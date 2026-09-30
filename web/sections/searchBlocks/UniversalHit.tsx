@@ -70,11 +70,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
 
   return (
     <article className="border-white-100/20 border-b pt-6 pb-8">
-      <BaseLink
-        href={buildURL(slug, locale)}
-        prefetch={false}
-        className="group"
-      >
+      <BaseLink href={buildURL(slug, locale)} className="group">
         {formattedDate && type !== 'magazine' && (
           <FormattedDateTime
             uppercase

@@ -2,8 +2,8 @@ import { stegaClean } from '@sanity/client/stega';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
+import { connection } from 'next/server';
 import { getLocale } from 'next-intl/server';
-import type { LivePerspective } from 'next-sanity/live';
 import { OrganizationJsonLd } from 'next-seo';
 import { Suspense } from 'react';
 import { getValidLanguagesLocales } from '@/languageConfig';
@@ -37,30 +37,56 @@ export async function generateMetadata(): Promise<Metadata> {
   return constructSanityMetadata('', locale, metaData);
 }
 
-// Layer 1: branches on draft mode without awaiting any other dynamic API,
-// so the published route still prerenders into the static shell.
-export default async function Home({ searchParams }: PageProps<'/[locale]'>) {
-  const { isEnabled: isDraftMode } = await draftMode();
-  let dynamic = { perspective: 'published' as LivePerspective, stega: false };
-  if (isDraftMode) {
-    const resolvedSearchParams = await searchParams;
-    dynamic = await getDynamicFetchOptions(resolvedSearchParams);
-  }
-
+async function DynamicMetadataMarker() {
   return (
-    <Suspense fallback={<LoadingPage homepage />}>
-      <CachedHome isDraftMode={isDraftMode} dynamic={dynamic} />
+    <Suspense>
+      <MetadataConnection />
     </Suspense>
   );
 }
 
+async function MetadataConnection() {
+  await connection();
+  return null;
+}
+
+// Layer 1: branches on draft mode without awaiting any other dynamic API,
+// so the published route still prerenders into the static shell.
+export default async function Home({ searchParams }: PageProps<'/[locale]'>) {
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (!isDraftMode) {
+    return (
+      <>
+        <DynamicMetadataMarker />
+        <CachedHome dynamic={{ perspective: 'published', stega: false }} />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <DynamicMetadataMarker />
+      <Suspense fallback={<LoadingPage homepage />}>
+        <DynamicHome searchParams={searchParams} />
+      </Suspense>
+    </>
+  );
+}
+
+async function DynamicHome({
+  searchParams,
+}: Pick<PageProps<'/[locale]'>, 'searchParams'>) {
+  const resolvedSearchParams = await searchParams;
+  const dynamic = await getDynamicFetchOptions(resolvedSearchParams);
+
+  return <CachedHome dynamic={dynamic} />;
+}
+
 // Layer 3: fetches through the existing draft-aware/cached `routeSanityFetch`/`getPage`.
 async function CachedHome({
-  isDraftMode = false,
   dynamic,
 }: {
-  isDraftMode?: boolean;
-  dynamic?: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
+  dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
 }) {
   'use cache: remote';
   const locale = await getLocale();
@@ -83,8 +109,7 @@ async function CachedHome({
     }),
   ]);
 
-  //Later when inside presentation tool, cant clean as it doesnt work with visual editing, must filter props together with visual editing,
-  const pageContent = isDraftMode ? stegaClean(homePageData) : homePageData;
+  const pageContent = dynamic.stega ? stegaClean(homePageData) : homePageData;
 
   const { headerData, pageData } = pageContent;
   const { data: siteMenuData } = siteMenuResult || {};

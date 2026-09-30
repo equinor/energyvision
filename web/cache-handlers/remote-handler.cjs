@@ -1,9 +1,30 @@
+const crypto = require('node:crypto');
 const { createClient } = require('redis');
 
 const CACHE_KEY_PREFIX = 'next-cache:';
 const REVALIDATED_TAGS_KEY = `${CACHE_KEY_PREFIX}revalidated-tags`;
 const redisUrl = process.env.REDIS_URL;
 const localTagTimestamps = new Map();
+const isProduction = process.env.NODE_ENV === 'production';
+let loggedMissingRedisUrl = false;
+let loggedRedisUnavailable = false;
+
+function getCacheKeyId(cacheKey) {
+  return crypto
+    .createHash('sha256')
+    .update(cacheKey)
+    .digest('hex')
+    .slice(0, 12);
+}
+
+function logCacheEvent(event, cacheKey, details = {}) {
+  if (!isProduction) return;
+
+  console.info('[cache-handler]', event, {
+    key: getCacheKeyId(cacheKey),
+    ...details,
+  });
+}
 
 let client;
 let connectPromise;
@@ -21,7 +42,13 @@ function logRedisError(error) {
 }
 
 async function getClient() {
-  if (!redisUrl) return undefined;
+  if (!redisUrl) {
+    if (isProduction && !loggedMissingRedisUrl) {
+      console.warn('[cache-handler] REDIS_URL is not configured');
+      loggedMissingRedisUrl = true;
+    }
+    return undefined;
+  }
 
   if (!client) {
     client = createClient({
@@ -37,9 +64,15 @@ async function getClient() {
     connectPromise ||= client.connect().catch((error) => {
       connectPromise = undefined;
       logRedisError(error);
+      loggedRedisUnavailable = true;
       return undefined;
     });
     await connectPromise;
+  }
+
+  if (isProduction && client.isOpen && loggedRedisUnavailable) {
+    console.info('[cache-handler] Redis connection restored');
+    loggedRedisUnavailable = false;
   }
 
   return client.isOpen ? client : undefined;
@@ -58,14 +91,25 @@ function isExpired(entry, softTags = []) {
 module.exports = {
   async get(cacheKey, softTags) {
     const redisClient = await getClient();
-    if (!redisClient) return undefined;
+    if (!redisClient) {
+      logCacheEvent('unavailable', cacheKey);
+      return undefined;
+    }
 
     try {
       const stored = await redisClient.get(getCacheKey(cacheKey));
-      if (!stored) return undefined;
+      if (!stored) {
+        logCacheEvent('miss', cacheKey);
+        return undefined;
+      }
 
       const data = JSON.parse(stored);
-      if (isExpired(data, softTags)) return undefined;
+      if (isExpired(data, softTags)) {
+        logCacheEvent('stale', cacheKey);
+        return undefined;
+      }
+
+      logCacheEvent('hit', cacheKey);
 
       return {
         value: new ReadableStream({
@@ -88,7 +132,10 @@ module.exports = {
 
   async set(cacheKey, pendingEntry) {
     const redisClient = await getClient();
-    if (!redisClient) return;
+    if (!redisClient) {
+      logCacheEvent('not-persisted', cacheKey);
+      return;
+    }
 
     const entry = await pendingEntry;
 
@@ -124,6 +171,9 @@ module.exports = {
       } else {
         await redisClient.set(getCacheKey(cacheKey), redisValue);
       }
+      logCacheEvent('persisted', cacheKey, {
+        ttlSeconds: Number.isFinite(ttl) && ttl > 0 ? Math.ceil(ttl) : null,
+      });
     } catch (error) {
       logRedisError(error);
     }
