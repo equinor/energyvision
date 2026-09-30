@@ -25,7 +25,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
       type = 'internalUrl',
       className = '',
       href,
-      prefetch = true,
+      prefetch,
       skipInternalStyle = false,
       hrefLang,
       onClick,
@@ -97,7 +97,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
             <NextLink
               {...commonProps}
               href={href}
-              prefetch={prefetch}
+              {...(prefetch !== undefined && { prefetch })}
               hrefLang={hrefLang}
               onClick={onClick}
               {...(target && { target })}

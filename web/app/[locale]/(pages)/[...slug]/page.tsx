@@ -2,9 +2,9 @@ import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig';
 import { stegaClean } from '@sanity/client/stega';
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
-import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
+import { Suspense } from 'react';
 import { decodeSlugs } from '@/lib/helpers/getFullUrl';
 import { Flags } from '@/sanity/helpers/datasetHelpers';
 import { getNameFromIso } from '@/sanity/helpers/localization';
@@ -19,6 +19,7 @@ import {
 } from '@/sanity/queries/metaData';
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu';
 import Header from '@/sections/Header/Header';
+import LoadingPage from '@/sections/LoadingPage/LoadingPage';
 
 type Props = {
   params: Promise<{ slug: string[]; locale: string }>;
@@ -78,20 +79,27 @@ export async function generateMetadata({
   return constructSanityMetadata(slug, locale, metaData);
 }
 
-export default async function Page({ params, searchParams }: Props) {
-  const resolvedSearchParams = await searchParams;
+export default function Page({ params, searchParams }: Props) {
+  return (
+    <Suspense fallback={<LoadingPage />}>
+      <DynamicContent params={params} searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+async function DynamicContent({ params, searchParams }: Props) {
+  const [{ slug }, resolvedSearchParams] = await Promise.all([
+    params,
+    searchParams,
+  ]);
   const dynamic = await getDynamicFetchOptions(resolvedSearchParams);
-  const { slug } = await params;
 
   return (
-    <>
-      {/*getTemplate()*/}
-      <CachedContent
-        slug={slug}
-        searchParams={resolvedSearchParams}
-        dynamic={dynamic}
-      />
-    </>
+    <CachedContent
+      slug={slug}
+      searchParams={resolvedSearchParams}
+      dynamic={dynamic}
+    />
   );
 }
 
@@ -107,11 +115,7 @@ async function CachedContent({
 }) {
   'use cache: remote';
   const locale = await getLocale();
-
-  /*   const isInPresentationToolContext =
-    (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
-  const { isEnabled: isDraftMode } = await draftMode();
-  let pageContent = null;
+  const decodedSlug = decodeSlugs(slug);
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
@@ -123,7 +127,7 @@ async function CachedContent({
       ...dynamic,
     }),
     getPage({
-      slug: decodeSlugs(slug),
+      slug: decodedSlug,
       locale,
       searchParams: searchParams,
       fetch: routeSanityFetch,
@@ -132,21 +136,15 @@ async function CachedContent({
       tags: [`page:/${Array.isArray(slug) ? slug.join('/') : slug}`],
     }),
   ]);
-  pageContent = pageResults;
 
-  if (isDraftMode) {
-    //Later when inside presentation tool, cant clea globally as it doesnt work with visual editing,
-    // must filter props together with visual editing,but is a big job.
-    pageContent = stegaClean(pageResults);
-  }
+  const pageContent = dynamic.stega ? stegaClean(pageResults) : pageResults;
 
   const { headerData, pageData } = pageContent;
   const { data: siteMenuData } = siteMenuResult || {};
   if (Object.keys(pageData).length === 0) notFound();
 
   const template = pageData?.template;
-  if (!template || typeof template === 'undefined')
-    console.warn('Missing template for', pageData?.slug);
+  if (!template) console.warn('Missing template for', pageData?.slug);
 
   const getTemplate = () => {
     switch (template) {
