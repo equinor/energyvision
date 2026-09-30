@@ -24,6 +24,7 @@ overrides:
   '@sanity/types': 6.7.0
   'lodash-es': 4.18.0
   'lodash': 4.18.0
+  'undici': 7.29.1
 publicHoistPattern:
   - '*import-in-the-middle*'
   - '*require-in-the-middle*'
