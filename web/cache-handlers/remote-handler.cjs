@@ -99,13 +99,13 @@ module.exports = {
     try {
       const stored = await redisClient.get(getCacheKey(cacheKey));
       if (!stored) {
-        logCacheEvent('miss', cacheKey);
+        //logCacheEvent('miss', cacheKey);
         return undefined;
       }
 
       const data = JSON.parse(stored);
       if (isExpired(data, softTags)) {
-        logCacheEvent('stale', cacheKey);
+        //logCacheEvent('stale', cacheKey);
         return undefined;
       }
 
