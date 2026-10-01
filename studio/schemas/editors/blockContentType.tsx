@@ -117,7 +117,7 @@ const titleVariantOptions: BlockContentProps = {
 
 const titleWithDisplayVariantOptions: BlockContentProps = {
   h2: false,
-  h3: false,
+  h3: true, //should be false. Textblock title should only have normal or display variants.
   largeText: true,
   extraLargeText: true,
   internalLink: false,
