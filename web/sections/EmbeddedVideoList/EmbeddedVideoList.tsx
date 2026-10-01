@@ -53,7 +53,7 @@ const EmbeddedVideoList = forwardRef<HTMLDivElement, EmbeddedVideoListProps>(
       (item) => item.id !== featuredItemId,
     );
     const cookiePolicy = data.cookiePolicy || ['none'];
-    console.log('data', data);
+
     const columns = data.gridColumns ?? '3';
     const itemBasisClass = {
       '2': 'sm:basis-[calc(50%-0.75rem)]',
