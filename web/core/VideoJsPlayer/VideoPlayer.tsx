@@ -1,48 +1,48 @@
-'use client'
-import dynamic from 'next/dynamic'
-import type { PortableTextBlock } from 'next-sanity'
-import { type HTMLProps, useRef } from 'react'
-import { twMerge } from 'tailwind-merge'
-import type Player from 'video.js/dist/types/player'
-import Blocks from '@/portableText/Blocks'
-import { resolveImage } from '@/sanity/lib/utils'
-import { type Image, mapSanityImageRatio } from '../Image/imageUtilities'
-import type { AspectRatioVariants, Variants } from './Video'
+'use client';
+import dynamic from 'next/dynamic';
+import type { PortableTextBlock } from 'next-sanity';
+import { type HTMLProps, useRef } from 'react';
+import { twMerge } from 'tailwind-merge';
+import type Player from 'video.js/dist/types/player';
+import Blocks from '@/portableText/Blocks';
+import { resolveImage } from '@/sanity/lib/utils';
+import { type Image, mapSanityImageRatio } from '../Image/imageUtilities';
+import type { AspectRatioVariants, Variants } from './Video';
 
-const Video = dynamic(() => import('./Video'), { ssr: false })
+const Video = dynamic(() => import('./Video'), { ssr: false });
 
 export type VideoType = {
-  title: string
-  src: string
-  poster: Image
-}
+  title: string;
+  src: string;
+  poster: Image;
+};
 
 export type VideoControlsType = {
-  loop?: boolean
-  autoPlay?: boolean
-  muted?: boolean
-}
+  loop?: boolean;
+  autoPlay?: boolean;
+  muted?: boolean;
+};
 
 export type VideoPlayerProps = Omit<
   HTMLProps<HTMLVideoElement>,
   'src' | 'poster'
 > & {
-  variant?: Variants
-  src: string
-  figureCaption?: string | PortableTextBlock[]
-  captionClassName?: string
-  figureClassName?: string
+  variant?: Variants;
+  src: string;
+  figureCaption?: string | PortableTextBlock[];
+  captionClassName?: string;
+  figureClassName?: string;
   /* setting this will sett fluid mode to video player */
-  aspectRatio?: AspectRatioVariants | undefined
+  aspectRatio?: AspectRatioVariants | undefined;
   /** Ignores aspect ratio to enable fill mode */
-  useFillMode?: boolean
-  useBrandTheme?: boolean
+  useFillMode?: boolean;
+  useBrandTheme?: boolean;
   /** Sets id on return element for anchors */
-  id?: string
-  poster?: Image
+  id?: string;
+  poster?: Image;
   /** For the aspect ratios that apply object cover, override to contain */
-  containVideo?: boolean
-}
+  containVideo?: boolean;
+};
 export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   variant = 'default',
   id,
@@ -69,11 +69,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     keepRatioOnMobile: true,
     useContain: true,
     isLargerDisplays: true,
-  })
-  const playerRef = useRef<Player>(null)
+  });
+  const playerRef = useRef<Player>(null);
   const useFill =
     !containVideo &&
-    (useFillMode || aspectRatio === '10:3' || aspectRatio === '21:9')
+    (useFillMode || aspectRatio === '10:3' || aspectRatio === '21:9');
 
   const videoJsOptions = {
     src: [
@@ -132,7 +132,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     ...(title && {
       title: title,
     }),
-  }
+  };
 
   const aspectRatioClassName: Record<AspectRatioVariants, string> = {
     '10:3': 'aspect-16/9 md:aspect-10/3',
@@ -142,22 +142,22 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     '2:1': 'aspect-2/1',
     '4:3': 'aspect-4/3',
     '1:1': 'aspect-square',
-  }
+  };
 
   const variantClassName: Record<Variants, string> = {
     default: `w-full`,
     fullwidth: `w-screen max-w-fullwidth`,
-  }
+  };
 
   const handlePlayerReady = (player: Player) => {
-    playerRef.current = player
+    playerRef.current = player;
     // analytics here?
     //console.log('player is ready')
     // You can handle player events here, for example:
     player.on('waiting', () => {
       // console.log('player is waiting')
-    })
-  }
+    });
+  };
 
   return (
     <figure
@@ -184,13 +184,13 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
           )}
         >
           {figureCaption && Array.isArray(figureCaption) && (
-            <Blocks value={figureCaption} variant='body' />
+            <Blocks value={figureCaption} variant="body" />
           )}
           {figureCaption && !Array.isArray(figureCaption) && figureCaption}
         </figcaption>
       )}
     </figure>
-  )
-}
+  );
+};
 
-export default VideoPlayer
+export default VideoPlayer;
