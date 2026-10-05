@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 // custom implementation of @sanity/form-builder/src/inputs/arrays/common/ArrayFunctions.tsx
 
-import { AddIcon } from '@sanity/icons';
+import { AddIcon } from '@sanity/icons/Add';
 import { Button, Grid } from '@sanity/ui';
 import { Menu, MenuButton, MenuItem } from '@sanity/ui/menu';
 import { type ReactNode, useCallback, useId, useMemo } from 'react';

@@ -1,5 +1,5 @@
 'use client';
-import { type HTMLProps, useEffect, useRef } from 'react';
+import { type HTMLProps, useEffect, useRef, useState } from 'react';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import type Player from 'video.js/dist/types/player';
@@ -52,6 +52,7 @@ export const Video: React.FC<VideoProps> = ({
 }) => {
   const videoRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<Player>(null);
+  const [player, setPlayer] = useState<Player | null>(null);
   const videoElementRef = useRef<HTMLElement | null>(null);
   const onReadyRef = useRef<VideoProps['onReady']>(onReady);
   const sourceKeyRef = useRef('');
@@ -94,7 +95,7 @@ export const Video: React.FC<VideoProps> = ({
   }, [onReady]);
 
   //Here or in the VideoPlayer?
-  useVideojsAnalytics(playerRef.current, src, title, autoplay);
+  useVideojsAnalytics(player, src, title, autoplay);
 
   useEffect(() => {
     if (playerRef.current) {
@@ -103,25 +104,19 @@ export const Video: React.FC<VideoProps> = ({
 
     const videoElement = document.createElement('video-js');
     videoElementRef.current = videoElement;
-    videoElement.classList.add('vjs-layout-large');
-    if (useBrandTheme) {
-      videoElement.classList.add('vjs-envis-brand');
-    }
-    if (variant === 'fullwidth') {
-      videoElement.classList.add(
-        'vjs-fullwidth',
-        'vjs-fill',
-        '[&>video]:object-cover',
-      );
-    } else {
-      videoElement.classList.add(
-        'pt-0!',
-        'w-full!',
-        'h-full!',
-        '[&>video]:object-contain',
-        '[&>video]:relative!',
-      );
-    }
+    videoElement.classList.add(
+      'vjs-layout-large',
+      ...(useBrandTheme ? ['vjs-envis-brand'] : []),
+      ...(variant === 'fullwidth'
+        ? ['vjs-fullwidth', 'vjs-fill', '[&>video]:object-cover']
+        : [
+            'pt-0!',
+            'w-full!',
+            'h-full!',
+            '[&>video]:object-contain',
+            '[&>video]:relative!',
+          ]),
+    );
 
     videoRef.current?.appendChild(videoElement);
 
@@ -142,6 +137,7 @@ export const Video: React.FC<VideoProps> = ({
     });
 
     playerRef.current = player;
+    setPlayer(player);
 
     return () => {
       window.clearTimeout(readyTimeout);
