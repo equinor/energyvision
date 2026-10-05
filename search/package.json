@@ -30,7 +30,7 @@
     "typescript": "5.9.3"
   },
   "dependencies": {
-    "@azure/storage-blob": "12.33.0",
+    "@azure/storage-blob": "12.34.0",
     "@sanity/client": "^8.5.0",
     "algoliasearch": "^5.57.0",
     "@azure/app-configuration-provider": "2.6.0",
