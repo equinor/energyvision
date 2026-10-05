@@ -1,9 +1,9 @@
-import { stegaClean } from '@sanity/client/stega';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { connection } from 'next/server';
 import { getLocale } from 'next-intl/server';
+import { stegaClean } from 'next-sanity';
 import { OrganizationJsonLd } from 'next-seo';
 import { Suspense } from 'react';
 import { getValidLanguagesLocales } from '@/languageConfig';

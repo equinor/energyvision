@@ -1,10 +1,10 @@
-'use client'
+'use client';
 
-import type { LiveEvent } from '@sanity/client'
-import { CorsOriginError } from '@sanity/client'
-import { startTransition, useEffect, useEffectEvent } from 'react'
-import { client } from '@/sanity/lib/client'
-import { liveRefresh, updateTags } from '../actions'
+import type { LiveEvent } from 'next-sanity';
+import { CorsOriginError } from 'next-sanity';
+import { startTransition, useEffect, useEffectEvent } from 'react';
+import { client } from '@/sanity/lib/client';
+import { liveRefresh, updateTags } from '../actions';
 
 export function TempSanityLive() {
   const handleLiveEvent = useEffectEvent((event: LiveEvent) => {
@@ -12,17 +12,17 @@ export function TempSanityLive() {
       case 'welcome':
         console.info(
           'Sanity is live with automatic revalidation of published content',
-        )
-        break
+        );
+        break;
       case 'message':
-        startTransition(() => updateTags(event.tags))
-        break
+        startTransition(() => updateTags(event.tags));
+        break;
       case 'reconnect':
       case 'restart':
-        startTransition(() => liveRefresh())
-        break
+        startTransition(() => liveRefresh());
+        break;
     }
-  })
+  });
   useEffect(() => {
     const subscription = client.live.events().subscribe({
       next: handleLiveEvent,
@@ -32,15 +32,15 @@ export function TempSanityLive() {
             `Sanity Live is unable to connect to the Sanity API as the current origin - ${window.origin} - is not in the list of allowed CORS origins for this Sanity Project.`,
             error.addOriginUrl && `Add it here:`,
             error.addOriginUrl?.toString(),
-          )
+          );
         } else {
-          console.error(error)
+          console.error(error);
         }
       },
-    })
-    return () => subscription.unsubscribe()
-  }, [])
+    });
+    return () => subscription.unsubscribe();
+  }, []);
 
-  return null
+  return null;
 }
-TempSanityLive.displayName = 'SanityLive'
+TempSanityLive.displayName = 'SanityLive';

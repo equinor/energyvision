@@ -1,4 +1,4 @@
-import { type ClientConfig, createClient } from '@sanity/client';
+import { type ClientConfig, createClient } from 'next-sanity';
 import { apiVersion, dataset, projectId, studioUrl } from '../api';
 
 const sanityConfig: ClientConfig = {

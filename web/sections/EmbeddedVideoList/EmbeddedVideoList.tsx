@@ -1,12 +1,14 @@
 'use client';
 
 import { toPlainText } from '@portabletext/react';
+import dynamic from 'next/dynamic';
 import type { PortableTextBlock } from 'next-sanity';
 import { forwardRef, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { IFrame } from '@/core/IFrame/IFrame';
 import Blocks from '@/portableText/Blocks';
 import type { CookieType } from '@/types';
+
+const IFrame = dynamic(() => import('@/core/IFrame/IFrame'));
 
 export type EmbeddedVideoListItem = {
   id: string;

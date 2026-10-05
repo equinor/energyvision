@@ -28,6 +28,10 @@ Before any Next.js work, find and read the relevant doc in node_modules/next/dis
 - Use existing route conventions and file organization; don’t mix `app/` and `pages/` in the same hierarchy.
 - For Tailwind, prefer the shared preset in brand/tailwind in package `@energyvision/shared` and follow website `tailwind.config.js` patterns.
 
+### Turbopack module-factory errors
+
+For `Module <id> was instantiated because it was required from module <id>, but the module factory is not available` during prerendering, check whether the same runtime module is imported statically in one part of the route graph and dynamically with `import()` elsewhere. This is a reported Turbopack failure mode ([Next.js issue #98099](https://github.com/vercel/next.js/issues/98099)). Compare resolved module paths, not just import strings, and ignore `import type` references because TypeScript erases them. Using one loading mode consistently is a mitigation to test, not proof of cause. 
+
 ## Web Sub-Skills
 
 - `next-dev-loop`: Verify Next.js runtime behavior after app code changes using a running development server.
@@ -87,3 +91,13 @@ If found in manually written code, inform the user and suggest refactor:
 - `Record<string, unknown>` used instead of a proper type definition.
 - Type assertions (`as`) used without a preceding runtime check.
 - Components exceeding ~200 lines without clear justification.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

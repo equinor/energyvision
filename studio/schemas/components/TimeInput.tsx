@@ -1,7 +1,6 @@
-import { useId } from '@reach/auto-id';
 import { ResetIcon } from '@sanity/icons';
 import { Box, Button, Flex, Select, Text } from '@sanity/ui';
-import { type FormEvent, useCallback, useState } from 'react';
+import { type FormEvent, useCallback, useId, useState } from 'react';
 import { type ObjectInputProps, set, unset } from 'sanity';
 
 export interface TimeInput {

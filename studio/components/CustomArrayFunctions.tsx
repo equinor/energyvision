@@ -1,11 +1,10 @@
 /* eslint-disable no-unused-vars */
 // custom implementation of @sanity/form-builder/src/inputs/arrays/common/ArrayFunctions.tsx
 
-import { useId } from '@reach/auto-id';
 import { AddIcon } from '@sanity/icons';
 import { Button, Grid } from '@sanity/ui';
 import { Menu, MenuButton, MenuItem } from '@sanity/ui/menu';
-import { type ReactNode, useCallback, useMemo } from 'react';
+import { type ReactNode, useCallback, useId, useMemo } from 'react';
 import { type ArraySchemaType, isReferenceSchemaType } from 'sanity';
 
 // validation is defined on 'type' but not declared on SchemaType
