@@ -1,83 +1,85 @@
-'use client'
-import type { PortableTextBlock } from '@portabletext/types'
+'use client';
+import type { PortableTextBlock } from '@portabletext/types';
 //TODO check this
 // eslint-disable-next-line import/no-unresolved
-import { useIsPresentationTool } from 'next-sanity/hooks'
-import { forwardRef, type HTMLAttributes, useId, useState } from 'react'
-import { twMerge } from 'tailwind-merge'
-import { dataset } from '@/languageConfig'
-import Transcript from '@/sections/Transcript/Transcript'
-import { iframeSrcList } from '@/securityHeaders'
-import useConsent from '../../lib/hooks/useConsent'
-import useConsentState from '../../lib/hooks/useConsentState'
-import Blocks from '../../portableText/Blocks'
-import type { CookieType } from '../../types'
-import { LogoPrimary } from '../Logo/Logo'
-import { Typography } from '../Typography'
-import RequestConsentContainer from './RequestConsentContainer'
+import { useIsPresentationTool } from 'next-sanity/hooks';
+import {
+  forwardRef,
+  type HTMLAttributes,
+  useEffect,
+  useId,
+  useState,
+} from 'react';
+import { twMerge } from 'tailwind-merge';
+import { dataset } from '@/languageConfig';
+import Transcript from '@/sections/Transcript/Transcript';
+import { iframeSrcList } from '@/securityHeaders';
+import useConsent from '../../lib/hooks/useConsent';
+import useConsentState from '../../lib/hooks/useConsentState';
+import Blocks from '../../portableText/Blocks';
+import type { CookieType } from '../../types';
+import { LogoPrimary } from '../Logo/Logo';
+import { Typography } from '../Typography';
+import RequestConsentContainer from './RequestConsentContainer';
 
 const calculatePadding = (aspectRatio: string): string => {
-  const ratio = aspectRatio.split(':')
-  const percentage = (parseInt(ratio[1], 10) / parseInt(ratio[0], 10)) * 100
+  const ratio = aspectRatio.split(':');
+  const percentage = (parseInt(ratio[1], 10) / parseInt(ratio[0], 10)) * 100;
 
-  return `${percentage}%`
-}
+  return `${percentage}%`;
+};
 
 const isIframeAllowedByCsp = (url: string) => {
   try {
-    const parsedUrl = new URL(url)
+    const parsedUrl = new URL(url);
 
-    return iframeSrcList.some(source => {
-      if (!source) return false
+    return iframeSrcList.some((source) => {
+      if (!source) return false;
 
       if (source.includes('*')) {
-        const parsedSource = new URL(source.replace('*.', 'placeholder.'))
+        const parsedSource = new URL(source.replace('*.', 'placeholder.'));
         const wildcardDomain = parsedSource.hostname.replace(
           /^placeholder\./,
           '',
-        )
+        );
 
         return (
           parsedUrl.protocol === parsedSource.protocol &&
           (parsedUrl.hostname === wildcardDomain ||
             parsedUrl.hostname.endsWith(`.${wildcardDomain}`))
-        )
+        );
       }
 
-      return parsedUrl.origin === new URL(source).origin
-    })
+      return parsedUrl.origin === new URL(source).origin;
+    });
   } catch {
-    return false
+    return false;
   }
-}
-
-const isDraftModeEnabled = () =>
-  typeof document !== 'undefined' &&
-  document.cookie.includes('__prerender_bypass=')
+};
 
 type IFrameProps = {
-  frameTitle: string
-  url: string
-  cookiePolicy: CookieType[]
-  height?: number
-  aspectRatio: string
+  frameTitle: string;
+  url: string;
+  cookiePolicy: CookieType[];
+  height?: number;
+  aspectRatio: string;
   /** Sets h3 if true, h2 if not */
-  hasSectionTitle: boolean
+  hasSectionTitle: boolean;
   /* Portabletext title
    * dont use if you have a section title above for iframe
    */
-  title?: PortableTextBlock[]
-  showTitleAbove?: boolean
+  title?: PortableTextBlock[];
+  showTitleAbove?: boolean;
   /** For above section title connected to iframe
    * id to element
    * Ignored if title is sent in
    */
-  labelledBy?: string
-  titleClassName?: string
-  description?: PortableTextBlock[]
-  descriptionClassName?: string
-  transcript?: any
-} & HTMLAttributes<HTMLElement>
+  labelledBy?: string;
+  titleClassName?: string;
+  description?: PortableTextBlock[];
+  descriptionClassName?: string;
+  transcript?: any;
+} & HTMLAttributes<HTMLElement>;
 
 export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   {
@@ -98,31 +100,40 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   },
   ref,
 ) {
-  const isPresentationTool = useIsPresentationTool()
+  const isPresentationTool = useIsPresentationTool();
+  const cookieConsent = useConsent(cookiePolicy);
+  const [draftModeEnabled, setDraftModeEnabled] = useState(false);
+  useEffect(() => {
+    setDraftModeEnabled(document.cookie.includes('__prerender_bypass='));
+  }, []);
   const isPreview =
-    isPresentationTool ||
-    isDraftModeEnabled() ||
-    dataset === 'global-development'
-  const [consented, setConsented] = useState(useConsent(cookiePolicy))
-  const titleId = useId()
-  const descriptionId = useId()
-  const labelledById = title ? titleId : labelledBy
+    isPresentationTool || draftModeEnabled || dataset === 'global-development';
+  const [consented, setConsented] = useState(() =>
+    cookiePolicy.every((policy) => policy === 'none'),
+  );
+  const titleId = useId();
+  const descriptionId = useId();
+  const labelledById = title ? titleId : labelledBy;
+
+  useEffect(() => {
+    setConsented(cookieConsent ?? false);
+  }, [cookieConsent]);
 
   useConsentState(
     cookiePolicy,
     () => {
-      setConsented(true)
+      setConsented(true);
     },
     () => {
-      setConsented(false)
+      setConsented(false);
     },
-  )
+  );
 
-  if (!url) return null
-  const isBlockedByCsp = !isIframeAllowedByCsp(url)
+  if (!url) return null;
+  const isBlockedByCsp = !isIframeAllowedByCsp(url);
   const containerPadding = height
     ? `${height}px`
-    : calculatePadding(aspectRatio)
+    : calculatePadding(aspectRatio);
 
   const iframeElement = (
     <>
@@ -130,12 +141,12 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
         <Blocks
           value={title}
           id={titleId}
-          as='h3'
+          as="h3"
           className={twMerge('pb-8 text-xl', titleClassName)}
         />
       )}
       <div
-        className='relative w-full overflow-hidden'
+        className="relative w-full overflow-hidden"
         style={{
           paddingBottom: containerPadding,
         }}
@@ -146,16 +157,16 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
               'dark absolute inset-0 flex h-full w-full flex-col items-center justify-center gap-8 bg-autumn-storm-60 p-20',
             )}
           >
-            <LogoPrimary className='h-auto w-[20%] text-white-100' />
-            <Typography variant='h2' className='text-center'>
+            <LogoPrimary className="h-auto w-[20%] text-white-100" />
+            <Typography variant="h2" className="text-center">
               This embedded content cannot be displayed in your browser.
             </Typography>
           </div>
         ) : (
           <iframe
-            className='absolute inset-0 h-full w-full border-0'
+            className="absolute inset-0 h-full w-full border-0"
             allowFullScreen
-            loading='lazy'
+            loading="lazy"
             src={url}
             title={frameTitle}
             {...(!isPreview && {
@@ -177,7 +188,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
         <Blocks
           value={title}
           id={titleId}
-          as='h3'
+          as="h3"
           className={twMerge(
             'pt-4 text-md',
             description ? 'pb-2' : '',
@@ -189,7 +200,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
         <Blocks
           value={description}
           id={descriptionId}
-          variant='body'
+          variant="body"
           className={twMerge(
             'text-base',
             !title || (!title && !showTitleAbove) ? 'pt-4' : '',
@@ -198,7 +209,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
         />
       )}
     </>
-  )
+  );
 
   return (
     <div ref={ref} className={twMerge('h-min', className)}>
@@ -211,7 +222,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
         />
       )}
     </div>
-  )
-})
+  );
+});
 
-export default IFrame
+export default IFrame;
