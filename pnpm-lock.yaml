@@ -188,6 +188,9 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../packages/typescript-config
+      '@sanity/client':
+        specifier: ^8.7.0
+        version: 8.7.0
       '@types/react':
         specifier: ^19.3.0
         version: 19.3.0
