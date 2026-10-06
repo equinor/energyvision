@@ -43,7 +43,7 @@
     "@tanstack/react-table": "8.21.3",
     "algoliasearch": "^5.50.1",
     "date-fns": "4.4.0",
-    "framer-motion": "^12.38.0",
+    "framer-motion": "^13.4.5",
     "html-entities": "^2.6.0",
     "ics": "3.12.0",
     "instantsearch.js": "4.117.0",
