@@ -107,7 +107,11 @@ export const constructSanityMetadata = (
     title: string;
     seoAndSome: SeoData;
     heroImage?: any;
-    slugs: any;
+    slugs?: LocaleSlug[];
+    allSlugs?: {
+      currentSlug: LocaleSlug;
+      translationSlugs: LocaleSlug[];
+    };
     publishDateTime: any;
     updatedAt: any;
   },
@@ -119,6 +123,7 @@ export const constructSanityMetadata = (
     if (process.env.NODE_ENV !== 'production') {
       console.warn('[generateMetadata] metaData is null', { slug, locale });
     }
+
     return {
       title: metaTitleSuffix,
       openGraph: {
@@ -142,13 +147,18 @@ export const constructSanityMetadata = (
     publishDateTime,
     updatedAt,
     slugs: langSlugs,
+    allSlugs,
   } = metaData;
 
   const plainTitle = Array.isArray(title) ? toPlainText(title) : title;
   const ogImage = resolveOpenGraphImage(
     seoAndSome?.openGraphImage ?? heroImage?.image,
   );
-  const slugs = formatToValidPrefixedIsoSlugs(slug, langSlugs);
+
+  const slugs = formatToValidPrefixedIsoSlugs(
+    slug,
+    allSlugs?.translationSlugs ?? langSlugs,
+  );
   const alternates = generateAlternatesLinks(slug, locale, slugs);
   const modifiedDate = isDateAfter(publishDateTime, updatedAt)
     ? publishDateTime

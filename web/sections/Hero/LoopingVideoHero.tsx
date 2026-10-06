@@ -19,6 +19,7 @@ export type LoopingVideoData = {
 
 export type LoopingVideoHeroProps = {
   title?: PortableTextBlock[];
+  subTitle?: ReactNode;
   nextSectionDesignOptions?: DesignOptions;
   video: LoopingVideoData;
   className?: string;
@@ -29,6 +30,7 @@ const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'));
 
 export const LoopingVideoHero = ({
   title,
+  subTitle,
   video,
   nextSectionDesignOptions,
   className = '',
@@ -71,6 +73,11 @@ export const LoopingVideoHero = ({
             className,
           )}
         />
+        {subTitle && (
+          <div className="mx-auto max-w-content px-layout-sm lg:px-layout-lg">
+            {subTitle}
+          </div>
+        )}
       </div>
     </>
   );
