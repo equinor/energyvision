@@ -169,9 +169,9 @@ module.exports = {
       } else {
         await redisClient.set(getCacheKey(cacheKey), redisValue);
       }
-      logCacheEvent('persisted', cacheKey, {
+      /*       logCacheEvent('persisted', cacheKey, {
         ttlSeconds: Number.isFinite(ttl) && ttl > 0 ? Math.ceil(ttl) : null,
-      });
+      }); */
     } catch (error) {
       logRedisError(error);
     }
