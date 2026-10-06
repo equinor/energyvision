@@ -31,7 +31,7 @@
     "@friendlycaptcha/sdk": "^0.2.0",
     "@hookform/resolvers": "^5.2.2",
     "@next/third-parties": "16.3.5",
-    "@portabletext/react": "^6.0.3",
+    "@portabletext/react": "^8.0.1",
     "@portabletext/to-html": "^5.0.2",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-tabs": "^1.1.13",
