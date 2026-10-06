@@ -187,6 +187,7 @@ export const HeroBlock = ({
           //@ts-ignore
           <LoopingVideoHero
             {...commonProps}
+            subTitle={subTitle}
             //@ts-ignore: backwardscompatibility?
             video={heroData?.video ?? heroData?.loopingVideo}
             {...(breadcrumbs?.enableBreadcrumbs && {
