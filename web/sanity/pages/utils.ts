@@ -108,10 +108,12 @@ export const constructSanityMetadata = (
     seoAndSome: SeoData;
     heroImage?: any;
     slugs?: LocaleSlug[];
-    allSlugs?: {
-      currentSlug: LocaleSlug;
-      translationSlugs: LocaleSlug[];
-    };
+    allSlugs?:
+      | LocaleSlug[]
+      | {
+          currentSlug: LocaleSlug;
+          translationSlugs: LocaleSlug[];
+        };
     publishDateTime: any;
     updatedAt: any;
   },
@@ -157,7 +159,9 @@ export const constructSanityMetadata = (
 
   const slugs = formatToValidPrefixedIsoSlugs(
     slug,
-    allSlugs?.translationSlugs ?? langSlugs,
+    Array.isArray(allSlugs)
+      ? allSlugs
+      : (allSlugs?.translationSlugs ?? langSlugs),
   );
   const alternates = generateAlternatesLinks(slug, locale, slugs);
   const modifiedDate = isDateAfter(publishDateTime, updatedAt)
