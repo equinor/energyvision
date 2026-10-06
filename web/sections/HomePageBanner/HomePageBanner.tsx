@@ -140,6 +140,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
             <Image
               grid="full"
               loading="eager"
+              fetchPriority="high"
               image={image}
               fill
               imageClassName={`${getObjectPositionForImage(backgroundPosition ?? 'center_center')}`}

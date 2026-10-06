@@ -1,5 +1,5 @@
-import { NumberIcon } from '@sanity/icons'
-import type { Rule } from 'sanity'
+import { NumberIcon } from '@sanity/icons/Number';
+import type { Rule } from 'sanity';
 
 export default {
   name: 'tabsKeyNumberItem',
@@ -34,12 +34,12 @@ export default {
       description: 'description',
     },
     prepare(selection: Record<string, string | number>) {
-      const { keyNumber, unit, description } = selection
+      const { keyNumber, unit, description } = selection;
       return {
         title: `${keyNumber} ${unit ?? ''}`,
         subtitle: description,
         media: NumberIcon,
-      }
+      };
     },
   },
-}
+};

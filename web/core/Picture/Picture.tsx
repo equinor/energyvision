@@ -1,35 +1,38 @@
-import type { Ref } from 'react'
-import { twMerge } from 'tailwind-merge'
-import { resolveImage } from '@/sanity/lib/utils'
-import { FigureCaption } from '../FigureCaption/FigureCaption'
-import { Image } from '../Image/Image'
+import type { Ref } from 'react';
+import { twMerge } from 'tailwind-merge';
+import { resolveImage } from '@/sanity/lib/utils';
+import { FigureCaption } from '../FigureCaption/FigureCaption';
+import { Image } from '../Image/Image';
 import {
+  type ImageProps,
   type ImageRatioKeys,
   type Image as ImageType,
   mapSanityImageRatio,
-} from '../Image/imageUtilities'
+} from '../Image/imageUtilities';
 
 type PictureProps = {
-  image: ImageType
-  caption?: string
-  attribution?: string
+  image: ImageType;
+  caption?: string;
+  attribution?: string;
   /** Aspect ratio for desktop. Should either be 10:3, 21:9
    * @default 10:3
    */
-  desktopAspectRatio?: ImageRatioKeys
+  desktopAspectRatio?: ImageRatioKeys;
   /** Aspect ratio for mobile, should be 4/3
    * @default 4:3
    */
-  mobileAspectRatio?: ImageRatioKeys
-  figCaptionClassName?: string
-  figureClassName?: string
+  mobileAspectRatio?: ImageRatioKeys;
+  figCaptionClassName?: string;
+  figureClassName?: string;
+  fetchPriority?: ImageProps['fetchPriority'];
+  loading?: ImageProps['loading'];
   /** if figure caption should have the default px layouts
    * @default true
    */
-  withLayoutPx?: boolean
-  className?: string
-  ref?: Ref<HTMLElement>
-}
+  withLayoutPx?: boolean;
+  className?: string;
+  ref?: Ref<HTMLElement>;
+};
 
 export const Picture = ({
   image,
@@ -37,6 +40,8 @@ export const Picture = ({
   mobileAspectRatio = '4:3',
   caption,
   attribution,
+  fetchPriority = 'low',
+  loading = 'lazy',
   className = '',
   figureClassName = '',
   figCaptionClassName = '',
@@ -49,22 +54,22 @@ export const Picture = ({
     aspectRatio: mapSanityImageRatio(desktopAspectRatio),
     keepRatioOnMobile: true,
     isLargerDisplays: true,
-  })
+  });
 
   const pictureElement = (
     <picture ref={ref} className={twMerge(`relative h-full w-full`, className)}>
-      <source media='(min-width: 768px)' srcSet={desktopUrl} />
+      <source media="(min-width: 768px)" srcSet={desktopUrl} />
       <Image
-        wrapperVariant='none'
+        wrapperVariant="none"
         image={image}
-        loading='eager'
-        fetchPriority='high'
-        grid='lg'
+        loading={loading}
+        fetchPriority={fetchPriority}
+        grid="lg"
         aspectRatio={mobileAspectRatio}
         keepRatioOnMobile
       />
     </picture>
-  )
+  );
 
   return caption || attribution ? (
     <figure className={figureClassName}>
@@ -78,5 +83,5 @@ export const Picture = ({
     </figure>
   ) : (
     pictureElement
-  )
-}
+  );
+};

@@ -1,23 +1,23 @@
-import { toPlainText } from 'next-sanity'
-import type { HTMLAttributes } from 'react'
-import { Breadcrumbs } from '@/core/Breadcrumbs/Breadcrumbs'
-import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import type { DesignOptions } from '@/types'
-import { getColorForTabsTheme } from '../TabsBlock/tabThemes'
-import { DefaultHero, type DefaultHeroProps } from './DefaultHero'
-import { FiftyFiftyHero, type FiftyFiftyHeroProps } from './FiftyFiftyHero'
+import { toPlainText } from 'next-sanity';
+import type { HTMLAttributes } from 'react';
+import { Breadcrumbs } from '@/core/Breadcrumbs/Breadcrumbs';
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap';
+import type { DesignOptions } from '@/types';
+import { getColorForTabsTheme } from '../TabsBlock/tabThemes';
+import { DefaultHero, type DefaultHeroProps } from './DefaultHero';
+import { FiftyFiftyHero, type FiftyFiftyHeroProps } from './FiftyFiftyHero';
 import {
   FullWidthImageHero,
   type FullWidthImageHeroProps,
-} from './FullWidthImageHero'
+} from './FullWidthImageHero';
 import {
   LoopingVideoHero,
   type LoopingVideoHeroProps,
-} from './LoopingVideoHero'
+} from './LoopingVideoHero';
 import {
   TextOnBackgroundImageHero,
   type TextOnBackgroundImageHeroProps,
-} from './TextOnBackgroundImageHero'
+} from './TextOnBackgroundImageHero';
 
 export enum HeroTypes {
   DEFAULT = 'default',
@@ -48,23 +48,23 @@ export enum HeroTypes {
 } */
 
 export type HeroData = {
-  type?: HeroTypes
+  type?: HeroTypes;
   //Fallback to old colorlist fields without key, takes title for color
-  heroBackground?: string
+  heroBackground?: string;
 } & TextOnBackgroundImageHeroProps &
   LoopingVideoHeroProps &
   FullWidthImageHeroProps &
   FiftyFiftyHeroProps &
-  DefaultHeroProps
+  DefaultHeroProps;
 
 export type HeroBlockProps = {
-  nextSectionDesignOptions?: DesignOptions
-  breadcrumbs?: any
-  isMagazineRoom?: boolean
+  nextSectionDesignOptions?: DesignOptions;
+  breadcrumbs?: any;
+  isMagazineRoom?: boolean;
   //To add custom styling to the outer container of the hero type
-  className?: string
-  heroData: HeroData
-} & HTMLAttributes<HTMLElement>
+  className?: string;
+  heroData: HeroData;
+} & HTMLAttributes<HTMLElement>;
 
 export const HeroBlock = ({
   heroData,
@@ -91,19 +91,18 @@ export const HeroBlock = ({
     useBlurCenter,
     displayTextVariant,
     figCaptionClassName,
-  } = heroData
+  } = heroData;
 
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
-  )
+  );
 
-  let bg = nextCompBg ? nextCompBg : ''
-  let dark = nextCompDark ? 'dark' : ''
-  //@ts-ignore next section is tabs with theme
-  if (nextSectionDesignOptions?.theme >= 0) {
-    //@ts-ignore
-    bg = getColorForTabsTheme(nextSectionDesignOptions?.theme).backgroundUtility
-    dark = ''
+  let bg = nextCompBg ? nextCompBg : '';
+  let dark = nextCompDark ? 'dark' : '';
+  const theme = nextSectionDesignOptions?.theme;
+  if (theme !== undefined && theme >= 0) {
+    bg = getColorForTabsTheme(theme).backgroundUtility ?? bg;
+    dark = '';
   }
 
   const breadcrumbsElement = (
@@ -116,11 +115,11 @@ export const HeroBlock = ({
       customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
       className={`${dark ? dark : ''} ${type === HeroTypes?.DEFAULT && (figure?.caption || figure?.attribution) ? 'pt-2' : ''}`}
     />
-  )
+  );
   const heroTypesThatHaveBreadcrumbsBelow = [
     HeroTypes?.DEFAULT,
     HeroTypes?.BACKGROUND_IMAGE,
-  ]
+  ];
 
   const commonProps = {
     figure,
@@ -133,7 +132,7 @@ export const HeroBlock = ({
     }),
     className,
     figCaptionClassName,
-  }
+  };
 
   const getHero = () => {
     switch (type) {
@@ -150,7 +149,7 @@ export const HeroBlock = ({
             className={`${breadcrumbs?.enableBreadcrumbs ? 'pb-2' : ''}`}
             variant={ratio ?? 'narrow'}
           />
-        )
+        );
       case HeroTypes.FIFTY_FIFTY:
         return (
           <FiftyFiftyHero
@@ -171,7 +170,7 @@ export const HeroBlock = ({
               breadcrumbsComponent: breadcrumbsElement,
             })}
           />
-        )
+        );
       case HeroTypes.BACKGROUND_IMAGE:
         return (
           <TextOnBackgroundImageHero
@@ -182,7 +181,7 @@ export const HeroBlock = ({
             useBrandTheme={useBrandTheme}
             isMagazineRoom={isMagazineRoom}
           />
-        )
+        );
       case HeroTypes.LOOPING_VIDEO:
         return (
           //@ts-ignore
@@ -196,7 +195,7 @@ export const HeroBlock = ({
             // reduce pb when breadscrumbs
             className={`${breadcrumbs?.enableBreadcrumbs ? 'pb-2' : ''}`}
           />
-        )
+        );
       default:
         return (
           <DefaultHero
@@ -205,13 +204,13 @@ export const HeroBlock = ({
             // reduce pb when breadscrumbs
             className={`${breadcrumbs?.enableBreadcrumbs ? 'pb-2' : ''}`}
           />
-        )
+        );
     }
-  }
+  };
 
   return type !== HeroTypes?.NO_HERO ? (
     //bg white here because presentation tools shows grey as a fallback, the hero with background color will lay over and override the white
-    <section className='h-full w-full bg-white-100'>
+    <section className="h-full w-full bg-white-100">
       {getHero()}
       {breadcrumbs?.enableBreadcrumbs &&
         heroTypesThatHaveBreadcrumbsBelow.includes(type) && (
@@ -227,9 +226,9 @@ export const HeroBlock = ({
         )}
     </section>
   ) : (
-    <h1 id='mainTitle' tabIndex={-1} className='sr-only'>
+    <h1 id="mainTitle" tabIndex={-1} className="sr-only">
       {/** @ts-ignore */}
       {toPlainText(title)}
     </h1>
-  )
-}
+  );
+};

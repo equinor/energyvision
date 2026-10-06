@@ -1,4 +1,4 @@
-import { ResetIcon } from '@sanity/icons';
+import { ResetIcon } from '@sanity/icons/Reset';
 import { Box, Button, Flex, Select, Text } from '@sanity/ui';
 import { type FormEvent, useCallback, useId, useState } from 'react';
 import { type ObjectInputProps, set, unset } from 'sanity';
