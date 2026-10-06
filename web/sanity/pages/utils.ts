@@ -95,6 +95,7 @@ const generateAlternatesLinks = (
     canonical: canonicalSlug,
     languages: {
       ...alternateLinks,
+      [locale]: canonicalSlug,
       'x-default': xDefaultSlug,
     },
   };
@@ -137,7 +138,7 @@ export const constructSanityMetadata = (
       },
       alternates: {
         ...(locale === defaultLanguage.iso && { canonical: fullSlug }),
-        languages: {},
+        languages: { [locale]: fullSlug },
       },
     };
   }
