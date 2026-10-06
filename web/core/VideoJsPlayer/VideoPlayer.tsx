@@ -83,7 +83,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       },
     ],
     muted: muted ? 'muted' : false,
-    playsinline: playsInline,
+    playsinline: autoPlay || playsInline,
     loop: loop,
     autoplay: autoPlay,
     preload: autoPlay ? 'auto' : 'none',
