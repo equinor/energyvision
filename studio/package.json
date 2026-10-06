@@ -26,7 +26,7 @@
     "@sanity/ui": "^4.2.4",
     "@sanity/uuid": "^3.0.3",
     "@sanity/vision": "6.16.0",
-    "@portabletext/react": "^5.0.0",
+    "@portabletext/react": "^8.0.1",
     "blob-util": "^2.0.2",
     "buffer": "^6.0.3",
     "date-fns": "^4.1.0",
