@@ -24,6 +24,7 @@ export const sentryIgnoreErrors: Array<string | RegExp> = [
   'Load failed',
   /Failed to find Server Action/i,
   /Error: Unexpected cache miss*/,
+  "Error: Couldn't find all resumable slots by key/index during replaying. The tree doesn't match so React will fallback to client rendering.",
   'This request might be from an older or newer deployment',
 ];
 
