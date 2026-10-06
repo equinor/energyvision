@@ -157,12 +157,13 @@ export const constructSanityMetadata = (
     seoAndSome?.openGraphImage ?? heroImage?.image,
   );
 
-  const slugs = formatToValidPrefixedIsoSlugs(
-    slug,
-    Array.isArray(allSlugs)
-      ? allSlugs
-      : (allSlugs?.translationSlugs ?? langSlugs),
-  );
+  const metadataSlugs = Array.isArray(allSlugs)
+    ? allSlugs
+    : [
+        ...(allSlugs?.translationSlugs ?? langSlugs ?? []),
+        ...(allSlugs?.currentSlug ? [allSlugs.currentSlug] : []),
+      ];
+  const slugs = formatToValidPrefixedIsoSlugs(slug, metadataSlugs);
   const alternates = generateAlternatesLinks(slug, locale, slugs);
   const modifiedDate = isDateAfter(publishDateTime, updatedAt)
     ? publishDateTime
