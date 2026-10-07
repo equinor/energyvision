@@ -15,7 +15,6 @@ const SATELLITES = [
   'germany',
   'japan',
   'poland',
-  'southkorea',
   'storage',
   'sponsorship',
   'stemgapet',
@@ -27,7 +26,6 @@ const NEWS = [
   'poland',
   'brazil',
   'germany',
-  'southkorea',
   'celticsea',
 ];
 const ARCHIVED_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV];
@@ -48,7 +46,7 @@ const PENSION_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV];
 const FANCY_MENU = [...GLOBAL_PROD, ...GLOBAL_DEV];
 const MAGAZINE = [...GLOBAL_PROD, ...GLOBAL_DEV, 'stemgapet'];
 /* Allows same slug for different languages */
-const SAME_SLUG = [...GLOBAL_DEV, 'japan', 'southkorea'];
+const SAME_SLUG = [...GLOBAL_DEV, 'japan'];
 const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV];
 
 const FETCH_OPTIMIZED = [...GLOBAL_PROD, ...SATELLITES, ...GLOBAL_DEV];
