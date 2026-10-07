@@ -6,7 +6,6 @@ import Cyprus from './Cyprus'
 import Germany from './Germany'
 import Japan from './Japan'
 import Poland from './Poland'
-import SouthKorea from './SouthKorea'
 
 const countries = {
   english: GreatBritain,
@@ -15,7 +14,6 @@ const countries = {
   japanese: Japan,
   german: Germany,
   polish: Poland,
-  korean: SouthKorea,
   welsh: Cyprus,
   'spanish-ar': Argentina,
 }

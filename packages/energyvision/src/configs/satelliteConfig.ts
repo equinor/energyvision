@@ -52,7 +52,6 @@ const languages = [
     name: 'ja_JP',
     locale: 'ja',
   },
-  { id: 'korean', title: 'Korean', iso: 'ko-KR', name: 'ko_KR', locale: 'ko' },
   { id: 'welsh', title: 'Welsh', iso: 'cy-CY', name: 'cy_CY', locale: 'cy' },
 ];
 
@@ -101,7 +100,6 @@ const datasets = {
   japan: ['english', 'japanese'],
   storage: ['english', 'german'],
   equinorfunds: ['norwegian'],
-  southkorea: ['english', 'korean'],
   celticsea: ['english', 'welsh'],
   sponsorship: ['norwegian', 'english'],
   stemgapet: ['norwegian', 'english'],
@@ -122,7 +120,6 @@ export type Dataset = (typeof datasets)[DatasetsKeys];
 export const defaultWebLanguage: Partial<Record<DatasetsKeys, string>> = {
   argentina: 'spanish-ar',
   storage: 'german',
-  southkorea: 'korean',
   japan: 'japanese',
   sponsorship: 'norwegian',
   stemgapet: 'norwegian',
@@ -167,10 +164,6 @@ const websiteDomains: Partial<
   japan: {
     url: 'https://www.equinor.jp',
     meta: 'equinor.jp',
-  },
-  southkorea: {
-    url: 'https://www.equinor.co.kr',
-    meta: 'equinor.co.kr',
   },
   celticsea: {
     url: 'https://www.equinorcelticsea.co.uk',

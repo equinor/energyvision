@@ -44,8 +44,8 @@ export const getDnsRedirect = (host: string, pathname: string) => {
     return `https://www.equinor.com${pathname}`
   }
 
-  if (dns === 'equinor.kr') {
-    return `https://www.equinor.co.kr${pathname}`
+  if (dns === 'equinor.kr' || dns === 'equinor.co.kr') {
+    return `https://www.equinor.com/where-we-are/south-korea`
   }
 
   const redirect =
