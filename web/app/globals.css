@@ -109,6 +109,24 @@
   grid-area: overlay;
 }
 
+.accordion-content-transition {
+  overflow: hidden;
+}
+
+.accordion-content-transition[data-state="open"] {
+  animation: slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+
+.accordion-content-transition[data-state="closed"] {
+  animation: slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-content-transition {
+    animation: none;
+  }
+}
+
 @theme inline {
   --spacing-page-content: --spacing(20);
   --spacing-innerColumn: calc(100vw - (--spacing(layout-lg) * 2));
