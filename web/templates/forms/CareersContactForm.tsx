@@ -75,6 +75,10 @@ const CareersContactForm = () => {
     if (category?.includes(suspectedRecruitmentScam))
       return 'b04a9748832d8610347af830feaad382';
     if (
+      category?.includes(intl('careers_contact_form_employment_verification'))
+    )
+      return 'a7afc4bddb692600ff6272dabf96197e';
+    if (
       candidateType?.includes(graduates) ||
       candidateType?.includes(interns) ||
       candidateType?.includes(apprentices)
@@ -256,6 +260,9 @@ const CareersContactForm = () => {
                         {intl('careers_contact_form_technical_issues')}
                       </option>
                       <option>{suspectedRecruitmentScam}</option>
+                      <option>
+                        {intl('careers_contact_form_employment_verification')}
+                      </option>
                     </Select>
                   )}
                 />
