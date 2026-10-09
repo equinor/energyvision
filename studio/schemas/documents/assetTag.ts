@@ -1,6 +1,6 @@
-import { EdsIcon } from '../../icons'
-import { tag } from '@equinor/eds-icons'
-import type { Rule } from 'sanity'
+import { tag } from '@equinor/eds-icons';
+import type { Rule } from 'sanity';
+import { EdsIcon } from '../../icons';
 
 export default {
   title: 'Asset tag',
@@ -25,7 +25,7 @@ export default {
         title: title,
         subtitle: 'Asset file tag',
         media: EdsIcon(tag),
-      }
+      };
     },
   },
-}
+};
