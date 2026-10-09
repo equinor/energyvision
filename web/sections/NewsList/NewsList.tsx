@@ -30,7 +30,7 @@ const NewsList = ({
   className?: string;
 }) => {
   const iso = useLocale();
-  const { title, articles } = data;
+  const { title, hideTitle, articles } = data;
   const { background } = designOptions || {};
   const { backgroundUtility } = background || {};
   const hitsPerPage =
@@ -54,7 +54,13 @@ const NewsList = ({
     >
       <div className="mx-auto max-w-content">
         <div className="px-layout-sm lg:px-layout-lg">
-          {title && <Blocks value={title} variant="h2" />}
+          {title && (
+            <Blocks
+              value={title}
+              variant="h2"
+              className={hideTitle ? 'sr-only' : undefined}
+            />
+          )}
         </div>
 
         <ul className="grid auto-rows-fr gap-x-6 gap-y-8 3xl:px-layout-md px-layout-sm sm:grid-cols-2 xl:grid-cols-3">
