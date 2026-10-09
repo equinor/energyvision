@@ -105,7 +105,7 @@ export default {
         'Select which tags should be used to generate the news list.',
       validation: (Rule: Rule) => Rule.required(),
     }, */
-  ],
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',
