@@ -1,10 +1,12 @@
 'use client';
 import dynamic from 'next/dynamic';
 import NextImage from 'next/image';
+import { useTranslations } from 'next-intl';
 import type { PortableTextBlock } from 'next-sanity';
 import { type HTMLProps, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import type Player from 'video.js/dist/types/player';
+import { CircularProgress } from '@/core/Progress/CircularProgress';
 import Blocks from '@/portableText/Blocks';
 import { resolveImage } from '@/sanity/lib/utils';
 import { type Image, mapSanityImageRatio } from '../Image/imageUtilities';
@@ -63,6 +65,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   className,
   containVideo,
 }) => {
+  const intl = useTranslations();
   const { url: posterUrl } = resolveImage({
     image: poster,
     grid: 'lg',
@@ -189,17 +192,29 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
           className="h-full w-full"
         />
         {posterUrl && !isVideoReady && (
-          <NextImage
-            src={posterUrl}
-            alt=""
-            fill
-            sizes="100vw"
-            loading="eager"
-            className={twMerge(
-              'pointer-events-none object-cover',
-              containVideo && 'object-contain',
-            )}
-          />
+          <>
+            <NextImage
+              src={posterUrl}
+              alt=""
+              fill
+              sizes="100vw"
+              loading="eager"
+              className={twMerge(
+                'pointer-events-none object-cover',
+                containVideo && 'object-contain',
+              )}
+            />
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+              <CircularProgress
+                variant="indeterminate"
+                type="progress"
+                aria-label={intl('loading')}
+                className="rounded-full bg-slate-blue-95/70 p-2 motion-reduce:animate-none"
+                trackClassName="stroke-white-100/30"
+                progressClassName="stroke-white-100 [stroke-dasharray:80_145]"
+              />
+            </div>
+          </>
         )}
       </div>
       {figureCaption && (
