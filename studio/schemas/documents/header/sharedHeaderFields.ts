@@ -5,17 +5,17 @@ import type {
   StringInputProps,
   StringSchemaType,
   ValidationContext,
-} from 'sanity'
-import { RoleFilteredSelect } from '@/schemas/components/RoleFilteredSelect/RoleFilteredSelect'
-import { Select } from '@/schemas/components/Select/Select'
+} from 'sanity';
+import { RoleFilteredSelect } from '@/schemas/components/RoleFilteredSelect/RoleFilteredSelect';
+import { Select } from '@/schemas/components/Select/Select';
 import {
   backgroundPosition as _backgroundPosition,
   layoutGrid as _layoutGrid,
-} from '@/schemas/objects/commonFields/commonFields'
-import { CompactBlockEditor } from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors'
-import type { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption'
-import singleItemArray from '../../objects/singleItemArray'
+} from '@/schemas/objects/commonFields/commonFields';
+import { CompactBlockEditor } from '../../components/CompactBlockEditor';
+import { configureBlockContent } from '../../editors';
+import type { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption';
+import singleItemArray from '../../objects/singleItemArray';
 
 export enum HeroTypes {
   DEFAULT = 'default',
@@ -26,11 +26,11 @@ export enum HeroTypes {
   BACKGROUND_IMAGE = 'backgroundImage',
 }
 
-type DocumentType = { parent: Hero; currentUser: CurrentUser }
+type DocumentType = { parent: Hero; currentUser: CurrentUser };
 type Hero = {
-  heroType?: HeroTypes
-  heroLoopingVideoRatio?: 'tall' | 'narrow' | '0.5'
-}
+  heroType?: HeroTypes;
+  heroLoopingVideoRatio?: 'tall' | 'narrow' | '0.5';
+};
 
 const title = {
   name: 'title',
@@ -42,9 +42,9 @@ const title = {
   of: [configureBlockContent({ variant: 'title' })],
   validation: (Rule: Rule) =>
     Rule.custom((value: string, ctx: ValidationContext) => {
-      return value ? true : 'Required'
+      return value ? true : 'Required';
     }),
-}
+};
 
 const heroType = {
   title: 'Type of hero',
@@ -76,14 +76,14 @@ const heroType = {
         title: 'Background image/color with title over',
         value: HeroTypes.BACKGROUND_IMAGE,
       },
-    ].filter(e => e),
+    ].filter((e) => e),
   },
   components: {
     input: (props: StringInputProps) =>
       RoleFilteredSelect(props, ['loopingVideo', 'noHero', 'backgroundImage']),
   },
   initialValue: 'default',
-}
+};
 
 const heroTitle = {
   name: 'heroTitle',
@@ -95,16 +95,16 @@ const heroTitle = {
   of: [configureBlockContent({ variant: 'title' })],
   fieldset: 'hero',
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
+    return parent?.heroType !== HeroTypes.FIFTY_FIFTY;
   },
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as unknown as DocumentType
+      const { parent } = context as unknown as DocumentType;
       if (parent?.heroType === HeroTypes.FIFTY_FIFTY && !value)
-        return 'Field is required'
-      return true
+        return 'Field is required';
+      return true;
     }),
-}
+};
 
 const heroRatio = {
   title: 'Hero image ratio',
@@ -118,22 +118,22 @@ const heroRatio = {
     ],
   },
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.FULL_WIDTH_IMAGE
+    return parent?.heroType !== HeroTypes.FULL_WIDTH_IMAGE;
   },
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as unknown as DocumentType
+      const { parent } = context as unknown as DocumentType;
       if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE) {
         if (!value) {
-          return 'Field is required'
+          return 'Field is required';
         }
       }
-      return true
+      return true;
     }),
   initialValue: 'narrow',
-}
+};
 
-const heroTypesWithIngress = [HeroTypes.FIFTY_FIFTY]
+const heroTypesWithIngress = [HeroTypes.FIFTY_FIFTY];
 
 const heroIngress = {
   title: 'Hero ingress',
@@ -143,9 +143,9 @@ const heroIngress = {
   of: [configureBlockContent({ variant: 'ingress' }), { type: 'thumbnail' }],
   hidden: ({ parent }: DocumentType) => {
     //@ts-expect-error: typing
-    return !heroTypesWithIngress.includes(parent?.heroType)
+    return !heroTypesWithIngress.includes(parent?.heroType);
   },
-}
+};
 
 const backgroundGradient = {
   title: 'Background Gradient',
@@ -165,13 +165,13 @@ const backgroundGradient = {
     input: (props: StringInputProps<StringSchemaType>) => Select(props),
   },
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE;
   },
-}
+};
 
 const backgroudPosition = _backgroundPosition(({ parent }: DocumentType) => {
-  return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
-}, 'hero')
+  return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE;
+}, 'hero');
 
 const heroLink = singleItemArray({
   name: 'heroLink',
@@ -184,9 +184,9 @@ const heroLink = singleItemArray({
       parent?.heroType !== HeroTypes.FIFTY_FIFTY ||
       (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle) ||
       (parent?.heroType === HeroTypes.FIFTY_FIFTY && !value)
-    )
+    );
   },
-})
+});
 
 const heroLinkV2 = {
   name: 'heroLinkV2',
@@ -198,9 +198,9 @@ const heroLinkV2 = {
     return (
       parent?.heroType !== HeroTypes.FIFTY_FIFTY ||
       (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle)
-    )
+    );
   },
-}
+};
 
 const background = {
   title: 'Hero background',
@@ -210,9 +210,9 @@ const background = {
   fieldset: 'hero',
   hidden: ({ parent }: DocumentType) => {
     //was discussed at some point with po : parent?.heroType === HeroTypes.DEFAULT && isAllowed(currentUser?.roles))
-    return !(parent?.heroType === HeroTypes.FIFTY_FIFTY)
+    return !(parent?.heroType === HeroTypes.FIFTY_FIFTY);
   },
-}
+};
 
 const heroImage = {
   title: 'Hero image',
@@ -223,7 +223,7 @@ const heroImage = {
     'Only used for SEO if hero type is No hero. Caption and credit is not shown for 50/50 Text and image.',
   validation: (Rule: Rule) =>
     Rule.custom((value: ImageWithAltAndCaption, context: ValidationContext) => {
-      const { parent } = context as unknown as DocumentType
+      const { parent } = context as unknown as DocumentType;
       //@ts-ignore:add _type?
       if (
         (parent?.heroType === HeroTypes.FIFTY_FIFTY ||
@@ -232,41 +232,45 @@ const heroImage = {
             parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE)) &&
         !value.image.asset
       )
-        return 'Field is required'
-      return true
+        return 'Field is required';
+      return true;
     }),
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType === HeroTypes.LOOPING_VIDEO
+    return parent?.heroType === HeroTypes.LOOPING_VIDEO;
   },
-}
+};
 
 const heroMobileImage = {
   title: 'Hero mobile image',
   name: 'heroMobileImage',
   type: 'imageWithAlt',
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE;
   },
   fieldset: 'hero',
-}
+};
 
 const heroLoopingVideo = {
   title: 'Video',
   name: 'heroLoopingVideo',
   type: 'reference',
   fieldset: 'hero',
-  to: [{ type: 'videoFile' }],
+  to: [{ type: 'videoFile' }, { type: 'assetFile' }],
+  options: {
+    filter:
+      '_type == "videoFile" || (_type == "assetFile" && asset.asset->extension == "mp4")',
+  },
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as unknown as DocumentType
+      const { parent } = context as unknown as DocumentType;
       if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value)
-        return 'Field is required'
-      return true
+        return 'Field is required';
+      return true;
     }),
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.LOOPING_VIDEO
+    return parent?.heroType !== HeroTypes.LOOPING_VIDEO;
   },
-}
+};
 
 const heroLoopingVideoRatio = {
   title: 'Video ratio',
@@ -282,16 +286,16 @@ const heroLoopingVideoRatio = {
     initialValue: 'narrow',
   },
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.LOOPING_VIDEO
+    return parent?.heroType !== HeroTypes.LOOPING_VIDEO;
   },
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as unknown as DocumentType
+      const { parent } = context as unknown as DocumentType;
       if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value)
-        return 'Field is required'
-      return true
+        return 'Field is required';
+      return true;
     }),
-}
+};
 
 const useCenterBlur = {
   title: 'Blur center',
@@ -300,15 +304,15 @@ const useCenterBlur = {
   fieldset: 'hero',
   description: 'Will blur center background behind text',
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE;
   },
-}
+};
 
 const herosWithDisplayTextTitle = [
   HeroTypes.BACKGROUND_IMAGE,
   HeroTypes.FIFTY_FIFTY,
   HeroTypes.FULL_WIDTH_IMAGE,
-]
+];
 const applyDisplayText = {
   title: 'Apply display text variant',
   name: 'displayTextVariant',
@@ -326,18 +330,18 @@ const applyDisplayText = {
   },
   hidden: ({ parent }: DocumentType) => {
     //@ts-ignore: typing
-    return !herosWithDisplayTextTitle.includes(parent?.heroType)
+    return !herosWithDisplayTextTitle.includes(parent?.heroType);
   },
-}
+};
 
 const layoutGrid = _layoutGrid(
   ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE;
   },
   'hero',
   'sm',
   'Optional. Select content column. Default is third outer.',
-)
+);
 
 const alignContentY = {
   title: 'Vertical content alignment',
@@ -354,9 +358,9 @@ const alignContentY = {
     ],
   },
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE;
   },
-}
+};
 
 const useBrandTheme = {
   title: 'Apply red brand text color',
@@ -366,9 +370,9 @@ const useBrandTheme = {
   description:
     'Ensure enough contrast between text and image.If no hero image set,background will be white',
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE;
   },
-}
+};
 
 const containVideo = {
   name: 'containVideo',
@@ -382,9 +386,9 @@ const containVideo = {
     return (
       parent?.heroType !== HeroTypes.LOOPING_VIDEO ||
       parent?.heroLoopingVideoRatio === '0.5'
-    )
+    );
   },
-}
+};
 
 export default [
   title,
@@ -407,4 +411,4 @@ export default [
   heroLoopingVideo,
   heroLoopingVideoRatio,
   containVideo,
-]
+];

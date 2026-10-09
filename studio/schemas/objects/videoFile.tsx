@@ -1,7 +1,7 @@
-import { play_circle } from '@equinor/eds-icons'
-import type { Reference, Rule } from 'sanity'
-import { EdsIcon } from '../../icons/edsIcons'
-import { ImageWithAlt } from './imageWithAlt'
+import { play_circle } from '@equinor/eds-icons';
+import type { Reference, Rule } from 'sanity';
+import { EdsIcon } from '../../icons/edsIcons';
+import type { ImageWithAlt } from './imageWithAlt';
 
 export default {
   type: 'document',
@@ -25,11 +25,15 @@ export default {
       name: 'thumbnail',
       type: 'imageWithAlt',
       title: 'Thumbnail',
-      description: 'Use the alt text below to describe the video content (for screenreaders).',
+      description:
+        'Use the alt text below to describe the video content (for screenreaders).',
       initialValue: {
         isDecorative: true,
       },
-      validation: (Rule: Rule) => Rule.custom((value: ImageWithAlt) => (!value.asset ? 'Image is required' : true)),
+      validation: (Rule: Rule) =>
+        Rule.custom((value: ImageWithAlt) =>
+          !value.asset ? 'Image is required' : true,
+        ),
     },
   ],
   preview: {
@@ -41,7 +45,7 @@ export default {
       return {
         title,
         media: image,
-      }
+      };
     },
   },
-}
+};

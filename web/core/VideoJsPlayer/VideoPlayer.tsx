@@ -1,7 +1,8 @@
 'use client';
 import dynamic from 'next/dynamic';
+import NextImage from 'next/image';
 import type { PortableTextBlock } from 'next-sanity';
-import { type HTMLProps, useRef } from 'react';
+import { type HTMLProps, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import type Player from 'video.js/dist/types/player';
 import Blocks from '@/portableText/Blocks';
@@ -71,15 +72,21 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     isLargerDisplays: true,
   });
   const playerRef = useRef<Player>(null);
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const useFill =
     !containVideo &&
     (useFillMode || aspectRatio === '10:3' || aspectRatio === '21:9');
+  const sourceType = new URL(src, 'https://localhost').pathname
+    .toLowerCase()
+    .endsWith('.mp4')
+    ? 'video/mp4'
+    : 'application/x-mpegURL';
 
   const videoJsOptions = {
     src: [
       {
         src: src,
-        type: 'application/x-mpegURL',
+        type: sourceType,
       },
     ],
     muted: muted ? 'muted' : false,
@@ -151,12 +158,13 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   const handlePlayerReady = (player: Player) => {
     playerRef.current = player;
-    // analytics here?
-    //console.log('player is ready')
-    // You can handle player events here, for example:
-    player.on('waiting', () => {
-      // console.log('player is waiting')
+    const markVideoReady = () => setIsVideoReady(true);
+    player.on('loadeddata', markVideoReady);
+    player.on('canplay', markVideoReady);
+    player.on('loadstart', () => {
+      if (autoPlay) setIsVideoReady(false);
     });
+    if (!autoPlay || player.readyState() >= 2) markVideoReady();
   };
 
   return (
@@ -167,15 +175,33 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
         figureClassName,
       )}
     >
-      <Video
-        //@ts-ignore: TODO
-        options={videoJsOptions}
-        onReady={handlePlayerReady}
-        useBrandTheme={useBrandTheme}
-        containVideo={containVideo}
-        variant={variant}
+      <div
         className={twMerge(aspectRatioClassName[aspectRatio], className)}
-      />
+        style={{ position: 'relative' }}
+      >
+        <Video
+          //@ts-ignore: TODO
+          options={videoJsOptions}
+          onReady={handlePlayerReady}
+          useBrandTheme={useBrandTheme}
+          containVideo={containVideo}
+          variant={variant}
+          className="h-full w-full"
+        />
+        {posterUrl && !isVideoReady && (
+          <NextImage
+            src={posterUrl}
+            alt=""
+            fill
+            sizes="100vw"
+            loading="eager"
+            className={twMerge(
+              'pointer-events-none object-cover',
+              containVideo && 'object-contain',
+            )}
+          />
+        )}
+      </div>
       {figureCaption && (
         <figcaption
           className={twMerge(
