@@ -500,6 +500,7 @@ _type == "keyNumbers" =>{
     "type": _type,
     "id": _key,
     "hitsPerPage": coalesce(hitsPerPage, 18),
+    hideTitle,
     title[]{
       ...,
       ${markDefs},
@@ -518,7 +519,7 @@ _type == "keyNumbers" =>{
       && count(coalesce(countryTags, selectedTags.countryTags, [])) == 0
       && count(coalesce(localNewsTags, selectedTags.localNewsTags, [])) == 0 =>
         *[(_type == "news" || _type == "localNews") && ${sameLang}]
-        | order(${publishDateTimeQuery} desc)[0...50]{
+        | order(${publishDateTimeQuery} desc){
           ${newsListArticleFields}
         },
       *[
