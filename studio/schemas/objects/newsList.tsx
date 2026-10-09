@@ -1,41 +1,17 @@
-import { list } from '@equinor/eds-icons'
-import { Box, Card, Stack, Text } from '@sanity/ui'
-import type { Rule } from 'sanity'
-import { EdsIcon } from '../../icons'
-import { defaultLanguage } from '../../languages'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
+import { Card, Text } from '@sanity/ui';
+import { LuNewspaper } from 'react-icons/lu';
+import type { PortableTextBlock, Reference, Rule } from 'sanity';
+import { Flags } from '@/src/lib/datasetHelpers';
+import blocksToText from '../../helpers/blocksToText';
+import { hideTitle, theme, title } from './commonFields/commonFields';
 
-// eslint-disable-next-line react/display-name
-const ComponentDescription = () => {
-  return (
-    <Card padding={4}>
-      <Box padding={[3, 3, 4, 5]} style={{ outline: '1px solid gray' }}>
-        <Stack space={[3, 3, 4, 5]}>
-          <Text align='center' size={[2, 2, 3, 4]}>
-            How to use
-          </Text>
-          <Text align='left' size={[1, 1, 2]}>
-            This component will automatically generate a list of news articles
-            based on the tags you select.
-          </Text>
-          <Text align='left' size={[1, 1, 2]}>
-            <span
-              role='img'
-              aria-label='warning icon'
-              style={{ marginRight: '5px' }}
-            >
-              ⚠️
-            </span>
-            Please note that there is no limit on this list: it will generate a
-            list of <strong>all</strong> articles that match the selected
-            tag(s).
-          </Text>
-        </Stack>
-      </Box>
-    </Card>
-  )
-}
+const NewsListDescription = () => (
+  <Card padding={1}>
+    <Text size={1}>
+      If no tags selected below, component will fetch all latest news
+    </Text>
+  </Card>
+);
 
 export default {
   title: 'News list',
@@ -52,84 +28,126 @@ export default {
     },
   ],
   fields: [
+    title,
+    hideTitle,
+    {
+      name: 'hitsPerPage',
+      title: 'Articles per page',
+      type: 'number',
+      fieldset: 'design',
+      initialValue: 18,
+      options: {
+        list: [
+          { title: '6', value: 6 },
+          { title: '12', value: 12 },
+          { title: '18', value: 18 },
+        ],
+        layout: 'dropdown',
+      },
+      validation: (Rule: Rule) => Rule.integer().valid([6, 12, 18]),
+    },
     {
       name: 'description',
       type: 'string',
+      readOnly: true,
       components: {
-        input: ComponentDescription,
+        input: NewsListDescription,
       },
     },
     {
-      name: 'title',
+      title: 'Topic tags',
+      name: 'tags',
       type: 'array',
-      title: 'Title',
-      description: 'The (optional) title/heading shown above the news list.',
-      components: {
-        input: CompactBlockEditor,
-      },
-      of: [configureBlockContent({ variant: 'title' })],
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'tag' }],
+          options: { disableNew: true },
+        },
+      ],
+      validation: (Rule: Rule) => Rule.unique(),
+      options: { sortable: false },
     },
     {
+      title: 'Country tags',
+      name: 'countryTags',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'countryTag' }],
+          options: { disableNew: true },
+        },
+      ],
+      validation: (Rule: Rule) => Rule.unique(),
+      options: { sortable: false },
+    },
+    Flags.HAS_LOCAL_NEWS && {
+      title: 'Local news tags',
+      name: 'localNewsTags',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'localNewsTag' }],
+          options: { disableNew: true },
+        },
+      ],
+      validation: (Rule: Rule) => Rule.unique(),
+      options: { sortable: false },
+    },
+    theme,
+    /*     {
       type: 'promoteNews',
       name: 'selectedTags',
       title: 'News tags',
       description:
         'Select which tags should be used to generate the news list.',
       validation: (Rule: Rule) => Rule.required(),
-    },
+    }, */
   ],
   preview: {
     select: {
-      newsTags1: `selectedTags.tags.0.title.${defaultLanguage.name}`,
-      newsTags2: `selectedTags.tags.1.title.${defaultLanguage.name}`,
-      newsTags3: `selectedTags.tags.2.title.${defaultLanguage.name}`,
-      countryTags1: `selectedTags.countryTags.0.title.${defaultLanguage.name}`,
-      countryTags2: `selectedTags.countryTags.1.title.${defaultLanguage.name}`,
-      countryTags3: `selectedTags.countryTags.2.title.${defaultLanguage.name}`,
-      localNewsTags1: `selectedTags.localNewsTags.0.${defaultLanguage.name}`,
-      localNewsTags2: `selectedTags.localNewsTags.1.${defaultLanguage.name}`,
-      localNewsTags3: `selectedTags.localNewsTags.2.${defaultLanguage.name}`,
+      title: 'title',
+      topicTagReferences: 'tags',
+      countryTagReferences: 'countryTags',
+      localNewsTagReferences: 'localNewsTags',
+      legacyTopicTagReferences: 'selectedTags.tags',
+      legacyCountryTagReferences: 'selectedTags.countryTags',
+      legacyLocalNewsTagReferences: 'selectedTags.localNewsTags',
     },
     prepare({
-      newsTags1,
-      newsTags2,
-      newsTags3,
-      countryTags1,
-      countryTags2,
-      countryTags3,
-      localNewsTags1,
-      localNewsTags2,
-      localNewsTags3,
+      title,
+      topicTagReferences,
+      countryTagReferences,
+      localNewsTagReferences,
+      legacyTopicTagReferences,
+      legacyCountryTagReferences,
+      legacyLocalNewsTagReferences,
     }: {
-      newsTags1?: string
-      newsTags2?: string
-      newsTags3?: string
-      countryTags1?: string
-      countryTags2?: string
-      countryTags3?: string
-      localNewsTags1?: string
-      localNewsTags2?: string
-      localNewsTags3?: string
+      title?: PortableTextBlock[];
+      topicTagReferences?: Reference[] | null;
+      countryTagReferences?: Reference[] | null;
+      localNewsTagReferences?: Reference[] | null;
+      legacyTopicTagReferences?: Reference[] | null;
+      legacyCountryTagReferences?: Reference[] | null;
+      legacyLocalNewsTagReferences?: Reference[] | null;
     }) {
-      const topicTags = [newsTags1, newsTags2, newsTags3].map(
-        tag => tag && `${tag} (topic)`,
-      )
-      const countryTags = [countryTags1, countryTags2, countryTags3].map(
-        tag => tag && `${tag} (country)`,
-      )
-      const localTags = [localNewsTags1, localNewsTags2, localNewsTags3].map(
-        tag => tag && `${tag} (local)`,
-      )
-
-      const tags = [...topicTags, ...countryTags, ...localTags].filter(Boolean)
-      const title =
-        tags.length > 0 ? `Tags: ${tags.join(', ')}` : 'No tags selected yet!'
+      const topicTagCount =
+        (topicTagReferences ?? legacyTopicTagReferences)?.length ?? 0;
+      const countryTagCount =
+        (countryTagReferences ?? legacyCountryTagReferences)?.length ?? 0;
+      const localNewsTagCount =
+        (localNewsTagReferences ?? legacyLocalNewsTagReferences)?.length ?? 0;
 
       return {
-        title: title,
-        subtitle: `News list component`,
-        media: <div>{EdsIcon(list)}</div>,
-      }
+        title: blocksToText(title),
+        subtitle:
+          topicTagCount + countryTagCount + localNewsTagCount === 0
+            ? 'Newslist | all tags'
+            : `Newslist | ${topicTagCount} topic | ${countryTagCount} country | ${localNewsTagCount} local news tags`,
+        media: LuNewspaper,
+      };
     },
   },
-}
+};

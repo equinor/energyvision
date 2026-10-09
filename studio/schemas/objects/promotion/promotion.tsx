@@ -1,73 +1,73 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
-import { calendar_event, contacts, library_books } from '@equinor/eds-icons'
+import { BsExclamationSquare } from 'react-icons/bs';
 import type {
   CustomValidatorResult,
   PortableTextBlock,
   Rule,
   ValidationError,
-} from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
-import { filterByRoute } from '../../../helpers/referenceFilters'
-import { EdsIcon } from '../../../icons'
-import { Flags } from '../../../src/lib/datasetHelpers'
-import type { ColorSelectorValue } from '../../components/ColorSelector'
-import { CompactBlockEditor } from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors'
-import routes from '../../routes'
-import type { MagazinePromotion } from './promoteMagazine'
-import type { TopicPromotion } from './promoteTopic'
+} from 'sanity';
+import blocksToText from '../../../helpers/blocksToText';
+import { filterByRoute } from '../../../helpers/referenceFilters';
+import { Flags } from '../../../src/lib/datasetHelpers';
+import type { ColorSelectorValue } from '../../components/ColorSelector';
+import { CompactBlockEditor } from '../../components/CompactBlockEditor';
+import { configureBlockContent } from '../../editors';
+import routes from '../../routes';
+import type { MagazinePromotion } from './promoteMagazine';
+import type { TopicPromotion } from './promoteTopic';
 
 const promotionLengthValidation = (
   context: Promotion,
 ): true | ValidationError => {
-  const { promotion } = context
-  const promo = promotion[0]
+  const { promotion } = context;
+  const promo = promotion[0];
   const numberOfItems =
     promo._type === 'promoteTopics'
       ? promo.references?.length
-      : promo.promotedArticles?.length
-  const MIN = 3
-  const MAX = 3
+      : promo.promotedArticles?.length;
+  const MIN = 3;
+  const MAX = 3;
 
   const validateNumber = (length: number): true | ValidationError => {
     if (length < MIN)
       // @ts-ignore
-      return { message: `Must have ${MIN} items`, paths: ['promotion'] }
+      return { message: `Must have ${MIN} items`, paths: ['promotion'] };
     if (length > MAX)
       // @ts-ignore
-      return { message: `Must have ${MIN} items`, paths: ['promotion'] }
+      return { message: `Must have ${MIN} items`, paths: ['promotion'] };
 
-    return true
-  }
+    return true;
+  };
 
   if (promo._type === 'promoteMagazine' && !promo.manuallySelectArticles)
-    return true
+    return true;
 
-  return validateNumber(numberOfItems)
-}
+  return validateNumber(numberOfItems);
+};
 
 export type Promotion = {
-  _type: 'promotion'
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  promotion: TopicPromotion | MagazinePromotion | any // @TODO: add other types
-  useHorizontalScroll: boolean
-  background?: ColorSelectorValue
-}
+  _type: 'promotion';
+  title?: PortableTextBlock[];
+  ingress?: PortableTextBlock[];
+  promotion: TopicPromotion | MagazinePromotion | any; // @TODO: add other types
+  useHorizontalScroll: boolean;
+  background?: ColorSelectorValue;
+};
 
 type PromotionType =
   | 'promoteTopics'
   | 'promoteNews'
   | 'promotePeople'
   | 'promoteEvents'
-  | 'promoteMagazine'
+  | 'promoteMagazine';
 
 export default {
   title: 'Promotion (Deprecated, use direct types)',
   description: 'Deprecated - Use direct promotion types instead',
   name: 'promotion',
   type: 'object',
+  icon: BsExclamationSquare,
   fieldsets: [
     {
       title: 'Design options',
@@ -85,13 +85,13 @@ export default {
         'promoteTopics',
         'promoteMagazine',
         'promoteNews',
-      ]
+      ];
 
       if (typesToValidate.includes(value.promotion[0]._type)) {
-        return promotionLengthValidation(value)
+        return promotionLengthValidation(value);
       }
 
-      return true
+      return true;
     }),
   fields: [
     {
@@ -125,7 +125,7 @@ export default {
           type: 'promoteMagazine',
           title: 'Promote magazine',
         },
-      ].filter(e => e),
+      ].filter((e) => e),
       options: { sortable: false },
     },
     {
@@ -159,7 +159,7 @@ export default {
       type: 'colorlist',
       fieldset: 'design',
     },
-  ].filter(e => e),
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',
@@ -169,45 +169,32 @@ export default {
       title = [],
       type,
     }: {
-      title: PortableTextBlock[]
-      type: PromotionType
+      title: PortableTextBlock[];
+      type: PromotionType;
     }) {
-      const plainTitle = title ? blocksToText(title) : undefined
+      const plainTitle = title ? blocksToText(title) : undefined;
 
       const getPromotionType = (type: PromotionType) => {
         if (type === 'promoteTopics') {
-          return 'Topic page promotion'
+          return 'Topic page';
         }
         if (type === 'promotePeople') {
-          return 'People promotion'
+          return 'People';
         }
         if (type === 'promoteEvents') {
-          return 'Events promotion'
+          return 'Events';
         }
         if (type === 'promoteMagazine') {
-          return 'Magazine promotion'
+          return 'Magazine';
         }
-        return 'News promotions'
-      }
-
-      const getPromotionIcon = (type: PromotionType) => {
-        if (type === 'promotePeople') {
-          return EdsIcon(contacts)
-        }
-        if (type === 'promoteEvents') {
-          return EdsIcon(calendar_event)
-        }
-        if (type === 'promoteMagazine') {
-          return EdsIcon(library_books)
-        }
-        return
-      }
+        return 'News';
+      };
 
       return {
         title: plainTitle,
-        subtitle: getPromotionType(type),
-        media: getPromotionIcon(type),
-      }
+        subtitle: `Deprecated - Change to direct ${getPromotionType(type)} promotion`,
+        media: BsExclamationSquare,
+      };
     },
   },
-}
+};

@@ -35,6 +35,20 @@ import {
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime';
 import { tabsComponentFields } from './tabsComponentFields';
 
+const newsListArticleFields = /* groq */ `
+  "type": _type,
+  "id": _id,
+  "updatedAt": ${lastUpdatedTimeQuery},
+  title,
+  heroImage,
+  "publishDateTime": ${publishDateTimeQuery},
+  "slug": slug.current,
+  ingress[]{
+    ...,
+    ${markDefs},
+  },
+`;
+
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
     ${keyNumbersFields}
@@ -485,47 +499,47 @@ _type == "keyNumbers" =>{
   _type == "newsList" => {
     "type": _type,
     "id": _key,
+    "hitsPerPage": coalesce(hitsPerPage, 18),
     title[]{
       ...,
       ${markDefs},
     },
-    "tags": selectedTags.tags[]->{
+    "tags": coalesce(tags, selectedTags.tags, [])[]->{
       "id": _id,
     },
-    "countryTags": selectedTags.countryTags[]->{
+    "countryTags": coalesce(countryTags, selectedTags.countryTags, [])[]->{
       "id": _id,
     },
-    "localNewsTags": selectedTags.localNewsTags[]->{
+    "localNewsTags": coalesce(localNewsTags, selectedTags.localNewsTags, [])[]->{
       "id": _id,
     },
-    "articles": *[
-      (_type == "news" || _type == "localNews")
-      && (
-        count(tags[_ref in ^.^.selectedTags.tags[]._ref]) > 0
-      ||
-        count(countryTags[_ref in ^.^.selectedTags.countryTags[]._ref]) > 0
-      ||
-        localNewsTag._ref in ^.selectedTags.localNewsTags[]._ref
-    )
-    && ${sameLang}
-    ] | order(${publishDateTimeQuery} desc){
-      "type": _type,
-      "id": _id,
-      "updatedAt":  ${lastUpdatedTimeQuery},
-      title,
-      heroImage,
-      "publishDateTime": ${publishDateTimeQuery},
-      "slug": slug.current,
-      ingress[]{
-        ...,
-        ${markDefs},
+    "articles": select(
+      count(coalesce(tags, selectedTags.tags, [])) == 0
+      && count(coalesce(countryTags, selectedTags.countryTags, [])) == 0
+      && count(coalesce(localNewsTags, selectedTags.localNewsTags, [])) == 0 =>
+        *[(_type == "news" || _type == "localNews") && ${sameLang}]
+        | order(${publishDateTimeQuery} desc)[0...50]{
+          ${newsListArticleFields}
+        },
+      *[
+        (_type == "news" || _type == "localNews")
+        && (
+          count(tags[_ref in coalesce(^.^.tags, ^.^.selectedTags.tags, [])[]._ref]) > 0
+        ||
+          count(countryTags[_ref in coalesce(^.^.countryTags, ^.^.selectedTags.countryTags, [])[]._ref]) > 0
+        ||
+          localNewsTag._ref in coalesce(^.localNewsTags, ^.selectedTags.localNewsTags, [])[]._ref
+        )
+        && ${sameLang}
+      ] | order(${publishDateTimeQuery} desc){
+        ${newsListArticleFields}
       },
-    },
+    ),
     "designOptions": {
         "background": {
-            "backgroundUtility": selectedTags.theme.theme.background.key,
+            "backgroundUtility": coalesce(theme, selectedTags.theme).theme.background.key,
         },
-        "foreground": selectedTags.theme.theme.foreground.key,
+        "foreground": coalesce(theme, selectedTags.theme).theme.foreground.key,
     }
   },
 
