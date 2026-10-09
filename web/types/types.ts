@@ -287,6 +287,8 @@ export type NewsListData = {
   id: string;
   type: string;
   title?: PortableTextBlock[];
+  hideTitle?: boolean;
+  hitsPerPage?: 6 | 12 | 18;
   articles: CardData[];
   tags?: [id: string];
   countryTags?: [id: string];
