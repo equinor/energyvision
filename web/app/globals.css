@@ -720,4 +720,53 @@ data-ui="checked active" class="data-checked:underline">
       );
     }
   }
+
+  .pen-circle-wrapper {
+    position: relative;
+    display: inline-block;
+    padding: 0.1em 0.3em;
+  }
+
+  .pen-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 150%;
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  .bubble-outline {
+    /* Make the inside match the paper color, and outline look like ink */
+    color: #fff;
+    -webkit-text-stroke: 4px #000;
+    paint-order: stroke fill;
+  }
+
+  .sketch-outline {
+    font-family: "Caveat", cursive;
+    font-size: 4rem;
+    color: #f4f4f4;
+
+    /* Primary clean stroke */
+    -webkit-text-stroke: 2px #0033aa; /* Classic blue pen color */
+    paint-order: stroke fill;
+
+    /* Multi-layered shadows simulate messy, manual tracing lines */
+    text-shadow:
+      2px 1px 0px rgba(0, 51, 170, 0.6),
+      -1px 2px 0px rgba(0, 51, 170, 0.4);
+  }
+  .pen-outline {
+    font-family:
+      "Permanent Marker", "Caveat", cursive; /* Use a handwriting font */
+    font-size: 4rem;
+    color: #ffffff; /* Inside color of the text */
+
+    /* The Outline Settings */
+    -webkit-text-stroke: 6px #1a1a1a; /* Width and color of the pen stroke */
+    paint-order: stroke fill; /* Pushes the stroke behind the text fill */
+  }
 }
