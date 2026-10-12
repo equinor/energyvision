@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import NextImage from 'next/image';
 import { useTranslations } from 'next-intl';
 import type { PortableTextBlock } from 'next-sanity';
-import { type HTMLProps, useRef, useState } from 'react';
+import { type HTMLProps, useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import type Player from 'video.js/dist/types/player';
 import { CircularProgress } from '@/core/Progress/CircularProgress';
@@ -43,6 +43,8 @@ export type VideoPlayerProps = Omit<
   /** Sets id on return element for anchors */
   id?: string;
   poster?: Image;
+  posterLoading?: 'lazy' | 'eager';
+  posterSizes?: string;
   /** For the aspect ratios that apply object cover, override to contain */
   containVideo?: boolean;
 };
@@ -62,6 +64,8 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   useBrandTheme = false,
   useFillMode = false,
   poster,
+  posterLoading = 'lazy',
+  posterSizes,
   className,
   containVideo,
 }) => {
@@ -75,7 +79,57 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     isLargerDisplays: true,
   });
   const playerRef = useRef<Player>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
+  const [posterWidth, setPosterWidth] = useState<number>();
+  const [shouldMountPlayer, setShouldMountPlayer] = useState(
+    posterLoading === 'eager',
+  );
+  const resolvedPosterSizes =
+    posterSizes ?? (posterWidth ? `${posterWidth}px` : undefined);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const updateWidth = () =>
+      setPosterWidth(Math.ceil(container.getBoundingClientRect().width));
+    updateWidth();
+
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', updateWidth);
+      return () => window.removeEventListener('resize', updateWidth);
+    }
+
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    if (
+      posterLoading === 'eager' ||
+      typeof IntersectionObserver === 'undefined'
+    ) {
+      setShouldMountPlayer(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldMountPlayer(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' },
+    );
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [posterLoading]);
   const useFill =
     !containVideo &&
     (useFillMode || aspectRatio === '10:3' || aspectRatio === '21:9');
@@ -161,13 +215,16 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   const handlePlayerReady = (player: Player) => {
     playerRef.current = player;
-    const markVideoReady = () => setIsVideoReady(true);
-    player.on('loadeddata', markVideoReady);
-    player.on('canplay', markVideoReady);
+    const hideLoadingOverlay = () => setIsVideoReady(true);
+    player.on('loadeddata', hideLoadingOverlay);
+    player.on('canplay', hideLoadingOverlay);
+    player.on('error', hideLoadingOverlay);
     player.on('loadstart', () => {
       if (autoPlay) setIsVideoReady(false);
     });
-    if (!autoPlay || player.readyState() >= 2) markVideoReady();
+    if (player.error() || !autoPlay || player.readyState() >= 2) {
+      hideLoadingOverlay();
+    }
   };
 
   return (
@@ -179,26 +236,29 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       )}
     >
       <div
+        ref={containerRef}
         className={twMerge(aspectRatioClassName[aspectRatio], className)}
         style={{ position: 'relative' }}
       >
-        <Video
-          //@ts-ignore: TODO
-          options={videoJsOptions}
-          onReady={handlePlayerReady}
-          useBrandTheme={useBrandTheme}
-          containVideo={containVideo}
-          variant={variant}
-          className="h-full w-full"
-        />
-        {posterUrl && !isVideoReady && (
+        {shouldMountPlayer && (
+          <Video
+            //@ts-ignore: TODO
+            options={videoJsOptions}
+            onReady={handlePlayerReady}
+            useBrandTheme={useBrandTheme}
+            containVideo={containVideo}
+            variant={variant}
+            className="h-full w-full"
+          />
+        )}
+        {posterUrl && !isVideoReady && resolvedPosterSizes && (
           <>
             <NextImage
               src={posterUrl}
               alt=""
               fill
-              sizes="100vw"
-              loading="eager"
+              sizes={resolvedPosterSizes}
+              loading={posterLoading}
               className={twMerge(
                 'pointer-events-none object-cover',
                 containVideo && 'object-contain',
