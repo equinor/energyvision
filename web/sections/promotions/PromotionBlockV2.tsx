@@ -1,43 +1,43 @@
-import type { PortableTextBlock } from '@portabletext/types'
-import { useLocale } from 'next-intl'
-import { forwardRef } from 'react'
-import { twMerge } from 'tailwind-merge'
+import type { PortableTextBlock } from '@portabletext/types';
+import { useLocale } from 'next-intl';
+import { forwardRef } from 'react';
+import { twMerge } from 'tailwind-merge';
 import {
   Promotion,
   type PromotionLayoutDirection,
   type PromotionVariant,
-} from '@/core/Promotion/Promotion'
+} from '@/core/Promotion/Promotion';
 import {
   type GridColumnVariant,
   getGridTemplateColumns,
   getLayoutPx,
-} from '@/lib/helpers/getCommonUtilities'
-import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref'
-import Blocks from '@/portableText/Blocks'
-import { getIsoFromName } from '@/sanity/helpers/localization'
+} from '@/lib/helpers/getCommonUtilities';
+import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref';
+import Blocks from '@/portableText/Blocks';
+import { getIsoFromName } from '@/sanity/helpers/localization';
 import {
   type ColorKeys,
   colorKeyToUtilityMap,
-} from '@/styles/colorKeyToUtilityMap'
-import type { LayoutGrid } from '@/types/designOptionsTypes'
+} from '@/styles/colorKeyToUtilityMap';
+import type { LayoutGrid } from '@/types/designOptionsTypes';
 
 export type PromotionBlockProps = {
-  title: PortableTextBlock[]
-  ingress: PortableTextBlock[]
+  title: PortableTextBlock[];
+  ingress: PortableTextBlock[];
   designOptions: {
     background?: {
-      backgroundUtility?: ColorKeys
-    }
-    foreground?: ColorKeys
-    layoutGrid?: LayoutGrid
-    gridColumns?: GridColumnVariant
-    layoutDirection?: PromotionLayoutDirection
-  }
-  promoteList?: any[]
-  id?: string
-  anchor?: string
-  className?: string
-}
+      backgroundUtility?: ColorKeys;
+    };
+    foreground?: ColorKeys;
+    layoutGrid?: LayoutGrid;
+    gridColumns?: GridColumnVariant;
+    layoutDirection?: PromotionLayoutDirection;
+  };
+  promoteList?: any[] | null;
+  id?: string;
+  anchor?: string;
+  className?: string;
+};
 
 const getVariantOnType = (type: string): PromotionVariant => {
   switch (type) {
@@ -45,18 +45,18 @@ const getVariantOnType = (type: string): PromotionVariant => {
     case 'externalLinkItem':
     case 'externalUrl':
     case 'link':
-      return 'externalLink'
+      return 'externalLink';
     default:
-      return 'default'
+      return 'default';
   }
-}
+};
 
 export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
   function PromotionBlockV2(
     {
       title,
       ingress,
-      promoteList = [],
+      promoteList: providedPromoteList,
       id,
       anchor,
       className = '',
@@ -64,28 +64,29 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
     },
     ref,
   ) {
-    const iso = useLocale()
+    const iso = useLocale();
+    const promoteList = providedPromoteList ?? [];
     const { background, foreground, layoutGrid, gridColumns, layoutDirection } =
-      designOptions
+      designOptions;
 
-    const { backgroundUtility } = background || {}
+    const { backgroundUtility } = background || {};
 
-    const px = getLayoutPx(layoutGrid ?? 'lg')
+    const px = getLayoutPx(layoutGrid ?? 'lg');
     let templateColumns =
-      promoteList?.length < 3 ? promoteList?.length.toString() : gridColumns
+      promoteList?.length < 3 ? promoteList?.length.toString() : gridColumns;
 
     if (layoutGrid === 'lg') {
       if (layoutDirection === 'row') {
-        templateColumns = '2'
+        templateColumns = '2';
       } else {
         templateColumns =
-          promoteList?.length < 3 ? promoteList?.length.toString() : '3'
+          promoteList?.length < 3 ? promoteList?.length.toString() : '3';
       }
     }
 
-    const cols = getGridTemplateColumns(templateColumns as GridColumnVariant)
+    const cols = getGridTemplateColumns(templateColumns as GridColumnVariant);
     const bg =
-      colorKeyToUtilityMap[backgroundUtility ?? 'white-100']?.background
+      colorKeyToUtilityMap[backgroundUtility ?? 'white-100']?.background;
 
     return (
       <section
@@ -93,32 +94,32 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
         id={anchor}
         className={twMerge(`${id ? 'scroll-mt-topbar' : ''} ${bg}`, className)}
       >
-        <div className='mx-auto max-w-content'>
+        <div className="mx-auto max-w-content">
           {title && (
             <Blocks
-              variant='h2'
+              variant="h2"
               value={title}
-              className='px-layout-sm lg:px-layout-lg'
+              className="px-layout-sm lg:px-layout-lg"
             />
           )}
-          <div className='flex flex-col gap-6'>
+          <div className="flex flex-col gap-6">
             {ingress && (
               <Blocks
-                variant='ingress'
+                variant="ingress"
                 value={ingress}
                 className={'px-layout-sm lg:px-layout-lg'}
               />
             )}
             <ul className={`${px} grid ${cols} auto-rows-fr gap-4`}>
               {promoteList.map((promotion: any) => {
-                const variant = getVariantOnType(promotion?.type)
+                const variant = getVariantOnType(promotion?.type);
                 const promotionIso = promotion?.link?.lang
                   ? getIsoFromName(promotion.link.lang)
-                  : iso
+                  : iso;
                 const href =
                   variant === 'default'
                     ? getLocalizedHref(promotion?.link?.slug, promotionIso)
-                    : promotion?.href
+                    : promotion?.href;
 
                 return (
                   <li key={promotion.id}>
@@ -133,12 +134,12 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
                       hasSectionTitle={!!title}
                     />
                   </li>
-                )
+                );
               })}
             </ul>
           </div>
         </div>
       </section>
-    )
+    );
   },
-)
+);

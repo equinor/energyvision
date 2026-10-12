@@ -1,4 +1,4 @@
-import { AddCircleIcon } from '@sanity/icons';
+import { AddCircleIcon } from '@sanity/icons/AddCircle';
 import { Button, Flex, Radio, Text } from '@sanity/ui';
 import { Tooltip } from '@sanity/ui/tooltip';
 import { customAlphabet } from 'nanoid';

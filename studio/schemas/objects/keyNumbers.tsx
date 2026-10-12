@@ -1,9 +1,9 @@
-import { NumberIcon } from '@sanity/icons'
-import type { PortableTextBlock, Rule } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import singleItemArray from './singleItemArray'
+import { NumberIcon } from '@sanity/icons/Number';
+import type { PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { configureBlockContent } from '../editors';
+import singleItemArray from './singleItemArray';
 
 export default {
   name: 'keyNumbers',
@@ -94,7 +94,7 @@ export default {
         title: blocksToText(selection.title),
         subtitle: `Showing ${selection.items.length} key numbers`,
         media: NumberIcon,
-      }
+      };
     },
   },
-}
+};

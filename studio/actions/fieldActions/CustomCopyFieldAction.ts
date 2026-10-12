@@ -1,4 +1,4 @@
-import { CopyIcon } from '@sanity/icons';
+import { CopyIcon } from '@sanity/icons/Copy';
 import { useToast } from '@sanity/ui/toast';
 import { useCallback } from 'react';
 import {

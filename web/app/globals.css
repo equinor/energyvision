@@ -181,10 +181,10 @@ data-ui="checked active" class="data-checked:underline">
 @custom-variant dark (&:is(.dark &):not(.light &));
 
 @utility envis-outline {
-  @apply outline-2 outline-offset-3 outline-norwegian-woods-100 outline-dashed;
+  @apply outline-2 outline-offset-2 outline-norwegian-woods-100 outline-dotted;
 }
 @utility envis-outline-invert {
-  @apply outline-2 outline-offset-3 outline-white-100 outline-dashed;
+  @apply outline-2 outline-offset-2 outline-white-100 outline-dotted;
 }
 @utility envis-outline-invert {
   word-break: "break-word";

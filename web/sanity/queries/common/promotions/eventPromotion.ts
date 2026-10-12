@@ -8,11 +8,11 @@ export const eventPromotionFields = /* groq */ `
     "startDayAndTime": content->startDayAndTime,
     "endDayAndTime": content->endDayAndTime,
     "ingress": content->ingress,
-    `
+    `;
 
 const tagFilter = /* groq */ `
   && count(content->eventTags[_ref in ^.^.tags[]._ref]) > 0
-`
+`;
 
 /* Unable to pass end time along with the date to sort. So using hard coded timestamp*/
 export const pastEventsQuery = (withTags = true): string => /* groq */ `
@@ -22,7 +22,7 @@ export const pastEventsQuery = (withTags = true): string => /* groq */ `
    // && coalesce(content->startDayAndTime.dayTime, (content->eventDate.date) + 'T00:00:00Z') < now()
     ${withTags ? tagFilter : ''} ]
     | order(coalesce(content->startDayAndTime.dayTime, (content->eventDate.date) + 'T00:00:00Z') desc)[0...50]
-`
+`;
 
 export const futureEventsQuery = (withTags = true): string => /* groq */ `
   *[_type match "route_" + $lang + "*"
@@ -30,5 +30,5 @@ export const futureEventsQuery = (withTags = true): string => /* groq */ `
     && content-> eventDate.date >= string::split(now(),"T")[0]
     //&& coalesce(content->startDayAndTime.dayTime, (content->eventDate.date) + 'T00:00:00Z') >= now()
     ${withTags ? tagFilter : ''}
-  ] | order( coalesce(content->startDayAndTime.dayTime, ((content->eventDate.date) + 'T00:00:00Z')) asc)
-`
+  ] | order( coalesce(content->startDayAndTime.dayTime, ((content->eventDate.date) + 'T'+content->eventDate.startTime+':00Z')) asc) // events are in CET by default, so ok to sort in utc
+`;
