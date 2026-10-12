@@ -29,12 +29,18 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(
       primary: 'accordion-content-transition',
       menu: `max-xl:overflow-hidden
     max-xl:data-closed:h-0
+    max-xl:data-closed:invisible
+    max-xl:data-open:[transition-delay:0s]
+    max-xl:[transition:visibility_0s_0.2s]
     max-xl:motion-safe:data-closed:animate-slideDown
     max-xl:motion-safe:data-open:animate-slideUp
 
     `,
       simpleMenu: `max-xl:overflow-hidden
     max-xl:data-closed:h-0
+    max-xl:data-closed:invisible
+    max-xl:data-open:[transition-delay:0s]
+    max-xl:[transition:visibility_0s_0.2s]
     max-xl:motion-safe:data-closed:animate-slideDown
     max-xl:motion-safe:data-open:animate-slideUp`,
     };

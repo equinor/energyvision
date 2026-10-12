@@ -11,7 +11,13 @@ export const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(function
   ref,
 ) {
   return (
-    <Accordion.Content variant={variant === 'simple' ? 'simpleMenu' : 'menu'} ref={ref} className={className} {...rest}>
+    <Accordion.Content
+      variant={variant === 'simple' ? 'simpleMenu' : 'menu'}
+      ref={ref}
+      className={className}
+      forceMount
+      {...rest}
+    >
       {children}
     </Accordion.Content>
   )
