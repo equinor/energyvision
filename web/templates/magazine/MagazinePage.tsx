@@ -60,9 +60,7 @@ const MagazinePage = ({
   const exploreTopicsTitle =
     !translatedExploreTopics ||
     translatedExploreTopics === 'magazine_explore_topics'
-      ? locale === 'nb-NO'
-        ? 'Utforsk temaene våre'
-        : 'Explore our topics'
+      ? 'Explore our topics'
       : translatedExploreTopics;
   const magazineTagLinkClassName =
     'focus-visible:envis-outline whitespace-nowrap rounded-full bg-moss-green-50 px-4 py-2 font-medium text-slate-80 text-sm no-underline hover:bg-moss-green-60 hover:text-slate-80 hover:underline focus:outline-hidden lg:text-xs';
