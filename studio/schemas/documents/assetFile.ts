@@ -8,7 +8,7 @@ import {
   microsoft_word,
 } from '@equinor/eds-icons';
 import { getExtension, getFileAsset } from '@sanity/asset-utils';
-import { Stack } from '@sanity/ui';
+import { Card, Stack, Text } from '@sanity/ui';
 import { createElement } from 'react';
 import { RiMovieLine } from 'react-icons/ri';
 import {
@@ -129,6 +129,18 @@ const AssetFileInput = (props: FileInputProps) => {
   );
 };
 
+const Mp4Description = () =>
+  createElement(
+    Card,
+    { padding: 3 },
+    createElement(
+      Text,
+      { size: 1 },
+      `When uploading a video please ensure its not longer than 15 seconds and not larger than 25MB. To reduce filesize ask for videos to be processed at 30fps with modern codecs (like H.264 or H.265). This can reduce the overall file size by roughly 30% to 50% (depending on your bitrate settings). 
+      Longer videos should be added to the Equinor YouTube channel. `,
+    ),
+  );
+
 export default {
   title: 'File',
   type: 'document',
@@ -191,6 +203,23 @@ export default {
             return 'Could not verify MP4 size or duration. Please retry in Studio or replace the file.';
           }
         }),
+    },
+    {
+      name: 'description',
+      title: 'Video requirements',
+      type: 'string',
+      readOnly: true,
+      components: {
+        input: Mp4Description,
+      },
+      hidden: ({
+        document,
+      }: {
+        document?: { asset?: { asset?: Reference } };
+      }) => {
+        const assetReference = document?.asset?.asset?._ref;
+        return !assetReference || getExtension(assetReference) !== 'mp4';
+      },
     },
     {
       name: 'thumbnail',
