@@ -5,7 +5,9 @@ const CACHE_KEY_PREFIX = 'next-cache:';
 const REVALIDATED_TAGS_KEY = `${CACHE_KEY_PREFIX}revalidated-tags`;
 const redisUrl = process.env.REDIS_URL;
 const localTagTimestamps = new Map();
-const isProduction = process.env.NODE_ENV === 'production';
+const shouldLog =
+  process.env.NODE_ENV === 'production' &&
+  process.env.NEXT_PUBLIC_SANITY_DATASET === 'global';
 let loggedMissingRedisUrl = false;
 let loggedRedisUnavailable = false;
 
@@ -18,7 +20,7 @@ function getCacheKeyId(cacheKey) {
 }
 
 function logCacheEvent(event, cacheKey, details = {}) {
-  if (!isProduction) return;
+  if (!shouldLog) return;
 
   console.info('[cache-handler]', event, {
     key: getCacheKeyId(cacheKey),
@@ -38,12 +40,13 @@ function getTagKey(tag) {
 }
 
 function logRedisError(error) {
+  if (!shouldLog) return;
   console.warn(`[cache-handler] Redis unavailable: ${error.message}`);
 }
 
 async function getClient() {
   if (!redisUrl) {
-    if (isProduction && !loggedMissingRedisUrl) {
+    if (shouldLog && !loggedMissingRedisUrl) {
       console.warn('[cache-handler] REDIS_URL is not configured');
       loggedMissingRedisUrl = true;
     }
@@ -70,7 +73,7 @@ async function getClient() {
     await connectPromise;
   }
 
-  if (isProduction && client.isOpen && loggedRedisUnavailable) {
+  if (shouldLog && client.isOpen && loggedRedisUnavailable) {
     console.info('[cache-handler] Redis connection restored');
     loggedRedisUnavailable = false;
   }
@@ -211,7 +214,7 @@ module.exports = {
       pipeline.set(getTagKey(tag), String(now));
       pipeline.sAdd(REVALIDATED_TAGS_KEY, tag);
       localTagTimestamps.set(tag, now);
-      console.log('Revalidating tag in redis:', tag);
+      if (shouldLog) console.log('Revalidating tag in redis:', tag);
     }
 
     try {
