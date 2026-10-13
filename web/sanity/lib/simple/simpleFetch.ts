@@ -11,7 +11,7 @@ export const simpleClientFetch: DefinedFetchType = async ({
 }) => {
   'use cache: remote';
   cacheLife('max');
-  console.log('Fetching with optimized fetch:', tags);
+  //console.log('Fetching with optimized fetch:', tags);
   cacheTag(...tags);
   const { result, resultSourceMap } = await simpleClient.fetch(
     query,
@@ -36,7 +36,7 @@ export const simpleClientMetadataFetch: DefinedFetchType = async ({
 }) => {
   'use cache: remote';
   cacheLife('max');
-  console.log('Fetching Meta with optimized fetch:', tags);
+  //console.log('Fetching Meta with optimized fetch:', tags);
   cacheTag(...tags);
   const { result, resultSourceMap } = await simpleClient.fetch(
     query,

@@ -147,6 +147,9 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
     dark:text-white-100
     pt-3
     no-underline
+    focus:outline-none
+    focus-visible:envis-outline
+    dark:focus-visible:envis-outline-invert
     ${variantClassName[variant]}`;
 
     const linkElement = (

@@ -84,11 +84,19 @@ Related files: `package.json`, `eslint.config.js`, `biome.json`, `tsconfig.json`
 - Avoid disabling lint rules unless necessary; if you must, comment why.
 
 # Packages, import and export Conventions
+All dependencies must comply with with the cooldown period, minimumReleaseAge, specified in pnpm-workspace.yaml. Exceptions must be explicitly documented and approved by the team, and any deviations must be justified with a clear technical rationale.
+Packages that requires post-installation steps must be explicitly documented and approved by the team and added to allowBuilds in pnpm-workspace.yaml.
+
 - **No Barrel Files:** Never import from index.ts/index.tsx files.
 - **Direct Imports:** Always import directly from the specific source file (e.g., `import { Button } from './core/Button/Button'`).
 - **Pathing:** Avoid using directory-level exports to ensure clear dependency paths.
 - Keep props stable; prefer additive changes. Deprecate before removal when possible.
 - Ensure tree-shakeability; avoid side effects at module top-level.
+
+## Dependency Major Upgrades
+- When a major version upgrade is requested, always search for and list breaking changes first.
+- Flag deprecated methods, changed default behaviors, or renamed configuration properties.
+- Propose explicit code refactoring steps before altering package manifest files.
 
 
 ## Building and deployment

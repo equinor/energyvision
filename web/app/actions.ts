@@ -1,15 +1,15 @@
-'use server'
+'use server';
 
-import type { SyncTag } from '@sanity/client'
-import { refresh, updateTag } from 'next/cache'
+import { refresh, updateTag } from 'next/cache';
+import type { SyncTag } from 'next-sanity';
 
 export async function updateTags(tags: SyncTag[]) {
   for (const tag of tags) {
-    updateTag(tag)
+    updateTag(tag);
   }
-  console.log(`<SanityLive /> updated tags: ${tags.join(', ')}`)
+  console.log(`<SanityLive /> updated tags: ${tags.join(', ')}`);
 }
 
 export async function liveRefresh() {
-  refresh()
+  refresh();
 }
