@@ -60,7 +60,7 @@ const usePlayEvent = (
   allowAnalytics: boolean,
 ) => {
   useEffect(() => {
-    if (!player) return;
+    if (!player || player.isDisposed()) return;
     const handlePlay = () => {
       if (allowAnalytics) {
         pushEvent(GTM_PLAY_EVENT, player);
@@ -79,7 +79,7 @@ const usePauseEvent = (
   allowAnalytics: boolean,
 ) => {
   useEffect(() => {
-    if (!player) return;
+    if (!player || player.isDisposed()) return;
     const handlePause = () => {
       const isVideoEnded = player.remainingTime() <= 0;
       if (!isVideoEnded && allowAnalytics) {
@@ -99,7 +99,7 @@ const useCompletionEvent = (
   allowAnalytics: boolean,
 ) => {
   useEffect(() => {
-    if (!player) return;
+    if (!player || player.isDisposed()) return;
     const handleCompletion = () => {
       if (allowAnalytics) {
         pushEvent(GTM_COMPLETION_EVENT, player);
@@ -122,7 +122,7 @@ const useVideoProgressEvent = (
   const intervalDuration = 1000; // Check every second
 
   useEffect(() => {
-    if (!player || !allowAnalytics) return;
+    if (!player || player.isDisposed() || !allowAnalytics) return;
     const intervalId = setInterval(() => {
       const duration = player.duration();
       if (
