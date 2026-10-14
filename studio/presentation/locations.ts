@@ -1,21 +1,21 @@
-import { map } from 'rxjs'
-import { getDraftId } from 'sanity'
-import type { DocumentLocationResolver } from 'sanity/presentation'
-import blocksToText from '@/helpers/blocksToText'
-import { capitalizeFirstLetter } from '@/helpers/formatters'
-import { defaultLanguage, defaultWebLang } from '@/languages'
-import { getIdFromName, getLocaleFromName } from '../src/lib/localization'
+import { map } from 'rxjs';
+import { getDraftId } from 'sanity';
+import type { DocumentLocationResolver } from 'sanity/presentation';
+import blocksToText from '@/helpers/blocksToText';
+import { capitalizeFirstLetter } from '@/helpers/formatters';
+import { defaultLanguage, defaultWebLang } from '@/languages';
+import { getIdFromName, getLocaleFromName } from '../src/lib/localization';
 
 export const locations: DocumentLocationResolver = (params, context) => {
-  let query = null
-  const routePages = ['page', 'event']
+  let query = null;
+  const routePages = ['page', 'event'];
   const pagesWithSlugOnThem = [
     'news',
     'magazine',
     'newsroom',
     'magazineIndex',
     'localNews',
-  ]
+  ];
 
   if (params.type === 'homePage') {
     query = {
@@ -36,7 +36,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
       }
       `,
       listen: `*[_id in [$id,$draftId]]`,
-    }
+    };
   } else if (routePages?.includes(params.type)) {
     query = {
       fetch: `*[_id==$id][0]{
@@ -51,7 +51,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
       }
       `,
       listen: `*[_id in [$id,$draftId]]`,
-    }
+    };
   } else if (pagesWithSlugOnThem?.includes(params.type)) {
     //pages with slugs on them
     query = {
@@ -65,7 +65,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
       ...}
       `,
       listen: `*[_id in [$id,$draftId]]`,
-    }
+    };
   }
 
   if (query) {
@@ -75,23 +75,23 @@ export const locations: DocumentLocationResolver = (params, context) => {
       publishedId: params.id.replace(/^drafts\./, ''),
       //default language here because we want the language setup for studio, not web
       defaultLang: defaultLanguage?.name,
-    }
+    };
 
     const doc$ = context.documentStore.listenQuery(
       query,
       //@ts-ignore
       pageParams,
       { perspective: 'drafts' }, // returns a draft article if it exists
-    )
+    );
 
     // Return a streaming list of locations
     return doc$.pipe(
-      map(doc => {
+      map((doc) => {
         // If the document doesn't exist or have a slug, return null
         if (!doc || (doc?._type === 'homePage' && !doc?.isActive)) {
-          return null
+          return null;
         }
-        let locs = []
+        let locs = [];
         if (routePages?.includes(params.type)) {
           if (
             doc?.translationSlugs?.filter(
@@ -99,80 +99,82 @@ export const locations: DocumentLocationResolver = (params, context) => {
             )?.length > 0
           ) {
             locs = doc?.translationSlugs
-              ?.filter(
-                (translation: any) =>
-                  translation?.slug && doc?.lang === translation?.lang,
-              )
+              ?.filter((translation: any) => doc?.lang === translation?.lang)
               ?.map((translation: any) => {
-                const locale = getLocaleFromName(translation?.lang)
-                return {
-                  title: `${blocksToText(translation?.title)}`,
-                  href: `${translation?.lang !== defaultWebLang?.name ? `${locale}` : ''}${translation?.slug}`,
-                }
-              })
+                const locale = getLocaleFromName(translation?.lang);
+                return translation?.slug
+                  ? {
+                      title: `${blocksToText(translation?.title)}`,
+                      href: `${translation?.lang !== defaultWebLang?.name ? `${locale}` : ''}${translation?.slug}`,
+                    }
+                  : {
+                      title: `${doc?.title ? blocksToText(doc?.title) : 'Untitled'}`,
+                      href: `/preview/${doc?._id}`,
+                    };
+              });
           } else if (doc?.slugs?.filter((slug: string) => slug)?.length > 0) {
             locs = doc?.slugs
               ?.filter((slug: string) => slug)
               ?.map((slug: string) => {
-                const locale = getLocaleFromName(doc?.lang)
+                const locale = getLocaleFromName(doc?.lang);
                 return {
                   title: `${blocksToText(doc?.title)}`,
                   href: `${doc?.lang !== defaultWebLang?.name ? `${locale}` : ''}${slug}`,
-                }
-              })
+                };
+              });
           } else {
             locs = [
               {
                 title: `${doc?.title ? blocksToText(doc?.title) : 'Untitled'}`,
                 href: `/preview/${doc?._id}`,
               },
-            ]
+            ];
           }
         } else if (doc?._type === 'homePage' && doc?.isActive) {
           if (!doc?.translationSlugs || doc?.translationSlugs?.length === 0) {
             const localeId = capitalizeFirstLetter(
               getIdFromName(defaultWebLang?.name),
-            )
+            );
             locs = [
               {
                 title: `${localeId} homepage`,
                 href: `/`,
               },
-            ]
+            ];
           }
           if (doc?.translationSlugs?.length > 0) {
             locs = doc?.translationSlugs
               ?.filter((item: any) => item?.lang === doc?.lang)
               ?.map((item: any) => {
-                const itemLocale = getLocaleFromName(item?.lang)
+                const itemLocale = getLocaleFromName(item?.lang);
                 const localeId = capitalizeFirstLetter(
                   getIdFromName(item?.lang),
-                )
+                );
                 return {
                   title: `${localeId} homepage`,
                   href: `${item?.lang !== defaultWebLang?.name ? `/${itemLocale}` : '/'}`,
-                }
-              })
+                };
+              });
           }
         } else if (pagesWithSlugOnThem?.includes(params.type)) {
-          const locale = getLocaleFromName(doc?.lang)
+          const locale = getLocaleFromName(doc?.lang);
           const plainTitle = Array.isArray(doc.title)
             ? blocksToText(doc.title)
-            : doc.title
+            : doc.title;
 
           locs = [
             {
               title: doc.title ? plainTitle : 'Untitled',
               href: `${doc?.lang !== defaultWebLang?.name ? `${locale}` : ''}${doc?.slug?.current}`,
             },
-          ]
+          ];
         }
 
         return {
           locations: locs ?? [],
-        }
+        };
       }),
-    )
+    );
   }
-  return null
-}
+  return null;
+};
