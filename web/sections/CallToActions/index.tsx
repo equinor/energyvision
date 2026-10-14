@@ -42,7 +42,7 @@ const CallToActions = ({
         }}
         {...(link?.lang && { hrefLang: getIsoFromName(link?.lang) })}
         href={url}
-        type={anchorReference ? 'anchorLink' : type}
+        type={type === 'internalUrl' && anchorReference ? 'anchorLink' : type}
         variant="fit"
       >
         {plainLabel}
@@ -80,7 +80,11 @@ const CallToActions = ({
                     hrefLang: getIsoFromName(link?.lang),
                   })}
                   href={url}
-                  type={anchorReference ? 'anchorLink' : type}
+                  type={
+                    type === 'internalUrl' && anchorReference
+                      ? 'anchorLink'
+                      : type
+                  }
                   variant={linkVariant ? linkVariant : 'default'}
                 >
                   {`${plainLabel}`}

@@ -1,5 +1,8 @@
 const linkFunction = /* groq */ `
-fn links::getLinkFields($link) = $link{
+fn links::getLinkFields($link) = select(
+  $link._type == "pageAnchor"
+    && (!defined($link.anchorId) || $link.anchorId == "") => null,
+  $link{
   "id":_key,
   "type": select(
     _type == "pageAnchor" => "anchorLink",
@@ -18,6 +21,7 @@ fn links::getLinkFields($link) = $link{
   }),
   "href": select(_type == "pageAnchor" => "#" + anchorId, href),
   "someType": someType
-};
+  }
+);
 `;
 export default linkFunction;
