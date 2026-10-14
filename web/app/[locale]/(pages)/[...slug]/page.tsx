@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
 import { stegaClean } from 'next-sanity';
-import { Suspense } from 'react';
+import { Fragment, Suspense } from 'react';
 import { decodeSlugs } from '@/lib/helpers/getFullUrl';
 import { Flags } from '@/sanity/helpers/datasetHelpers';
 import { getNameFromIso } from '@/sanity/helpers/localization';
@@ -162,9 +162,9 @@ async function CachedContent({
     }
   };
   return (
-    <>
+    <Fragment key={`${locale}:/${Array.isArray(slug) ? slug.join('/') : slug}`}>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
       <article>{getTemplate()}</article>
-    </>
+    </Fragment>
   );
 }
