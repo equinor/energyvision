@@ -1,16 +1,16 @@
-import { toPlainText } from 'next-sanity'
-import ResourceLink from '@/core/Link/ResourceLink'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import { twMerge } from '@/lib/twMerge/twMerge'
-import { getIsoFromName } from '../../sanity/helpers/localization'
-import type { LinkData } from '../../types/index'
+import { toPlainText } from 'next-sanity';
+import ResourceLink from '@/core/Link/ResourceLink';
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction';
+import { twMerge } from '@/lib/twMerge/twMerge';
+import { getIsoFromName } from '../../sanity/helpers/localization';
+import type { LinkData } from '../../types/index';
 
 type CallToActionsProps = {
-  callToActions: LinkData[]
-  splitList?: boolean
-  className?: string
-  linkVariant?: 'default' | 'fit'
-}
+  callToActions: LinkData[];
+  splitList?: boolean;
+  className?: string;
+  linkVariant?: 'default' | 'fit';
+};
 
 const CallToActions = ({
   callToActions = [],
@@ -18,20 +18,20 @@ const CallToActions = ({
   linkVariant,
   className,
 }: CallToActionsProps) => {
-  if (!callToActions) return null
+  if (!callToActions) return null;
 
   const getSingleAction = () => {
-    const { label, type, link, file } = callToActions[0]
-    const plainLabel = Array.isArray(label) ? toPlainText(label) : label
-    const url = getUrlFromAction(callToActions[0])
+    const { label, type, link, file, anchorReference } = callToActions[0];
+    const plainLabel = Array.isArray(label) ? toPlainText(label) : label;
+    const url = getUrlFromAction(callToActions[0]);
     if (
       !url &&
       !(type === 'downloadableFile' || type === 'downloadableImage')
     ) {
       console.warn(
         `CallToActions: Missing URL on Call to action link with type: '${type}' and label: '${label}'`,
-      )
-      return null
+      );
+      return null;
     }
 
     return (
@@ -42,13 +42,13 @@ const CallToActions = ({
         }}
         {...(link?.lang && { hrefLang: getIsoFromName(link?.lang) })}
         href={url}
-        type={type}
-        variant='fit'
+        type={anchorReference ? 'anchorLink' : type}
+        variant="fit"
       >
         {plainLabel}
       </ResourceLink>
-    )
-  }
+    );
+  };
 
   return (
     <div className={twMerge('pt-8', className)}>
@@ -61,9 +61,12 @@ const CallToActions = ({
           )}
         >
           {callToActions.map((callToAction: LinkData) => {
-            const url = getUrlFromAction(callToAction)
-            const { id, label, type, link, file } = callToAction
-            const plainLabel = Array.isArray(label) ? toPlainText(label) : label
+            const url = getUrlFromAction(callToAction);
+            const { id, label, type, link, file, anchorReference } =
+              callToAction;
+            const plainLabel = Array.isArray(label)
+              ? toPlainText(label)
+              : label;
 
             return url ? (
               <li key={id}>
@@ -77,18 +80,18 @@ const CallToActions = ({
                     hrefLang: getIsoFromName(link?.lang),
                   })}
                   href={url}
-                  type={type}
+                  type={anchorReference ? 'anchorLink' : type}
                   variant={linkVariant ? linkVariant : 'default'}
                 >
                   {`${plainLabel}`}
                 </ResourceLink>
               </li>
-            ) : null
+            ) : null;
           })}
         </ul>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default CallToActions
+export default CallToActions;
