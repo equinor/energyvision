@@ -1,7 +1,7 @@
-import { heroFields } from '../../common/heroFields'
-import markDefs from '../blockEditorMarks'
-import { sameLang } from './../langAndDrafts'
-import { publishDateTimeQuery } from '../publishDateTime'
+import { heroFields } from '../../common/heroFields';
+import markDefs from '../blockEditorMarks';
+import { notDraft, sameLang } from './../langAndDrafts';
+import { publishDateTimeQuery } from '../publishDateTime';
 
 const promotedMagazineFields = /* groq */ `
   "id": _id,
@@ -26,7 +26,7 @@ const promotedMagazineFields = /* groq */ `
   openGraphImage,
   "heroType": coalesce(heroType, 'default'),
   "hero": ${heroFields},
-`
+`;
 
 export default /* groq */ `
   "id": _key,
@@ -41,13 +41,14 @@ export default /* groq */ `
       _type == "magazine"
       && (count(magazineTags[_ref in ^.^.tags[]._ref]) > 0)
       && ${sameLang}
+      && ${notDraft}
     ] | order(${publishDateTimeQuery} desc)[0...3]{
       ${promotedMagazineFields}
     }
   },
   manuallySelectArticles => {
-    "promotions": promotedArticles[]->{
+    "promotions": promotedArticles[]->[${notDraft}]{
       ${promotedMagazineFields}
     }
   },
-`
+`;
