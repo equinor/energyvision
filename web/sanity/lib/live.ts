@@ -62,12 +62,13 @@ export async function getDynamicFetchOptions(searchParams: {
   [key: string]: string | string[] | undefined;
 }): Promise<DynamicFetchOptions> {
   const { isEnabled: isDraftMode } = await draftMode();
+
   if (!isDraftMode) {
     return { perspective: 'published', stega: false };
   }
-  const studioPerspective = searchParams
-    ? (searchParams['sanity-preview-perspective'] as LivePerspective | 'drafts')
-    : 'drafts';
+  const studioPerspective = (searchParams['sanity-preview-perspective'] ??
+    'drafts') as LivePerspective | 'drafts';
+
   // if draft mode is enabled resolve the perspective from the url '
   return { perspective: studioPerspective, stega: true };
 }
