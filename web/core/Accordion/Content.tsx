@@ -69,8 +69,10 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(
 
         default:
           return (
-            <div className="mb-6 ml-2.5 flex flex-col gap-6 border-slate-80 border-l border-dashed pt-0 pr-4 pb-6 pl-7 dark:border-white-100">
-              {children}
+            <div className="min-h-0 overflow-hidden">
+              <div className="mb-6 ml-2.5 flex flex-col gap-6 border-slate-80 border-l border-dashed pt-0 pr-4 pb-6 pl-7 dark:border-white-100">
+                {children}
+              </div>
             </div>
           );
       }
