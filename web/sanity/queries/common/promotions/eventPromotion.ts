@@ -1,3 +1,5 @@
+import { notDraft } from '../langAndDrafts';
+
 export const eventPromotionFields = /* groq */ `
     "type": "events",
     "id": _id,
@@ -17,6 +19,7 @@ const tagFilter = /* groq */ `
 /* Unable to pass end time along with the date to sort. So using hard coded timestamp*/
 export const pastEventsQuery = (withTags = true): string => /* groq */ `
     *[_type match "route_" + $lang + "*"
+    && ${notDraft}
     && content->_type == "event"
     && (content->eventDate.date)  < string::split(now(),"T")[0]
    // && coalesce(content->startDayAndTime.dayTime, (content->eventDate.date) + 'T00:00:00Z') < now()
@@ -26,6 +29,7 @@ export const pastEventsQuery = (withTags = true): string => /* groq */ `
 
 export const futureEventsQuery = (withTags = true): string => /* groq */ `
   *[_type match "route_" + $lang + "*"
+    && ${notDraft}
     && content->_type == "event"
     && content-> eventDate.date >= string::split(now(),"T")[0]
     //&& coalesce(content->startDayAndTime.dayTime, (content->eventDate.date) + 'T00:00:00Z') >= now()

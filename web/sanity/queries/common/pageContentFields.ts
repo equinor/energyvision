@@ -13,7 +13,7 @@ import markDefs from './blockEditorMarks';
 import homepageContentFields from './homepageContentFields';
 import { imageCarouselFields } from './imageCarouselFields';
 import { keyNumbersFields } from './keyNumbersFields';
-import { sameLang } from './langAndDrafts';
+import { notDraft, sameLang } from './langAndDrafts';
 import {
   eventPromotion,
   magazinePromotion,
@@ -337,17 +337,40 @@ _type == "keyNumbers" =>{
           "id": _id,
           _type,
         },
-        "promotions": *[
-          (_type == "news" || _type == "localNews")
-          && (
-            count(tags[_ref in ^.^.tags[]._ref]) > 0
-            ||
-            count(countryTags[_ref in ^.^.countryTags[]._ref]) > 0
-            ||
-            localNewsTag._ref in ^.localNewsTags[]._ref
-          )
-          && ${sameLang}
-        ] | order(${publishDateTimeQuery} desc)[0...3]{
+        "promotions": select(
+          count(coalesce(tags, [])) == 0
+          && count(coalesce(countryTags, [])) == 0
+          && count(coalesce(localNewsTags, [])) == 0 =>
+          *[(_type == "news" || _type == "localNews")
+            && ${sameLang}
+            && ${notDraft}
+          ] | order(${publishDateTimeQuery} desc)[0...3]{
+            "type": _type,
+            "id": _id,
+            "updatedAt":  ${lastUpdatedTimeQuery},
+            title,
+            heroImage,
+            "publishDateTime": ${publishDateTimeQuery},
+            "link": {
+              "slug": slug.current,
+              "type":"internalUrl",
+              "lang": lang,
+            },
+            ingress[]{
+              ...,
+              ${markDefs},
+            },
+          },
+          *[
+            (_type == "news" || _type == "localNews")
+            && (
+              count(tags[_ref in ^.^.tags[]._ref]) > 0
+              || count(countryTags[_ref in ^.^.countryTags[]._ref]) > 0
+              || localNewsTag._ref in ^.localNewsTags[]._ref
+            )
+            && ${sameLang}
+            && ${notDraft}
+          ] | order(${publishDateTimeQuery} desc)[0...3]{
           "type": _type,
           "id": _id,
           "updatedAt":  ${lastUpdatedTimeQuery},
@@ -364,10 +387,14 @@ _type == "keyNumbers" =>{
             ...,
             ${markDefs},
           },
-        },
+          }
+          )
       },
       _type == "promoteTopics" => {
-        "promotions": references[0...3]{
+        "promotions": references[
+          !((reference->_id) in path("drafts.**"))
+          && !((reference->_originalId) in path("drafts.**"))
+        ][0...3]{
          "id": _key,
          "type": _type,
           ingress[]{
@@ -463,7 +490,7 @@ _type == "keyNumbers" =>{
           },
         },
         manuallySelectEvents => {
-          "promotions": promotedEvents[]->{
+          "promotions": promotedEvents[]->[${notDraft}]{
             ${eventPromotionFields}
           },
         },
@@ -518,7 +545,7 @@ _type == "keyNumbers" =>{
       count(coalesce(tags, selectedTags.tags, [])) == 0
       && count(coalesce(countryTags, selectedTags.countryTags, [])) == 0
       && count(coalesce(localNewsTags, selectedTags.localNewsTags, [])) == 0 =>
-        *[(_type == "news" || _type == "localNews") && ${sameLang}]
+        *[(_type == "news" || _type == "localNews") && ${sameLang} && ${notDraft}]
         | order(${publishDateTimeQuery} desc){
           ${newsListArticleFields}
         },
@@ -532,6 +559,7 @@ _type == "keyNumbers" =>{
           localNewsTag._ref in coalesce(^.localNewsTags, ^.selectedTags.localNewsTags, [])[]._ref
         )
         && ${sameLang}
+        && ${notDraft}
       ] | order(${publishDateTimeQuery} desc){
         ${newsListArticleFields}
       },
