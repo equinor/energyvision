@@ -23,7 +23,7 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(
     { variant = 'primary', children, className = '', ...rest },
     ref,
   ) {
-    const useComplex = useMediaQuery(`(min-width: 1300px)`);
+    const useComplex = useMediaQuery(`(min-width: 1280px)`);
 
     const variantClassName: Partial<Record<Variants, string>> = {
       primary: 'accordion-content-transition',
