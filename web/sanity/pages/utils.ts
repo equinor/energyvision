@@ -278,6 +278,17 @@ export async function getPage(params: Params) {
     pageData = data;
   }
 
+  console.info('[getPage] Navigation diagnostic', {
+    requestedSlug: Array.isArray(slug)
+      ? `/${slug.join('/')}`
+      : `/${slug ?? ''}`,
+    locale,
+    perspective,
+    returnedSlug: pageData?.slug,
+    returnedDocumentId: pageData?._id ?? pageData?.id,
+    template: pageData?.template,
+  });
+
   let magazineArticles = null;
   if (pageData?.template === 'magazineIndex') {
     const { data: articles } = await fetch({
