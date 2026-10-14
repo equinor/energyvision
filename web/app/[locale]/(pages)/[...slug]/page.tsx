@@ -162,7 +162,7 @@ async function CachedContent({
     }
   };
   return (
-    <Fragment key={`${locale}:/${Array.isArray(slug) ? slug.join('/') : slug}`}>
+    <Fragment key={`${locale}:/${Array.isArray(slug) ? slug.join('/') : slug}:${JSON.stringify(searchParams)}`}>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
       <article>{getTemplate()}</article>
     </Fragment>
