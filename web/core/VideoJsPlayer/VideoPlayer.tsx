@@ -81,6 +81,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const playerRef = useRef<Player>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
+  const [hasVideoError, setHasVideoError] = useState(false);
   const [posterWidth, setPosterWidth] = useState<number>();
   const [shouldMountPlayer, setShouldMountPlayer] = useState(
     posterLoading === 'eager',
@@ -216,13 +217,20 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const handlePlayerReady = (player: Player) => {
     playerRef.current = player;
     const hideLoadingOverlay = () => setIsVideoReady(true);
+    const handleError = () => setHasVideoError(true);
     player.on('loadeddata', hideLoadingOverlay);
     player.on('canplay', hideLoadingOverlay);
-    player.on('error', hideLoadingOverlay);
+    player.on('error', handleError);
+    player.on('playing', () => {
+      setHasVideoError(false);
+      hideLoadingOverlay();
+    });
     player.on('loadstart', () => {
       if (autoPlay) setIsVideoReady(false);
     });
-    if (player.error() || !autoPlay || player.readyState() >= 2) {
+    if (player.error()) {
+      handleError();
+    } else if (!autoPlay || player.readyState() >= 2) {
       hideLoadingOverlay();
     }
   };
@@ -251,31 +259,35 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
             className="h-full w-full"
           />
         )}
-        {posterUrl && !isVideoReady && resolvedPosterSizes && (
-          <>
-            <NextImage
-              src={posterUrl}
-              alt=""
-              fill
-              sizes={resolvedPosterSizes}
-              loading={posterLoading}
-              className={twMerge(
-                'pointer-events-none object-cover',
-                containVideo && 'object-contain',
-              )}
-            />
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-              <CircularProgress
-                variant="indeterminate"
-                type="progress"
-                aria-label={intl('loading')}
-                className="rounded-full bg-slate-blue-95/70 p-2 motion-reduce:animate-none"
-                trackClassName="stroke-white-100/30"
-                progressClassName="stroke-white-100 [stroke-dasharray:80_145]"
+        {posterUrl &&
+          (!isVideoReady || hasVideoError) &&
+          resolvedPosterSizes && (
+            <>
+              <NextImage
+                src={posterUrl}
+                alt=""
+                fill
+                sizes={resolvedPosterSizes}
+                loading={posterLoading}
+                className={twMerge(
+                  'pointer-events-none object-cover',
+                  containVideo && 'object-contain',
+                )}
               />
-            </div>
-          </>
-        )}
+              {!hasVideoError && (
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                  <CircularProgress
+                    variant="indeterminate"
+                    type="progress"
+                    aria-label={intl('loading')}
+                    className="rounded-full bg-slate-blue-95/70 p-2 motion-reduce:animate-none"
+                    trackClassName="stroke-white-100/30"
+                    progressClassName="stroke-white-100 [stroke-dasharray:80_145]"
+                  />
+                </div>
+              )}
+            </>
+          )}
       </div>
       {figureCaption && (
         <figcaption

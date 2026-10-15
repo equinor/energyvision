@@ -12,7 +12,6 @@ import { Card, Stack, Text } from '@sanity/ui';
 import { createElement } from 'react';
 import { RiMovieLine } from 'react-icons/ri';
 import {
-  type File,
   type FileInputProps,
   type Reference,
   type Rule,
@@ -21,46 +20,6 @@ import {
 import { EdsIcon } from '../../icons';
 import { apiVersion } from '../../sanity.client';
 import HLSPlayer from '../components/HLSPlayer';
-
-const MAX_MP4_SIZE_BYTES = 25_000_000;
-const MAX_MP4_DURATION_SECONDS = 15;
-const MP4_METADATA_TIMEOUT_MS = 10_000;
-
-const getMp4Duration = (url: string): Promise<number> =>
-  new Promise((resolve, reject) => {
-    if (typeof document === 'undefined') {
-      reject(new Error('Video metadata requires a browser'));
-      return;
-    }
-
-    const video = document.createElement('video');
-    const cleanup = () => {
-      clearTimeout(timeout);
-      video.onloadedmetadata = null;
-      video.onerror = null;
-      video.removeAttribute('src');
-      video.load();
-    };
-    const fail = () => {
-      cleanup();
-      reject(new Error('Unable to read video metadata'));
-    };
-    const timeout = setTimeout(fail, MP4_METADATA_TIMEOUT_MS);
-
-    video.preload = 'metadata';
-    video.onloadedmetadata = () => {
-      const duration = video.duration;
-      cleanup();
-      if (Number.isFinite(duration) && duration >= 0) {
-        resolve(duration);
-      } else {
-        reject(new Error('Invalid video duration'));
-      }
-    };
-    video.onerror = fail;
-    video.src = url;
-    video.load();
-  });
 
 export const fileIcon = (extension: string) => {
   switch (extension) {
@@ -167,42 +126,6 @@ export default {
       components: {
         input: AssetFileInput,
       },
-      validation: (Rule: Rule) =>
-        Rule.custom(async (value: File | undefined, context) => {
-          const assetReference = value?.asset?._ref;
-          if (!assetReference || getExtension(assetReference) !== 'mp4') {
-            return true;
-          }
-
-          try {
-            const asset = await context.getClient({ apiVersion }).fetch<{
-              size: number;
-              url: string;
-            } | null>(
-              /* groq */ `*[_id == $id && _type == "sanity.fileAsset"][0]{size, url}`,
-              { id: assetReference },
-            );
-
-            if (
-              !asset ||
-              !Number.isFinite(asset.size) ||
-              asset.size < 0 ||
-              !asset.url
-            ) {
-              return 'Could not verify MP4 file metadata. Please retry or replace the file.';
-            }
-            if (asset.size > MAX_MP4_SIZE_BYTES) {
-              return 'MP4 files must be 25 MB or smaller.';
-            }
-
-            const duration = await getMp4Duration(asset.url);
-            return duration > MAX_MP4_DURATION_SECONDS
-              ? 'MP4 videos must be 15 seconds or shorter.'
-              : true;
-          } catch {
-            return 'Could not verify MP4 size or duration. Please retry in Studio or replace the file.';
-          }
-        }),
     },
     {
       name: 'description',
