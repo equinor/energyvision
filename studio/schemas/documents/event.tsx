@@ -1,15 +1,8 @@
 import { calendar_event, image } from '@equinor/eds-icons';
-import {
-  defineField,
-  type PortableTextBlock,
-  type Rule,
-  type ValidationContext,
-} from 'sanity';
-import { formatDate } from '@/helpers/formatDate';
+import type { PortableTextBlock, Rule, ValidationContext } from 'sanity';
 import blocksToText from '../../helpers/blocksToText';
 import { EdsIcon } from '../../icons';
 import { CompactBlockEditor } from '../components/CompactBlockEditor';
-import { SyncEndDayTimeInput } from '../components/SyncEndDayTimeInput';
 import { configureBlockContent } from '../editors';
 import basicIframe from '../objects/basicIframe';
 import type { EventDate } from '../objects/eventDate';
@@ -32,12 +25,6 @@ const validateRelatedLinksTitle = (
   }
 
   return true;
-};
-
-export type EventDayAndTime = {
-  _type: 'eventDayAndTime';
-  dayTime: Date;
-  overrideTimeLabel?: string;
 };
 
 export default {
@@ -84,73 +71,9 @@ export default {
     },
     {
       title: 'Date information',
-      description:
-        'The date field is deprecated, and will eventually be removed. Please use the "Event start" and "Event end" fields instead.',
       name: 'eventDate',
       type: 'eventDate',
     },
-    /*     defineField({
-      type: 'object',
-      name: 'startDayAndTime',
-      title: 'Event start',
-      fields: [
-        {
-          title: 'Datetime',
-          description: 'See below to ignore or override time',
-          name: 'dayTime',
-          type: 'datetime',
-          options: {
-            // Enforces a specific timezone in Sanity Studio
-            displayTimeZone: 'Europe/Oslo',
-            // Optional: Set to false to prevent users from switching back to local browser time
-            allowTimeZoneSwitch: false,
-            dateFormat: 'DD-MM-YYYY',
-            timeFormat: 'HH:mm',
-            timeStep: 15,
-          },
-        },
-        {
-          name: 'overrideTimeLabel',
-          title: 'Time label',
-          description:
-            'Optional if you want to override the default "To be announced" when no date is set, or write "-" if you hide time completely',
-          type: 'string',
-        },
-      ],
-    }),
-    defineField({
-      type: 'object',
-      name: 'endDayAndTime',
-      title: 'Event end',
-      description: 'Optional. Will update with same date as start if set',
-      fields: [
-        {
-          title: 'Datetime',
-          description: 'See below to ignore or override time',
-          name: 'dayTime',
-          type: 'datetime',
-          options: {
-            // Enforces a specific timezone in Sanity Studio
-            displayTimeZone: 'Europe/Oslo',
-            // Optional: Set to false to prevent users from switching back to local browser time
-            allowTimeZoneSwitch: false,
-            dateFormat: 'DD-MM-YYYY',
-            timeFormat: 'HH:mm',
-            timeStep: 15,
-          },
-          components: {
-            input: SyncEndDayTimeInput,
-          },
-        },
-        {
-          name: 'overrideTimeLabel',
-          title: 'Time label',
-          description:
-            'Optional if you want to override the default "To be announced" when no date is set, or write "-" if you hide time completely',
-          type: 'string',
-        },
-      ],
-    }), */
     {
       title: 'Event tags',
       name: 'eventTags',
@@ -237,21 +160,15 @@ export default {
     select: {
       title: 'title',
       date: 'eventDate',
-      startDayTime: 'startDayAndTime.dayTime',
     },
     prepare({
       title,
       date,
-      startDayTime,
     }: {
       title?: PortableTextBlock[];
       date?: EventDate;
-      startDayTime?: string;
     }) {
       let eventDate = 'No date set';
-      if (startDayTime) {
-        eventDate = formatDate(startDayTime);
-      }
       if (date?.date) {
         eventDate = date.date;
       }
