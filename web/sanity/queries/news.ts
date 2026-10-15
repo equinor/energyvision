@@ -1,22 +1,22 @@
-import { Flags } from '../helpers/datasetHelpers'
-import { functions } from './common/functions'
-import { sameLang } from './common/langAndDrafts'
+import { Flags } from '../helpers/datasetHelpers';
+import { functions } from './common/functions';
+import { notDraft, sameLang } from './common/langAndDrafts';
 import {
   contentForNewsQuery,
   iframeForNewsQuery,
   ingressForNewsQuery,
   relatedLinksForNewsQuery,
-} from './common/newsSubqueries'
+} from './common/newsSubqueries';
 import {
   lastUpdatedTimeQuery,
   publishDateTimeQuery,
-} from './common/publishDateTime'
-import { inlineSlugsQuery } from './metaData'
+} from './common/publishDateTime';
+import { inlineSlugsQuery } from './metaData';
 
 export const excludeCrudeOilAssays =
   Flags.IS_DEV || Flags.IS_GLOBAL_PROD
     ? /* groq */ `!('crude-oil-assays' in tags[]->key.current) &&`
-    : ''
+    : '';
 
 const latestNewsFields = /* groq */ `
   "id": _id,
@@ -28,7 +28,7 @@ const latestNewsFields = /* groq */ `
   "publishDateTime": ${publishDateTimeQuery},
   "slug": slug.current,
   "iframe": ${iframeForNewsQuery},
-`
+`;
 
 export const newsQuery = /* groq */ `
   ${functions}
@@ -54,11 +54,12 @@ export const newsQuery = /* groq */ `
       slug.current != $slug &&
       heroImage.image.asset != null &&
       ${excludeCrudeOilAssays}
-      ${sameLang}] | order(${publishDateTimeQuery} desc)[0...3] {
+      ${sameLang}
+      && ${notDraft}] | order(${publishDateTimeQuery} desc)[0...3] {
         ${latestNewsFields}
       }
   }[0]
-`
+`;
 
 export const newsPromotionQuery = /* groq */ `
   *[(_type == "news" || _type == "localNews")
@@ -68,8 +69,15 @@ export const newsPromotionQuery = /* groq */ `
       count(countryTags[_ref in $countryTags[].id]) > 0
       ||
       localNewsTag._ref in $localNewsTags[].id
+      ||
+      (
+        count(coalesce($tags, [])) == 0
+        && count(coalesce($countryTags, [])) == 0
+        && count(coalesce($localNewsTags, [])) == 0
+      )
     )
-    && ${sameLang})
+    && ${sameLang}
+    && ${notDraft})
   ] | order(${publishDateTimeQuery} desc)[0...3]{
     "type": _type,
     "id": _id,
@@ -80,4 +88,4 @@ export const newsPromotionQuery = /* groq */ `
     "slug": slug.current,
     ${ingressForNewsQuery},
   }
-`
+`;
