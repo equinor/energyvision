@@ -18,11 +18,20 @@ const commonPromotionFields = /* groq */ `
 export const promotionsV2 = /* groq */ `
 ${commonPromotionFields},
 "promoteList": promoteList[
-        (linkSelector.link[0]._type != "reference"
+                (
+                    (linkSelector.link[0]._type != "reference"
             && linkSelector.link[0]._type != "referenceToOtherLanguage")
-        || (
+                    || (
             !((linkSelector.link[0]->_id) in path("drafts.**"))
             && !((linkSelector.link[0]->_originalId) in path("drafts.**"))
+                    )
+                )
+                && (
+                    linkSelector.link[0]._type != "pageAnchor"
+                    || (
+                        defined(linkSelector.link[0].anchorId)
+                        && linkSelector.link[0].anchorId != ""
+                    )
         )
 ]{
     "id": _key,

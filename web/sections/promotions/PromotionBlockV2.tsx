@@ -13,6 +13,7 @@ import {
   getLayoutPx,
 } from '@/lib/helpers/getCommonUtilities';
 import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref';
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction';
 import Blocks from '@/portableText/Blocks';
 import { getIsoFromName } from '@/sanity/helpers/localization';
 import {
@@ -117,9 +118,11 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
                   ? getIsoFromName(promotion.link.lang)
                   : iso;
                 const href =
-                  variant === 'default'
-                    ? getLocalizedHref(promotion?.link?.slug, promotionIso)
-                    : promotion?.href;
+                  promotion?.type === 'anchorLink'
+                    ? getUrlFromAction(promotion)
+                    : variant === 'default'
+                      ? getLocalizedHref(promotion?.link?.slug, promotionIso)
+                      : promotion?.href;
 
                 return (
                   <li key={promotion.id}>
