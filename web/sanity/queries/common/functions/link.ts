@@ -1,7 +1,14 @@
 const linkFunction = /* groq */ `
-fn links::getLinkFields($link) = $link{
+fn links::getLinkFields($link) = select(
+  $link._type == "pageAnchor"
+    && (!defined($link.anchorId) || $link.anchorId == "") => null,
+  $link{
   "id":_key,
-  "type": select( _type == "link" || _type == "socialMediaLink" => "externalUrl" , "internalUrl"),
+  "type": select(
+    _type == "pageAnchor" => "anchorLink",
+    _type == "link" || _type == "socialMediaLink" => "externalUrl",
+    "internalUrl"
+  ),
   "link": select(
     _type == "homePageLink" => { "slug": "/", "lang": homePageLanguage},
     _type == "personListUrl" => @->{ "slug": personListUrl },
@@ -12,8 +19,9 @@ fn links::getLinkFields($link) = $link{
     lang
   ),
   }),
-  "href": href,
+  "href": select(_type == "pageAnchor" => "#" + anchorId, href),
   "someType": someType
-};
-`
-export default linkFunction
+  }
+);
+`;
+export default linkFunction;
