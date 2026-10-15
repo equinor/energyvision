@@ -1,5 +1,5 @@
-import { sanityFetch } from '@/sanity/lib/live'
-import { externalRedirects, redirects } from '@/sanity/queries/redirects'
+import { sanityFetch } from '@/sanity/lib/live';
+import { externalRedirects, redirects } from '@/sanity/queries/redirects';
 
 export const getRedirectUrl = async (slug: string, locale: string) => {
   const { data }: { data: any } = await sanityFetch({
@@ -8,9 +8,9 @@ export const getRedirectUrl = async (slug: string, locale: string) => {
       slug: slug,
       slugWithLocale: `/${locale}${slug}`,
     },
-  })
-  return data
-}
+  });
+  return data;
+};
 
 export const getExternalRedirectUrl = async (slug: string, locale: string) => {
   const { data }: { data: any } = await sanityFetch({
@@ -19,9 +19,9 @@ export const getExternalRedirectUrl = async (slug: string, locale: string) => {
       slug: slug,
       slugWithLocale: `/${locale}${slug}`,
     },
-  })
-  return data
-}
+  });
+  return data;
+};
 
 export const getWWWRedirect = (
   requestLocale: string,
@@ -29,31 +29,31 @@ export const getWWWRedirect = (
   pathname: string,
 ): string | undefined => {
   if (!host.includes('www')) {
-    return `https://www.${host}/${requestLocale}${pathname}`
+    return `https://www.${host}/${requestLocale}${pathname}`;
   }
-  return undefined
-}
+  return undefined;
+};
 
 export const getDnsRedirect = (host: string, pathname: string) => {
   const dns = host
     .replace('http://', '')
     .replace('https://', '')
-    .replace('www.', '')
+    .replace('www.', '');
 
   if (dns === 'statoil.com') {
-    return `https://www.equinor.com${pathname}`
+    return `https://www.equinor.com${pathname}`;
   }
 
   if (dns === 'equinor.kr' || dns === 'equinor.co.kr') {
-    return `https://www.equinor.com/where-we-are/south-korea`
+    return `https://www.equinor.com/where-we-are/south-korea`;
   }
 
   const redirect =
-    dnsRedirects.find(redirect => redirect.from === dns + pathname) ||
-    dnsRedirects.find(redirect => redirect.from === dns)
+    dnsRedirects.find((redirect) => redirect.from === dns + pathname) ||
+    dnsRedirects.find((redirect) => redirect.from === dns);
 
-  return redirect && `https://www.equinor.com${redirect.to}`
-}
+  return redirect && `https://www.equinor.com${redirect.to}`;
+};
 
 const dnsRedirects = [
   {
@@ -116,12 +116,12 @@ const dnsRedirects = [
     from: 'eu2nsea.eu',
     to: '/energy/eu2nsea',
   },
-  {
-    from: 'morgendagenshelter.no',
-    to: '/no/om-oss/sponsing-og-stotte',
-  },
+  // {
+  //   from: 'morgendagenshelter.no',
+  //   to: '/no/om-oss/sponsing-og-stotte',
+  // },
   {
     from: 'data.equinor.com',
     to: '/energy/data-sharing',
   },
-]
+];
