@@ -9,6 +9,13 @@
   height: 100px;
 }
 
+[data-testid='pt-editor']
+  [data-testid='text-block__text'][data-list-item='bullet']
+  [data-list-prefix]
+  > span {
+  top: 0.1875em;
+}
+
 .no-box-shadow {
   box-shadow: none !important;
 }
