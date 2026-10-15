@@ -1,8 +1,5 @@
 const linkFunction = /* groq */ `
-fn links::getLinkFields($link) = select(
-  $link._type == "pageAnchor"
-    && (!defined($link.anchorId) || $link.anchorId == "") => null,
-  $link{
+fn links::getLinkFields($link) = $link{
   "id":_key,
   "type": select(
     _type == "pageAnchor" => "anchorLink",
