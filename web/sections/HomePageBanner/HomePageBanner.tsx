@@ -164,7 +164,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
                   <li key={id} className="m-1">
                     <BaseLink
                       className={twMerge(
-                        `min-w-65 max-w-[400px] ${foreground} group flex h-full flex-col gap-2 rounded-md px-4 py-6 shadow-card active:shadow-card-interact`,
+                        `min-w-65 max-w-[400px] ${foreground} group group/link flex h-full flex-col gap-2 rounded-md px-4 py-6 shadow-card active:shadow-card-interact`,
                         useWhiteTitle && 'focus-visible:outline-white-100',
                       )}
                       type={link?.type}
