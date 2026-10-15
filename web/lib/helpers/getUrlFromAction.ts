@@ -25,7 +25,7 @@ export const getUrlFromAction = ({
   }
 
   if (type === 'anchorLink') {
-    return href && href !== '#' ? href + anchor : undefined;
+    return href && href !== '#' ? href : anchor ? anchor : undefined;
   }
 
   if (!href && type !== 'downloadableFile' && type !== 'downloadableImage') {
