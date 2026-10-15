@@ -19,9 +19,14 @@ fn links::getLinkFields($link) = select(
     lang
   ),
   }),
-  "href": select(_type == "pageAnchor" => "#" + anchorId, href),
+  "href": select(
+    _type == "pageAnchor" => select(
+      defined(anchorId) && anchorId != "" => "#" + anchorId,
+      null
+    ),
+    href
+  ),
   "someType": someType
-  }
-);
+};
 `;
 export default linkFunction;
