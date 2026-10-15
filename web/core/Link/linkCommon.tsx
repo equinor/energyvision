@@ -22,7 +22,7 @@ export const getArrowAnimation = (type: LinkType) => {
     case 'icsLink':
       return 'translate-y-0.5';
     case 'externalUrl':
-      return 'translate-y-0.5 group-hover/link:-translate-y-0.5';
+      return 'translate-y-0.5 group-hover/link:translate-x-1 group-hover/link:-translate-y-0.5';
     default:
       return 'translate-y-0.5 group-hover/link:translate-x-2';
   }
