@@ -1,8 +1,8 @@
-import { play_circle_outlined } from '@equinor/eds-icons'
-import { EdsIcon, FileIcon, LibraryIcon, TagMoreIcon } from '../../../../icons'
-import { AssetExtensionFilters } from './AssetExtensionFilters'
-import { AssetTagFilters } from './AssetTagFilters'
-import { UnusedAssetFilters } from './UnusedAssetFilters'
+import { play_circle_outlined } from '@equinor/eds-icons';
+import { EdsIcon, FileIcon, LibraryIcon, TagMoreIcon } from '../../../../icons';
+import { AssetExtensionFilters } from './AssetExtensionFilters';
+import { AssetTagFilters } from './AssetTagFilters';
+import { UnusedAssetFilters } from './UnusedAssetFilters';
 
 const assetLibraryItems = (S, context) =>
   [
@@ -17,18 +17,34 @@ const assetLibraryItems = (S, context) =>
     S.listItem()
       .title('Manage file tags')
       .icon(TagMoreIcon)
-      .child(S.documentTypeList('assetTag').id('manageAssetTags').title('Manage asset tags')),
+      .child(
+        S.documentTypeList('assetTag')
+          .id('manageAssetTags')
+          .title('Manage asset tags'),
+      ),
     S.divider(),
     S.listItem()
       .title('Video Assets')
       .icon(() => EdsIcon(play_circle_outlined))
-      .child(S.documentTypeList('videoFile').id('videoFiles').title('Video Files')),
+      .child(
+        S.documentList()
+          .id('videoFiles')
+          .title('Video Files')
+          .filter(
+            '_type == "videoFile" || (_type == "assetFile" && asset.asset->extension == "mp4")',
+          ),
+      ),
     S.divider(),
     UnusedAssetFilters(S),
-  ].filter((e) => e)
+  ].filter((e) => e);
 
 export const AssetLibrary = (S, context) =>
   S.listItem()
     .title('Asset library')
     .icon(LibraryIcon)
-    .child(S.list('assets').id('assets').title('Asset library').items(assetLibraryItems(S, context)))
+    .child(
+      S.list('assets')
+        .id('assets')
+        .title('Asset library')
+        .items(assetLibraryItems(S, context)),
+    );
