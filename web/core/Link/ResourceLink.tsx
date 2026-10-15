@@ -1,7 +1,5 @@
-import { calendar } from '@equinor/eds-icons';
 import { type PortableTextBlock, toPlainText } from 'next-sanity';
 import { twMerge } from 'tailwind-merge';
-import { TransformableIcon } from '../../icons/TransformableIcon';
 import { BaseLink, type BaseLinkProps } from './BaseLink';
 import DownloadableLink from './DownloadableLink';
 import { getArrowElement } from './linkCommon';
@@ -93,37 +91,16 @@ export const ResourceLink = ({
 
   const getContentElements = () => {
     const textClassNames = twMerge(`pt-1 grow leading-none`, textClassName);
-    switch (type) {
-      case 'icsLink':
-        return (
-          <>
-            <TransformableIcon
-              aria-hidden
-              iconData={calendar}
-              className="mr-2"
-            />
-            <span
-              className={textClassNames}
-              {...(ariaHideText && {
-                'aria-hidden': true,
-              })}
-            >
-              {_label}
-            </span>
-          </>
-        );
-      default:
-        return (
-          <span
-            className={textClassNames}
-            {...(ariaHideText && {
-              'aria-hidden': true,
-            })}
-          >
-            {_label}
-          </span>
-        );
-    }
+    return (
+      <span
+        className={textClassNames}
+        {...(ariaHideText && {
+          'aria-hidden': true,
+        })}
+      >
+        {_label}
+      </span>
+    );
   };
 
   return href ? (
