@@ -31,7 +31,7 @@ export type VideoPlayerProps = Omit<
   'src' | 'poster'
 > & {
   variant?: Variants;
-  src: string;
+  src?: string | null;
   figureCaption?: string | PortableTextBlock[];
   captionClassName?: string;
   figureClassName?: string;
@@ -134,16 +134,19 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const useFill =
     !containVideo &&
     (useFillMode || aspectRatio === '10:3' || aspectRatio === '21:9');
-  const sourceType = new URL(src, 'https://localhost').pathname
-    .toLowerCase()
-    .endsWith('.mp4')
-    ? 'video/mp4'
-    : 'application/x-mpegURL';
+  const videoSource = src?.trim() ?? '';
+  const sourceType =
+    videoSource &&
+    new URL(videoSource, 'https://localhost').pathname
+      .toLowerCase()
+      .endsWith('.mp4')
+      ? 'video/mp4'
+      : 'application/x-mpegURL';
 
   const videoJsOptions = {
     src: [
       {
-        src: src,
+        src: videoSource,
         type: sourceType,
       },
     ],
@@ -248,7 +251,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
         className={twMerge(aspectRatioClassName[aspectRatio], className)}
         style={{ position: 'relative' }}
       >
-        {shouldMountPlayer && (
+        {videoSource && shouldMountPlayer && (
           <Video
             //@ts-ignore: TODO
             options={videoJsOptions}
@@ -260,7 +263,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
           />
         )}
         {posterUrl &&
-          (!isVideoReady || hasVideoError) &&
+          (!videoSource || !isVideoReady || hasVideoError) &&
           resolvedPosterSizes && (
             <>
               <NextImage
@@ -274,7 +277,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
                   containVideo && 'object-contain',
                 )}
               />
-              {!hasVideoError && (
+              {videoSource && !hasVideoError && (
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                   <CircularProgress
                     variant="indeterminate"

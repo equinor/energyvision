@@ -12,6 +12,7 @@ import { Card, Stack, Text } from '@sanity/ui';
 import { createElement } from 'react';
 import { RiMovieLine } from 'react-icons/ri';
 import {
+  type File,
   type FileInputProps,
   type Reference,
   type Rule,
@@ -126,6 +127,10 @@ export default {
       components: {
         input: AssetFileInput,
       },
+      validation: (Rule: Rule) =>
+        Rule.required().custom((value: File | undefined) =>
+          value?.asset?._ref ? true : 'A file attachment is required.',
+        ),
     },
     {
       name: 'description',
