@@ -120,18 +120,11 @@ export default {
   preview: {
     select: {
       title: 'title',
-      references: 'references',
     },
-    prepare({
-      title,
-      references,
-    }: {
-      title?: PortableTextBlock[];
-      references?: PromotedTopicPage[];
-    }) {
+    prepare({ title }: { title?: PortableTextBlock[] }) {
       return {
         title: blocksToText(title ?? [])?.trim() || 'Untitled',
-        subtitle: `Topic promotion: ${references?.length ?? 0} references`,
+        subtitle: 'Update to type Promotion',
         media: LiaPagerSolid,
       };
     },

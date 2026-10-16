@@ -1,7 +1,6 @@
-import { Card, Flex, Grid, Radio, Text } from '@sanity/ui';
+import { Card, Flex, Grid, Radio, Text, useTheme_v2 } from '@sanity/ui';
 import { useCallback } from 'react';
 import { LuPanelBottom, LuText } from 'react-icons/lu';
-import { MdImage } from 'react-icons/md';
 import {
   type Image,
   type PortableTextBlock,
@@ -13,6 +12,7 @@ import {
 } from 'sanity';
 import { capitalizeFirstLetter } from '@/helpers/formatters';
 import { OptionButtons } from '@/schemas/components/OptionButtons/OptionButtons';
+import { Flags } from '@/src/lib/datasetHelpers';
 import blocksToText from '../../../helpers/blocksToText';
 import {
   gridColumns,
@@ -21,8 +21,72 @@ import {
   layoutGrid,
   theme,
   title,
+  viewAllLink,
+  viewAllLinkLabel,
 } from '../commonFields/commonFields';
 import linkSelector from '../linkSelector/linkSelector';
+
+type PromotionLayoutDirection = 'col' | 'row';
+
+export const PromotionLayoutIcon = ({
+  direction = 'col',
+  preview = false,
+}: {
+  direction?: PromotionLayoutDirection;
+  preview?: boolean;
+}) => {
+  const theme = useTheme_v2();
+  const iconColor = theme.color.muted.fg;
+  const isRow = direction === 'row';
+  const aspectRatio = isRow ? (preview ? 4 / 3 : 2) : (16 / 9) * 0.65;
+  const iconStyle = {
+    color: iconColor,
+    width: '100%',
+    height: '100%',
+    minWidth: 0,
+    minHeight: 0,
+  };
+
+  const layoutIcon = (
+    <div
+      aria-hidden
+      style={{
+        display: 'grid',
+        gridTemplateColumns: isRow ? '31% 69%' : '1fr',
+        gridTemplateRows: isRow ? '1fr' : '65% 35%',
+        width: preview ? 16 : 48,
+        aspectRatio,
+        boxSizing: 'border-box',
+        flexShrink: 0,
+        color: 'var(--card-muted-fg-color)',
+        border: '1px solid currentColor',
+        borderRadius: preview ? '2px' : '4px',
+        overflow: 'hidden',
+      }}
+    >
+      <div style={{ ...iconStyle, backgroundColor: 'currentColor' }} />
+      <LuText style={iconStyle} />
+    </div>
+  );
+
+  return preview ? (
+    <div
+      aria-hidden
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 33,
+        height: 33,
+        flexShrink: 0,
+      }}
+    >
+      {layoutIcon}
+    </div>
+  ) : (
+    layoutIcon
+  );
+};
 
 type PromotionLayoutInputProps = {
   options: any[];
@@ -82,10 +146,9 @@ export const PromotionLayoutInput = (props: PromotionLayoutInputProps) => {
                     flexDirection: option?.value === 'col' ? 'column' : 'row',
                   }}
                 >
-                  {/*@ts-ignore:todo*/}
-                  <MdImage size={20} />
-                  {/*@ts-ignore:todo*/}
-                  <LuText size={20} />
+                  <PromotionLayoutIcon
+                    direction={option?.value === 'row' ? 'row' : 'col'}
+                  />
                 </div>
               </Flex>
             </Flex>
@@ -99,31 +162,11 @@ export const PromotionLayoutInput = (props: PromotionLayoutInputProps) => {
 const layoutOptions = [
   {
     value: 'col',
-    icon: (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <MdImage size={20} />
-        <LuText size={20} />
-      </div>
-    ),
+    icon: <PromotionLayoutIcon direction="col" />,
   },
   {
     value: 'row',
-    icon: (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-        }}
-      >
-        <MdImage size={20} />
-        <LuText size={20} />
-      </div>
-    ),
+    icon: <PromotionLayoutIcon direction="row" />,
   },
 ];
 type PromotedTopicPage = {
@@ -139,7 +182,7 @@ export type promotionV2 = {
 };
 
 export default {
-  title: 'Promotions (v2)',
+  title: 'Promotion',
   name: 'promotionsV2',
   type: 'object',
   fieldsets: [
@@ -267,6 +310,8 @@ export default {
       ],
       validation: (Rule: Rule) => Rule.unique(),
     },
+    viewAllLink,
+    viewAllLinkLabel,
     theme,
     layoutGrid(),
     gridColumns({
@@ -325,21 +370,36 @@ export default {
       title: 'title',
       promoteList: 'promoteList',
       theme: 'theme',
+      layoutDirection: 'layoutDirection',
+      layoutGrid: 'layoutGrid',
+      gridColumns: 'gridColumns',
     },
     prepare({
       title,
       promoteList,
+      layoutDirection = 'col',
+      layoutGrid,
+      gridColumns,
     }: {
       title?: PortableTextBlock[];
       promoteList: any[];
       theme?: any;
+      layoutDirection?: PromotionLayoutDirection;
+      layoutGrid?: string;
+      gridColumns?: string;
     }) {
       const plainTitle = title ? blocksToText(title) : 'Untitled';
-      const subTitle = `${promoteList && promoteList?.length > 0 ? promoteList.length : ''} promotions (v2) `;
+      const subtitleDetails = [
+        `${promoteList?.length ?? 0} items`,
+        layoutGrid,
+        gridColumns ? `${gridColumns} columns` : '',
+      ]
+        .filter(Boolean)
+        .join(' | ');
       return {
         title: plainTitle,
-        subtitle: subTitle,
-        media: LuPanelBottom,
+        subtitle: `Promotion: ${subtitleDetails}`,
+        media: <PromotionLayoutIcon direction={layoutDirection} preview />,
       };
     },
   },

@@ -1,6 +1,5 @@
 import type { Reference, Rule } from 'sanity';
 import type { ColorSelectorValue } from '../components/ColorSelector';
-//import { layoutGrid } from './commonFields/commonFields'
 import type { ImageWithAltAndCaption } from './imageWithAltAndCaption';
 
 export type Figure = {

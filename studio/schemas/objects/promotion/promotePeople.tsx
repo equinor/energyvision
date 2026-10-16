@@ -1,5 +1,5 @@
 import type { PortableTextBlock } from '@portabletext/react';
-import { MdOutlineContactEmergency } from 'react-icons/md';
+import { ImProfile } from 'react-icons/im';
 import type { Reference, Rule } from 'sanity';
 import blocksToText from '../../../helpers/blocksToText';
 import {
@@ -186,7 +186,7 @@ export default {
       return {
         title: `${plainTitle}`,
         subtitle: `People promotion: ${peopleList?.length} people`,
-        media: MdOutlineContactEmergency,
+        media: ImProfile,
       };
     },
   },

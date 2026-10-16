@@ -17,6 +17,10 @@ const commonPromotionFields = /* groq */ `
 `;
 export const promotionsV2 = /* groq */ `
 ${commonPromotionFields},
+"viewAllLink": {
+    "label": viewAllLinkLabel,
+    ...links::getLinkFields(viewAllLink),
+},
 "promoteList": promoteList[
                 (
                     (linkSelector.link[0]._type != "reference"

@@ -1,8 +1,8 @@
-import { Card, Flex, Grid, Radio, Text } from '@sanity/ui'
-import { useCallback } from 'react'
-import { HiOutlineViewColumns } from 'react-icons/hi2'
-import { LuText } from 'react-icons/lu'
-import { MdImage } from 'react-icons/md'
+import { Card, Flex, Grid, Radio, Text } from '@sanity/ui';
+import { useCallback } from 'react';
+import { BsExclamationSquare } from 'react-icons/bs';
+import { LuText } from 'react-icons/lu';
+import { MdImage } from 'react-icons/md';
 import {
   type Image,
   type PortableTextBlock,
@@ -11,26 +11,26 @@ import {
   type StringInputProps,
   set,
   type ValidationContext,
-} from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
-import { topicPromotionFilter } from '../../../helpers/referenceFilters'
-import routes from '../../routes'
-import { layoutGrid, theme, title } from '../commonFields/commonFields'
+} from 'sanity';
+import blocksToText from '../../../helpers/blocksToText';
+import { topicPromotionFilter } from '../../../helpers/referenceFilters';
+import routes from '../../routes';
+import { layoutGrid, theme, title } from '../commonFields/commonFields';
 
 type PromotionLayoutInputProps = {
-  options: any[]
-} & StringInputProps
+  options: any[];
+} & StringInputProps;
 
 export const PromotionLayoutInput = (props: PromotionLayoutInputProps) => {
-  const { onChange, schemaType, value = '' } = props
+  const { onChange, schemaType, value = '' } = props;
 
   const handleChange = useCallback(
     (event: any) => {
-      const nextValue = event.currentTarget.value
-      onChange(set(nextValue))
+      const nextValue = event.currentTarget.value;
+      onChange(set(nextValue));
     },
     [onChange],
-  )
+  );
 
   return (
     <Grid columns={schemaType?.options?.list?.length} rows={1} gap={2}>
@@ -44,10 +44,10 @@ export const PromotionLayoutInput = (props: PromotionLayoutInputProps) => {
             shadow={1}
           >
             <Flex
-              direction='row'
-              align='center'
-              width='100%'
-              height='stretch'
+              direction="row"
+              align="center"
+              width="100%"
+              height="stretch"
               gap={2}
             >
               <Radio
@@ -57,8 +57,8 @@ export const PromotionLayoutInput = (props: PromotionLayoutInputProps) => {
                 onChange={handleChange}
                 value={option.value}
               />
-              <Flex gap={2} align='center' width='100%'>
-                <Text as='label' htmlFor={option.value}>
+              <Flex gap={2} align="center" width="100%">
+                <Text as="label" htmlFor={option.value}>
                   {option.title}
                 </Text>
                 <div
@@ -79,30 +79,30 @@ export const PromotionLayoutInput = (props: PromotionLayoutInputProps) => {
               </Flex>
             </Flex>
           </Card>
-        )
+        );
       })}
     </Grid>
-  )
-}
+  );
+};
 
 type PromotedTopicPage = {
-  _key: string
-  _type: 'topics'
-  ingress: PortableTextBlock[]
-  reference: Reference
-}
+  _key: string;
+  _type: 'topics';
+  ingress: PortableTextBlock[];
+  reference: Reference;
+};
 
 export type promoteTopics = {
-  _type: 'promoteTopicsV2'
-  references: PromotedTopicPage[]
-}
+  _type: 'promoteTopicsV2';
+  references: PromotedTopicPage[];
+};
 
 export default {
   title: 'Promotion v2 topics (deprecated)',
   name: 'promoteTopicsV2',
   type: 'object',
   deprecated: {
-    reason: 'Use promotions v2 instead',
+    reason: 'Use Promotion',
   },
   fieldsets: [
     {
@@ -119,14 +119,14 @@ export default {
         {
           type: 'object',
           name: 'topicItem',
-          title: 'Topic item',
+          title: 'Article item',
           fields: [
             {
               title: 'Page to be promoted',
               name: 'reference',
               description: 'Select the page you want to promote',
               type: 'reference',
-              to: [...routes].filter(e => e),
+              to: [...routes].filter((e) => e),
               options: {
                 filter: topicPromotionFilter,
                 disableNew: true,
@@ -142,17 +142,17 @@ export default {
               topicTitle,
               topicMedia,
             }: {
-              topicTitle: PortableTextBlock[]
-              topicMedia: Image
+              topicTitle: PortableTextBlock[];
+              topicMedia: Image;
             }) {
               const plainTitle = topicTitle
                 ? blocksToText(topicTitle)
-                : 'Untitled'
+                : 'Untitled';
 
               return {
                 title: plainTitle,
                 media: topicMedia,
-              }
+              };
             },
           },
         },
@@ -177,14 +177,14 @@ export default {
       initialValue: '3',
       //@ts-ignore:todo
       hidden: ({ parent }: DocumentType) => {
-        return parent?.layoutGrid === 'lg'
+        return parent?.layoutGrid === 'lg';
       },
       fieldset: 'design',
       validation: (Rule: Rule) =>
         Rule.custom((value: string, ctx: ValidationContext) => {
           //@ts-ignore:todo
           if (Number(ctx.parent?.promoteList?.length) < Number(value)) {
-            return 'Fewer promotions than grid columns. Please select lower grid columns'
+            return 'Fewer promotions than grid columns. Please select lower grid columns';
           }
 
           if (
@@ -194,10 +194,10 @@ export default {
             ctx.parent?.layoutGrid !== 'sm'
           ) {
             if (value === '4') {
-              return 'Please use only 2 or 3 cols when using the smaller layout grids with side by side promotions'
+              return 'Please use only 2 or 3 cols when using the smaller layout grids with side by side promotions';
             }
           }
-          return true
+          return true;
         }),
     },
     {
@@ -229,17 +229,17 @@ export default {
       title,
       promoteList,
     }: {
-      title?: PortableTextBlock[]
-      promoteList: any[]
-      theme?: any
+      title?: PortableTextBlock[];
+      promoteList: any[];
+      theme?: any;
     }) {
-      const plainTitle = title ? blocksToText(title) : 'Untitled'
-      const subTitle = `Promote ${promoteList && promoteList?.length > 0 ? promoteList.length : ''} topics`
+      const plainTitle = title ? blocksToText(title) : 'Untitled';
+      const subTitle = `Deprecated - Change to promotions v2 | ${promoteList?.length ?? 0} topics`;
       return {
         title: plainTitle,
         subtitle: subTitle,
-        media: HiOutlineViewColumns,
-      }
+        media: BsExclamationSquare,
+      };
     },
   },
-}
+};

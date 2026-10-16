@@ -1,12 +1,20 @@
-import type { PortableTextBlock } from '@portabletext/react'
-import { RiCalendarEventFill } from 'react-icons/ri'
-import type { Reference, Rule, ValidationContext } from 'sanity'
-import { defaultBackgroundColors } from '@/schemas/defaultColors'
-import blocksToText from '../../../helpers/blocksToText'
-import { capitalizeFirstLetter } from '../../../helpers/formatters'
-import { filterByRouteEvents } from '../../../helpers/referenceFilters'
-import routes from '../../routes'
-import { createColorSelectField } from '../colorList'
+import type { PortableTextBlock } from '@portabletext/react';
+import { Fragment } from 'react';
+import { RiCalendarEventFill } from 'react-icons/ri';
+import {
+  type PreviewProps,
+  type Reference,
+  type Rule,
+  useDocumentValues,
+  type ValidationContext,
+} from 'sanity';
+import { defaultBackgroundColors } from '@/schemas/defaultColors';
+import blocksToText from '../../../helpers/blocksToText';
+import { capitalizeFirstLetter } from '../../../helpers/formatters';
+import { filterByRouteEvents } from '../../../helpers/referenceFilters';
+import { defaultLanguage } from '../../../languages';
+import routes from '../../routes';
+import { createColorSelectField } from '../colorList';
 import {
   backgroundPosition,
   ingress,
@@ -14,20 +22,58 @@ import {
   title,
   viewAllLink,
   viewAllLinkLabel,
-} from '../commonFields/commonFields'
+} from '../commonFields/commonFields';
 
 export type EventPromotion = {
-  _key: string
-  _type: 'promoteEvents'
-  tags?: string[]
-  promotionType?: 'automatic' | 'manual'
-  promotedEvents?: Reference[]
-  promotePastEvents?: boolean
-  eventsCount?: number
-}
+  _key: string;
+  _type: 'promoteEvents';
+  tags?: Reference[];
+  promotionType?: 'automatic' | 'manual';
+  promotedEvents?: Reference[];
+  promotePastEvents?: boolean;
+  eventsCount?: number;
+};
+
+const EventTagLabel = ({ documentId }: { documentId: string }) => {
+  const { value, isLoading, error } = useDocumentValues<{
+    title?: Record<string, string>;
+    key?: { current?: string };
+  }>(documentId, ['title', 'key']);
+
+  return (
+    <>
+      {value?.title?.[defaultLanguage.name] ||
+        value?.key?.current ||
+        (isLoading ? 'Loading tag' : error ? 'Unavailable tag' : 'Unnamed tag')}
+    </>
+  );
+};
+
+const EventPromotionPreview = (
+  props: PreviewProps & { tags?: Reference[] },
+) => {
+  const { tags, subtitle, renderDefault } = props;
+
+  return renderDefault({
+    ...props,
+    subtitle: (
+      <>
+        Event promotion: {subtitle && <>{subtitle} | </>}
+        {tags?.length
+          ? tags.map((tag, index) => (
+              <Fragment key={tag._key ?? tag._ref}>
+                {index > 0 && ', '}
+                <EventTagLabel documentId={tag._ref} />
+              </Fragment>
+            ))
+          : 'All'}
+      </>
+    ),
+  });
+};
 
 export default {
-  title: 'Events promotion',
+  title: 'Event promotion',
   name: 'promoteEvents',
   type: 'object',
   fieldsets: [
@@ -103,11 +149,11 @@ export default {
       hidden: ({ parent }: any) => parent?.promotionType !== 'manual',
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext) => {
-          const { parent } = context as { parent: EventPromotion }
-          if (parent?.promotionType === 'automatic') return true
+          const { parent } = context as { parent: EventPromotion };
+          if (parent?.promotionType === 'automatic') return true;
           if (!value || value.length === 0)
-            return 'You must select at least one event'
-          return true
+            return 'You must select at least one event';
+          return true;
         }).unique(),
     },
     {
@@ -121,33 +167,33 @@ export default {
         collapsed: false,
       },
       hidden: (props: any) => {
-        const { parent, currentUser } = props || {}
-        const allowedRoles = ['designer', 'administrator', 'developer']
+        const { parent, currentUser } = props || {};
+        const allowedRoles = ['designer', 'administrator', 'developer'];
         const isAllowed = currentUser?.roles?.some((role: any) =>
           allowedRoles?.includes(role?.name),
-        )
-        if (!isAllowed) return true
+        );
+        if (!isAllowed) return true;
         if (
           parent?.promotionType === 'manual' &&
           parent?.promotedEvents?.length === 1
         )
-          return false
-        return true
+          return false;
+        return true;
       },
     },
     backgroundPosition((props: any) => {
-      const { parent, currentUser } = props || {}
-      const allowedRoles = ['designer', 'administrator', 'developer']
+      const { parent, currentUser } = props || {};
+      const allowedRoles = ['designer', 'administrator', 'developer'];
       const isAllowed = currentUser?.roles?.some((role: any) =>
         allowedRoles?.includes(role?.name),
-      )
-      if (!isAllowed) return true
+      );
+      if (!isAllowed) return true;
       if (
         parent?.promotionType === 'manual' &&
         parent?.promotedEvents?.length === 1
       )
-        return false
-      return true
+        return false;
+      return true;
     }),
     {
       title: 'Use white text',
@@ -155,18 +201,18 @@ export default {
       name: 'isDark',
       type: 'boolean',
       hidden: (props: any) => {
-        const { parent, currentUser } = props || {}
-        const allowedRoles = ['designer', 'administrator', 'developer']
+        const { parent, currentUser } = props || {};
+        const allowedRoles = ['designer', 'administrator', 'developer'];
         const isAllowed = currentUser?.roles?.some((role: any) =>
           allowedRoles?.includes(role?.name),
-        )
-        if (!isAllowed) return true
+        );
+        if (!isAllowed) return true;
         if (
           parent?.promotionType === 'manual' &&
           parent?.promotedEvents?.length === 1
         )
-          return false
-        return true
+          return false;
+        return true;
       },
     },
     {
@@ -175,18 +221,18 @@ export default {
       name: 'useGlassEffect',
       type: 'boolean',
       hidden: (props: any) => {
-        const { parent, currentUser } = props || {}
-        const allowedRoles = ['designer', 'administrator', 'developer']
+        const { parent, currentUser } = props || {};
+        const allowedRoles = ['designer', 'administrator', 'developer'];
         const isAllowed = currentUser?.roles?.some((role: any) =>
           allowedRoles?.includes(role?.name),
-        )
-        if (!isAllowed) return true
+        );
+        if (!isAllowed) return true;
         if (
           parent?.promotionType === 'manual' &&
           parent?.promotedEvents?.length === 1
         )
-          return false
-        return true
+          return false;
+        return true;
       },
     },
     viewAllLink,
@@ -197,15 +243,15 @@ export default {
       fieldset: 'design',
       description: 'Selected background with white cards',
       colors: [
-        ...defaultBackgroundColors.filter(color => color.key !== 'white-100'),
+        ...defaultBackgroundColors.filter((color) => color.key !== 'white-100'),
       ],
       valueField: 'key',
     }),
     theme,
-  ].filter(e => e),
-  /*   components: {
-    preview: PromoteEventsPreview,
-  }, */
+  ].filter((e) => e),
+  components: {
+    preview: EventPromotionPreview,
+  },
   preview: {
     select: {
       title: 'title',
@@ -223,28 +269,38 @@ export default {
       tags,
       promotedEvents,
     }: {
-      title?: PortableTextBlock[]
-      promotionType: 'automatic' | 'manual'
-      promotePastEvents?: boolean
-      eventsCount?: number
-      tags?: string[]
-      promotedEvents?: Reference[]
+      title?: PortableTextBlock[];
+      promotionType: 'automatic' | 'manual';
+      promotePastEvents?: boolean;
+      eventsCount?: number;
+      tags?: Reference[];
+      promotedEvents?: Reference[];
     }) {
       //@ts-ignore:todo
-      const plainTitle = blocksToText(title)
-      let mainTitle = 'Event promotion'
+      const plainTitle = blocksToText(title);
+      let mainTitle = 'Event promotion';
       if (promotionType === 'automatic') {
-        mainTitle = `${capitalizeFirstLetter(promotionType ?? '')} | ${promotePastEvents ? 'past' : ''} ${eventsCount ? `${eventsCount}` : 'all'} event(s) ${tags && tags?.length > 0 ? 'on tag(s)' : 'on all tags'}`
+        mainTitle = `${capitalizeFirstLetter(promotionType ?? '')} | ${promotePastEvents ? 'past' : ''} ${eventsCount ? `${eventsCount}` : 'all'} event(s) ${tags && tags?.length > 0 ? 'on tag(s)' : 'on all tags'}`;
       }
       if (promotionType === 'manual') {
-        mainTitle = `${capitalizeFirstLetter(promotionType ?? '')} | ${promotedEvents && promotedEvents?.length > 0 ? promotedEvents?.length : 'No'} event(s)`
+        mainTitle = `${capitalizeFirstLetter(promotionType ?? '')} | ${promotedEvents && promotedEvents?.length > 0 ? promotedEvents?.length : 'No'} event(s)`;
       }
+      const eventCount =
+        promotionType === 'manual' ? promotedEvents?.length : eventsCount;
+      const subtitleDetails = [
+        eventCount !== undefined ? `${eventCount}` : '',
+        promotionType ? capitalizeFirstLetter(promotionType) : '',
+        promotionType === 'automatic' && promotePastEvents ? 'Past events' : '',
+      ]
+        .filter(Boolean)
+        .join(' | ');
 
       return {
         title: plainTitle ? plainTitle : mainTitle,
-        subtitle: `Event promotion${plainTitle ? `: ${mainTitle}` : ''}`,
+        subtitle: subtitleDetails,
+        tags: promotionType === 'manual' ? [] : (tags ?? []),
         media: RiCalendarEventFill,
-      }
+      };
     },
   },
-}
+};
