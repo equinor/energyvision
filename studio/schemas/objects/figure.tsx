@@ -1,13 +1,12 @@
-import type { Reference, Rule } from 'sanity'
-import type { ColorSelectorValue } from '../components/ColorSelector'
-//import { layoutGrid } from './commonFields/commonFields'
-import type { ImageWithAltAndCaption } from './imageWithAltAndCaption'
+import type { Reference, Rule } from 'sanity';
+import type { ColorSelectorValue } from '../components/ColorSelector';
+import type { ImageWithAltAndCaption } from './imageWithAltAndCaption';
 
 export type Figure = {
-  _type: 'figure'
-  figure: ImageWithAltAndCaption
-  background?: ColorSelectorValue
-}
+  _type: 'figure';
+  figure: ImageWithAltAndCaption;
+  background?: ColorSelectorValue;
+};
 
 export default {
   name: 'figure',
@@ -85,18 +84,18 @@ export default {
       caption,
       background,
     }: {
-      alt: string
-      image: Reference
-      aspectRatio?: string
-      credit?: string
-      caption?: string
-      background?: string
+      alt: string;
+      image: Reference;
+      aspectRatio?: string;
+      credit?: string;
+      caption?: string;
+      background?: string;
     }) {
       return {
         title: `${aspectRatio} image ${alt ? '| alt ' : ''}${credit ? '| credit ' : ''}${caption ? '| caption ' : ''} `,
-        subtitle: `Image component ${background ? `| ${background?.title}` : ''}`,
+        subtitle: `Image ${background ? `| ${background?.title}` : ''}`,
         media: image,
-      }
+      };
     },
   },
-}
+};

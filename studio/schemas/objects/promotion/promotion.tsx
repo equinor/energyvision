@@ -63,11 +63,13 @@ type PromotionType =
   | 'promoteMagazine';
 
 export default {
-  title: 'Promotion (Deprecated, use direct types)',
-  description: 'Deprecated - Use direct promotion types instead',
+  title: 'Deprecated promotion',
+  description: 'Change to Promotion or direct promotion types',
   name: 'promotion',
+  deprecated: {
+    reason: 'Use Promotion or direct promotion types',
+  },
   type: 'object',
-  icon: BsExclamationSquare,
   fieldsets: [
     {
       title: 'Design options',
@@ -192,7 +194,7 @@ export default {
 
       return {
         title: plainTitle,
-        subtitle: `Deprecated - Change to direct ${getPromotionType(type)} promotion`,
+        subtitle: `Deprecated - Change to Promotion or direct ${getPromotionType(type)} promotion`,
         media: BsExclamationSquare,
       };
     },

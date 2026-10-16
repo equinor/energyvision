@@ -1,8 +1,8 @@
-import { LiaChartPieSolid } from 'react-icons/lia'
-import type { PortableTextBlock, Rule } from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
-import { CompactBlockEditor } from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors'
+import { LiaChartPieSolid } from 'react-icons/lia';
+import type { PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../../helpers/blocksToText';
+import { CompactBlockEditor } from '../../components/CompactBlockEditor';
+import { configureBlockContent } from '../../editors';
 
 export default {
   title: 'Pie chart',
@@ -37,13 +37,13 @@ export default {
       title: 'title',
     },
     prepare({ title }: { title?: PortableTextBlock[] }) {
-      const plainTitle = title ? blocksToText(title) : 'Pie Chart'
+      const plainTitle = title ? blocksToText(title) : 'Pie Chart';
 
       return {
         title: plainTitle,
-        subtitle: 'Pie chart component',
+        subtitle: 'Pie chart',
         media: LiaChartPieSolid,
-      }
+      };
     },
   },
-}
+};
