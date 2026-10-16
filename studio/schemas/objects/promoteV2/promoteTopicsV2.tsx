@@ -234,7 +234,7 @@ export default {
       theme?: any;
     }) {
       const plainTitle = title ? blocksToText(title) : 'Untitled';
-      const subTitle = `Deprecated - Change to promotions v2 | ${promoteList?.length ?? 0} topics`;
+      const subTitle = `Deprecated - Change to Promotion | ${promoteList?.length ?? 0} topics`;
       return {
         title: plainTitle,
         subtitle: subTitle,
