@@ -1,12 +1,12 @@
-import markDefs from '../blockEditorMarks'
-import { sameLang } from '../langAndDrafts'
-import { lastUpdatedTimeQuery, publishDateTimeQuery } from '../publishDateTime'
+import markDefs from '../blockEditorMarks';
+import { notDraft, sameLang } from '../langAndDrafts';
+import { lastUpdatedTimeQuery, publishDateTimeQuery } from '../publishDateTime';
 import {
   eventPromotionFields,
   futureEventsQuery,
   pastEventsQuery,
-} from './eventPromotion'
-import promoteMagazine from './promoteMagazine'
+} from './eventPromotion';
+import promoteMagazine from './promoteMagazine';
 
 const commonPromotionFields = /* groq */ `
     "type": _type,
@@ -36,13 +36,13 @@ const commonPromotionFields = /* groq */ `
         "dark": coalesce(designOptions.isDark,isDark, false),
         useGlassEffect,
     }
-`
+`;
 export const eventPromotion = /* groq */ `
     ${commonPromotionFields},
     promotionType,
     promotePastEvents,
     promotionType == "manual" => {
-        "promotions": promotedEvents[]->{${eventPromotionFields}},
+        "promotions": promotedEvents[]->[${notDraft}]{${eventPromotionFields}},
     },
     promotionType == "automatic" => {
     "tags": tags[]->{
@@ -52,13 +52,13 @@ export const eventPromotion = /* groq */ `
     },
     eventsCount,
     promotePastEvents,
-    (!promotePastEvents) => {
+    (!promotePastEvents || !defined(promotePastEvents)) => {
         (!defined(tags) || count(tags) <= 0) => {
               "promotions": ${futureEventsQuery(false)}[]{
                  ${eventPromotionFields}
               },
         },
-        (defined(tags) || count(tags) > 0) => {
+        (defined(tags) && count(tags) > 0) => {
               "promotions": ${futureEventsQuery(true)}[]{
                  ${eventPromotionFields}
               },
@@ -77,7 +77,7 @@ export const eventPromotion = /* groq */ `
             },
     },
     }
-`
+`;
 export const newsPromotion = /* groq */ `
 ${commonPromotionFields},
     "tags": tags[]->{
@@ -94,17 +94,40 @@ ${commonPromotionFields},
         "id": _id,
         _type,
     },
-    "promotions": *[
-        (_type == "news" || _type == "localNews")
-        && (
-        count(tags[_ref in ^.^.tags[]._ref]) > 0
-        ||
-        count(countryTags[_ref in ^.^.countryTags[]._ref]) > 0
-        ||
-        localNewsTag._ref in ^.localNewsTags[]._ref
-        )
-        && ${sameLang}
-    ] | order(${publishDateTimeQuery} desc)[0...3]{
+    "promotions": select(
+        count(coalesce(tags, [])) == 0
+        && count(coalesce(countryTags, [])) == 0
+        && count(coalesce(localNewsTags, [])) == 0 =>
+        *[(_type == "news" || _type == "localNews")
+          && ${sameLang}
+          && ${notDraft}
+        ] | order(${publishDateTimeQuery} desc)[0...3]{
+            "type": _type,
+            "id": _id,
+            "updatedAt":  ${lastUpdatedTimeQuery},
+            title,
+            heroImage,
+            "publishDateTime": ${publishDateTimeQuery},
+            "link": {
+                "slug": slug.current,
+                "type": "internalUrl",
+                "lang": lang
+            },
+            ingress[]{
+            ...,
+            ${markDefs},
+            },
+        },
+        *[
+            (_type == "news" || _type == "localNews")
+            && (
+                count(tags[_ref in ^.^.tags[]._ref]) > 0
+                || count(countryTags[_ref in ^.^.countryTags[]._ref]) > 0
+                || localNewsTag._ref in ^.localNewsTags[]._ref
+            )
+            && ${sameLang}
+            && ${notDraft}
+        ] | order(${publishDateTimeQuery} desc)[0...3]{
         "type": _type,
         "id": _id,
         "updatedAt":  ${lastUpdatedTimeQuery},
@@ -121,7 +144,8 @@ ${commonPromotionFields},
         ${markDefs},
         },
     }
-`
+    )
+`;
 export const peoplePromotion = /* groq */ `
     ${commonPromotionFields},
     "promotions": peopleList[]{
@@ -146,14 +170,17 @@ export const peoplePromotion = /* groq */ `
         },
         },
     }
-`
+`;
 export const magazinePromotion = /* groq */ `
     ${commonPromotionFields},
     ${promoteMagazine}
-`
+`;
 export const topicsPromotion = /* groq */ `
 ${commonPromotionFields},
-        "promotions": references[0...3]{
+                "promotions": references[
+                    !((reference->_id) in path("drafts.**"))
+                    && !((reference->_originalId) in path("drafts.**"))
+                ][0...3]{
          "id": _key,
          "type": _type,
           ingress[]{
@@ -184,4 +211,4 @@ ${commonPromotionFields},
           "openGraphImage": reference->openGraphImage,
           "heroType": coalesce(reference->content->heroType, 'default'),
          },
-},`
+},`;

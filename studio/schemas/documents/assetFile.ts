@@ -6,28 +6,42 @@ import {
   microsoft_excel,
   microsoft_powerpoint,
   microsoft_word,
-} from '@equinor/eds-icons'
-import type { Rule } from 'sanity'
-import { EdsIcon } from '../../icons'
+} from '@equinor/eds-icons';
+import { getExtension, getFileAsset } from '@sanity/asset-utils';
+import { Card, Stack, Text } from '@sanity/ui';
+import { createElement } from 'react';
+import { RiMovieLine } from 'react-icons/ri';
+import {
+  type File,
+  type FileInputProps,
+  type Reference,
+  type Rule,
+  useClient,
+} from 'sanity';
+import { EdsIcon } from '../../icons';
+import { apiVersion } from '../../sanity.client';
+import HLSPlayer from '../components/HLSPlayer';
 
 export const fileIcon = (extension: string) => {
   switch (extension) {
     case 'pdf':
-      return EdsIcon(library_pdf)
+      return EdsIcon(library_pdf);
     case 'xls':
     case 'xlsx':
-      return EdsIcon(microsoft_excel)
+      return EdsIcon(microsoft_excel);
     case 'doc':
     case 'docx':
-      return EdsIcon(microsoft_word)
+      return EdsIcon(microsoft_word);
     case 'pptx':
-      return EdsIcon(microsoft_powerpoint)
+      return EdsIcon(microsoft_powerpoint);
     case 'ics':
-      return EdsIcon(calendar_event)
+      return EdsIcon(calendar_event);
+    case 'mp4':
+      return createElement(RiMovieLine);
     default:
-      return EdsIcon(file)
+      return EdsIcon(file);
   }
-}
+};
 
 const acceptedFileTypes = [
   '.pdf',
@@ -42,7 +56,50 @@ const acceptedFileTypes = [
   '.asc',
   '.ics',
   '.mp3',
-]
+  '.mp4',
+];
+
+const AssetFileInput = (props: FileInputProps) => {
+  const client = useClient({ apiVersion });
+  const assetReference = props.value?.asset?._ref;
+  const { projectId, dataset } = client.config();
+
+  if (
+    !assetReference ||
+    getExtension(assetReference) !== 'mp4' ||
+    !projectId ||
+    !dataset
+  ) {
+    return props.renderDefault(props);
+  }
+
+  const { url } = getFileAsset(assetReference, { projectId, dataset });
+
+  return createElement(
+    Stack,
+    { gap: 3 },
+    props.renderDefault(props),
+    createElement(HLSPlayer, {
+      src: url,
+      controls: true,
+      width: '100%',
+      height: '350px',
+      style: { background: 'black' },
+    }),
+  );
+};
+
+const Mp4Description = () =>
+  createElement(
+    Card,
+    { padding: 3 },
+    createElement(
+      Text,
+      { size: 1 },
+      `When uploading a video please ensure its not longer than 15 seconds and not larger than 25MB. To reduce filesize ask for videos to be processed at 30fps with modern codecs (like H.264 or H.265). This can reduce the overall file size by roughly 30% to 50% (depending on your bitrate settings). 
+      Longer videos should be added to the Equinor YouTube channel. `,
+    ),
+  );
 
 export default {
   title: 'File',
@@ -67,6 +124,48 @@ export default {
       options: {
         accept: acceptedFileTypes.join(','),
       },
+      components: {
+        input: AssetFileInput,
+      },
+      validation: (Rule: Rule) =>
+        Rule.required().custom((value: File | undefined) =>
+          value?.asset?._ref ? true : 'A file attachment is required.',
+        ),
+    },
+    {
+      name: 'description',
+      title: 'Video requirements',
+      type: 'string',
+      readOnly: true,
+      components: {
+        input: Mp4Description,
+      },
+      hidden: ({
+        document,
+      }: {
+        document?: { asset?: { asset?: Reference } };
+      }) => {
+        const assetReference = document?.asset?.asset?._ref;
+        return !assetReference || getExtension(assetReference) !== 'mp4';
+      },
+    },
+    {
+      name: 'thumbnail',
+      type: 'imageWithAlt',
+      title: 'Thumbnail',
+      description:
+        'Use the alt text below to describe the video content (for screenreaders).',
+      initialValue: {
+        isDecorative: true,
+      },
+      hidden: ({
+        document,
+      }: {
+        document?: { asset?: { asset?: Reference } };
+      }) => {
+        const assetReference = document?.asset?.asset?._ref;
+        return !assetReference || getExtension(assetReference) !== 'mp4';
+      },
     },
     {
       title: 'Tags',
@@ -90,16 +189,16 @@ export default {
       filename: 'asset.asset.originalFilename',
     },
     prepare(selection: { title: string; extension: string; filename: any }) {
-      const { title, extension, filename } = selection
+      const { title, extension, filename } = selection;
       const subtitle = extension
         ? `${extension} | ${filename}`
-        : 'File attachment missing'
+        : 'File attachment missing';
 
       return {
         title: title,
         subtitle: subtitle,
         media: fileIcon(extension),
-      }
+      };
     },
   },
-}
+};

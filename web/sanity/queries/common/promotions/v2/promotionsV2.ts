@@ -1,4 +1,4 @@
-import markDefs from '../../blockEditorMarks'
+import markDefs from '../../blockEditorMarks';
 
 const commonPromotionFields = /* groq */ `
     "type": _type,
@@ -14,10 +14,26 @@ const commonPromotionFields = /* groq */ `
         gridColumns,
         layoutDirection,
     }
-`
+`;
 export const promotionsV2 = /* groq */ `
 ${commonPromotionFields},
-"promoteList": promoteList[]{
+"promoteList": promoteList[
+                (
+                    (linkSelector.link[0]._type != "reference"
+            && linkSelector.link[0]._type != "referenceToOtherLanguage")
+                    || (
+            !((linkSelector.link[0]->_id) in path("drafts.**"))
+            && !((linkSelector.link[0]->_originalId) in path("drafts.**"))
+                    )
+                )
+                && (
+                    linkSelector.link[0]._type != "pageAnchor"
+                    || (
+                        defined(linkSelector.link[0].anchorId)
+                        && linkSelector.link[0].anchorId != ""
+                    )
+        )
+]{
     "id": _key,
     ...links::getLinkFields(linkSelector.link[0]),
     "label": coalesce(
@@ -34,11 +50,14 @@ ${commonPromotionFields},
     linkSelector.link[0]->heroFigure.image,
     image),
 }
-`
+`;
 
 export const topicsPromotionV2 = /* groq */ `
 ${commonPromotionFields},
-"promoteList": promoteList[]{
+"promoteList": promoteList[
+    !((reference->_id) in path("drafts.**"))
+    && !((reference->_originalId) in path("drafts.**"))
+]{
     "id": _key,
     "type": _type,
      "link": {
@@ -52,7 +71,7 @@ ${commonPromotionFields},
     reference->content->heroFigure.image),
     },
 }
-`
+`;
 export const externalLinksPromotionV2 = /* groq */ `
 ${commonPromotionFields},
 "promoteList": promoteList[]{
@@ -62,4 +81,4 @@ ${commonPromotionFields},
     image,
     "href":link.href,
 }
-`
+`;
