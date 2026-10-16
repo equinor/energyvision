@@ -1,15 +1,15 @@
-import { collection_2 } from '@equinor/eds-icons'
-import type { PortableTextBlock, Rule } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import type { PromoTile } from './promoTile'
+import { collection_2 } from '@equinor/eds-icons';
+import type { PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { configureBlockContent } from '../editors';
+import type { PromoTile } from './promoTile';
 
 export type PromoTileArray = {
-  _type: 'promoTileArray'
-  group: PromoTile[]
-}
+  _type: 'promoTileArray';
+  group: PromoTile[];
+};
 
 export default {
   type: 'object',
@@ -47,7 +47,7 @@ export default {
       of: [{ type: 'promoTile' }],
       validation: (Rule: Rule) => Rule.required().min(2),
     },
-  ].filter(e => e),
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',
@@ -57,25 +57,25 @@ export default {
       group,
       title,
     }: {
-      title?: PortableTextBlock[]
-      group: PromoTile[]
+      title?: PortableTextBlock[];
+      group: PromoTile[];
     }) {
-      const compTitle = title ? blocksToText(title) : undefined
+      const compTitle = title ? blocksToText(title) : undefined;
 
       const getGroupTitle = (promoTile: PromoTile) => {
         return promoTile.linkLabelAsTitle
           ? promoTile.link?.label
-          : blocksToText(promoTile.title as PortableTextBlock[])
-      }
+          : blocksToText(promoTile.title as PortableTextBlock[]);
+      };
       return {
         title: compTitle
           ? compTitle
           : group
             ? getGroupTitle(group[0]) + ' | ' + (getGroupTitle(group[1]) || '')
             : 'Missing content',
-        subtitle: 'Promo tiles component',
+        subtitle: 'Promo tiles',
         media: <div>{EdsIcon(collection_2)}</div>,
-      }
+      };
     },
   },
-}
+};

@@ -1,15 +1,15 @@
-import type { PortableTextBlock } from '@portabletext/react'
-import { TiNews } from 'react-icons/ti'
-import type { Rule } from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
-import { Flags } from '../../../src/lib/datasetHelpers'
+import type { PortableTextBlock } from '@portabletext/react';
+import { TiNews } from 'react-icons/ti';
+import type { Rule } from 'sanity';
+import blocksToText from '../../../helpers/blocksToText';
+import { Flags } from '../../../src/lib/datasetHelpers';
 import {
   ingress,
   theme,
   title,
   viewAllLink,
   viewAllLinkLabel,
-} from '../commonFields/commonFields'
+} from '../commonFields/commonFields';
 
 export default {
   title: 'News promotion',
@@ -89,10 +89,10 @@ export default {
       fieldset: 'design',
       readonly: true,
       hidden: ({ value }: any) => {
-        return !value || value.title === 'White'
+        return !value || value.title === 'White';
       },
     },
-  ].filter(e => e),
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',
@@ -106,26 +106,29 @@ export default {
       countryTags,
       localNewsTags,
     }: {
-      title?: PortableTextBlock[]
-      tags?: string[]
-      countryTags?: string[]
-      localNewsTags?: string[]
+      title?: PortableTextBlock[];
+      tags?: string[];
+      countryTags?: string[];
+      localNewsTags?: string[];
     }) {
       //@ts-ignore:todo
-      const plainTitle = blocksToText(title) ?? 'No title, only news'
-      const tagsCount = tags?.length
-      const countryTagsCount = countryTags?.length
-      const localNewsTagsCount = localNewsTags?.length
+      const plainTitle = blocksToText(title) ?? 'No title, only news';
+      const tagsCount = tags?.length;
+      const countryTagsCount = countryTags?.length;
+      const localNewsTagsCount = localNewsTags?.length;
+      const tagSummary = [
+        tagsCount ? `${tagsCount} tags` : '',
+        countryTagsCount ? `${countryTagsCount} countryTags` : '',
+        localNewsTagsCount ? `${localNewsTagsCount} localNewsTags` : '',
+      ]
+        .filter(Boolean)
+        .join(' | ');
 
       return {
         title: plainTitle,
-        subtitle: `News promotion 
-        ${tags && tags?.length > 0 ? `| ${tagsCount} tags` : ''}
-        ${countryTags && countryTags?.length > 0 ? `| ${countryTagsCount} countryTags` : ''}
-        ${localNewsTags && localNewsTags?.length > 0 ? `| ${localNewsTagsCount} localNewsTags` : ''}
-        `,
+        subtitle: `News promotion: ${tagSummary}`,
         media: TiNews,
-      }
+      };
     },
   },
-}
+};

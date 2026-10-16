@@ -55,11 +55,11 @@ export default {
       title: 'title',
     },
     prepare({ title }: { title?: PortableTextBlock[] }) {
-      const plainTitle = title ? blocksToText(title) : 'Bar Chart Block';
+      const plainTitle = title ? blocksToText(title) : 'Bar Chart';
 
       return {
         title: plainTitle,
-        subtitle: 'Bar chart block component',
+        subtitle: 'Bar chart',
         media: AiOutlineBarChart,
       };
     },

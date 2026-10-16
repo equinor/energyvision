@@ -1,43 +1,43 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
-import { Flex, Stack, Text } from '@sanity/ui'
-import { defineField, defineType, type PreviewProps, type Rule } from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
-import { capitalizeFirstLetter } from '../../../helpers/formatters'
-import type { ColorSelectorValue } from '../../components/ColorSelector'
-import { CompactBlockEditor } from '../../components/CompactBlockEditor'
+import { Flex, Stack, Text } from '@sanity/ui';
+import { defineField, defineType, type PreviewProps, type Rule } from 'sanity';
+import blocksToText from '../../../helpers/blocksToText';
+import { capitalizeFirstLetter } from '../../../helpers/formatters';
+import type { ColorSelectorValue } from '../../components/ColorSelector';
+import { CompactBlockEditor } from '../../components/CompactBlockEditor';
 import {
   CardTheme,
   type ThemeSelectorValue,
-} from '../../components/ThemeSelector'
-import { configureBlockContent } from '../../editors/blockContentType'
-import { layoutGrid } from '../commonFields/commonFields'
-import { getColorForTabTheme } from './tabsThemes'
+} from '../../components/ThemeSelector';
+import { configureBlockContent } from '../../editors/blockContentType';
+import { layoutGrid } from '../commonFields/commonFields';
+import { getColorForTabTheme } from './tabsThemes';
 
 type TabsPreviewProps = {
-  tabList?: any[]
-  tabsBackground?: any
-} & PreviewProps
+  tabList?: any[];
+  tabsBackground?: any;
+} & PreviewProps;
 
 export function TabsPreview(props: TabsPreviewProps) {
-  const { title, tabList, tabsBackground } = props
+  const { title, tabList, tabsBackground } = props;
 
   //@ts-ignore:todo
-  const plainTitle = title ? blocksToText(title) : undefined
+  const plainTitle = title ? blocksToText(title) : undefined;
   const panelType =
     tabList?.[0]?.tabPanel?.panelType ??
     tabList?.[0]?.tabPanel?.keyNumbersPanel?._type ??
     tabList?.[0]?.tabPanel?.infoPanel?._type ??
     tabList?.[0]?.tabPanel?.panel?.[0]?._type ??
-    ''
-  const subTitle = `Tabs component | ${tabList?.length} tabs | Panel type: ${capitalizeFirstLetter(
+    '';
+  const subTitle = `Tabs | ${tabList?.length} tabs | Panel type: ${capitalizeFirstLetter(
     panelType,
-  )}`
+  )}`;
 
   const color: ThemeSelectorValue = {
     title: tabsBackground?.background?.[0]?.title as string,
     value: tabsBackground?.background?.[0]?.value,
-  }
+  };
   return (
     <Flex gap={2} padding={2} align={'center'}>
       <CardTheme
@@ -53,16 +53,16 @@ export function TabsPreview(props: TabsPreviewProps) {
         </Text>
       </Stack>
     </Flex>
-  )
+  );
 }
 
 export type Tabs = {
-  _type: 'tabs'
-  title: any
-  ingress?: any
-  tabs: any[]
-  background?: ColorSelectorValue
-}
+  _type: 'tabs';
+  title: any;
+  ingress?: any;
+  tabs: any[];
+  background?: ColorSelectorValue;
+};
 
 export default defineType({
   title: 'Tabs',
@@ -111,7 +111,7 @@ export default defineType({
       'md',
       'Optional. Select content column. Default is second outer.',
     ),
-  ].filter(e => e),
+  ].filter((e) => e),
   components: {
     preview: TabsPreview,
   },
@@ -122,4 +122,4 @@ export default defineType({
       tabList: 'tabList',
     },
   },
-})
+});

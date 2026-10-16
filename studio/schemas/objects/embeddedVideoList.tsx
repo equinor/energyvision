@@ -1,12 +1,12 @@
-import { play_circle } from '@equinor/eds-icons'
-import type { PortableTextBlock, Rule } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import { gridColumns } from './commonFields/commonFields'
-import { cookiePolicy } from './iframe/sharedIframeFields'
+import { play_circle } from '@equinor/eds-icons';
+import type { PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { configureBlockContent } from '../editors';
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
+import { gridColumns } from './commonFields/commonFields';
+import { cookiePolicy } from './iframe/sharedIframeFields';
 
 export default {
   name: 'embeddedVideoList',
@@ -88,14 +88,14 @@ export default {
               subtitle,
               highlighted,
             }: {
-              title: PortableTextBlock[]
-              subtitle: string
-              highlighted?: boolean
+              title: PortableTextBlock[];
+              subtitle: string;
+              highlighted?: boolean;
             }) {
               return {
                 title: blocksToText(title) || 'Embedded video',
                 subtitle: highlighted ? `Highlighted | ${subtitle}` : subtitle,
-              }
+              };
             },
           },
         },
@@ -105,11 +105,11 @@ export default {
           .min(1)
           .custom((items?: Array<{ highlighted?: boolean }>) => {
             const highlightedCount =
-              items?.filter(item => item?.highlighted).length ?? 0
+              items?.filter((item) => item?.highlighted).length ?? 0;
 
             return highlightedCount > 1
               ? 'Only one video can be highlighted.'
-              : true
+              : true;
           }),
     },
   ],
@@ -119,14 +119,14 @@ export default {
       items: 'items',
     },
     prepare(selection: any) {
-      const { title, items } = selection
-      const length = items ? items.length : 0
+      const { title, items } = selection;
+      const length = items ? items.length : 0;
 
       return {
-        title: title ? blocksToText(title) : 'Untitled embedded video list',
-        subtitle: `Embedded video list with ${length} items`,
+        title: title ? blocksToText(title) : 'Untitled',
+        subtitle: `Embedded video list: ${length} videos`,
         media: EdsIcon(play_circle),
-      }
+      };
     },
   },
-}
+};
