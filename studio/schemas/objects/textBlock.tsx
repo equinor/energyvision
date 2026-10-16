@@ -255,7 +255,7 @@ export default {
 
       return {
         title: plainTitle || 'Missing title/content',
-        subtitle: `Text block:${subtitleDetails ? ` ${subtitleDetails}` : ''}`,
+        subtitle: `Text block${subtitleDetails ? `: ${subtitleDetails}` : ''}`,
         media,
       };
     },

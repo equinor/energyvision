@@ -2,9 +2,9 @@
 //@ts-nocheck
 
 //import { ConfigRedirect } from '@/next.config'
-import { dataset } from '../../languageConfig'
-import { getLocaleFromName } from '../helpers/localization'
-import { notSecuredTokenClient } from '../lib/client'
+import { dataset } from '../../languageConfig';
+import { getLocaleFromName } from '../helpers/localization';
+import { notSecuredTokenClient } from '../lib/client';
 
 /* export const getAllRedirects = async () => {
   try {
@@ -31,16 +31,16 @@ import { notSecuredTokenClient } from '../lib/client'
 const getExternalRedirects = async () => {
   const result = await notSecuredTokenClient.fetch(
     `*[_type == "externalRedirect"]{from,to}`,
-  )
+  );
   const externalRedirects = result
-    .filter(e => e)
-    .map(externalRedirect => {
+    .filter((e) => e)
+    .map((externalRedirect) => {
       return {
         source: externalRedirect.from,
         permanent: true,
         destination: externalRedirect.to,
-      }
-    })
+      };
+    });
   const redirects = [
     // Redirect IE users to not-supported page
     {
@@ -56,7 +56,7 @@ const getExternalRedirects = async () => {
       destination: '/not-supported.html',
     },
     ...externalRedirects,
-  ]
+  ];
   if (
     dataset &&
     ['global', 'global-development', 'global-test'].includes(dataset)
@@ -72,73 +72,77 @@ const getExternalRedirects = async () => {
         destination: '/no/magasin',
         permanent: true,
       },
-    ]
-    redirects.concat(fiftySiteRedirects)
+    ];
+    redirects.concat(fiftySiteRedirects);
   }
-  return redirects.filter(e => e)
-}
+  return redirects.filter((e) => e);
+};
 
 export const getInternalRedirects = async () => {
   const result = await notSecuredTokenClient.fetch(`*[_type == "redirect"]{
   lang,
   from,
   "to": to->slug.current
-}`)
+}`);
   const redirects = result
-    .filter(e => e)
-    .map(redirect => {
-      const to = redirect.to === '/' ? '' : redirect.to
-      const locale = getLocaleFromName(redirect.lang)
-      const des = `${locale !== 'en' ? `/${locale}` : ''}${to}`
+    .filter((e) => e)
+    .map((redirect) => {
+      const to = redirect.to === '/' ? '' : redirect.to;
+      const locale = getLocaleFromName(redirect.lang);
+      const des = `${locale !== 'en' ? `/${locale}` : ''}${to}`;
 
       const nextRedirect = {
         source: redirect.from,
         destination: des,
         permanent: true,
-      }
+      };
       return redirect.from.startsWith(locale)
         ? { ...nextRedirect, locale: false }
-        : nextRedirect
-    })
-  return [...redirects]
-}
+        : nextRedirect;
+    });
+  return [...redirects];
+};
 
 export const getAllRedirects = async () => {
   const result = await Promise.all([
     getExternalRedirects(),
     getInternalRedirects(),
-  ])
+  ]);
 
-  return result.flat()
-}
+  return result.flat();
+};
 
 export const getWWWRedirect = (requestLocale, host, pathname) => {
   if (!host.includes('www')) {
-    return `https://www.${host}/${requestLocale}${pathname}`
+    return `https://www.${host}/${requestLocale}${pathname}`;
   }
-  return undefined
-}
+  return undefined;
+};
 
 export const getDnsRedirect = (host, pathname) => {
   const dns = host
     .replace('http://', '')
     .replace('https://', '')
-    .replace('www.', '')
+    .replace('www.', '');
 
   if (dns === 'statoil.com') {
-    return `https://www.equinor.com${pathname}`
+    return `https://www.equinor.com${pathname}`;
   }
 
   if (dns === 'equinor.kr' || dns === 'equinor.co.kr') {
-    return "https://www.equinor.com/where-we-are/south-korea"
+    return 'https://www.equinor.com/where-we-are/south-korea';
+  }
+
+  if (dns === 'morgendagenshelter.no') {
+    return 'https://www.sponsorship.equinor.com/';
   }
 
   const redirect =
-    dnsRedirects.find(redirect => redirect.from === dns + pathname) ||
-    dnsRedirects.find(redirect => redirect.from === dns)
+    dnsRedirects.find((redirect) => redirect.from === dns + pathname) ||
+    dnsRedirects.find((redirect) => redirect.from === dns);
 
-  return redirect && `https://www.equinor.com${redirect.to}`
-}
+  return redirect && `https://www.equinor.com${redirect.to}`;
+};
 
 const dnsRedirects = [
   {
@@ -202,11 +206,7 @@ const dnsRedirects = [
     to: '/energy/eu2nsea',
   },
   {
-    from: 'morgendagenshelter.no',
-    to: '/no/om-oss/sponsing-og-stotte',
-  },
-  {
     from: 'data.equinor.com',
     to: '/energy/data-sharing',
   },
-]
+];

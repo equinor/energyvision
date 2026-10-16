@@ -1,7 +1,14 @@
 import type { PortableTextBlock } from '@portabletext/react';
+import { Fragment } from 'react';
 import { TiNews } from 'react-icons/ti';
-import type { Rule } from 'sanity';
+import {
+  type PreviewProps,
+  type Reference,
+  type Rule,
+  useDocumentValues,
+} from 'sanity';
 import blocksToText from '../../../helpers/blocksToText';
+import { defaultLanguage } from '../../../languages';
 import { Flags } from '../../../src/lib/datasetHelpers';
 import {
   ingress,
@@ -10,6 +17,48 @@ import {
   viewAllLink,
   viewAllLinkLabel,
 } from '../commonFields/commonFields';
+
+const NewsTagLabel = ({ documentId }: { documentId: string }) => {
+  const { value, isLoading, error } = useDocumentValues<{
+    title?: string | Record<string, string>;
+    key?: { current?: string };
+  }>(documentId, ['title', 'key']);
+  const title =
+    typeof value?.title === 'string'
+      ? value.title
+      : value?.title?.[defaultLanguage.name];
+
+  return (
+    <>
+      {title ||
+        value?.key?.current ||
+        (isLoading ? 'Loading tag' : error ? 'Unavailable tag' : 'Unnamed tag')}
+    </>
+  );
+};
+
+const NewsPromotionPreview = (
+  props: PreviewProps & { tagReferences?: Reference[] },
+) => {
+  const { tagReferences, renderDefault } = props;
+
+  return renderDefault({
+    ...props,
+    subtitle: (
+      <>
+        News promotion:{' '}
+        {tagReferences?.length
+          ? tagReferences.map((tag, index) => (
+              <Fragment key={tag._key ?? `${tag._ref}-${index}`}>
+                {index > 0 && ', '}
+                <NewsTagLabel documentId={tag._ref} />
+              </Fragment>
+            ))
+          : 'All'}
+      </>
+    ),
+  });
+};
 
 export default {
   title: 'News promotion',
@@ -93,6 +142,9 @@ export default {
       },
     },
   ].filter((e) => e),
+  components: {
+    preview: NewsPromotionPreview,
+  },
   preview: {
     select: {
       title: 'title',
@@ -107,26 +159,19 @@ export default {
       localNewsTags,
     }: {
       title?: PortableTextBlock[];
-      tags?: string[];
-      countryTags?: string[];
-      localNewsTags?: string[];
+      tags?: Reference[];
+      countryTags?: Reference[];
+      localNewsTags?: Reference[];
     }) {
       //@ts-ignore:todo
       const plainTitle = blocksToText(title) ?? 'No title, only news';
-      const tagsCount = tags?.length;
-      const countryTagsCount = countryTags?.length;
-      const localNewsTagsCount = localNewsTags?.length;
-      const tagSummary = [
-        tagsCount ? `${tagsCount} tags` : '',
-        countryTagsCount ? `${countryTagsCount} countryTags` : '',
-        localNewsTagsCount ? `${localNewsTagsCount} localNewsTags` : '',
-      ]
-        .filter(Boolean)
-        .join(' | ');
-
       return {
         title: plainTitle,
-        subtitle: `News promotion: ${tagSummary}`,
+        tagReferences: [
+          ...(tags ?? []),
+          ...(countryTags ?? []),
+          ...(localNewsTags ?? []),
+        ],
         media: TiNews,
       };
     },
