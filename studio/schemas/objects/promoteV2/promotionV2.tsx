@@ -12,7 +12,6 @@ import {
 } from 'sanity';
 import { capitalizeFirstLetter } from '@/helpers/formatters';
 import { OptionButtons } from '@/schemas/components/OptionButtons/OptionButtons';
-import { Flags } from '@/src/lib/datasetHelpers';
 import blocksToText from '../../../helpers/blocksToText';
 import {
   gridColumns,
