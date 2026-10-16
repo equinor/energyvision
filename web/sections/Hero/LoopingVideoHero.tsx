@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 import type { PortableTextBlock } from 'next-sanity';
 import type { ReactNode } from 'react';
-import type { Image } from '@/core/Image/imageUtilities';
+import { getFullScreenSizes, type Image } from '@/core/Image/imageUtilities';
 import { twMerge } from '@/lib/twMerge/twMerge';
 import Blocks from '@/portableText/Blocks';
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap';
@@ -53,6 +53,8 @@ export const LoopingVideoHero = ({
         variant="fullwidth"
         aspectRatio={aspect[ratio ?? 'narrow']}
         {...video}
+        posterLoading="eager"
+        posterSizes={getFullScreenSizes()}
         autoPlay
         muted
         loop

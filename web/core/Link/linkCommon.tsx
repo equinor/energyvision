@@ -18,13 +18,13 @@ export const getArrowAnimation = (type: LinkType) => {
     case 'downloadableImage':
       return 'group-hover/link:translate-y-0.5';
     case 'anchorLink':
-      return 'translate-y-0.5 group-hover/link:translate-y-2';
+      return 'translate-y-0.5 group-hover/link:translate-y-1.5';
     case 'icsLink':
-      return 'translate-y-0.5';
+      return 'translate-y-0.5 group-hover/link:scale-110';
     case 'externalUrl':
       return 'translate-y-0.5 group-hover/link:-translate-y-0.5';
     default:
-      return 'translate-y-0.5 group-hover/link:translate-x-2';
+      return 'translate-y-0.5 group-hover/link:translate-x-1.5';
   }
 };
 
