@@ -15,6 +15,10 @@ import securityHeaders from './securityHeaders';
 
 const withNextIntl = createNextIntlPlugin();
 
+const useRedisCache =
+  process.env.NEXT_PUBLIC_SANITY_DATASET === 'global' &&
+  process.env.RADIX_ENVIRONMENT === 'prod';
+
 const sentryConfig = {
   org: 'equinor',
   project: 'equinor-com',
@@ -58,9 +62,11 @@ const nextConfig: NextConfig = withNextIntl({
     },
     browserToTerminal: true,
   },
-  cacheHandlers: {
-    remote: require.resolve('./cache-handlers/remote-handler.cjs'),
-  },
+  ...(useRedisCache && {
+    cacheHandlers: {
+      remote: require.resolve('./cache-handlers/remote-handler.cjs'),
+    },
+  }),
   /*turbopack: {
      root: join(__dirname),
     resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json'],
