@@ -6,7 +6,7 @@ export const sameLang = /* groq */ `
 
 // The drafts perspective normalizes _id, so also check _originalId (the draft id it resolved).
 export const notDraft = /* groq */ `
-  !(_id in path("drafts.**")) && !(_originalId in path("drafts.**"))
+  !(_id in path("drafts.**")) && !(coalesce(_originalId, _id) in path("drafts.**"))
 `;
 
 export const fixPreviewForDrafts = /* groq */ `

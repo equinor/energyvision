@@ -1,9 +1,12 @@
 'use client';
 import dynamic from 'next/dynamic';
+import NextImage from 'next/image';
+import { useTranslations } from 'next-intl';
 import type { PortableTextBlock } from 'next-sanity';
-import { type HTMLProps, useRef } from 'react';
+import { type HTMLProps, useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import type Player from 'video.js/dist/types/player';
+import { CircularProgress } from '@/core/Progress/CircularProgress';
 import Blocks from '@/portableText/Blocks';
 import { resolveImage } from '@/sanity/lib/utils';
 import { type Image, mapSanityImageRatio } from '../Image/imageUtilities';
@@ -28,7 +31,7 @@ export type VideoPlayerProps = Omit<
   'src' | 'poster'
 > & {
   variant?: Variants;
-  src: string;
+  src?: string | null;
   figureCaption?: string | PortableTextBlock[];
   captionClassName?: string;
   figureClassName?: string;
@@ -40,6 +43,8 @@ export type VideoPlayerProps = Omit<
   /** Sets id on return element for anchors */
   id?: string;
   poster?: Image;
+  posterLoading?: 'lazy' | 'eager';
+  posterSizes?: string;
   /** For the aspect ratios that apply object cover, override to contain */
   containVideo?: boolean;
 };
@@ -59,9 +64,12 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   useBrandTheme = false,
   useFillMode = false,
   poster,
+  posterLoading = 'lazy',
+  posterSizes,
   className,
   containVideo,
 }) => {
+  const intl = useTranslations();
   const { url: posterUrl } = resolveImage({
     image: poster,
     grid: 'lg',
@@ -71,15 +79,75 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     isLargerDisplays: true,
   });
   const playerRef = useRef<Player>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [hasVideoError, setHasVideoError] = useState(false);
+  const [posterWidth, setPosterWidth] = useState<number>();
+  const [shouldMountPlayer, setShouldMountPlayer] = useState(
+    posterLoading === 'eager',
+  );
+  const resolvedPosterSizes =
+    posterSizes ?? (posterWidth ? `${posterWidth}px` : undefined);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const updateWidth = () =>
+      setPosterWidth(Math.ceil(container.getBoundingClientRect().width));
+    updateWidth();
+
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', updateWidth);
+      return () => window.removeEventListener('resize', updateWidth);
+    }
+
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    if (
+      posterLoading === 'eager' ||
+      typeof IntersectionObserver === 'undefined'
+    ) {
+      setShouldMountPlayer(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldMountPlayer(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' },
+    );
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [posterLoading]);
   const useFill =
     !containVideo &&
     (useFillMode || aspectRatio === '10:3' || aspectRatio === '21:9');
+  const videoSource = src?.trim() ?? '';
+  const sourceType =
+    videoSource &&
+    new URL(videoSource, 'https://localhost').pathname
+      .toLowerCase()
+      .endsWith('.mp4')
+      ? 'video/mp4'
+      : 'application/x-mpegURL';
 
   const videoJsOptions = {
     src: [
       {
-        src: src,
-        type: 'application/x-mpegURL',
+        src: videoSource,
+        type: sourceType,
       },
     ],
     muted: muted ? 'muted' : false,
@@ -151,12 +219,23 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   const handlePlayerReady = (player: Player) => {
     playerRef.current = player;
-    // analytics here?
-    //console.log('player is ready')
-    // You can handle player events here, for example:
-    player.on('waiting', () => {
-      // console.log('player is waiting')
+    const hideLoadingOverlay = () => setIsVideoReady(true);
+    const handleError = () => setHasVideoError(true);
+    player.on('loadeddata', hideLoadingOverlay);
+    player.on('canplay', hideLoadingOverlay);
+    player.on('error', handleError);
+    player.on('playing', () => {
+      setHasVideoError(false);
+      hideLoadingOverlay();
     });
+    player.on('loadstart', () => {
+      if (autoPlay) setIsVideoReady(false);
+    });
+    if (player.error()) {
+      handleError();
+    } else if (!autoPlay || player.readyState() >= 2) {
+      hideLoadingOverlay();
+    }
   };
 
   return (
@@ -167,15 +246,52 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
         figureClassName,
       )}
     >
-      <Video
-        //@ts-ignore: TODO
-        options={videoJsOptions}
-        onReady={handlePlayerReady}
-        useBrandTheme={useBrandTheme}
-        containVideo={containVideo}
-        variant={variant}
+      <div
+        ref={containerRef}
         className={twMerge(aspectRatioClassName[aspectRatio], className)}
-      />
+        style={{ position: 'relative' }}
+      >
+        {videoSource && shouldMountPlayer && (
+          <Video
+            //@ts-ignore: TODO
+            options={videoJsOptions}
+            onReady={handlePlayerReady}
+            useBrandTheme={useBrandTheme}
+            containVideo={containVideo}
+            variant={variant}
+            className="h-full w-full"
+          />
+        )}
+        {posterUrl &&
+          (!videoSource || !isVideoReady || hasVideoError) &&
+          resolvedPosterSizes && (
+            <>
+              <NextImage
+                src={posterUrl}
+                alt=""
+                fill
+                sizes={resolvedPosterSizes}
+                loading={posterLoading}
+                className={twMerge(
+                  'pointer-events-none object-cover',
+                  containVideo && 'object-contain',
+                )}
+              />
+              {videoSource && !hasVideoError && (
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                  <CircularProgress
+                    variant="indeterminate"
+                    type="progress"
+                    aria-label={intl('loading')}
+                    className="rounded-full bg-slate-blue-95/70 p-2 motion-reduce:animate-none"
+                    trackClassName="stroke-white-100/30"
+                    progressClassName="stroke-white-100 [stroke-dasharray:80_145]"
+                  />
+                </div>
+              )}
+            </>
+          )}
+      </div>
       {figureCaption && (
         <figcaption
           className={twMerge(
