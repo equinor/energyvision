@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { text_field } from '@equinor/eds-icons'
-import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import blocksToText from '../../../../helpers/blocksToText'
-import { capitalizeFirstLetter } from '../../../../helpers/formatters'
+import { text_field } from '@equinor/eds-icons';
+import type { PortableTextBlock, Reference, Rule } from 'sanity';
+import blocksToText from '../../../../helpers/blocksToText';
+import { capitalizeFirstLetter } from '../../../../helpers/formatters';
 import {
   ContentBottomCenterImage,
   ContentBottomLeftImage,
@@ -10,24 +10,24 @@ import {
   ContentLeftImage,
   ContentRightImage,
   EdsIcon,
-} from '../../../../icons'
-import { RadioIconSelector } from '../../../components'
-import type { ColorSelectorValue } from '../../../components/ColorSelector'
-import { CompactBlockEditor } from '../../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../../editors'
-import singleItemArray from '../../singleItemArray'
+} from '../../../../icons';
+import { RadioIconSelector } from '../../../components';
+import type { ColorSelectorValue } from '../../../components/ColorSelector';
+import { CompactBlockEditor } from '../../../components/CompactBlockEditor';
+import { configureBlockContent } from '../../../editors';
+import singleItemArray from '../../singleItemArray';
 import {
   fromLargerTextThemeColors,
   fromNormalTextThemeColors,
-} from '../../textTeaser'
+} from '../../textTeaser';
 
-const blockContentType = configureBlockContent({ variant: 'extendedBlock' })
+const blockContentType = configureBlockContent({ variant: 'extendedBlock' });
 const themedTitleContentType = configureBlockContent({
   variant: 'titleWithDisplay',
-})
+});
 const titleContentType = configureBlockContent({
   variant: 'titleWithDisplay',
-})
+});
 
 const contentAlignmentOptions = [
   { value: 'left', icon: ContentLeftImage },
@@ -35,20 +35,20 @@ const contentAlignmentOptions = [
   { value: 'right', icon: ContentRightImage },
   { value: 'bottom-left', icon: ContentBottomLeftImage },
   { value: 'bottom-center', icon: ContentBottomCenterImage },
-]
+];
 
 type GridTextBlock = {
-  overline?: string
-  useThemedTitle?: boolean
-  title?: string
-  content?: string
-  action?: Reference[]
-  background?: ColorSelectorValue
-}
+  overline?: string;
+  useThemedTitle?: boolean;
+  title?: string;
+  content?: string;
+  action?: Reference[];
+  background?: ColorSelectorValue;
+};
 
 type GridTextBlockDocument = {
-  parent: GridTextBlock
-}
+  parent: GridTextBlock;
+};
 
 export default {
   name: 'gridTextBlock',
@@ -164,18 +164,18 @@ export default {
           onChange,
           value,
         }: {
-          onChange: any
-          value: string
+          onChange: any;
+          value: string;
         }) {
           return (
             <RadioIconSelector
-              name='imageAlignmentSelector'
+              name="imageAlignmentSelector"
               options={contentAlignmentOptions}
               defaultValue={'left'}
               currentValue={value}
               onChange={onChange}
             />
-          )
+          );
         },
       },
     },
@@ -213,23 +213,23 @@ export default {
             title: `Image background`,
             subtitle: `${capitalizeFirstLetter(contentAlignment) + ' aligned '} content`,
             media: image.asset,
-          }
+          };
         },
       },
     },
-  ].filter(e => e),
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',
     },
     prepare({ title }: { title: PortableTextBlock[] }) {
-      const plainTitle = blocksToText(title)
+      const plainTitle = blocksToText(title);
 
       return {
         title: plainTitle || 'Missing title/content',
-        subtitle: 'Grid text block component',
+        subtitle: 'Grid text block',
         media: EdsIcon(text_field),
-      }
+      };
     },
   },
-}
+};

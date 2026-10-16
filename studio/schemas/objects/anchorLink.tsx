@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { anchor } from '@equinor/eds-icons'
-import { Box, Heading, Text } from '@sanity/ui'
-import type { Rule } from 'sanity'
-import { EdsIcon } from '../../icons'
-import { validateComponentAnchor } from '../validations/validateAnchorReference'
+import { anchor } from '@equinor/eds-icons';
+import { Box, Heading, Text } from '@sanity/ui';
+import type { Rule } from 'sanity';
+import { EdsIcon } from '../../icons';
+import { validateComponentAnchor } from '../validations/validateAnchorReference';
 
 export type AnchorLink = {
-  _type: 'anchorLink'
-}
+  _type: 'anchorLink';
+};
 
 const Description = () => {
   return (
@@ -19,8 +19,8 @@ const Description = () => {
         component following it.
       </Text>
     </Box>
-  )
-}
+  );
+};
 
 export default {
   title: 'Anchor Link',
@@ -59,9 +59,9 @@ export default {
     prepare({ anchorReference }: { anchorReference: string }) {
       return {
         title: anchorReference,
-        subtitle: `Anchor Link component`,
+        subtitle: `Anchor Link`,
         media: EdsIcon(anchor),
-      }
+      };
     },
   },
-}
+};

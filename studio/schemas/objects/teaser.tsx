@@ -1,49 +1,49 @@
 /* eslint-disable react/display-name */
 
-import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
+import type { PortableTextBlock, Reference, Rule } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
 import {
   FullSizeImage,
   LeftAlignedImage,
   RightAlignedImage,
   SmallSizeImage,
-} from '../../icons'
-import { RadioIconSelector } from '../components'
-import type { ColorSelectorValue } from '../components/ColorSelector'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import { backgroundPosition } from './commonFields/commonFields'
-import type { DownloadableImage } from './downloadableImage'
-import type { DownloadableFile } from './files'
-import type { ImageWithAlt } from './imageWithAlt'
-import type { LinkSelector } from './linkSelector'
+} from '../../icons';
+import { RadioIconSelector } from '../components';
+import type { ColorSelectorValue } from '../components/ColorSelector';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { configureBlockContent } from '../editors';
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
+import { backgroundPosition } from './commonFields/commonFields';
+import type { DownloadableImage } from './downloadableImage';
+import type { DownloadableFile } from './files';
+import type { ImageWithAlt } from './imageWithAlt';
+import type { LinkSelector } from './linkSelector';
 
 const imageSizeOptions = [
   { value: 'full', icon: FullSizeImage },
   { value: 'small', icon: SmallSizeImage },
-]
+];
 
 const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
   { value: 'right', icon: RightAlignedImage },
-]
+];
 
 export type Teaser = {
-  _type: 'teaser'
-  overline?: string
-  title?: PortableTextBlock[]
-  text?: PortableTextBlock[]
-  action?: (LinkSelector | DownloadableFile | DownloadableImage)[]
-  image: ImageWithAlt
-  imagePosition?: string
-  imageSize?: string
-  background?: ColorSelectorValue
-}
+  _type: 'teaser';
+  overline?: string;
+  title?: PortableTextBlock[];
+  text?: PortableTextBlock[];
+  action?: (LinkSelector | DownloadableFile | DownloadableImage)[];
+  image: ImageWithAlt;
+  imagePosition?: string;
+  imageSize?: string;
+  background?: ColorSelectorValue;
+};
 
 type TeaserDocument = {
-  parent: Teaser
-}
+  parent: Teaser;
+};
 
 export default {
   name: 'teaser',
@@ -94,7 +94,7 @@ export default {
       of: [configureBlockContent({ variant: 'simpleBlock' })],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
-          return validateCharCounterEditor(value, 600, true)
+          return validateCharCounterEditor(value, 600, true);
         }).warning(),
     },
     {
@@ -128,18 +128,18 @@ export default {
           onChange,
           value,
         }: {
-          onChange: any
-          value: string
+          onChange: any;
+          value: string;
         }) {
           return (
             <RadioIconSelector
-              name='imageAlignmentSelector'
+              name="imageAlignmentSelector"
               options={imageAlignmentOptions}
-              defaultValue='left'
+              defaultValue="left"
               currentValue={value}
               onChange={onChange}
             />
-          )
+          );
         },
       },
     },
@@ -155,18 +155,18 @@ export default {
           onChange,
           value,
         }: {
-          onChange: any
-          value: string
+          onChange: any;
+          value: string;
         }) {
           return (
             <RadioIconSelector
-              name='imageSizeSelector'
+              name="imageSizeSelector"
               options={imageSizeOptions}
-              defaultValue='full'
+              defaultValue="full"
               currentValue={value}
               onChange={onChange}
             />
-          )
+          );
         },
       },
     },
@@ -198,17 +198,17 @@ export default {
       text,
       image,
     }: {
-      title: PortableTextBlock[]
-      text: PortableTextBlock[]
-      image: Reference
+      title: PortableTextBlock[];
+      text: PortableTextBlock[];
+      image: Reference;
     }) {
-      const plainTitle = blocksToText(title ?? text)
+      const plainTitle = blocksToText(title ?? text);
 
       return {
         title: plainTitle || 'Missing title/content',
-        subtitle: 'Teaser component',
+        subtitle: 'Teaser',
         media: image,
-      }
+      };
     },
   },
-}
+};

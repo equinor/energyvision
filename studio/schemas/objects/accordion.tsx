@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { Rule } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { AccordionComponent } from '../../icons'
-import type { ColorSelectorValue } from '../components/ColorSelector'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors/blockContentType'
+import { TfiLayoutAccordionList } from 'react-icons/tfi';
+import type { Rule } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import type { ColorSelectorValue } from '../components/ColorSelector';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { configureBlockContent } from '../editors/blockContentType';
 
 export type Accordion = {
-  _type: 'accordion'
-  title: any
-  ingress?: any
-  accordion: any[]
-  background: ColorSelectorValue
-}
+  _type: 'accordion';
+  title: any;
+  ingress?: any;
+  accordion: any[];
+  background: ColorSelectorValue;
+};
 
 export default {
   title: 'Accordion',
@@ -86,19 +86,19 @@ export default {
       type: 'colorlist',
       fieldset: 'design',
     },
-  ].filter(e => e),
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',
     },
     prepare({ title = '' }: { title: any }) {
-      const plainTitle = title ? blocksToText(title) : undefined
+      const plainTitle = title ? blocksToText(title) : undefined;
 
       return {
         title: plainTitle || 'Missing title',
-        subtitle: `Accordion component.`,
-        media: AccordionComponent,
-      }
+        subtitle: `Accordion`,
+        media: TfiLayoutAccordionList,
+      };
     },
   },
-}
+};

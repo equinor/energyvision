@@ -738,6 +738,11 @@ const snippets: textSnippet = {
     defaultValue: 'Magazine Tag',
     group: groups.magazine,
   },
+  magazine_explore_topics: {
+    title: 'Magazine article: Explore our topics heading',
+    defaultValue: 'Explore our topics',
+    group: groups.magazine,
+  },
   magazine_tag_filter_all: {
     title: 'All',
     defaultValue: 'All',

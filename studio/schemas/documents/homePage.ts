@@ -1,14 +1,16 @@
-import { paste } from '@equinor/eds-icons'
-import { PiStorefrontLight } from 'react-icons/pi'
-import { formatDate } from '@/helpers/formatDate'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import { Flags } from '../../src/lib/datasetHelpers'
-import { RolesBasedArrayInput } from '../components/RolesBasedArrayInput'
-import { defaultColors } from '../defaultColors'
-import sharedHeroFields, { HeroTypes } from './header/sharedHeaderFields'
-import { lang } from './langField'
-import { openGraphImage, seo, stickyMenu } from './topic/sharedTopicPageFields'
+import { paste } from '@equinor/eds-icons';
+import { createElement } from 'react';
+import { PiStorefrontLight } from 'react-icons/pi';
+import type { ArrayOfObjectsInputProps } from 'sanity';
+import { formatDate } from '@/helpers/formatDate';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import { Flags } from '../../src/lib/datasetHelpers';
+import { RolesBasedArrayInput } from '../components/RolesBasedArrayInput';
+import { defaultColors } from '../defaultColors';
+import sharedHeroFields, { HeroTypes } from './header/sharedHeaderFields';
+import { lang } from './langField';
+import { openGraphImage, seo, stickyMenu } from './topic/sharedTopicPageFields';
 
 export default {
   type: 'document',
@@ -85,12 +87,21 @@ export default {
         { type: 'promotePeople', title: 'People promotion' },
         { type: 'promoteTopics', title: 'Topic page promotion' },
         Flags.HAS_NEWS && { type: 'promoteNews', title: 'News promotions' },
-        /*         { type: 'promoteExternalLinkV2' },
-        { type: 'promoteTopicsV2' }, */
         { type: 'promotionsV2' },
-      ].filter(e => e),
+      ].filter((e) => e),
       components: {
-        input: RolesBasedArrayInput,
+        input: (props: ArrayOfObjectsInputProps) =>
+          createElement(RolesBasedArrayInput, {
+            ...props,
+            schemaType: {
+              ...props.schemaType,
+              of: props.schemaType.of.filter(
+                (member) =>
+                  member.name !== 'promoteTopics' &&
+                  member.name !== 'promotion',
+              ),
+            },
+          }),
       },
       options: {
         insertMenu: {
@@ -100,18 +111,12 @@ export default {
               name: 'promotions',
               title: 'Promotions',
               of: [
-                'promotion',
                 'promoteMagazine',
-                'promoteTopics',
                 'promotePeople',
                 'promoteEvents',
                 'promoteNews',
+                'promotionsV2',
               ],
-            },
-            {
-              name: 'promotionsV2',
-              title: 'Promotions(v2)',
-              of: ['promotionsV2'],
             },
             {
               name: 'carousels',
@@ -122,7 +127,7 @@ export default {
         },
       },
     },
-  ].filter(e => e),
+  ].filter((e) => e),
   orderings: [
     {
       title: 'Title ',
@@ -139,14 +144,14 @@ export default {
       updated: '_updatedAt',
     },
     prepare(selection: any) {
-      const { title, image, video, type, updated } = selection
-      const plainTitle = title ? blocksToText(title) : ''
-      const media = type === HeroTypes.LOOPING_VIDEO ? video : image
+      const { title, image, video, type, updated } = selection;
+      const plainTitle = title ? blocksToText(title) : '';
+      const media = type === HeroTypes.LOOPING_VIDEO ? video : image;
       return {
         title: plainTitle,
         subtitle: `Updated ${formatDate(updated)}`,
         media: media ?? PiStorefrontLight,
-      }
+      };
     },
   },
-}
+};
