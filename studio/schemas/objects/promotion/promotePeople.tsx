@@ -1,34 +1,34 @@
-import type { PortableTextBlock } from '@portabletext/react'
-import { MdOutlineContactEmergency } from 'react-icons/md'
-import type { Reference, Rule } from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
+import type { PortableTextBlock } from '@portabletext/react';
+import { MdOutlineContactEmergency } from 'react-icons/md';
+import type { Reference, Rule } from 'sanity';
+import blocksToText from '../../../helpers/blocksToText';
 import {
   ingress,
   theme,
   title,
   viewAllLink,
   viewAllLinkLabel,
-} from '../commonFields/commonFields'
-import type { ImageWithAlt } from '../imageWithAlt'
-import linkSelector from '../linkSelector/linkSelector'
+} from '../commonFields/commonFields';
+import type { ImageWithAlt } from '../imageWithAlt';
+import linkSelector from '../linkSelector/linkSelector';
 
 export type Promotion = {
-  image?: ImageWithAlt
-  name: string
-  title?: string
-  department?: string
-  isLink: boolean
-  reference?: Reference
-  url?: string
-  anchor?: string
-}
+  image?: ImageWithAlt;
+  name: string;
+  title?: string;
+  department?: string;
+  isLink: boolean;
+  reference?: Reference;
+  url?: string;
+  anchor?: string;
+};
 
 export type ReferenceTarget = {
-  type: string
-}
+  type: string;
+};
 
 function emailIsValid(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 export default {
@@ -107,9 +107,9 @@ export default {
               hidden: ({ parent }: { parent: Promotion }) => parent?.isLink,
               validation: (Rule: Rule) =>
                 Rule.warning().custom((email: string) => {
-                  if (!email || email === '') return true
-                  if (!emailIsValid(email)) return 'Not a valid email'
-                  return true
+                  if (!email || email === '') return true;
+                  if (!emailIsValid(email)) return 'Not a valid email';
+                  return true;
                 }),
             },
             {
@@ -137,18 +137,18 @@ export default {
               department,
               image,
             }: {
-              name: string
-              title: string
-              department: string
-              image: Reference
+              name: string;
+              title: string;
+              department: string;
+              image: Reference;
             }) {
-              const departmentText = department ? department : ''
-              const titleText = title ? title : ''
+              const departmentText = department ? department : '';
+              const titleText = title ? title : '';
               return {
                 title: name,
                 subtitle: `${titleText} ${departmentText}`,
                 media: image,
-              }
+              };
             },
           },
         },
@@ -165,7 +165,7 @@ export default {
       fieldset: 'design',
       readonly: true,
       hidden: ({ value }: any) => {
-        return !value || value.title === 'White'
+        return !value || value.title === 'White';
       },
     },
   ],
@@ -178,16 +178,16 @@ export default {
       title,
       peopleList,
     }: {
-      title?: PortableTextBlock[]
-      peopleList?: any[]
+      title?: PortableTextBlock[];
+      peopleList?: any[];
     }) {
       //@ts-ignore:todo
-      const plainTitle = blocksToText(title) ?? 'No title, only people'
+      const plainTitle = blocksToText(title) ?? 'No title, only people';
       return {
         title: `${plainTitle}`,
-        subtitle: `People promotion | ${peopleList?.length} people`,
+        subtitle: `People promotion: ${peopleList?.length} people`,
         media: MdOutlineContactEmergency,
-      }
+      };
     },
   },
-}
+};

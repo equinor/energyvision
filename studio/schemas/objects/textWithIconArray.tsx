@@ -1,9 +1,9 @@
-import { view_module } from '@equinor/eds-icons'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import type { SchemaType } from '../../types'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
+import { view_module } from '@equinor/eds-icons';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import type { SchemaType } from '../../types';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { configureBlockContent } from '../editors';
 
 export default {
   type: 'object',
@@ -53,40 +53,40 @@ export default {
       group: 'group',
     },
     prepare({ group, title }: any) {
-      const plainText = blocksToText(title)
+      const plainText = blocksToText(title);
       const previewTitle = plainText
         ? plainText
         : group
           ? generatePreviewTitle(group)
-          : 'Missing content'
+          : 'Missing content';
       return {
         title: previewTitle,
-        subtitle: `${group ? group.length : 0} Text with Icon component(s)`,
+        subtitle: `${group ? group.length : 0} Text with Icon`,
         media: <div>{EdsIcon(view_module)}</div>,
-      }
+      };
     },
   },
-}
+};
 
 const generatePreviewTitle = (group: any) => {
   return group.reduce((sum: string, current: any, index: number): string => {
-    const cutOff = 20
+    const cutOff = 20;
 
-    let string = ''
+    let string = '';
 
     if (current.title) {
-      string = current.title.substr(0, cutOff).trim()
+      string = current.title.substr(0, cutOff).trim();
     } else if (current.text) {
-      const plainText = blocksToText(current.text)
+      const plainText = blocksToText(current.text);
       string = plainText
         ? plainText.slice(0, cutOff).trim()
-        : `Missing title and text`
+        : `Missing title and text`;
     } else {
-      string = `Missing title and text`
+      string = `Missing title and text`;
     }
 
     return (
       sum + `${index + 1}: ${string.length < cutOff ? string : string + '...'} `
-    )
-  }, '')
-}
+    );
+  }, '');
+};

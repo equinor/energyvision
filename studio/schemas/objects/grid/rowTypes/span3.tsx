@@ -1,12 +1,12 @@
-import blocksToText from '../../../../helpers/blocksToText'
-import { PortableTextBlock, Rule } from 'sanity'
-import { EdsIcon } from '../../../../icons'
-import { table_chart } from '@equinor/eds-icons'
-import singleItemArray from '../../singleItemArray'
+import { table_chart } from '@equinor/eds-icons';
+import { type PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../../../helpers/blocksToText';
+import { EdsIcon } from '../../../../icons';
+import singleItemArray from '../../singleItemArray';
 
 export type Span3 = {
-  _type: 'span3'
-}
+  _type: 'span3';
+};
 
 export default {
   title: 'Span 3',
@@ -32,13 +32,13 @@ export default {
       title: 'title',
     },
     prepare({ title = [] }: { title: PortableTextBlock[] }) {
-      const plainTitle = title.length > 0 ? blocksToText(title) : 'Span 3 type'
+      const plainTitle = title.length > 0 ? blocksToText(title) : 'Span 3 type';
 
       return {
         title: plainTitle,
-        subtitle: 'Span 3 component',
+        subtitle: 'Span 3',
         media: () => EdsIcon(table_chart),
-      }
+      };
     },
   },
-}
+};

@@ -1,12 +1,12 @@
-import { dollar } from '@equinor/eds-icons'
-import { Box, Heading, Text } from '@sanity/ui'
-import type { PortableTextBlock } from 'sanity'
-import { defineField } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import type { ColorSelectorValue } from '../components/ColorSelector'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
+import { dollar } from '@equinor/eds-icons';
+import { Box, Heading, Text } from '@sanity/ui';
+import type { PortableTextBlock } from 'sanity';
+import { defineField } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import type { ColorSelectorValue } from '../components/ColorSelector';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { configureBlockContent } from '../editors';
 
 // eslint-disable-next-line react/display-name
 const ApiDescription = () => {
@@ -20,14 +20,14 @@ const ApiDescription = () => {
         </Text>
       </span>
     </Box>
-  )
-}
+  );
+};
 
 export type StockValues = {
-  _type: 'stockValuesApi'
-  description: string
-  background?: ColorSelectorValue
-}
+  _type: 'stockValuesApi';
+  description: string;
+  background?: ColorSelectorValue;
+};
 
 export default {
   title: 'Stock values',
@@ -78,12 +78,12 @@ export default {
       title: 'title',
     },
     prepare({ title }: { title: PortableTextBlock[] }) {
-      const plainTitle = blocksToText(title) ?? 'Stock values component'
+      const plainTitle = blocksToText(title) ?? 'Stock values';
       return {
         title: plainTitle,
-        subtitle: 'Stock values component',
+        subtitle: 'Stock values',
         media: EdsIcon(dollar),
-      }
+      };
     },
   },
-}
+};

@@ -1,11 +1,11 @@
-import blocksToText from '../../../../helpers/blocksToText'
-import { PortableTextBlock, Rule } from 'sanity'
-import { EdsIcon } from '../../../../icons'
-import { table_chart } from '@equinor/eds-icons'
+import { table_chart } from '@equinor/eds-icons';
+import type { PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../../../helpers/blocksToText';
+import { EdsIcon } from '../../../../icons';
 
 export type Span2And1 = {
-  _type: 'threeColumns'
-}
+  _type: 'threeColumns';
+};
 
 export default {
   title: '3 columns',
@@ -29,13 +29,14 @@ export default {
       title: 'title',
     },
     prepare({ title = [] }: { title: PortableTextBlock[] }) {
-      const plainTitle = title.length > 0 ? blocksToText(title) : '3 columns type'
+      const plainTitle =
+        title.length > 0 ? blocksToText(title) : '3 columns type';
 
       return {
         title: plainTitle,
-        subtitle: '3 columns component',
+        subtitle: '3 columns',
         media: () => EdsIcon(table_chart),
-      }
+      };
     },
   },
-}
+};

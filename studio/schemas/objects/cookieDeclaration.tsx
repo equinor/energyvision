@@ -1,8 +1,8 @@
-import { table_chart } from '@equinor/eds-icons'
-import { Box, Heading, Text } from '@sanity/ui'
-import { EdsIcon } from '../../icons'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
+import { table_chart } from '@equinor/eds-icons';
+import { Box, Heading, Text } from '@sanity/ui';
+import { EdsIcon } from '../../icons';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { configureBlockContent } from '../editors';
 
 // eslint-disable-next-line react/display-name
 const ApiDescription = () => {
@@ -15,13 +15,13 @@ const ApiDescription = () => {
         Cookie Policy page.
       </Text>
     </Box>
-  )
-}
+  );
+};
 
 export type cookieDeclaration = {
-  _type: 'cookieDeclaration'
-  description: string
-}
+  _type: 'cookieDeclaration';
+  description: string;
+};
 
 export default {
   title: 'Cookie Declaration',
@@ -48,14 +48,14 @@ export default {
       },
       initialValue: 'Cookie Declaration',
     },
-  ].filter(e => e),
+  ].filter((e) => e),
   preview: {
     prepare() {
       return {
-        title: 'Cookie Declaration component',
+        title: 'Cookie Declaration',
         subtitle: 'Displays cookies identified in the site automatically',
         media: EdsIcon(table_chart),
-      }
+      };
     },
   },
-}
+};
