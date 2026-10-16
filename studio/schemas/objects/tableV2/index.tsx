@@ -1,41 +1,41 @@
-import { MdTableRows } from 'react-icons/md'
-import type { PortableTextBlock, PreviewProps, Rule } from 'sanity'
-import { capitalizeFirstLetter } from '@/helpers/formatters'
-import blocksToText from '../../../helpers/blocksToText'
-import type { ColorSelectorValue } from '../../components/ColorSelector'
-import { CompactBlockEditor } from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors'
-import { layoutGrid } from '../commonFields/commonFields'
+import { MdTableRows } from 'react-icons/md';
+import type { PortableTextBlock, PreviewProps, Rule } from 'sanity';
+import { capitalizeFirstLetter } from '@/helpers/formatters';
+import blocksToText from '../../../helpers/blocksToText';
+import type { ColorSelectorValue } from '../../components/ColorSelector';
+import { CompactBlockEditor } from '../../components/CompactBlockEditor';
+import { configureBlockContent } from '../../editors';
+import { layoutGrid } from '../commonFields/commonFields';
 
 export type Table = {
-  _type: 'table'
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  background?: ColorSelectorValue
-  theme?: string
-}
+  _type: 'table';
+  title?: PortableTextBlock[];
+  ingress?: PortableTextBlock[];
+  background?: ColorSelectorValue;
+  theme?: string;
+};
 
 type TablePreviewProps = {
-  theme?: string
-  useBorder?: boolean
-  tableCaption?: string
-  title?: PortableTextBlock[]
-} & PreviewProps
+  theme?: string;
+  useBorder?: boolean;
+  tableCaption?: string;
+  title?: PortableTextBlock[];
+} & PreviewProps;
 
 export function TablePreview(props: TablePreviewProps) {
   //@ts-ignore: find import for  _type
-  const { title, theme, tableCaption, useBorder, _type, renderDefault } = props
+  const { title, theme, tableCaption, useBorder, _type, renderDefault } = props;
 
   //@ts-ignore:todo
-  const plainTitle = title ? blocksToText(title) : undefined
-  const subTitle = `${_type === 'tablev2' ? 'Import table' : 'Table'} | ${
+  const plainTitle = title ? blocksToText(title) : undefined;
+  const subTitle = `${_type === 'tablev2' ? 'Import table:' : 'Table:'} ${
     useBorder ? 'Border bottom rows' : 'Zebra rows'
-  }${theme ? ` | ${capitalizeFirstLetter(typeof theme === 'string' ? theme : (theme?.title ?? ''))} theme` : ''}`
-  let color = '#ebebeb'
+  }${theme ? ` | ${capitalizeFirstLetter(theme)} theme` : ''}`;
+  let color = '#ebebeb';
   if (theme === 'blue') {
-    color = '#a8c3db'
+    color = '#a8c3db';
   } else if (theme === 'green') {
-    color = '#c2d4d6'
+    color = '#c2d4d6';
   }
 
   const customMedia = (
@@ -49,16 +49,16 @@ export function TablePreview(props: TablePreviewProps) {
         justifyContent: 'center',
       }}
     >
-      <MdTableRows size={24} color='gray' />
+      <MdTableRows size={24} color="gray" />
     </div>
-  )
+  );
 
   return renderDefault({
     ...props,
     title: plainTitle ?? tableCaption ?? 'No title or table caption',
     subtitle: subTitle,
     media: customMedia,
-  })
+  });
 }
 
 export default {
@@ -191,9 +191,9 @@ export default {
               validation: (Rule: Rule) =>
                 Rule.custom((value: any[]) => {
                   if (!value || value?.length < 1) {
-                    return 'Must have at least 1 cell'
+                    return 'Must have at least 1 cell';
                   }
-                  return true
+                  return true;
                 }),
             },
           ],
@@ -206,37 +206,37 @@ export default {
                 return {
                   title: 'Empty Row',
                   subtitle: 'Row with 0 cells',
-                }
+                };
               }
 
-              const [cellOne, cellTwo, cellThree, cellFour] = cells
-              const numberOfCells = cells.length
+              const [cellOne, cellTwo, cellThree, cellFour] = cells;
+              const numberOfCells = cells.length;
 
               const plainTitleOne = cellOne
                 ? (blocksToText(cellOne.content) ?? '')
-                : undefined
+                : undefined;
               const plainTitleTwo = cellTwo
                 ? (blocksToText(cellTwo.content) ?? '')
-                : undefined
+                : undefined;
               const plainTitleThree = cellThree
                 ? (blocksToText(cellThree.content) ?? '')
-                : undefined
+                : undefined;
               const plainTitleFour = cellFour
                 ? (blocksToText(cellFour.content) ?? '')
-                : undefined
-              const hasMoreCells = Boolean(plainTitleFour)
+                : undefined;
+              const hasMoreCells = Boolean(plainTitleFour);
               const titles = [
                 plainTitleOne,
                 plainTitleTwo,
                 plainTitleThree,
-              ].filter(Boolean)
+              ].filter(Boolean);
               const titleTexts =
-                titles.length > 0 ? `${titles.join(' | ')}` : ''
-              const title = hasMoreCells ? `${titleTexts}...` : titleTexts
+                titles.length > 0 ? `${titles.join(' | ')}` : '';
+              const title = hasMoreCells ? `${titleTexts}...` : titleTexts;
               return {
                 title: title,
                 subtitle: `Row with ${numberOfCells || '0'} cells`,
-              }
+              };
             },
           },
         },
@@ -244,9 +244,9 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom((value: { cells?: any[] }[]) => {
           if (value?.length < 1) {
-            return 'Must have at least 1 row'
+            return 'Must have at least 1 row';
           }
-          return true
+          return true;
         }),
       fieldset: 'tableConfig',
     },
@@ -305,7 +305,7 @@ export default {
       name: 'useFullContainerWidth',
       fieldset: 'design',
       hidden: ({ value }: any) => {
-        return !value
+        return !value;
       },
     },
     {
@@ -317,7 +317,7 @@ export default {
       name: 'useInnerContentWidth',
       fieldset: 'design',
       hidden: ({ value }: any) => {
-        return !value
+        return !value;
       },
     },
     {
@@ -348,4 +348,4 @@ export default {
       theme: 'theme',
     },
   },
-}
+};

@@ -2,6 +2,7 @@ import type { PortableTextBlock } from '@portabletext/types';
 import { useLocale } from 'next-intl';
 import { forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { ResourceLink } from '@/core/Link/ResourceLink';
 import {
   Promotion,
   type PromotionLayoutDirection,
@@ -21,6 +22,7 @@ import {
   colorKeyToUtilityMap,
 } from '@/styles/colorKeyToUtilityMap';
 import type { LayoutGrid } from '@/types/designOptionsTypes';
+import type { LinkData } from '@/types/linkTypes';
 
 export type PromotionBlockProps = {
   title: PortableTextBlock[];
@@ -35,6 +37,7 @@ export type PromotionBlockProps = {
     layoutDirection?: PromotionLayoutDirection;
   };
   promoteList?: any[] | null;
+  viewAllLink?: LinkData;
   id?: string;
   anchor?: string;
   className?: string;
@@ -58,6 +61,7 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
       title,
       ingress,
       promoteList: providedPromoteList,
+      viewAllLink,
       id,
       anchor,
       className = '',
@@ -110,6 +114,22 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
                 value={ingress}
                 className={'px-layout-sm lg:px-layout-lg'}
               />
+            )}
+            {viewAllLink?.link?.slug && viewAllLink.label && (
+              <div className="px-layout-sm lg:px-layout-lg">
+                <ResourceLink
+                  type="internalUrl"
+                  variant="fit"
+                  href={getLocalizedHref(
+                    viewAllLink.link.slug,
+                    viewAllLink.link.lang
+                      ? getIsoFromName(viewAllLink.link.lang)
+                      : iso,
+                  )}
+                >
+                  {viewAllLink.label}
+                </ResourceLink>
+              </div>
             )}
             <ul className={`${px} grid ${cols} auto-rows-fr gap-4`}>
               {promoteList.map((promotion: any) => {

@@ -1,24 +1,24 @@
 // This version of the iframe is used by the Event and News templates
 
-import { code } from '@equinor/eds-icons'
-import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import type { ColorSelectorValue } from '../components/ColorSelector'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import { cookiePolicy } from './iframe/sharedIframeFields'
+import { code } from '@equinor/eds-icons';
+import type { PortableTextBlock, Rule, ValidationContext } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import type { ColorSelectorValue } from '../components/ColorSelector';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { configureBlockContent } from '../editors';
+import { cookiePolicy } from './iframe/sharedIframeFields';
 
 export type IFrame = {
-  _type: 'basicIframe'
-  title?: PortableTextBlock[]
-  frameTitle: string
-  url: string
-  aspectRatio: string
-  height?: number
-  background?: ColorSelectorValue
-  cookiePolicy: 'none' | 'marketing' | 'statistics'
-}
+  _type: 'basicIframe';
+  title?: PortableTextBlock[];
+  frameTitle: string;
+  url: string;
+  aspectRatio: string;
+  height?: number;
+  background?: ColorSelectorValue;
+  cookiePolicy: 'none' | 'marketing' | 'statistics';
+};
 
 export default {
   name: 'basicIframe',
@@ -56,8 +56,8 @@ export default {
         'The title of the iframe. This value is not visible on the page but is required for accessibility.',
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext) => {
-          const { parent } = context as { parent: IFrame }
-          return parent?.url && value === undefined ? 'Required' : true
+          const { parent } = context as { parent: IFrame };
+          return parent?.url && value === undefined ? 'Required' : true;
         }),
     },
     {
@@ -68,10 +68,10 @@ export default {
       fieldset: 'iframe',
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
-          const { parent } = context as { parent: IFrame }
+          const { parent } = context as { parent: IFrame };
           return (parent?.title || parent?.frameTitle) && value === undefined
             ? 'Required'
-            : true
+            : true;
         }),
     },
     cookiePolicy('iframe'),
@@ -110,16 +110,16 @@ export default {
       title,
       frameTitle,
     }: {
-      title: PortableTextBlock[]
-      frameTitle: string
+      title: PortableTextBlock[];
+      frameTitle: string;
     }) {
-      const plainTitle = title ? blocksToText(title) : undefined
+      const plainTitle = title ? blocksToText(title) : undefined;
 
       return {
         title: plainTitle || frameTitle,
-        subtitle: `IFrame component`,
+        subtitle: `IFrame`,
         media: EdsIcon(code),
-      }
+      };
     },
   },
-}
+};
