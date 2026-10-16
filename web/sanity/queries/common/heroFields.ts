@@ -1,5 +1,5 @@
-import linkSelectorFields from './actions/linkSelectorFields'
-import markDefs from './blockEditorMarks'
+import linkSelectorFields from './actions/linkSelectorFields';
+import markDefs from './blockEditorMarks';
 
 export const heroFields = /* groq */ `{
     "type": coalesce(heroType, 'default'),
@@ -32,9 +32,15 @@ export const heroFields = /* groq */ `{
       heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail},
       heroFigure),
     "loopingVideo": {
-      "title": heroLoopingVideo->video.title,
+      "title": select(
+        heroLoopingVideo->_type == "assetFile" => heroLoopingVideo->title,
+        heroLoopingVideo->video.title
+      ),
       "poster": heroLoopingVideo->thumbnail,
-      "src": heroLoopingVideo->video.url,
+      "src": select(
+        heroLoopingVideo->_type == "assetFile" => heroLoopingVideo->asset.asset->url,
+        heroLoopingVideo->video.url
+      ),
       "ratio": heroLoopingVideoRatio,
       containVideo,
     },
@@ -45,4 +51,4 @@ export const heroFields = /* groq */ `{
     "herolink": heroLink{
       ${linkSelectorFields}
     }
-  }`
+  }`;

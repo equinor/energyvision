@@ -52,13 +52,13 @@ export const eventPromotion = /* groq */ `
     },
     eventsCount,
     promotePastEvents,
-    (!promotePastEvents) => {
+    (!promotePastEvents || !defined(promotePastEvents)) => {
         (!defined(tags) || count(tags) <= 0) => {
               "promotions": ${futureEventsQuery(false)}[]{
                  ${eventPromotionFields}
               },
         },
-        (defined(tags) || count(tags) > 0) => {
+        (defined(tags) && count(tags) > 0) => {
               "promotions": ${futureEventsQuery(true)}[]{
                  ${eventPromotionFields}
               },
