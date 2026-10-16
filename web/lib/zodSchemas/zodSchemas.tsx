@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 import {
   contentRegex,
   emailRegex,
@@ -7,14 +7,14 @@ import {
   phoneRegex,
   questionsRegex,
   urlRegex,
-} from '@/templates/forms/validations'
+} from '@/templates/forms/validations';
 
 const AllowedCategoriesSubscribeForm = [
   'generalNews',
   'magazineStories',
   'stockMarketAnnouncements',
   'crudeOilAssays',
-] as const
+] as const;
 
 export const subscribeSchema = (t: any) =>
   z.object({
@@ -23,7 +23,7 @@ export const subscribeSchema = (t: any) =>
       .array(z.enum(AllowedCategoriesSubscribeForm))
       .min(1, { message: 'At least one category must be selected' }),
     email: z.email().nonempty('Email is required'),
-  })
+  });
 
 // PensionForm Schema
 export const pensionFormSchema = (t: any) =>
@@ -41,7 +41,7 @@ export const pensionFormSchema = (t: any) =>
       .string()
       .nonempty(t('pension_form_what_is_your_request_validation'))
       .regex(contentRegex, t('not_valid_input')),
-  })
+  });
 
 // CareerFairForm Schema
 export const careerFairFormSchema = (t: any) =>
@@ -71,10 +71,10 @@ export const careerFairFormSchema = (t: any) =>
     website: z
       .string()
       .optional()
-      .refine(val => !val || urlRegex.test(val), t('not_valid_input')),
+      .refine((val) => !val || urlRegex.test(val), t('not_valid_input')),
     supportingDocuments: z.string().optional(),
     preferredLang: z.string().optional(),
-  })
+  });
 
 // OrderReportsForm Schema
 export const orderReportsFormSchema = (t: any) =>
@@ -104,7 +104,7 @@ export const orderReportsFormSchema = (t: any) =>
     reports: z
       .array(z.string())
       .nonempty('At least one report must be selected'),
-  })
+  });
 
 // CareersContactForm Schema
 export const careersContactFormSchema = (t: any) =>
@@ -130,7 +130,7 @@ export const careersContactFormSchema = (t: any) =>
       .string()
       .optional()
       .refine(
-        val => !val || englishTextRegex.test(val),
+        (val) => !val || englishTextRegex.test(val),
         t('careers_contact_form_positionId_validation'),
       ),
     preferredLang: z.string().optional(),
@@ -140,7 +140,7 @@ export const careersContactFormSchema = (t: any) =>
       .string()
       .nonempty(t('careers_contact_form_location_validation'))
       .regex(nameRegex, t('not_valid_input')),
-  })
+  });
 
 // ContactEquinorForm Schema
 export const contactEquinorFormSchema = (t: any) =>
@@ -157,5 +157,5 @@ export const contactEquinorFormSchema = (t: any) =>
     message: z
       .string()
       .nonempty(t('contact_form_how_to_help_validation'))
-      .regex(contentRegex, t('not_valid_input')),
-  })
+      .regex(questionsRegex, t('not_valid_input')),
+  });
