@@ -1,5 +1,5 @@
-import { Box, Heading, Text } from '@sanity/ui'
-import { LuSearchCode } from 'react-icons/lu'
+import { Box, Heading, Text } from '@sanity/ui';
+import { LuSearchCode } from 'react-icons/lu';
 
 const Description = () => {
   return (
@@ -10,8 +10,8 @@ const Description = () => {
         Textblock anchor references together in a search
       </Text>
     </Box>
-  )
-}
+  );
+};
 
 export default {
   title: 'Anchor search',
@@ -39,9 +39,9 @@ export default {
     prepare({ label }: { label: string }) {
       return {
         title: label,
-        subtitle: `Anchor search component`,
+        subtitle: `Anchor search`,
         media: LuSearchCode,
-      }
+      };
     },
   },
-}
+};

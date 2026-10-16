@@ -32,6 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
       lang: getNameFromIso(locale),
     },
     perspective: 'published',
+    tags: [`homePage:${locale}`],
   });
 
   return constructSanityMetadata('', locale, metaData);

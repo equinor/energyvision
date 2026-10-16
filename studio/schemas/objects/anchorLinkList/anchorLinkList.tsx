@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { format_line_spacing } from '@equinor/eds-icons'
-import type { Rule } from 'sanity'
-import { EdsIcon } from '../../../icons'
-import { layoutGrid } from '../commonFields/commonFields'
+import { format_line_spacing } from '@equinor/eds-icons';
+import type { Rule } from 'sanity';
+import { EdsIcon } from '../../../icons';
+import { layoutGrid } from '../commonFields/commonFields';
 
 export type AnchorLinkList = {
-  _type: 'anchorLinkList'
-}
+  _type: 'anchorLinkList';
+};
 
 export default {
   title: 'List of anchor links',
@@ -57,9 +57,9 @@ export default {
     prepare({ title }: { title: string }) {
       return {
         title: title,
-        subtitle: `List of anchor links component`,
+        subtitle: `List of anchor links`,
         media: EdsIcon(format_line_spacing),
-      }
+      };
     },
   },
-}
+};

@@ -1,47 +1,52 @@
 /* eslint-disable react/display-name */
-import blocksToText from '../../../../helpers/blocksToText'
-import { configureBlockContent } from '../../../editors'
-import { validateCharCounterEditor } from '../../../validations/validateCharCounterEditor'
 
-import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import type { DownloadableImage } from '../../downloadableImage'
-import type { DownloadableFile } from '../../files'
-import type { ImageWithAlt } from '../../imageWithAlt'
-import type { LinkSelector } from '../../linkSelector'
-import type { ColorSelectorValue } from '../../../components/ColorSelector'
-import { LeftAlignedImage, RightAlignedImage } from '../../../../icons'
-import { RadioIconSelector } from '../../../components'
-import { fromLargerTextThemeColors, fromNormalTextThemeColors } from '../../textTeaser'
-import singleItemArray from '../../singleItemArray'
+import type { PortableTextBlock, Reference, Rule } from 'sanity';
+import blocksToText from '../../../../helpers/blocksToText';
+import { LeftAlignedImage, RightAlignedImage } from '../../../../icons';
+import { RadioIconSelector } from '../../../components';
+import type { ColorSelectorValue } from '../../../components/ColorSelector';
+import { configureBlockContent } from '../../../editors';
+import { validateCharCounterEditor } from '../../../validations/validateCharCounterEditor';
+import type { DownloadableImage } from '../../downloadableImage';
+import type { DownloadableFile } from '../../files';
+import type { ImageWithAlt } from '../../imageWithAlt';
+import type { LinkSelector } from '../../linkSelector';
+import singleItemArray from '../../singleItemArray';
+import {
+  fromLargerTextThemeColors,
+  fromNormalTextThemeColors,
+} from '../../textTeaser';
 
 const blockContentType = configureBlockContent({
   smallText: true,
   largeText: true,
   extraLargeText: true,
-})
-const themedTitleContentType = configureBlockContent({ variant: 'withXLTitle' })
+});
+const themedTitleContentType = configureBlockContent({
+  variant: 'withXLTitle',
+});
 
 const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
   { value: 'right', icon: RightAlignedImage },
-]
+];
 
 export type GridTeaser = {
-  _type: 'gridTeaser'
-  content?: PortableTextBlock[]
-  themedContent?: PortableTextBlock[]
-  useExtendedThemes?: boolean
-  quote: string
-  author: string
-  authorTitle?: string
-  action?: (LinkSelector | DownloadableFile | DownloadableImage)[]
-  image: ImageWithAlt
-  imagePosition?: string
-  background?: ColorSelectorValue
-}
+  _type: 'gridTeaser';
+  content?: PortableTextBlock[];
+  themedContent?: PortableTextBlock[];
+  useExtendedThemes?: boolean;
+  quote: string;
+  author: string;
+  authorTitle?: string;
+  action?: (LinkSelector | DownloadableFile | DownloadableImage)[];
+  image: ImageWithAlt;
+  imagePosition?: string;
+  background?: ColorSelectorValue;
+};
 type GridTeaserDocument = {
-  parent: GridTeaser
-}
+  parent: GridTeaser;
+};
 
 export default {
   name: 'gridTeaser',
@@ -72,7 +77,8 @@ export default {
     {
       title: 'Use extended themes',
       name: 'useExtendedThemes',
-      description: 'Enabling this removes normal text style and quote, but gives more theme options',
+      description:
+        'Enabling this removes normal text style and quote, but gives more theme options',
       type: 'boolean',
     },
     {
@@ -83,7 +89,7 @@ export default {
       hidden: ({ parent }: GridTeaserDocument) => parent.useExtendedThemes,
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
-          return validateCharCounterEditor(value, 600)
+          return validateCharCounterEditor(value, 600);
         }).warning(),
     },
     {
@@ -94,7 +100,7 @@ export default {
       hidden: ({ parent }: GridTeaserDocument) => !parent.useExtendedThemes,
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
-          return validateCharCounterEditor(value, 600)
+          return validateCharCounterEditor(value, 600);
         }).warning(),
     },
     {
@@ -133,7 +139,10 @@ export default {
       name: 'image',
       title: 'Image',
       type: 'imageWithAlt',
-      validation: (Rule: Rule) => Rule.custom((value: ImageWithAlt) => (!value.asset ? 'Image is required' : true)),
+      validation: (Rule: Rule) =>
+        Rule.custom((value: ImageWithAlt) =>
+          !value.asset ? 'Image is required' : true,
+        ),
     },
     {
       name: 'imagePosition',
@@ -142,7 +151,13 @@ export default {
         'On span 3 one can select which side the image will be on for larger screens. On mobile and single column the image will be above',
       type: 'string',
       components: {
-        input: function ({ onChange, value }: { onChange: any; value: string }) {
+        input: function ({
+          onChange,
+          value,
+        }: {
+          onChange: any;
+          value: string;
+        }) {
           return (
             <RadioIconSelector
               name="imageAlignmentSelector"
@@ -151,7 +166,7 @@ export default {
               currentValue={value}
               onChange={onChange}
             />
-          )
+          );
         },
       },
     },
@@ -185,19 +200,19 @@ export default {
       text,
       image,
     }: {
-      title: PortableTextBlock[]
-      text: PortableTextBlock[]
-      isBigText: boolean
-      bigText: PortableTextBlock[]
-      image: Reference
+      title: PortableTextBlock[];
+      text: PortableTextBlock[];
+      isBigText: boolean;
+      bigText: PortableTextBlock[];
+      image: Reference;
     }) {
-      const plainTitle = blocksToText(title || text)
+      const plainTitle = blocksToText(title || text);
 
       return {
         title: plainTitle || 'Missing content/quote',
-        subtitle: 'Grid Teaser component',
+        subtitle: 'Grid Teaser',
         media: image,
-      }
+      };
     },
   },
-}
+};

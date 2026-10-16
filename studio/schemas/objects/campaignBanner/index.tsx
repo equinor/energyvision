@@ -1,10 +1,10 @@
 /* eslint-disable react/display-name */
-import blocksToText from '../../../helpers/blocksToText'
-import { configureBlockContent } from '../../editors'
-import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
 
-import type { Image, PortableTextBlock, Reference, Rule } from 'sanity'
-import type { ColorSelectorValue } from '../../components/ColorSelector'
+import type { Image, PortableTextBlock, Reference, Rule } from 'sanity';
+import blocksToText from '../../../helpers/blocksToText';
+import type { ColorSelectorValue } from '../../components/ColorSelector';
+import { configureBlockContent } from '../../editors';
+import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor';
 
 const blockConfigTitle = {
   h2: false,
@@ -17,20 +17,20 @@ const blockConfigTitle = {
   smallText: true,
   largeText: true,
   extraLargeText: true,
-}
+};
 
-const blockTitleType = configureBlockContent({ ...blockConfigTitle })
+const blockTitleType = configureBlockContent({ ...blockConfigTitle });
 
 export type CampaignBanner = {
-  _type: 'campaignBanner'
-  overline?: string
-  title?: PortableTextBlock[]
-  text?: PortableTextBlock[]
-  image: Image
-  imagePosition?: string
-  imageSize?: string
-  background?: ColorSelectorValue
-}
+  _type: 'campaignBanner';
+  overline?: string;
+  title?: PortableTextBlock[];
+  text?: PortableTextBlock[];
+  image: Image;
+  imagePosition?: string;
+  imageSize?: string;
+  background?: ColorSelectorValue;
+};
 
 export default {
   name: 'campaignBanner',
@@ -56,7 +56,7 @@ export default {
       of: [blockTitleType],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
-          return validateCharCounterEditor(value, 600)
+          return validateCharCounterEditor(value, 600);
         }).warning(),
     },
     {
@@ -83,14 +83,22 @@ export default {
       text: 'text',
       image: 'backgroundImage.asset',
     },
-    prepare({ title, text, image }: { title: PortableTextBlock[]; text: PortableTextBlock[]; image: Reference }) {
-      const plainTitle = blocksToText(title || text)
+    prepare({
+      title,
+      text,
+      image,
+    }: {
+      title: PortableTextBlock[];
+      text: PortableTextBlock[];
+      image: Reference;
+    }) {
+      const plainTitle = blocksToText(title || text);
 
       return {
         title: plainTitle || 'Missing title/content',
-        subtitle: 'Campaign banner component',
+        subtitle: 'Campaign banner',
         media: image,
-      }
+      };
     },
   },
-}
+};
