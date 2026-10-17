@@ -23,18 +23,24 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(
     { variant = 'primary', children, className = '', ...rest },
     ref,
   ) {
-    const useComplex = useMediaQuery(`(min-width: 1280px)`);
-
-    const commonSlideUpDown = `overflow-hidden motion-safe:data-closed:animate-slideDown motion-safe:data-open:animate-slideUp`;
+    const useComplex = useMediaQuery(`(min-width: 1300px)`);
 
     const variantClassName: Partial<Record<Variants, string>> = {
-      primary: `${commonSlideUpDown}`,
+      primary: 'accordion-content-transition',
       menu: `max-xl:overflow-hidden
+    max-xl:data-closed:h-0
+    max-xl:data-closed:invisible
+    max-xl:data-open:[transition-delay:0s]
+    max-xl:[transition:visibility_0s_0.2s]
     max-xl:motion-safe:data-closed:animate-slideDown
     max-xl:motion-safe:data-open:animate-slideUp
 
     `,
       simpleMenu: `max-xl:overflow-hidden
+    max-xl:data-closed:h-0
+    max-xl:data-closed:invisible
+    max-xl:data-open:[transition-delay:0s]
+    max-xl:[transition:visibility_0s_0.2s]
     max-xl:motion-safe:data-closed:animate-slideDown
     max-xl:motion-safe:data-open:animate-slideUp`,
     };
@@ -63,8 +69,10 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(
 
         default:
           return (
-            <div className="mb-6 ml-2.5 flex flex-col gap-6 border-slate-80 border-l border-dashed pt-0 pr-4 pb-6 pl-7 dark:border-white-100">
-              {children}
+            <div className="min-h-0 overflow-hidden">
+              <div className="mb-6 ml-2.5 flex flex-col gap-6 border-slate-80 border-l border-dashed pt-0 pr-4 pb-6 pl-7 dark:border-white-100">
+                {children}
+              </div>
             </div>
           );
       }
