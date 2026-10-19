@@ -124,7 +124,7 @@ export default {
     prepare({ title }: { title?: PortableTextBlock[] }) {
       return {
         title: blocksToText(title ?? [])?.trim() || 'Untitled',
-        subtitle: 'Update to type Promotion',
+        subtitle: 'Please update to type Promotion',
         media: LiaPagerSolid,
       };
     },
