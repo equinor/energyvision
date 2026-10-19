@@ -1,22 +1,23 @@
-/** biome-ignore-all assist/source/organizeImports: <explanation> */
-// 1. Fetch the environment variable
 let archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK;
 
-// 2. SAFETY CHECK: If the variable is missing or evaluates to the literal string "undefined",
+// If the variable is missing or evaluates to the literal string "undefined",
 // fall back to an empty string so Next.js doesn't crash on local development startup.
 if (!archiveServerHostname || archiveServerHostname === 'undefined') {
   archiveServerHostname = '';
 }
 
 import path from 'node:path';
-/* import { withSentryConfig } from '@sentry/nextjs' */
+import { withSentryConfig } from '@sentry/nextjs/config';
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 //import { getAllRedirects } from './sanity/interface/redirects'
 import securityHeaders from './securityHeaders';
-import { withSentryConfig } from '@sentry/nextjs';
 
 const withNextIntl = createNextIntlPlugin();
+
+const useRedisCache =
+  process.env.NEXT_PUBLIC_SANITY_DATASET === 'global' &&
+  process.env.RADIX_ENVIRONMENT === 'prod';
 
 const sentryConfig = {
   org: 'equinor',
@@ -48,6 +49,8 @@ export type ConfigRedirect = {
 const nextConfig: NextConfig = withNextIntl({
   output: 'standalone',
   cacheComponents: true,
+  partialPrefetching: true,
+  agentRules: false,
   transpilePackages: [
     'require-in-the-middle',
     'import-in-the-middle',
@@ -59,10 +62,11 @@ const nextConfig: NextConfig = withNextIntl({
     },
     browserToTerminal: true,
   },
-  cacheHandlers: {
-    remote: require.resolve('./cache-handlers/remote-handler.cjs'),
-  },
-
+  ...(useRedisCache && {
+    cacheHandlers: {
+      remote: require.resolve('./cache-handlers/remote-handler.cjs'),
+    },
+  }),
   /*turbopack: {
      root: join(__dirname),
     resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json'],
@@ -71,7 +75,6 @@ const nextConfig: NextConfig = withNextIntl({
       "@energyvision/shared":"../packages/energyvision/*"
     }
   },*/
-  //cacheComponents: true,
   images: {
     remotePatterns: [
       {
@@ -138,6 +141,6 @@ const nextConfig: NextConfig = withNextIntl({
 });
 
 // Only wrap with Sentry if we are building for production
-export default process.env.NODE_ENV === 'production'
+export default process.env.NODE_ENV === 'production' && !process.env.TURBOPACK
   ? withSentryConfig(nextConfig, sentryConfig)
   : nextConfig;

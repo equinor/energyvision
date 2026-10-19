@@ -1,9 +1,7 @@
-import {
-  ComponentIcon,
-  EllipsisVerticalIcon,
-  ResetIcon,
-  UploadIcon,
-} from '@sanity/icons';
+import { ComponentIcon } from '@sanity/icons/Component';
+import { EllipsisVerticalIcon } from '@sanity/icons/EllipsisVertical';
+import { ResetIcon } from '@sanity/icons/Reset';
+import { UploadIcon } from '@sanity/icons/Upload';
 import { Box, Button, Card, Dialog, Label, Stack, Text } from '@sanity/ui';
 import { Menu, MenuButton, MenuDivider, MenuItem } from '@sanity/ui/menu';
 import { Buffer } from 'buffer';
@@ -72,8 +70,7 @@ const VideoSelector = forwardRef(function VideoSelector(
 
   const handleMediaBankEvent = useCallback(
     async (event: MessageEvent) => {
-      if (!event || !event.data || event.origin !== MEDIABANK_DOMAIN)
-        return false;
+      if (!event?.data || event.origin !== MEDIABANK_DOMAIN) return false;
 
       const message = JSON.parse(event.data);
 

@@ -1,20 +1,21 @@
-import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { Flags } from '../../src/lib/datasetHelpers'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import { validateRequiredIfVisible } from '../validations/validateRequiredIfVisible'
-import type { DownloadableFile } from './files'
+import { LiaClipboardListSolid } from 'react-icons/lia';
+import type { PortableTextBlock, Rule, ValidationContext } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { Flags } from '../../src/lib/datasetHelpers';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { configureBlockContent } from '../editors';
+import { validateRequiredIfVisible } from '../validations/validateRequiredIfVisible';
+import type { DownloadableFile } from './files';
 
-const titleContentType = configureBlockContent({ variant: 'title' })
+const titleContentType = configureBlockContent({ variant: 'title' });
 
 export type Form = {
-  _type: 'form'
-  form: FormType
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  downloads: DownloadableFile[]
-}
+  _type: 'form';
+  form: FormType;
+  title?: PortableTextBlock[];
+  ingress?: PortableTextBlock[];
+  downloads: DownloadableFile[];
+};
 
 type FormType =
   | 'subscribeForm'
@@ -22,7 +23,7 @@ type FormType =
   | 'careersContactForm'
   | 'orderReportsForm'
   | 'careerFairAndVisitsForm'
-  | 'pensionForm'
+  | 'pensionForm';
 
 export default {
   name: 'form',
@@ -77,7 +78,7 @@ export default {
             title: 'Pension form',
             value: 'pensionForm',
           },
-        ].filter(e => e),
+        ].filter((e) => e),
         layout: 'dropdown',
       },
       validation: (Rule: Rule) => Rule.required(),
@@ -90,12 +91,12 @@ export default {
       of: [{ type: 'downloadableFile', title: 'Downloadable file' }],
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext) => {
-          const { parent } = context as { parent: Form }
+          const { parent } = context as { parent: Form };
           return validateRequiredIfVisible(
             parent?.form === 'orderReportsForm',
             value,
             'You must add reports',
-          )
+          );
         }).unique(),
       hidden: ({ parent }: { parent: Form }) =>
         parent?.form !== 'orderReportsForm',
@@ -110,34 +111,35 @@ export default {
       title = [],
       type,
     }: {
-      title: PortableTextBlock[]
-      type: FormType
+      title: PortableTextBlock[];
+      type: FormType;
     }) {
-      const plainTitle = title ? blocksToText(title) : undefined
+      const plainTitle = title ? blocksToText(title) : undefined;
 
       const getFormType = (type: FormType) => {
         if (type === 'subscribeForm') {
-          return 'Subscribe Form'
+          return 'Subscribe Form';
         }
         if (type === 'contactEquinorForm') {
-          return 'Contact Equinor form'
+          return 'Contact Equinor form';
         }
         if (type === 'careersContactForm') {
-          return 'Careers contact form'
+          return 'Careers contact form';
         }
         if (type === 'orderReportsForm') {
-          return 'Order reports'
+          return 'Order reports';
         }
         if (type === 'pensionForm') {
-          return 'Pension form'
+          return 'Pension form';
         }
-        return 'Career fairs and visits'
-      }
+        return 'Career fairs and visits';
+      };
 
       return {
         title: plainTitle,
         subtitle: getFormType(type),
-      }
+        media: LiaClipboardListSolid,
+      };
     },
   },
-}
+};

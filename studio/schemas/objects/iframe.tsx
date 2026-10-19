@@ -1,12 +1,12 @@
 // This version of the iframe is used by Topic Pages
 // It features description, ingress and c2a in addition to the basic iframe fields
 
-import { code } from '@equinor/eds-icons'
-import type { PortableTextBlock } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import type { ColorSelectorValue } from '../components/ColorSelector'
-import { configureBlockContent } from '../editors'
+import { code } from '@equinor/eds-icons';
+import type { PortableTextBlock } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import type { ColorSelectorValue } from '../components/ColorSelector';
+import { configureBlockContent } from '../editors';
 import {
   action,
   aspectRatio,
@@ -17,25 +17,25 @@ import {
   title,
   transcript,
   url,
-} from './iframe/sharedIframeFields'
+} from './iframe/sharedIframeFields';
 
 const ingressContentType = configureBlockContent({
   h2: false,
   h3: false,
   h4: false,
   attachment: false,
-})
+});
 
 export type IFrame = {
-  _type: 'iframe'
-  title?: PortableTextBlock[]
-  frameTitle: string
-  url: string
-  aspectRatio: string
-  height?: number
-  background?: ColorSelectorValue
-  cookiePolicy: string[]
-}
+  _type: 'iframe';
+  title?: PortableTextBlock[];
+  frameTitle: string;
+  url: string;
+  aspectRatio: string;
+  height?: number;
+  background?: ColorSelectorValue;
+  cookiePolicy: string[];
+};
 
 export default {
   title: 'Iframe',
@@ -93,16 +93,16 @@ export default {
       title,
       frameTitle,
     }: {
-      title: PortableTextBlock[]
-      frameTitle: string
+      title: PortableTextBlock[];
+      frameTitle: string;
     }) {
-      const plainTitle = title ? blocksToText(title) : undefined
+      const plainTitle = title ? blocksToText(title) : undefined;
 
       return {
         title: plainTitle || frameTitle,
-        subtitle: `IFrame component`,
+        subtitle: `IFrame`,
         media: EdsIcon(code),
-      }
+      };
     },
   },
-}
+};

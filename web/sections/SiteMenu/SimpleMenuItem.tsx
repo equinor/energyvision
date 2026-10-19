@@ -1,22 +1,22 @@
-'use client'
-import { usePathname } from 'next/navigation'
-import { useLocale } from 'next-intl'
-import { useId } from 'react'
-import { twMerge } from 'tailwind-merge'
-import Link from '@/core/Link/Link'
-import ResourceLink from '@/core/Link/ResourceLink'
-import { Menu } from '@/core/MenuAccordion'
-import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref'
-import type { SimpleGroupData } from '../../types/index'
+'use client';
+import { usePathname } from 'next/navigation';
+import { useLocale } from 'next-intl';
+import { useId } from 'react';
+import { twMerge } from 'tailwind-merge';
+import Link from '@/core/Link/Link';
+import ResourceLink from '@/core/Link/ResourceLink';
+import { Menu } from '@/core/MenuAccordion';
+import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref';
+import type { SimpleGroupData } from '../../types/index';
 
-const { MenuItem, MenuHeader, MenuContent } = Menu
+const { MenuItem, MenuHeader, MenuContent } = Menu;
 
 type MenuGroupType = {
-  item: SimpleGroupData
-  index: number
-  nextIsSimpleLink?: boolean
-  linkCallback?: () => void
-}
+  item: SimpleGroupData;
+  index: number;
+  nextIsSimpleLink?: boolean;
+  linkCallback?: () => void;
+};
 
 //CHECK PATHNAME versus router.asPath before
 export const SimpleMenuItem = ({
@@ -25,16 +25,16 @@ export const SimpleMenuItem = ({
   nextIsSimpleLink,
   linkCallback,
 }: MenuGroupType) => {
-  const { type, label, links = [], readMoreLink } = item
-  const pathname = usePathname()
-  const id = useId()
-  const iso = useLocale()
+  const { type, label, links = [], readMoreLink } = item;
+  const pathname = usePathname();
+  const id = useId();
+  const iso = useLocale();
 
   if (item?.type === 'simpleMenuLink' && item.link && !item.link.slug) {
-    console.warn('Missing slug for simple menu link')
+    console.warn('Missing slug for simple menu link');
   }
 
-  const href = getLocalizedHref(item.link?.slug, iso)
+  const href = getLocalizedHref(item.link?.slug, iso);
 
   const ariaCurrentStyling = `aria-current:before:content-['']
   aria-current:before:absolute
@@ -42,7 +42,7 @@ export const SimpleMenuItem = ({
   aria-current:before:-left-4
   aria-current:before:w-[2px]
   aria-current:before:h-full
-  aria-current:before:bg-north-sea-50`
+  aria-current:before:bg-north-sea-50`;
 
   return (
     <>
@@ -65,18 +65,18 @@ export const SimpleMenuItem = ({
           {item.label}
         </Link>
       ) : (
-        <MenuItem value={`${index}`} variant='simple'>
+        <MenuItem value={`${index}`} variant="simple">
           {label && (
             <MenuHeader
               id={id}
-              variant='simple'
+              variant="simple"
               className={`${nextIsSimpleLink ? 'max-xl:border-b' : ''}`}
             >
               {label}
             </MenuHeader>
           )}
-          <MenuContent variant='simple' className=''>
-            <div className=''>
+          <MenuContent variant="simple" className="">
+            <div className="">
               {!!readMoreLink?.link?.slug && (
                 <ResourceLink
                   href={readMoreLink.link?.slug}
@@ -94,7 +94,7 @@ export const SimpleMenuItem = ({
             </div>
             <ul aria-labelledby={id} className={`flex flex-col flex-wrap`}>
               {links?.map((link: any) => {
-                const href = getLocalizedHref(link?.link?.slug, iso) || '/'
+                const href = getLocalizedHref(link?.link?.slug, iso) || '/';
                 return (
                   <li key={link.id}>
                     <Link
@@ -107,15 +107,15 @@ export const SimpleMenuItem = ({
                         onClick: linkCallback,
                       })}
                     >
-                      {link.label} {href}
+                      {link.label}
                     </Link>
                   </li>
-                )
+                );
               })}
             </ul>
           </MenuContent>
         </MenuItem>
       )}
     </>
-  )
-}
+  );
+};

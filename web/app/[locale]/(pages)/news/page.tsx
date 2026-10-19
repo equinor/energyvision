@@ -82,9 +82,19 @@ const getInitialResponse =
     return response;
   };
 
-export default async function NewsroomPage({
+export default function NewsroomPage({
   searchParams,
 }: PageProps<'/[locale]/news'>) {
+  return (
+    <Suspense fallback={<NewsroomLoadingPage />}>
+      <DynamicNewsroomPage searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+async function DynamicNewsroomPage({
+  searchParams,
+}: Pick<PageProps<'/[locale]/news'>, 'searchParams'>) {
   const dynamic = await getDynamicFetchOptions(await searchParams);
   return <CachedNewsroomPage dynamic={dynamic} />;
 }
@@ -92,7 +102,7 @@ export default async function NewsroomPage({
 async function CachedNewsroomPage({
   dynamic,
 }: {
-  dynamic?: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
+  dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
 }) {
   'use cache: remote';
 
@@ -107,7 +117,6 @@ async function CachedNewsroomPage({
         lang: getNameFromIso(locale) ?? 'en_GB',
       },
       requestTag: 'site-menu',
-      stega: false,
       tags: [`siteMenu:${locale}`],
       ...dynamic,
     }),
@@ -130,18 +139,16 @@ async function CachedNewsroomPage({
   return (
     <>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
-      <Suspense fallback={<NewsroomLoadingPage />}>
-        {Flags.HAS_NEWSROOM && response ? (
-          <NewsRoomTemplate
-            locale={locale}
-            pageData={pageData}
-            initialSearchResponse={response}
-          />
-        ) : (
-          // allow '/news' page on other satellite sites
-          <TopicPage {...pageData} />
-        )}
-      </Suspense>
+      {Flags.HAS_NEWSROOM && response ? (
+        <NewsRoomTemplate
+          locale={locale}
+          pageData={pageData}
+          initialSearchResponse={response}
+        />
+      ) : (
+        // allow '/news' page on other satellite sites
+        <TopicPage {...pageData} />
+      )}
     </>
   );
 }

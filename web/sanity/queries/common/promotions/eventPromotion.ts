@@ -1,3 +1,5 @@
+import { notDraft } from '../langAndDrafts';
+
 export const eventPromotionFields = /* groq */ `
     "type": "events",
     "id": _id,
@@ -5,30 +7,27 @@ export const eventPromotionFields = /* groq */ `
     "title": content->title,
     "location": content->location,
     "eventDate": content->eventDate,
-    "startDayAndTime": content->startDayAndTime,
-    "endDayAndTime": content->endDayAndTime,
     "ingress": content->ingress,
-    `
+    `;
 
 const tagFilter = /* groq */ `
   && count(content->eventTags[_ref in ^.^.tags[]._ref]) > 0
-`
+`;
 
-/* Unable to pass end time along with the date to sort. So using hard coded timestamp*/
 export const pastEventsQuery = (withTags = true): string => /* groq */ `
     *[_type match "route_" + $lang + "*"
+    && ${notDraft}
     && content->_type == "event"
-    && (content->eventDate.date)  < string::split(now(),"T")[0]
-   // && coalesce(content->startDayAndTime.dayTime, (content->eventDate.date) + 'T00:00:00Z') < now()
+    && content->eventDate.date < string::split(now(),"T")[0]
     ${withTags ? tagFilter : ''} ]
-    | order(coalesce(content->startDayAndTime.dayTime, (content->eventDate.date) + 'T00:00:00Z') desc)[0...50]
-`
+    | order(content->eventDate.date desc, coalesce(content->eventDate.startTime, "00:00") desc)[0...50]
+`;
 
 export const futureEventsQuery = (withTags = true): string => /* groq */ `
   *[_type match "route_" + $lang + "*"
+    && ${notDraft}
     && content->_type == "event"
-    && content-> eventDate.date >= string::split(now(),"T")[0]
-    //&& coalesce(content->startDayAndTime.dayTime, (content->eventDate.date) + 'T00:00:00Z') >= now()
+    && content->eventDate.date >= string::split(now(),"T")[0]
     ${withTags ? tagFilter : ''}
-  ] | order( coalesce(content->startDayAndTime.dayTime, ((content->eventDate.date) + 'T00:00:00Z')) asc)
-`
+  ] | order(content->eventDate.date asc, coalesce(content->eventDate.startTime, "00:00") asc)
+`;

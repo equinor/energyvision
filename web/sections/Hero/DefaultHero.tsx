@@ -1,37 +1,37 @@
-import type { PortableTextBlock } from '@portabletext/types'
-import type { HTMLAttributes, ReactNode } from 'react'
-import type { Figure, ImageRatioKeys } from '@/core/Image/imageUtilities'
-import { Picture } from '@/core/Picture/Picture'
-import { Typography } from '@/core/Typography'
-import { twMerge } from '@/lib/twMerge/twMerge'
-import Blocks from '@/portableText/Blocks'
+import type { PortableTextBlock } from '@portabletext/types';
+import type { HTMLAttributes, ReactNode } from 'react';
+import type { Figure, ImageRatioKeys } from '@/core/Image/imageUtilities';
+import { Picture } from '@/core/Picture/Picture';
+import { Typography } from '@/core/Typography';
+import { twMerge } from '@/lib/twMerge/twMerge';
+import Blocks from '@/portableText/Blocks';
 import MagazineTagBar, {
   type MagazineTag,
-} from '../MagazineTags/MagazineTagBar'
+} from '../MagazineTags/MagazineTagBar';
 
 export type DefaultHeroProps = {
-  title?: PortableTextBlock[] | string
+  title?: PortableTextBlock[] | string;
   /**Override title wrapper classnames */
-  titleClassName?: string
+  titleClassName?: string;
   /**Override figure classnames if caption/attribution */
-  figureClassName?: string
+  figureClassName?: string;
   /**Override figcaption classnames */
-  figCaptionClassName?: string
+  figCaptionClassName?: string;
   /**Override image wrapper classnames */
-  imageWrapperClassName?: string
+  imageWrapperClassName?: string;
   /**Override image classnames */
-  imageClassName?: string
+  imageClassName?: string;
   /* For news published information */
-  subTitle?: ReactNode
-  figure?: Figure
-  isBigTitle?: boolean
+  subTitle?: ReactNode;
+  figure?: Figure;
+  isBigTitle?: boolean;
   /**bg-<colorkey> */
-  background?: string
-  bigTitle?: PortableTextBlock[]
-  ratio?: ImageRatioKeys
+  background?: string;
+  bigTitle?: PortableTextBlock[];
+  ratio?: ImageRatioKeys;
   /* Magazine promoted tagline */
-  magazineTags?: MagazineTag[]
-} & HTMLAttributes<HTMLElement>
+  magazineTags?: MagazineTag[];
+} & HTMLAttributes<HTMLElement>;
 
 export const DefaultHero = ({
   title,
@@ -47,10 +47,10 @@ export const DefaultHero = ({
   ratio = '2:1',
 }: DefaultHeroProps) => {
   //find variant in title
-  const px = 'px-layout-sm lg:px-layout-md'
+  const px = 'px-layout-sm lg:px-layout-md';
   const isPlainTitle =
-    title && (title === 'string' || typeof title === 'string')
-  const isColorBg = background && background !== 'bg-white-100'
+    title && (title === 'string' || typeof title === 'string');
+  const isColorBg = background && background !== 'bg-white-100';
 
   return (
     <div className={twMerge(className, `pb-4 lg:pb-6`)}>
@@ -64,26 +64,26 @@ export const DefaultHero = ({
           {title &&
             (isPlainTitle ? (
               <Typography
-                group='heading'
-                variant='h1'
-                id='mainTitle'
+                group="heading"
+                variant="h1"
+                id="mainTitle"
                 tabIndex={-1}
               >
                 {title}
               </Typography>
             ) : (
               <Blocks
-                id='mainTitle'
+                id="mainTitle"
                 value={title as PortableTextBlock[]}
-                group='heading'
-                variant='h1'
+                group="heading"
+                variant="h1"
                 tabIndex={-1}
               />
             ))}
           {subTitle && subTitle}
         </div>
       </div>
-      <div className='mx-auto max-w-content'>
+      <div className="mx-auto max-w-content">
         {figure && (
           <div
             className={twMerge(
@@ -100,6 +100,8 @@ export const DefaultHero = ({
               figureClassName={twMerge(`w-full`, imageWrapperClassName)}
               className={twMerge('', imageClassName)}
               withLayoutPx={false}
+              loading="eager"
+              fetchPriority="high"
             />
           </div>
         )}
@@ -108,5 +110,5 @@ export const DefaultHero = ({
         )}
       </div>
     </div>
-  )
-}
+  );
+};

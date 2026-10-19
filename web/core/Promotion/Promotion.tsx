@@ -1,25 +1,25 @@
-import type { PortableTextBlock } from '@portabletext/types'
-import { forwardRef, type ReactNode } from 'react'
-import { twMerge } from 'tailwind-merge'
-import { Image } from '@/core/Image/Image'
-import type { Image as ImageType } from '@/core/Image/imageUtilities'
+import type { PortableTextBlock } from '@portabletext/types';
+import { forwardRef, type ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
+import { Image } from '@/core/Image/Image';
+import type { Image as ImageType } from '@/core/Image/imageUtilities';
 import {
   getArrowAnimation,
   getArrowElement,
   iconRotation,
-} from '@/core/Link/linkCommon'
-import { Typography } from '@/core/Typography'
-import type { GridColumnVariant } from '@/lib/helpers/getCommonUtilities'
+} from '@/core/Link/linkCommon';
+import { Typography } from '@/core/Typography';
+import type { GridColumnVariant } from '@/lib/helpers/getCommonUtilities';
 import {
   type ColorKeys,
   colorKeyToUtilityMap,
-} from '@/styles/colorKeyToUtilityMap'
-import BaseLink, { type BaseLinkProps } from '../Link/BaseLink'
-import { LogoPrimary } from '../Logo/Logo'
+} from '@/styles/colorKeyToUtilityMap';
+import BaseLink, { type BaseLinkProps } from '../Link/BaseLink';
+import { LogoPrimary } from '../Logo/Logo';
 
-export type PromotionType = 'compact' | 'extended'
-export type PromotionVariant = 'externalLink' | 'default'
-export type PromotionLayoutDirection = 'col' | 'row'
+export type PromotionType = 'compact' | 'extended';
+export type PromotionVariant = 'externalLink' | 'default';
+export type PromotionLayoutDirection = 'col' | 'row';
 
 export type PromotionProps = {
   /**
@@ -27,44 +27,44 @@ export type PromotionProps = {
    * extended - title, ingress and date eyebrow, stacked layout. E.g. News promotion
    * @default compact
    */
-  type?: PromotionType
+  type?: PromotionType;
   /** Internal(default) links or external
    * @defaul default
    */
-  variant?: PromotionVariant
+  variant?: PromotionVariant;
   /** Background on promotion card
    * @default gray-20
    */
-  background?: ColorKeys
-  image?: ImageType
+  background?: ColorKeys;
+  image?: ImageType;
   /** Rendered as plain but accepts portable */
-  title: string | PortableTextBlock[]
+  title: string | PortableTextBlock[];
   /** Rendered as plain but accepts portable.
    * Combined type hides ingress on mobile
    */
-  ingress?: PortableTextBlock[]
+  ingress?: PortableTextBlock[];
   /** about title element */
-  eyebrow?: ReactNode
+  eyebrow?: ReactNode;
   /** Side by side or stacked layout
    * @default col
    */
-  layoutDirection?: PromotionLayoutDirection
+  layoutDirection?: PromotionLayoutDirection;
   /** Helper from parent grid columns to decide image aspect */
-  gridColumns?: GridColumnVariant
+  gridColumns?: GridColumnVariant;
   /** h2 or h3 if section title in parent block component */
-  hasSectionTitle?: boolean
-} & Omit<BaseLinkProps, 'type'>
+  hasSectionTitle?: boolean;
+} & Omit<BaseLinkProps, 'type'>;
 
 const getPlainText = (text: string | PortableTextBlock[] | undefined) => {
-  if (typeof text === 'undefined') return text
+  if (typeof text === 'undefined') return text;
 
   return Array.isArray(text)
     ? text
-        .map(block => block.children.map(span => span.text).join(''))
+        .map((block) => block.children.map((span) => span.text).join(''))
         .join('\n')
         .replace(/\n/g, ' ')
-    : text
-}
+    : text;
+};
 
 export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
   function Promotion(
@@ -85,12 +85,12 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
     },
     ref,
   ) {
-    const plainText = getPlainText(title)
+    const plainText = getPlainText(title);
 
-    const plainIngress = getPlainText(ingress)
+    const plainIngress = getPlainText(ingress);
 
-    const showArrow = true //type !== 'extended'
-    const _layoutDirection = type === 'extended' ? 'col' : layoutDirection
+    const showArrow = true; //type !== 'extended'
+    const _layoutDirection = type === 'extended' ? 'col' : layoutDirection;
 
     return href ? (
       <BaseLink
@@ -98,7 +98,6 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
         type={variant === 'externalLink' ? 'externalUrl' : 'internalUrl'}
         href={href}
         {...(hrefLang && { hrefLang })}
-        prefetch={false}
         className={twMerge(
           `group/link grid h-full w-full max-w-full overflow-hidden rounded-card`,
           colorKeyToUtilityMap[background ?? 'gray-20'].background,
@@ -115,7 +114,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
       >
         {image ? (
           <Image
-            grid='xs'
+            grid="xs"
             image={image}
             fill
             className={twMerge(
@@ -140,7 +139,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
                 : 'aspect-4/3 rounded-s-card',
             )}
           >
-            <LogoPrimary className='h-auto w-[20%] text-white-100' />
+            <LogoPrimary className="h-auto w-[20%] text-white-100" />
           </div>
         )}
         <div
@@ -168,7 +167,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
             )}
           >
             {eyebrow && eyebrow}
-            <div className='flex h-fit flex-col justify-start'>
+            <div className="flex h-fit flex-col justify-start">
               {plainText && (
                 <Typography
                   as={hasSectionTitle ? 'h3' : 'h2'}
@@ -180,8 +179,8 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
               )}
               {plainIngress && (
                 <Typography
-                  group='card'
-                  variant='ingress'
+                  group="card"
+                  variant="ingress"
                   className={twMerge(
                     type === 'compact' &&
                       _layoutDirection === 'col' &&
@@ -223,6 +222,6 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
           )}
         </div>
       </BaseLink>
-    ) : null
+    ) : null;
   },
-)
+);

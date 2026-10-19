@@ -1,13 +1,13 @@
-import blocksToText from '../../../../helpers/blocksToText'
+import { table_chart } from '@equinor/eds-icons';
 
-import { PortableTextBlock, Rule } from 'sanity'
-import { EdsIcon } from '../../../../icons'
-import { table_chart } from '@equinor/eds-icons'
-import singleItemArray from '../../singleItemArray'
+import { type PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../../../helpers/blocksToText';
+import { EdsIcon } from '../../../../icons';
+import singleItemArray from '../../singleItemArray';
 
 export type Span2And1 = {
-  _type: 'span2and1'
-}
+  _type: 'span2and1';
+};
 
 export default {
   title: 'Span 2 and 1 column',
@@ -28,7 +28,8 @@ export default {
     {
       title: 'Align Span 2 on the right',
       name: 'alignSpan2Right',
-      description: 'Will align the span 2 on the right side. If not selected on the left',
+      description:
+        'Will align the span 2 on the right side. If not selected on the left',
       type: 'boolean',
     },
     singleItemArray({
@@ -47,13 +48,14 @@ export default {
       title: 'title',
     },
     prepare({ title = [] }: { title: PortableTextBlock[] }) {
-      const plainTitle = title.length > 0 ? blocksToText(title) : 'Span 2 and 1 type'
+      const plainTitle =
+        title.length > 0 ? blocksToText(title) : 'Span 2 and 1 type';
 
       return {
         title: plainTitle,
-        subtitle: 'Span 2 and 1 component',
+        subtitle: 'Span 2 and 1',
         media: () => EdsIcon(table_chart),
-      }
+      };
     },
   },
-}
+};

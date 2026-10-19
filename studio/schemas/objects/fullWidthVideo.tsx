@@ -1,8 +1,8 @@
-import { play_circle } from '@equinor/eds-icons'
-import { EdsIcon } from '../../icons'
-import blocksToText from '../../helpers/blocksToText'
-import type { PortableTextBlock, Rule } from 'sanity'
-import { ImageWithAlt } from './imageWithAlt'
+import { play_circle } from '@equinor/eds-icons';
+import type { PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import type { ImageWithAlt } from './imageWithAlt';
 
 export default {
   name: 'fullWidthVideo',
@@ -39,7 +39,7 @@ export default {
       type: 'boolean',
       initialValue: false,
       hidden: ({ parent }: any) => {
-        return parent?.aspectRatio === '2:1'
+        return parent?.aspectRatio === '2:1';
       },
     },
   ],
@@ -49,14 +49,22 @@ export default {
       videoTitle: 'videoFile.video.title',
       media: 'videoFile.thumbnail',
     },
-    prepare({ title, videoTitle, media }: { title: PortableTextBlock[]; videoTitle: string; media: ImageWithAlt }) {
-      const plainTitle = title ? blocksToText(title) : undefined
+    prepare({
+      title,
+      videoTitle,
+      media,
+    }: {
+      title: PortableTextBlock[];
+      videoTitle: string;
+      media: ImageWithAlt;
+    }) {
+      const plainTitle = title ? blocksToText(title) : undefined;
 
       return {
         title: plainTitle || videoTitle,
-        subtitle: `Full width video component`,
+        subtitle: `Full width video`,
         media: media || EdsIcon(play_circle),
-      }
+      };
     },
   },
-}
+};

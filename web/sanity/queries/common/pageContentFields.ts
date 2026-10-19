@@ -13,7 +13,7 @@ import markDefs from './blockEditorMarks';
 import homepageContentFields from './homepageContentFields';
 import { imageCarouselFields } from './imageCarouselFields';
 import { keyNumbersFields } from './keyNumbersFields';
-import { sameLang } from './langAndDrafts';
+import { notDraft, sameLang } from './langAndDrafts';
 import {
   eventPromotion,
   magazinePromotion,
@@ -34,6 +34,20 @@ import {
 } from './promotions/v2/promotionsV2';
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime';
 import { tabsComponentFields } from './tabsComponentFields';
+
+const newsListArticleFields = /* groq */ `
+  "type": _type,
+  "id": _id,
+  "updatedAt": ${lastUpdatedTimeQuery},
+  title,
+  heroImage,
+  "publishDateTime": ${publishDateTimeQuery},
+  "slug": slug.current,
+  ingress[]{
+    ...,
+    ${markDefs},
+  },
+`;
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -323,17 +337,40 @@ _type == "keyNumbers" =>{
           "id": _id,
           _type,
         },
-        "promotions": *[
-          (_type == "news" || _type == "localNews")
-          && (
-            count(tags[_ref in ^.^.tags[]._ref]) > 0
-            ||
-            count(countryTags[_ref in ^.^.countryTags[]._ref]) > 0
-            ||
-            localNewsTag._ref in ^.localNewsTags[]._ref
-          )
-          && ${sameLang}
-        ] | order(${publishDateTimeQuery} desc)[0...3]{
+        "promotions": select(
+          count(coalesce(tags, [])) == 0
+          && count(coalesce(countryTags, [])) == 0
+          && count(coalesce(localNewsTags, [])) == 0 =>
+          *[(_type == "news" || _type == "localNews")
+            && ${sameLang}
+            && ${notDraft}
+          ] | order(${publishDateTimeQuery} desc)[0...3]{
+            "type": _type,
+            "id": _id,
+            "updatedAt":  ${lastUpdatedTimeQuery},
+            title,
+            heroImage,
+            "publishDateTime": ${publishDateTimeQuery},
+            "link": {
+              "slug": slug.current,
+              "type":"internalUrl",
+              "lang": lang,
+            },
+            ingress[]{
+              ...,
+              ${markDefs},
+            },
+          },
+          *[
+            (_type == "news" || _type == "localNews")
+            && (
+              count(tags[_ref in ^.^.tags[]._ref]) > 0
+              || count(countryTags[_ref in ^.^.countryTags[]._ref]) > 0
+              || localNewsTag._ref in ^.localNewsTags[]._ref
+            )
+            && ${sameLang}
+            && ${notDraft}
+          ] | order(${publishDateTimeQuery} desc)[0...3]{
           "type": _type,
           "id": _id,
           "updatedAt":  ${lastUpdatedTimeQuery},
@@ -350,10 +387,14 @@ _type == "keyNumbers" =>{
             ...,
             ${markDefs},
           },
-        },
+          }
+          )
       },
       _type == "promoteTopics" => {
-        "promotions": references[0...3]{
+        "promotions": references[
+          !((reference->_id) in path("drafts.**"))
+          && !(coalesce(reference->_originalId, reference->_id) in path("drafts.**"))
+        ][0...3]{
          "id": _key,
          "type": _type,
           ingress[]{
@@ -449,7 +490,7 @@ _type == "keyNumbers" =>{
           },
         },
         manuallySelectEvents => {
-          "promotions": promotedEvents[]->{
+          "promotions": promotedEvents[]->[${notDraft}]{
             ${eventPromotionFields}
           },
         },
@@ -485,48 +526,89 @@ _type == "keyNumbers" =>{
   _type == "newsList" => {
     "type": _type,
     "id": _key,
+    "hitsPerPage": coalesce(hitsPerPage, 18),
+    hideTitle,
     title[]{
       ...,
       ${markDefs},
     },
-    "tags": selectedTags.tags[]->{
+    "tags": coalesce(tags, selectedTags.tags, [])[]->{
       "id": _id,
     },
-    "countryTags": selectedTags.countryTags[]->{
+    "countryTags": coalesce(countryTags, selectedTags.countryTags, [])[]->{
       "id": _id,
     },
-    "localNewsTags": selectedTags.localNewsTags[]->{
+    "localNewsTags": coalesce(localNewsTags, selectedTags.localNewsTags, [])[]->{
       "id": _id,
     },
-    "articles": *[
-      (_type == "news" || _type == "localNews")
-      && (
-        count(tags[_ref in ^.^.selectedTags.tags[]._ref]) > 0
-      ||
-        count(countryTags[_ref in ^.^.selectedTags.countryTags[]._ref]) > 0
-      ||
-        localNewsTag._ref in ^.selectedTags.localNewsTags[]._ref
-    )
-    && ${sameLang}
-    ] | order(${publishDateTimeQuery} desc){
-      "type": _type,
-      "id": _id,
-      "updatedAt":  ${lastUpdatedTimeQuery},
-      title,
-      heroImage,
-      "publishDateTime": ${publishDateTimeQuery},
-      "slug": slug.current,
-      ingress[]{
-        ...,
-        ${markDefs},
+    "articles": select(
+      count(coalesce(tags, selectedTags.tags, [])) == 0
+      && count(coalesce(countryTags, selectedTags.countryTags, [])) == 0
+      && count(coalesce(localNewsTags, selectedTags.localNewsTags, [])) == 0 =>
+        *[(_type == "news" || _type == "localNews") && ${sameLang} && ${notDraft}]
+        | order(${publishDateTimeQuery} desc){
+          ${newsListArticleFields}
+        },
+      *[
+        (_type == "news" || _type == "localNews")
+        && (
+          count(tags[_ref in coalesce(^.^.tags, ^.^.selectedTags.tags, [])[]._ref]) > 0
+        ||
+          count(countryTags[_ref in coalesce(^.^.countryTags, ^.^.selectedTags.countryTags, [])[]._ref]) > 0
+        ||
+          localNewsTag._ref in coalesce(^.localNewsTags, ^.selectedTags.localNewsTags, [])[]._ref
+        )
+        && ${sameLang}
+        && ${notDraft}
+      ] | order(${publishDateTimeQuery} desc){
+        ${newsListArticleFields}
       },
-    },
+    ),
     "designOptions": {
         "background": {
-            "backgroundUtility": selectedTags.theme.theme.background.key,
+            "backgroundUtility": coalesce(theme, selectedTags.theme).theme.background.key,
         },
-        "foreground": selectedTags.theme.theme.foreground.key,
+        "foreground": coalesce(theme, selectedTags.theme).theme.foreground.key,
     }
+  },
+
+  _type == "personList" => {
+    "type": _type,
+    "id": _key,
+    title[]{
+      ...,
+      ${markDefs},
+    },
+    hideTitle,
+    ingress[]{
+      ...,
+      ${markDefs},
+    },
+    "designOptions": {
+      "background": {
+        "backgroundUtility": theme.theme.background.key,
+      },
+      "foreground": theme.theme.foreground.key,
+    },
+    "items": items[person->lang == $lang]{
+      "id": _key,
+      highlighted,
+      "person": person->{
+        "id": _id,
+        name,
+        title,
+        linkedinProfileUrl,
+        image,
+        bio[]{
+          ...,
+          ${markDefs},
+        },
+        callToActions[]{
+          ${linkSelectorFields},
+        },
+        "slug": slug.current,
+      },
+    },
   },
 
   _type == "stockValuesApi"=>{
