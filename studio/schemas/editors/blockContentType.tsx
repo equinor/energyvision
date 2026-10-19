@@ -6,6 +6,7 @@ import {
 import { MdOutlineAnchor } from 'react-icons/md';
 import type { BlockDefinition, BlockStyleDefinition } from 'sanity';
 import type { Level2Keys } from '@/helpers/Level2KeyTypes';
+import { advancedHighlight } from '@/schemas/objects/advancedHighlight';
 import {
   EdsBlockEditorIcon,
   EdsIcon,
@@ -343,7 +344,7 @@ export const configureBlockContent = (
           component: SuperScriptRenderer,
         },
       ],
-      annotations: [],
+      annotations: [advancedHighlight],
     },
   };
 
