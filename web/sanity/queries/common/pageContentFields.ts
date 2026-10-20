@@ -53,6 +53,40 @@ const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
     ${keyNumbersFields}
   },
+  _type == "statCallout" => {
+    "type": _type,
+    "id": _key,
+    title[]{..., ${markDefs}},
+    hideTitle,
+    useHorizontalScroll,
+    layoutGrid,
+    "items": items[]{
+      "id": _key,
+      title[]{..., ${markDefs}},
+      caption[]{..., ${markDefs}},
+      titleVerticalAlignment,
+      "backgroundImage": backgroundImage{
+        ...,
+        "extension": asset->extension
+      },
+      "backgroundVideo": backgroundVideo->{
+        "src": asset.asset->url,
+        title
+      },
+      "backgroundColor": {
+        "backgroundUtility": backgroundColor.key,
+        "dark": coalesce(backgroundColor.dark, false)
+      },
+      "icon": icon{
+        ...,
+        "extension": asset->extension
+      },
+      useWhite
+    },
+    "designOptions": {
+      ${background}
+    }
+  },
   _type == "teaser" => {
     "type": _type,
     "id": _key,

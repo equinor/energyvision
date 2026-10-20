@@ -19,6 +19,7 @@ import { MediaButton } from '@/core/MediaButton/MediaButton'
 import { EventCard } from '@/sections/cards/EventCard'
 import type { EventCardData } from '@/sections/cards/EventCard/EventCard'
 import KeyNumberItem from '@/sections/KeyNumber/KeyNumberItem'
+import { StatCalloutItem, type StatCalloutItemData } from '@/sections/StatCallout/StatCalloutItem'
 import type { VideoPlayerCarouselItem } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { usePrefersReducedMotion } from '../../lib/hooks/usePrefersReducedMotion'
@@ -45,9 +46,10 @@ type CarouselItemTypes = {
   | EventCardData
   | KeyNumberItemData
   | IFrameCarouselItemData
+  | StatCalloutItemData
 )
 
-type Variants = 'video' | 'image' | 'event' | 'keyNumber' | 'iframe'
+type Variants = 'video' | 'image' | 'event' | 'keyNumber' | 'iframe' | 'statCallout'
 
 type CarouselProps = {
   items: CarouselItemTypes[]
@@ -439,6 +441,17 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
     }
     const getCarouselItem = (item: CarouselItemTypes, i: number) => {
       switch (variant) {
+        case 'statCallout':
+          return (
+            <CarouselItem
+              key={item.id}
+              displayMode='scroll'
+              aria-label={getTranslatedItemCountLabel(i + 1)}
+              className='w-[min(25rem,calc(100vw-3rem))] max-w-[25rem] grow-0 first:pl-0 last:pr-0'
+            >
+              <StatCalloutItem item={item as StatCalloutItemData} />
+            </CarouselItem>
+          )
         case 'video':
           return getVideoVariantBody(item as VideoPlayerCarouselItem, i)
         case 'image':

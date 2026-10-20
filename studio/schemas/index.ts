@@ -83,6 +83,7 @@ import pullQuote from './objects/pullQuote';
 import relatedLinks from './objects/relatedLinks';
 import simpleMenuGroup from './objects/simpleMenuGroup';
 import simpleMenuLink from './objects/simpleMenuLink';
+import statCallout from './objects/statCallout';
 import stickyMenu from './objects/stickyMenu';
 import stockValuesApi from './objects/stockValuesApi';
 import tableV2 from './objects/tableV2';
@@ -186,6 +187,7 @@ const RemainingSchemas = [
   promoTile,
   promoTileArray,
   stockValuesApi,
+  statCallout,
   iframe,
   basicIframe,
   footer,
