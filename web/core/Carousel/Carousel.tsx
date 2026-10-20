@@ -1,8 +1,8 @@
-'use client'
-import { toPlainText } from '@portabletext/react'
-import type { PortableTextBlock } from '@portabletext/types'
-import dynamic from 'next/dynamic'
-import { useTranslations } from 'next-intl'
+'use client';
+import { toPlainText } from '@portabletext/react';
+import type { PortableTextBlock } from '@portabletext/types';
+import dynamic from 'next/dynamic';
+import { useTranslations } from 'next-intl';
 import {
   type ElementType,
   forwardRef,
@@ -13,33 +13,36 @@ import {
   useMemo,
   useRef,
   useState,
-} from 'react'
-import { twMerge } from 'tailwind-merge'
-import { MediaButton } from '@/core/MediaButton/MediaButton'
-import { EventCard } from '@/sections/cards/EventCard'
-import type { EventCardData } from '@/sections/cards/EventCard/EventCard'
-import KeyNumberItem from '@/sections/KeyNumber/KeyNumberItem'
-import { StatCalloutItem, type StatCalloutItemData } from '@/sections/StatCallout/StatCalloutItem'
-import type { VideoPlayerCarouselItem } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
-import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import { usePrefersReducedMotion } from '../../lib/hooks/usePrefersReducedMotion'
+} from 'react';
+import { twMerge } from 'tailwind-merge';
+import { MediaButton } from '@/core/MediaButton/MediaButton';
+import { EventCard } from '@/sections/cards/EventCard';
+import type { EventCardData } from '@/sections/cards/EventCard/EventCard';
+import KeyNumberItem from '@/sections/KeyNumber/KeyNumberItem';
+import {
+  StatCalloutItem,
+  type StatCalloutItemData,
+} from '@/sections/StatCallout/StatCalloutItem';
+import type { VideoPlayerCarouselItem } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel';
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery';
+import { usePrefersReducedMotion } from '../../lib/hooks/usePrefersReducedMotion';
 import type {
   IFrameCarouselItemData,
   KeyNumberItemData,
-} from '../../types/index'
-import type { VideoPlayerProps } from '../VideoJsPlayer/VideoPlayer'
-import { CarouselImageItem, type ImageCarouselItem } from './CarouselImageItem'
-import { CarouselItem } from './CarouselItem'
+} from '../../types/index';
+import type { VideoPlayerProps } from '../VideoJsPlayer/VideoPlayer';
+import { CarouselImageItem, type ImageCarouselItem } from './CarouselImageItem';
+import { CarouselItem } from './CarouselItem';
 
-export type DisplayModes = 'single' | 'scroll'
-export type Layouts = 'full' | 'default'
+export type DisplayModes = 'single' | 'scroll';
+export type Layouts = 'full' | 'default';
 
 /** Clean up types here */
 type CarouselItemTypes = {
-  id?: string
-  _key?: string
-  _type?: string
-  type?: string
+  id?: string;
+  _key?: string;
+  _type?: string;
+  type?: string;
 } & (
   | VideoPlayerCarouselItem
   | ImageCarouselItem
@@ -47,35 +50,41 @@ type CarouselItemTypes = {
   | KeyNumberItemData
   | IFrameCarouselItemData
   | StatCalloutItemData
-)
+);
 
-type Variants = 'video' | 'image' | 'event' | 'keyNumber' | 'iframe' | 'statCallout'
+type Variants =
+  | 'video'
+  | 'image'
+  | 'event'
+  | 'keyNumber'
+  | 'iframe'
+  | 'statCallout';
 
 type CarouselProps = {
-  items: CarouselItemTypes[]
-  variant?: Variants
-  displayMode?: DisplayModes
+  items: CarouselItemTypes[];
+  variant?: Variants;
+  displayMode?: DisplayModes;
   /* If carousel has a title/sectionTitle over it */
-  labelledbyId?: string
+  labelledbyId?: string;
   /* grouped controls and list */
-  className?: string
+  className?: string;
   /* Outer container */
-  containerClassName?: string
-  listClassName?: string
-  autoRotation?: boolean
-  hasSectionTitle?: boolean
-  title?: PortableTextBlock[]
+  containerClassName?: string;
+  listClassName?: string;
+  autoRotation?: boolean;
+  hasSectionTitle?: boolean;
+  title?: PortableTextBlock[];
   /** Variant Image: The section title to be used in translated autorotation control button */
-  sectionTitle?: PortableTextBlock[]
-  getVariantElementBody?: (itemData: any, index?: number) => JSX.Element
-} & Omit<HTMLAttributes<HTMLDivElement>, 'title'>
+  sectionTitle?: PortableTextBlock[];
+  getVariantElementBody?: (itemData: any, index?: number) => JSX.Element;
+} & Omit<HTMLAttributes<HTMLDivElement>, 'title'>;
 
-const TRANSLATE_X_AMOUNT_LG = 1000
-const TRANSLATE_X_AMOUNT_SM = 370 //old value 295
-const TRANSLATE_X_AMOUNT_MD = 712
+const TRANSLATE_X_AMOUNT_LG = 1000;
+const TRANSLATE_X_AMOUNT_SM = 370; //old value 295
+const TRANSLATE_X_AMOUNT_MD = 712;
 
-const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
-const IFrame = dynamic(() => import('@/core/IFrame/IFrame'))
+const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'));
+const IFrame = dynamic(() => import('@/core/IFrame/IFrame'));
 export const Carousel = forwardRef<HTMLElement, CarouselProps>(
   function Carousel(
     {
@@ -96,81 +105,81 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
   ) {
     const CarouselTag = hasSectionTitle
       ? (`div` as ElementType)
-      : (`section` as ElementType)
-    const carouselItemsId = useId()
-    const intl = useTranslations()
-    const sliderRef = useRef<HTMLUListElement>(null)
-    const timeoutRef = useRef<NodeJS.Timeout | null>(null)
-    const positionUpdateTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+      : (`section` as ElementType);
+    const carouselItemsId = useId();
+    const intl = useTranslations();
+    const sliderRef = useRef<HTMLUListElement>(null);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const positionUpdateTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     //a prefers-reduced-motion user setting must always override autoplay
-    const prefersReducedMotion = usePrefersReducedMotion()
+    const prefersReducedMotion = usePrefersReducedMotion();
     const internalAutoRotation = useMemo(() => {
       //Only image single mode should have auto rotation
       if (prefersReducedMotion) {
-        return false
+        return false;
       }
       if (autoRotation && variant === 'image' && displayMode === 'single') {
-        return true
+        return true;
       }
-      return false
-    }, [autoRotation, displayMode, prefersReducedMotion, variant])
-    const [pauseAutoRotation, setPauseAutoRotation] = useState(false)
-    const [wasUserInteraction, setWasUserInteraction] = useState(false)
-    const isMedium = useMediaQuery(`(min-width: 768px)`)
-    const isLarge = useMediaQuery(`(min-width: 1024px)`)
-    let TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_SM
+      return false;
+    }, [autoRotation, displayMode, prefersReducedMotion, variant]);
+    const [pauseAutoRotation, setPauseAutoRotation] = useState(false);
+    const [wasUserInteraction, setWasUserInteraction] = useState(false);
+    const isMedium = useMediaQuery(`(min-width: 768px)`);
+    const isLarge = useMediaQuery(`(min-width: 1024px)`);
+    let TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_SM;
     if (isMedium) {
-      TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_MD
+      TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_MD;
     }
     if (isLarge) {
-      TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_LG
+      TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_LG;
     }
 
     const initialPositions = useMemo(() => {
       return items?.map((_item, i) => {
         if (i === items.length - 1) {
-          return -TRANSLATE_X_AMOUNT
+          return -TRANSLATE_X_AMOUNT;
         }
-        return TRANSLATE_X_AMOUNT * i
-      })
-    }, [TRANSLATE_X_AMOUNT, items])
-    const [currentIndex, setCurrentIndex] = useState(0)
-    const [currentListTranslateX, setCurrentListTranslateX] = useState(0)
-    const [currentXPosition, setCurrentXPosition] = useState(0)
-    const [itemsXPositions, setItemsXPositions] = useState<number[]>([])
+        return TRANSLATE_X_AMOUNT * i;
+      });
+    }, [TRANSLATE_X_AMOUNT, items]);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentListTranslateX, setCurrentListTranslateX] = useState(0);
+    const [currentXPosition, setCurrentXPosition] = useState(0);
+    const [itemsXPositions, setItemsXPositions] = useState<number[]>([]);
 
     const loopSlideNext = useCallback(() => {
       // Cancel any pending position update to avoid race condition
       if (positionUpdateTimeoutRef.current) {
-        clearTimeout(positionUpdateTimeoutRef.current)
+        clearTimeout(positionUpdateTimeoutRef.current);
       }
 
-      const isLast = currentIndex === items?.length - 1
-      const newIndex = isLast ? 0 : currentIndex + 1
-      const newXPosition = currentXPosition + TRANSLATE_X_AMOUNT
-      const higestLastItemTranslateXPosition = Math.max(...itemsXPositions)
+      const isLast = currentIndex === items?.length - 1;
+      const newIndex = isLast ? 0 : currentIndex + 1;
+      const newXPosition = currentXPosition + TRANSLATE_X_AMOUNT;
+      const higestLastItemTranslateXPosition = Math.max(...itemsXPositions);
 
       //move the ul slider
-      const newTranslateX = currentListTranslateX - TRANSLATE_X_AMOUNT
-      setCurrentListTranslateX(newTranslateX)
+      const newTranslateX = currentListTranslateX - TRANSLATE_X_AMOUNT;
+      setCurrentListTranslateX(newTranslateX);
 
       if (newXPosition === higestLastItemTranslateXPosition) {
         const newPositions = itemsXPositions.map((position, i) => {
           if (newIndex === items?.length - 1 && i === 0) {
-            return higestLastItemTranslateXPosition + TRANSLATE_X_AMOUNT
+            return higestLastItemTranslateXPosition + TRANSLATE_X_AMOUNT;
           }
           if (i === newIndex + 1) {
-            return higestLastItemTranslateXPosition + TRANSLATE_X_AMOUNT
+            return higestLastItemTranslateXPosition + TRANSLATE_X_AMOUNT;
           }
-          return position
-        })
+          return position;
+        });
         positionUpdateTimeoutRef.current = setTimeout(
           () => setItemsXPositions(newPositions),
           400,
-        )
+        );
       }
-      setCurrentIndex(newIndex)
-      setCurrentXPosition(newXPosition)
+      setCurrentIndex(newIndex);
+      setCurrentXPosition(newXPosition);
     }, [
       TRANSLATE_X_AMOUNT,
       currentIndex,
@@ -178,40 +187,40 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       currentXPosition,
       items?.length,
       itemsXPositions,
-    ])
+    ]);
 
     const loopSlidePrev = useCallback(() => {
       // Cancel any pending position update to avoid race condition
       if (positionUpdateTimeoutRef.current) {
-        clearTimeout(positionUpdateTimeoutRef.current)
+        clearTimeout(positionUpdateTimeoutRef.current);
       }
 
-      const isFirst = currentIndex === 0
-      const newIndex = isFirst ? items?.length - 1 : currentIndex - 1
-      const newXPosition = currentXPosition - TRANSLATE_X_AMOUNT
-      const lowestLastItemTranslateXPosition = Math.min(...itemsXPositions)
+      const isFirst = currentIndex === 0;
+      const newIndex = isFirst ? items?.length - 1 : currentIndex - 1;
+      const newXPosition = currentXPosition - TRANSLATE_X_AMOUNT;
+      const lowestLastItemTranslateXPosition = Math.min(...itemsXPositions);
 
       //move the ul slider
-      const newTranslateX = currentListTranslateX + TRANSLATE_X_AMOUNT
-      setCurrentListTranslateX(newTranslateX)
+      const newTranslateX = currentListTranslateX + TRANSLATE_X_AMOUNT;
+      setCurrentListTranslateX(newTranslateX);
 
       if (newXPosition === lowestLastItemTranslateXPosition) {
         const newPositions = itemsXPositions.map((position, i) => {
           if (newIndex === 0 && i === items?.length - 1) {
-            return lowestLastItemTranslateXPosition - TRANSLATE_X_AMOUNT
+            return lowestLastItemTranslateXPosition - TRANSLATE_X_AMOUNT;
           }
           if (i === newIndex - 1) {
-            return lowestLastItemTranslateXPosition - TRANSLATE_X_AMOUNT
+            return lowestLastItemTranslateXPosition - TRANSLATE_X_AMOUNT;
           }
-          return position
-        })
+          return position;
+        });
         positionUpdateTimeoutRef.current = setTimeout(
           () => setItemsXPositions(newPositions),
           400,
-        )
+        );
       }
-      setCurrentIndex(newIndex)
-      setCurrentXPosition(newXPosition)
+      setCurrentIndex(newIndex);
+      setCurrentXPosition(newXPosition);
     }, [
       TRANSLATE_X_AMOUNT,
       currentIndex,
@@ -219,111 +228,111 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       currentXPosition,
       items?.length,
       itemsXPositions,
-    ])
+    ]);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
       if (event.key === 'ArrowRight') {
-        setWasUserInteraction(true)
-        loopSlideNext()
+        setWasUserInteraction(true);
+        loopSlideNext();
       }
       if (event.key === 'ArrowLeft') {
-        setWasUserInteraction(true)
-        loopSlidePrev()
+        setWasUserInteraction(true);
+        loopSlidePrev();
       }
-    }
+    };
 
     const scrollSlideNext = useCallback(() => {
       if (!sliderRef.current) {
-        return
+        return;
       }
 
-      const scrollAmount = Math.max(sliderRef.current.clientWidth * 0.8, 320)
+      const scrollAmount = Math.max(sliderRef.current.clientWidth * 0.8, 320);
       sliderRef.current.scrollBy({
         left: scrollAmount,
         behavior: prefersReducedMotion ? 'auto' : 'smooth',
-      })
-    }, [prefersReducedMotion])
+      });
+    }, [prefersReducedMotion]);
 
     const scrollSlidePrev = useCallback(() => {
       if (!sliderRef.current) {
-        return
+        return;
       }
 
-      const scrollAmount = Math.max(sliderRef.current.clientWidth * 0.8, 320)
+      const scrollAmount = Math.max(sliderRef.current.clientWidth * 0.8, 320);
       sliderRef.current.scrollBy({
         left: -scrollAmount,
         behavior: prefersReducedMotion ? 'auto' : 'smooth',
-      })
-    }, [prefersReducedMotion])
+      });
+    }, [prefersReducedMotion]);
 
     const handlePreviousClick = () => {
       if (displayMode === 'scroll') {
-        scrollSlidePrev()
-        return
+        scrollSlidePrev();
+        return;
       }
 
-      loopSlidePrev()
+      loopSlidePrev();
       if (variant === 'image' && !pauseAutoRotation) {
-        setPauseAutoRotation(true)
+        setPauseAutoRotation(true);
       }
-    }
+    };
 
     const handleNextClick = () => {
       if (displayMode === 'scroll') {
-        scrollSlideNext()
-        return
+        scrollSlideNext();
+        return;
       }
 
-      loopSlideNext()
+      loopSlideNext();
       if (variant === 'image' && !pauseAutoRotation) {
-        setPauseAutoRotation(true)
+        setPauseAutoRotation(true);
       }
-    }
+    };
 
     useEffect(() => {
       if (internalAutoRotation && !pauseAutoRotation) {
-        timeoutRef.current = setTimeout(() => loopSlideNext(), 6000) // + 1s from the play/pause button timer
+        timeoutRef.current = setTimeout(() => loopSlideNext(), 6000); // + 1s from the play/pause button timer
         return () => {
-          timeoutRef.current && clearTimeout(timeoutRef.current)
-        }
+          timeoutRef.current && clearTimeout(timeoutRef.current);
+        };
       }
-    }, [internalAutoRotation, loopSlideNext, pauseAutoRotation])
+    }, [internalAutoRotation, loopSlideNext, pauseAutoRotation]);
 
     useEffect(() => {
       const reset = () => {
         if (positionUpdateTimeoutRef.current) {
-          clearTimeout(positionUpdateTimeoutRef.current)
+          clearTimeout(positionUpdateTimeoutRef.current);
         }
-        setCurrentIndex(0)
-        setCurrentXPosition(0)
-        setCurrentListTranslateX(0)
-        setItemsXPositions(initialPositions)
-      }
-      reset()
-    }, [initialPositions])
+        setCurrentIndex(0);
+        setCurrentXPosition(0);
+        setCurrentListTranslateX(0);
+        setItemsXPositions(initialPositions);
+      };
+      reset();
+    }, [initialPositions]);
 
     const getTranslatedItemCountLabel = (item: number) => {
-      let label = `Item ${item} of ${items.length}`
+      let label = `Item ${item} of ${items.length}`;
       const translatedLabel = intl('carouselItemCountLabel', {
         x: item,
         carouselLength: items.length,
-      }).toString()
+      }).toString();
       if (translatedLabel && translatedLabel.length > 0) {
-        label = translatedLabel
+        label = translatedLabel;
       }
 
-      return label
-    }
+      return label;
+    };
 
     const cancelTimeout = () => {
-      timeoutRef.current && clearTimeout(timeoutRef.current)
-    }
+      timeoutRef.current && clearTimeout(timeoutRef.current);
+    };
 
     const getIframeVariantBody = (
       itemData: IFrameCarouselItemData,
       index: number,
     ) => {
-      const { title, description, action, ...iframeData } = itemData
+      const { title, description, action, ...iframeData } = itemData;
       const element = (
         <IFrame
           frameTitle={iframeData?.frameTitle}
@@ -332,9 +341,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
           aspectRatio={'16:9'}
           height={iframeData?.height}
           hasSectionTitle={!!title}
-          className='my-20'
+          className="my-20"
         />
-      )
+      );
 
       return (
         <CarouselItem
@@ -356,13 +365,13 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
         >
           {element}
         </CarouselItem>
-      )
-    }
+      );
+    };
     const getVideoVariantBody = (
       itemData: VideoPlayerCarouselItem,
       index: number,
     ) => {
-      const { title, video, id } = itemData
+      const { title, video, id } = itemData;
       const props: VideoPlayerProps = {
         title: video?.title,
         poster: video?.poster,
@@ -370,9 +379,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
         aspectRatio: displayMode === 'scroll' ? '9:16' : '16:9',
         figureCaption: title,
         className: 'min-w-[24rem] h-full overflow-hidden rounded-card',
-      }
+      };
       //@ts-ignore: TODO
-      const element = <VideoPlayer {...props} />
+      const element = <VideoPlayer {...props} />;
 
       return (
         <CarouselItem
@@ -389,8 +398,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
         >
           {element}
         </CarouselItem>
-      )
-    }
+      );
+    };
     const getEventVariantBody = (itemData: EventCardData, index: number) => {
       const element = getVariantElementBody ? (
         getVariantElementBody(itemData)
@@ -398,15 +407,15 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
         <EventCard
           hasSectionTitle={hasSectionTitle}
           data={itemData}
-          variant='carousel'
+          variant="carousel"
         />
-      )
+      );
 
       return (
         <CarouselItem
           key={itemData.id}
           displayMode={displayMode}
-          variant='default'
+          variant="default"
           aria-label={getTranslatedItemCountLabel(index + 1)}
           className={` ${
             displayMode === 'scroll' ? `w-event-carousel-card-w` : ''
@@ -420,40 +429,40 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
         >
           {element}
         </CarouselItem>
-      )
-    }
+      );
+    };
     const getKeyNumberVariantBody = (
       itemData: KeyNumberItemData,
       index: number,
     ) => {
-      const element = <KeyNumberItem as='div' variant='card' {...itemData} />
+      const element = <KeyNumberItem as="div" variant="card" {...itemData} />;
 
       return (
         <CarouselItem
           aria-label={getTranslatedItemCountLabel(index + 1)}
           key={itemData.id}
-          displayMode='scroll'
-          variant='default'
+          displayMode="scroll"
+          variant="default"
         >
           {element}
         </CarouselItem>
-      )
-    }
+      );
+    };
     const getCarouselItem = (item: CarouselItemTypes, i: number) => {
       switch (variant) {
         case 'statCallout':
           return (
             <CarouselItem
               key={item.id}
-              displayMode='scroll'
+              displayMode="scroll"
               aria-label={getTranslatedItemCountLabel(i + 1)}
-              className='w-[min(25rem,calc(100vw-3rem))] max-w-[25rem] grow-0 first:pl-0 last:pr-0'
+              className="w-[min(25rem,calc(100vw-3rem))] max-w-[25rem] grow-0 first:pl-0 last:pr-0"
             >
               <StatCalloutItem item={item as StatCalloutItemData} />
             </CarouselItem>
-          )
+          );
         case 'video':
-          return getVideoVariantBody(item as VideoPlayerCarouselItem, i)
+          return getVideoVariantBody(item as VideoPlayerCarouselItem, i);
         case 'image':
           return (
             <CarouselImageItem
@@ -475,26 +484,26 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
                 },
                 wasUserPress: wasUserInteraction,
                 onFocus: () => {
-                  cancelTimeout()
+                  cancelTimeout();
                 },
               })}
             />
-          )
+          );
         case 'event':
-          return getEventVariantBody(item as EventCardData, i)
+          return getEventVariantBody(item as EventCardData, i);
         case 'keyNumber':
-          return getKeyNumberVariantBody(item as KeyNumberItemData, i)
+          return getKeyNumberVariantBody(item as KeyNumberItemData, i);
         case 'iframe':
-          return getIframeVariantBody(item as IFrameCarouselItemData, i)
+          return getIframeVariantBody(item as IFrameCarouselItemData, i);
       }
-    }
+    };
 
-    let translatedPlayPauseAutoRotationTitle = ''
+    let translatedPlayPauseAutoRotationTitle = '';
     if (internalAutoRotation && labelledbyId && sectionTitle) {
-      translatedPlayPauseAutoRotationTitle = toPlainText(sectionTitle)
+      translatedPlayPauseAutoRotationTitle = toPlainText(sectionTitle);
     }
     if (internalAutoRotation && !labelledbyId && title) {
-      translatedPlayPauseAutoRotationTitle = toPlainText(title)
+      translatedPlayPauseAutoRotationTitle = toPlainText(title);
     }
 
     return (
@@ -543,7 +552,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
             })}
           >
             {items?.map((item, i) => {
-              return getCarouselItem(item, i)
+              return getCarouselItem(item, i);
             })}
           </ul>
           <fieldset
@@ -552,10 +561,10 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
               internalAutoRotation ? 'justify-between' : 'justify-end',
               displayMode === 'single' &&
                 `mx-auto w-single-carousel-card-w-sm md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg`,
-              displayMode === 'scroll' && `w-full`,
+              displayMode === 'scroll' && `w-full px-layout-sm`,
             )}
           >
-            <legend className='sr-only'>{intl('carousel_controls')}</legend>
+            <legend className="sr-only">{intl('carousel_controls')}</legend>
             {/** Only image should have autoplay */}
             {internalAutoRotation && variant === 'image' && (
               <MediaButton
@@ -571,11 +580,11 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
                 }
                 mode={pauseAutoRotation ? 'play' : 'pause'}
                 onClick={() => {
-                  setPauseAutoRotation(!pauseAutoRotation)
+                  setPauseAutoRotation(!pauseAutoRotation);
                 }}
                 paused={pauseAutoRotation}
                 useTimer
-                className='[grid-area:left]'
+                className="[grid-area:left]"
               />
             )}
             {/** From W3.org:
@@ -586,16 +595,16 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
              * used; moving the focus makes it harder for users to browse
              * back and forth between the slides.
              */}
-            <div className='flex items-center gap-3'>
+            <div className="flex items-center gap-3">
               <MediaButton
                 title={intl('previous')}
                 aria-controls={carouselItemsId}
-                mode='previous'
+                mode="previous"
                 onClick={handlePreviousClick}
               />
               <MediaButton
                 title={intl('next')}
-                mode='next'
+                mode="next"
                 aria-controls={carouselItemsId}
                 onClick={handleNextClick}
               />
@@ -605,7 +614,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
             <div
               aria-live={pauseAutoRotation ? 'polite' : 'off'}
               aria-atomic={true}
-              className='sr-only'
+              className="sr-only"
             >
               {intl('carouselLiveAnnoucement', {
                 x: currentIndex + 1,
@@ -615,6 +624,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
           )}
         </div>
       </CarouselTag>
-    )
+    );
   },
-)
+);
