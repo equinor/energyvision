@@ -1,59 +1,61 @@
-'use client'
-import type { PortableTextBlock } from '@portabletext/types'
-import { toPlainText } from 'next-sanity'
-import { Image } from '@/core/Image/Image'
+'use client';
+import type { PortableTextBlock } from '@portabletext/types';
+import { toPlainText } from 'next-sanity';
+import { Image } from '@/core/Image/Image';
 import {
   getObjectPositionForImage,
   type Image as ImageType,
-} from '@/core/Image/imageUtilities'
-import ResourceLink from '@/core/Link/ResourceLink'
-import { Typography } from '@/core/Typography'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
-import { twMerge } from '@/lib/twMerge/twMerge'
-import Blocks from '@/portableText/Blocks'
-import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import { getIsoFromName } from '../../../sanity/helpers/localization'
-import type { DesignOptions, LinkData } from '../../../types/index'
+} from '@/core/Image/imageUtilities';
+import ResourceLink from '@/core/Link/ResourceLink';
+import { Typography } from '@/core/Typography';
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction';
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery';
+import { twMerge } from '@/lib/twMerge/twMerge';
+import Blocks from '@/portableText/Blocks';
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap';
+import { getIsoFromName } from '../../../sanity/helpers/localization';
+import type { DesignOptions, LinkData } from '../../../types/index';
 
 export type TeaserData = {
-  type: string
-  id: string
-  title: PortableTextBlock[]
-  content: PortableTextBlock[]
-  overline?: string
-  image: ImageType
-  actions?: LinkData[]
+  type: string;
+  id: string;
+  title: PortableTextBlock[];
+  content: PortableTextBlock[];
+  overline?: string;
+  image: ImageType;
+  actions?: LinkData[];
   designOptions: DesignOptions & {
-    imagePosition?: 'left' | 'right'
-    imageSize?: 'full' | 'small'
-    containImage?: boolean
-  }
-}
+    imagePosition?: 'left' | 'right';
+    imageSize?: 'full' | 'small';
+    containImage?: boolean;
+    graphPaperBackground?: boolean;
+  };
+};
 
 type TeaserProps = {
-  data: TeaserData
-  anchor?: string
-}
+  data: TeaserData;
+  anchor?: string;
+};
 
 const Teaser = ({ data, anchor }: TeaserProps) => {
-  const { title, overline, content, image, actions, designOptions } = data
+  const { title, overline, content, image, actions, designOptions } = data;
   const {
     imageSize = 'full',
     imagePosition = 'right',
     containImage = false,
+    graphPaperBackground = false,
     background,
-  } = designOptions
+  } = designOptions;
 
-  const { backgroundPosition } = background || {}
-  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
-  const isLargerDisplays = useMediaQuery(`(min-width: 1650px)`)
+  const { backgroundPosition } = background || {};
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions);
+  const isLargerDisplays = useMediaQuery(`(min-width: 1650px)`);
 
-  if ([title, overline, content, image?.asset, actions].every(i => !i)) {
-    return null
+  if ([title, overline, content, image?.asset, actions].every((i) => !i)) {
+    return null;
   }
 
-  const isSvg = image.extension === 'svg' && imageSize === 'small'
+  const isSvg = image.extension === 'svg' && imageSize === 'small';
 
   // Svg can be "pictures"/illustrations and small svgs...
   const imageElement = (
@@ -70,8 +72,8 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
       <Image
         image={image}
         fill={!isSvg}
-        wrapperVariant='none'
-        grid='lg'
+        wrapperVariant="none"
+        grid="lg"
         keepRatioOnMobile
         aspectRatio={isLargerDisplays ? '16:9' : '4:3'}
         imageClassName={`${
@@ -79,12 +81,16 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
         } ${getObjectPositionForImage(backgroundPosition ?? 'center_center')}`}
       />
     </div>
-  )
+  );
 
   return (
     <article
       id={anchor}
-      className={`max-w-fullwidth ${bg} ${dark ? 'dark' : ''}`}
+      className={twMerge(
+        'max-w-fullwidth',
+        graphPaperBackground ? 'graph-paper-background' : bg,
+        !graphPaperBackground && dark && 'dark',
+      )}
     >
       <div
         className={twMerge(
@@ -99,15 +105,15 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
           )}
         >
           {overline ? (
-            <hgroup className='mb-1'>
-              <Typography variant='overline'>{overline}</Typography>
+            <hgroup className="mb-1">
+              <Typography variant="overline">{overline}</Typography>
               {title && (
-                <Blocks value={title} as='h2' group='heading' variant='h2' />
+                <Blocks value={title} as="h2" group="heading" variant="h2" />
               )}
             </hgroup>
           ) : (
             title && (
-              <Blocks value={title} as='h2' group='heading' variant='h2' />
+              <Blocks value={title} as="h2" group="heading" variant="h2" />
             )
           )}
           {content && (
@@ -117,9 +123,9 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
             />
           )}
           {actions && (
-            <div className='mt-8 flex flex-col gap-x-8 gap-y-6'>
+            <div className="mt-8 flex flex-col gap-x-8 gap-y-6">
               {actions?.map((action, idx) => {
-                const url = action && getUrlFromAction(action)
+                const url = action && getUrlFromAction(action);
                 return (
                   <ResourceLink
                     href={url as string}
@@ -128,7 +134,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
                     })}
                     type={action.type}
                     key={action.id || idx}
-                    variant='fit'
+                    variant="fit"
                     file={{
                       ...action?.file,
                       label: action?.label,
@@ -136,7 +142,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
                   >
                     {`${action.label}`}
                   </ResourceLink>
-                )
+                );
               })}
             </div>
           )}
@@ -144,7 +150,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
         {/*         {imagePosition === 'right' && !useFlexCol && imageElement} */}
       </div>
     </article>
-  )
-}
+  );
+};
 
-export default Teaser
+export default Teaser;

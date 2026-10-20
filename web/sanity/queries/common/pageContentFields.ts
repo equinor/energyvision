@@ -98,6 +98,7 @@ _type == "keyNumbers" =>{
       "imagePosition": coalesce(imagePosition, 'left'),
       containImage,
       imageSize,
+      graphPaperBackground,
     },
     "image": image {
       ...,

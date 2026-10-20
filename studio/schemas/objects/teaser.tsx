@@ -1,6 +1,11 @@
 /* eslint-disable react/display-name */
 
-import type { PortableTextBlock, Reference, Rule } from 'sanity';
+import type {
+  ConditionalPropertyCallbackContext,
+  PortableTextBlock,
+  Reference,
+  Rule,
+} from 'sanity';
 import blocksToText from '../../helpers/blocksToText';
 import {
   FullSizeImage,
@@ -39,6 +44,7 @@ export type Teaser = {
   imagePosition?: string;
   imageSize?: string;
   background?: ColorSelectorValue;
+  graphPaperBackground?: boolean;
 };
 
 type TeaserDocument = {
@@ -185,6 +191,16 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
+    },
+    {
+      name: 'graphPaperBackground',
+      title: 'Graph paper background',
+      type: 'boolean',
+      fieldset: 'design',
+      hidden: ({ currentUser }: ConditionalPropertyCallbackContext) =>
+        !currentUser?.roles.some(
+          (role) => role.name === 'designer' || role.name === 'developer',
+        ),
     },
   ],
   preview: {
