@@ -1,6 +1,7 @@
 import { Card, Flex, Grid, Radio, Text } from '@sanity/ui';
 import { useCallback } from 'react';
 import { BsExclamationSquare } from 'react-icons/bs';
+import { LiaPagerSolid } from 'react-icons/lia';
 import { LuText } from 'react-icons/lu';
 import { MdImage } from 'react-icons/md';
 import {
@@ -234,11 +235,11 @@ export default {
       theme?: any;
     }) {
       const plainTitle = title ? blocksToText(title) : 'Untitled';
-      const subTitle = `Deprecated - Change to Promotion | ${promoteList?.length ?? 0} topics`;
+      const subTitle = `Please update to Promotion | ${promoteList?.length ?? 0} topics`;
       return {
         title: plainTitle,
         subtitle: subTitle,
-        media: BsExclamationSquare,
+        media: LiaPagerSolid,
       };
     },
   },
