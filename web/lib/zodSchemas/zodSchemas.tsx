@@ -40,7 +40,7 @@ export const pensionFormSchema = (t: any) =>
     requests: z
       .string()
       .nonempty(t('pension_form_what_is_your_request_validation'))
-      .regex(contentRegex, t('not_valid_input')),
+      .regex(questionsRegex, t('not_valid_input')),
   });
 
 // CareerFairForm Schema
@@ -67,7 +67,7 @@ export const careerFairFormSchema = (t: any) =>
       .string()
       .nonempty(t('career_fair_form_event_description_validation'))
       .max(3400)
-      .regex(contentRegex, t('not_valid_input')),
+      .regex(questionsRegex, t('not_valid_input')),
     website: z
       .string()
       .optional()
