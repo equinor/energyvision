@@ -36,6 +36,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
       target,
       role,
       title,
+      scroll,
     },
     ref,
   ) {
@@ -102,6 +103,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
               replace={replace}
               hrefLang={hrefLang}
               onClick={onClick}
+              scroll={scroll}
               {...(target && { target })}
             >
               {children}
