@@ -1,28 +1,27 @@
-import { calendar } from '@equinor/eds-icons'
-import { type PortableTextBlock, toPlainText } from 'next-sanity'
-import { twMerge } from 'tailwind-merge'
-import { TransformableIcon } from '../../icons/TransformableIcon'
-import { BaseLink, type BaseLinkProps } from './BaseLink'
-import DownloadableLink from './DownloadableLink'
-import { getArrowElement } from './linkCommon'
+import { type PortableTextBlock, toPlainText } from 'next-sanity';
+import { PiYoutubeLogo } from 'react-icons/pi';
+import { twMerge } from 'tailwind-merge';
+import { BaseLink, type BaseLinkProps } from './BaseLink';
+import DownloadableLink from './DownloadableLink';
+import { getArrowElement } from './linkCommon';
 
-export type Variants = 'default' | 'fit'
+export type Variants = 'default' | 'fit';
 
 export type ResourceLinkProps = {
-  variant?: Variants
+  variant?: Variants;
   /** Overriding styles for the icon  */
-  iconClassName?: string
+  iconClassName?: string;
   /** Overriding styles for the text */
-  textClassName?: string
+  textClassName?: string;
   /** When using aria-label on the link, e.g add to calendar  */
-  ariaHideText?: boolean
+  ariaHideText?: boolean;
   /** If type is of an extension type (PDF), show the extention as icon */
-  showExtensionIcon?: boolean
+  showExtensionIcon?: boolean;
   /** not provided with downloads */
-  href?: string | undefined
-  label?: string | PortableTextBlock[]
-  file?: any
-} & Omit<BaseLinkProps, 'href'>
+  href?: string | undefined;
+  label?: string | PortableTextBlock[];
+  file?: any;
+} & Omit<BaseLinkProps, 'href'>;
 
 export const ResourceLink = ({
   ref,
@@ -53,27 +52,27 @@ export const ResourceLink = ({
       >
         {children}
       </DownloadableLink>
-    )
+    );
   }
 
-  let _label = children
+  let _label = children;
   if (label) {
     if (Array.isArray(label)) {
-      _label = toPlainText(label)
+      _label = toPlainText(label);
     } else {
-      _label = label as string
+      _label = label as string;
     }
   }
 
   const variantClassName: Partial<Record<Variants, string>> = {
     default: 'w-full pt-3',
     fit: 'w-fit pt-3',
-  }
+  };
 
   const contentVariantClassName: Partial<Record<Variants, string>> = {
     default: 'pb-3 pr-2',
     fit: 'pb-3 pr-2',
-  }
+  };
 
   const classNames = twMerge(
     `group/link
@@ -89,42 +88,21 @@ export const ResourceLink = ({
     ${variantClassName[variant]}
   `,
     className,
-  )
+  );
 
   const getContentElements = () => {
-    const textClassNames = twMerge(`pt-1 grow leading-none`, textClassName)
-    switch (type) {
-      case 'icsLink':
-        return (
-          <>
-            <TransformableIcon
-              title={`calendar`}
-              iconData={calendar}
-              className='mr-2'
-            />
-            <span
-              className={textClassNames}
-              {...(ariaHideText && {
-                'aria-hidden': true,
-              })}
-            >
-              {_label}
-            </span>
-          </>
-        )
-      default:
-        return (
-          <span
-            className={textClassNames}
-            {...(ariaHideText && {
-              'aria-hidden': true,
-            })}
-          >
-            {_label}
-          </span>
-        )
-    }
-  }
+    const textClassNames = twMerge(`pt-1 grow leading-none`, textClassName);
+    return (
+      <span
+        className={textClassNames}
+        {...(ariaHideText && {
+          'aria-hidden': true,
+        })}
+      >
+        {_label}
+      </span>
+    );
+  };
 
   return href ? (
     <BaseLink
@@ -142,15 +120,20 @@ export const ResourceLink = ({
           `flex h-full w-inherit items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`,
         )}
       >
+        {type === 'externalUrl' &&
+          typeof _label === 'string' &&
+          _label.toLowerCase().includes('youtube') && (
+            <PiYoutubeLogo aria-hidden size={19} className="min-w-5" />
+          )}
         {getContentElements()}
         {getArrowElement(type, iconClassName)}
       </div>
-      <div className='relative h-0.5'>
-        <div className='absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover/link:w-full dark:bg-white-100' />
-        <div className='absolute inset-0 z-0 h-px w-full bg-grey-50 dark:bg-white-100' />
+      <div className="relative h-0.5">
+        <div className="absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover/link:w-full dark:bg-white-100" />
+        <div className="absolute inset-0 z-0 h-px w-full bg-grey-50 dark:bg-white-100" />
       </div>
     </BaseLink>
-  ) : null
-}
+  ) : null;
+};
 
-export default ResourceLink
+export default ResourceLink;

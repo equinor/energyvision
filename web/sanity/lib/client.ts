@@ -1,47 +1,41 @@
-/*import { ClientConfig, createClient } from '@sanity/client'*/
-import { type ClientConfig, createClient } from 'next-sanity'
-import { apiVersion, dataset, projectId, studioUrl } from '../lib/api'
-
-//import { token } from './token'
-
-//useCdn: true, // Set to false if statically generating pages, using ISR or tag-based revalidation
+import { type ClientConfig, createClient } from 'next-sanity';
+import { apiVersion, dataset, projectId, studioUrl } from '../lib/api';
 
 const sanityConfig: ClientConfig = {
   projectId,
   dataset,
   apiVersion,
-  //handled by definelive?
-  //perspective: dataset === 'global-development' ? 'drafts' : 'published',
-  useCdn: true,
+  // To use more regular API request for other environments than radix prod
+  useCdn: process.env.RADIX_ENVIRONMENT === 'prod',
   ignoreBrowserTokenWarning: dataset === 'global-development',
   requestTagPrefix: 'website', // to track usage on web in sanity console
   stega: {
     studioUrl,
     // Set logger to 'console' for more verbose logging
     // logger: console,
-    filter: props => {
+    filter: (props) => {
       if (props.sourcePath.at(-1) === 'title') {
-        return true
+        return true;
       }
 
-      return props.filterDefault(props)
+      return props.filterDefault(props);
     },
   },
-}
+};
 
 export const client = createClient({
   ...sanityConfig,
   token: process.env.SANITY_API_TOKEN,
-})
+});
 
 //only for next config
 export const notSecuredTokenClient = createClient({
   ...sanityConfig,
   token: process.env.SANITY_API_TOKEN,
-})
+});
 
 export const noCdnClient = createClient({
   ...sanityConfig,
   useCdn: false,
   token: process.env.SANITY_API_TOKEN,
-})
+});

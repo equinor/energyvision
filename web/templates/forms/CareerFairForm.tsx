@@ -1,31 +1,31 @@
-'use client'
-import { Icon } from '@equinor/eds-core-react'
-import { error_filled } from '@equinor/eds-icons'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useLocale, useTranslations } from 'next-intl'
-import { type BaseSyntheticEvent, useId, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import type { z } from 'zod'
-import { FORM_CATALOG_NUMBERS } from '@/app/_actions/formCatalogNumbers'
-import submitFormServerAction from '@/app/_actions/submitFormServerAction'
-import verifyCaptcha from '@/app/_actions/verifyCaptcha'
-import { Button } from '@/core/Button'
-import { Checkbox } from '@/core/Checkbox/Checkbox'
-import { FormMessageBox } from '@/core/Form/FormMessageBox'
-import { Select } from '@/core/Select/Select'
-import { TextField } from '@/core/TextField/TextField'
-import { careerFairFormSchema } from '@/lib/zodSchemas/zodSchemas'
-import FriendlyCaptcha from './FriendlyCaptcha'
+'use client';
+import { Icon } from '@equinor/eds-core-react';
+import { error_filled } from '@equinor/eds-icons';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useLocale, useTranslations } from 'next-intl';
+import { type BaseSyntheticEvent, useId, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import type { z } from 'zod';
+import { FORM_CATALOG_NUMBERS } from '@/app/_actions/formCatalogNumbers';
+import submitFormServerAction from '@/app/_actions/submitFormServerAction';
+import verifyCaptcha from '@/app/_actions/verifyCaptcha';
+import { Button } from '@/core/Button';
+import { Checkbox } from '@/core/Checkbox/Checkbox';
+import { FormMessageBox } from '@/core/Form/FormMessageBox';
+import { Select } from '@/core/Select/Select';
+import { TextField } from '@/core/TextField/TextField';
+import { careerFairFormSchema } from '@/lib/zodSchemas/zodSchemas';
+import { FriendlyCaptcha, getFriendlyCaptchaSolution } from './FriendlyCaptcha';
 
-type CareerFairFormData = z.infer<ReturnType<typeof careerFairFormSchema>>
+type CareerFairFormData = z.infer<ReturnType<typeof careerFairFormSchema>>;
 
 const CareerFairForm = () => {
-  const intl = useTranslations()
-  const locale = useLocale()
-  const formId = useId()
-  const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
-  const [isServerError, setServerError] = useState(false)
-  const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
+  const intl = useTranslations();
+  const locale = useLocale();
+  const formId = useId();
+  const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false);
+  const [isServerError, setServerError] = useState(false);
+  const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false);
 
   const {
     handleSubmit,
@@ -48,28 +48,31 @@ const CareerFairForm = () => {
       supportingDocuments: '',
       preferredLang: locale,
     },
-  })
+  });
 
   const onSubmit = async (
     data: CareerFairFormData,
     event?: BaseSyntheticEvent,
   ) => {
-    data.preferredLang = locale
+    data.preferredLang = locale;
     if (isFriendlyChallengeDone) {
-      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response']
-        .value
-      const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
+      const frcCaptchaSolution = getFriendlyCaptchaSolution(event);
+      if (!frcCaptchaSolution) {
+        setIsFriendlyChallengeDone(false);
+        return;
+      }
+      const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution);
 
       if (!isCaptchaVerified) {
-        return
+        return;
       }
 
-      const isDataValidated = careerFairFormSchema(intl).safeParse(data)
+      const isDataValidated = careerFairFormSchema(intl).safeParse(data);
 
       if (!isDataValidated.success) {
-        setServerError(true)
-        setSuccessfullySubmitted(false)
-        return
+        setServerError(true);
+        setSuccessfullySubmitted(false);
+        return;
       }
 
       const finalFormData = {
@@ -87,41 +90,41 @@ const CareerFairForm = () => {
           supportingdocuments:
             data.supportingDocuments === 'Yes' ? 'Yes' : 'No',
         },
-      }
+      };
 
       const result = await submitFormServerAction(
         JSON.stringify(finalFormData),
         FORM_CATALOG_NUMBERS.careerFairs,
-      )
+      );
 
-      setServerError(result.status !== 200)
-      setSuccessfullySubmitted(result.status === 200)
+      setServerError(result.status !== 200);
+      setSuccessfullySubmitted(result.status === 200);
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
         type: 'custom',
         message: intl('form_antirobot_validation_required'),
-      })
+      });
     }
-  }
+  };
 
-  const watchEvent = watch('event')
+  const watchEvent = watch('event');
   return (
     <>
       {!isSuccessfullySubmitted && (
         <>
-          <div className='pb-6 text-sm'>{intl('all_fields_mandatory')}</div>
+          <div className="pb-6 text-sm">{intl('all_fields_mandatory')}</div>
           <form
             onSubmit={handleSubmit(onSubmit)}
             onReset={() => {
-              reset()
-              setIsFriendlyChallengeDone(false)
-              setSuccessfullySubmitted(false)
+              reset();
+              setIsFriendlyChallengeDone(false);
+              setSuccessfullySubmitted(false);
             }}
-            className='flex flex-col gap-12'
+            className="flex flex-col gap-12"
           >
             <Controller
-              name='organisation'
+              name="organisation"
               control={control}
               render={({
                 field: { ref, ...props },
@@ -132,10 +135,10 @@ const CareerFairForm = () => {
                   id={`${props.name}_${formId}`}
                   label={`${intl('career_fair_form_organisation')}*`}
                   inputRef={ref}
-                  aria-required='true'
+                  aria-required="true"
                   inputIcon={
                     invalid ? (
-                      <Icon data={error_filled} title='error' />
+                      <Icon data={error_filled} title="error" />
                     ) : undefined
                   }
                   helperText={error?.message}
@@ -144,7 +147,7 @@ const CareerFairForm = () => {
               )}
             />
             <Controller
-              name='contactPerson'
+              name="contactPerson"
               control={control}
               render={({
                 field: { ref, ...props },
@@ -155,10 +158,10 @@ const CareerFairForm = () => {
                   id={`${props.name}_${formId}`}
                   label={`${intl('career_fair_form_contact_person')}*`}
                   inputRef={ref}
-                  aria-required='true'
+                  aria-required="true"
                   inputIcon={
                     invalid ? (
-                      <Icon data={error_filled} title='error' />
+                      <Icon data={error_filled} title="error" />
                     ) : undefined
                   }
                   helperText={error?.message}
@@ -167,7 +170,7 @@ const CareerFairForm = () => {
               )}
             />
             <Controller
-              name='phone'
+              name="phone"
               control={control}
               render={({
                 field: { ref, ...props },
@@ -178,22 +181,22 @@ const CareerFairForm = () => {
                   id={`${props.name}_${formId}`}
                   label={`${intl('career_fair_form_phone')}*`}
                   description={intl('country_code_format')}
-                  type='tel'
+                  type="tel"
                   inputRef={ref}
                   inputIcon={
                     invalid ? (
-                      <Icon data={error_filled} title='error' />
+                      <Icon data={error_filled} title="error" />
                     ) : undefined
                   }
                   helperText={error?.message}
-                  aria-required='true'
+                  aria-required="true"
                   {...(invalid && { variant: 'error' })}
                 />
               )}
             />
 
             <Controller
-              name='email'
+              name="email"
               control={control}
               render={({
                 field: { ref, ...props },
@@ -206,17 +209,17 @@ const CareerFairForm = () => {
                   inputRef={ref}
                   inputIcon={
                     invalid ? (
-                      <Icon data={error_filled} title='error' />
+                      <Icon data={error_filled} title="error" />
                     ) : undefined
                   }
                   helperText={error?.message}
-                  aria-required='true'
+                  aria-required="true"
                   {...(invalid && { variant: 'error' })}
                 />
               )}
             />
             <Controller
-              name='event'
+              name="event"
               control={control}
               render={({ field: { ref, ...props } }) => (
                 <>
@@ -224,10 +227,10 @@ const CareerFairForm = () => {
                     {...props}
                     selectRef={ref}
                     id={`${props.name}_${formId}`}
-                    aria-describedby='select-helper-text-${id}'
+                    aria-describedby="select-helper-text-${id}"
                     label={intl('career_fair_form_event')}
                   >
-                    <option value=''>
+                    <option value="">
                       {intl('form_please_select_an_option')}
                     </option>
                     <option>
@@ -236,7 +239,7 @@ const CareerFairForm = () => {
                     <option>{intl('career_fair_form_visit_equinor')}</option>
                   </Select>
                   {watchEvent === intl('career_fair_form_visit_equinor') && (
-                    <p className='-mt-2' id='select-helper-text'>
+                    <p className="-mt-2" id="select-helper-text">
                       {intl('career_fair_form_visit_equinor_helper_text')}
                     </p>
                   )}
@@ -245,7 +248,7 @@ const CareerFairForm = () => {
             />
 
             <Controller
-              name='eventDescription'
+              name="eventDescription"
               control={control}
               render={({
                 field: { ref, ...props },
@@ -257,14 +260,14 @@ const CareerFairForm = () => {
                   multiline
                   rowsMax={10}
                   maxLength={3400}
-                  aria-required='true'
+                  aria-required="true"
                   label={`${intl('career_fair_form_event_description')}*`}
                   description={intl('form_validation_maxChars', {
                     maxChars: '3400',
                   })}
                   inputIcon={
                     invalid ? (
-                      <Icon data={error_filled} title='error' />
+                      <Icon data={error_filled} title="error" />
                     ) : undefined
                   }
                   helperText={error?.message}
@@ -274,7 +277,7 @@ const CareerFairForm = () => {
               )}
             />
             <Controller
-              name='website'
+              name="website"
               control={control}
               render={({
                 field: { ref, ...props },
@@ -291,37 +294,36 @@ const CareerFairForm = () => {
               )}
             />
             <Checkbox
-              className='pb-4'
+              className="pb-4"
               label={intl('career_fair_form_supporting_documents')}
-              value='Yes'
+              value="Yes"
               {...register('supportingDocuments')}
             />
 
-            <div className='flex flex-col gap-2'>
+            <div className="flex flex-col gap-2">
               <FriendlyCaptcha
                 doneCallback={() => {
-                  setIsFriendlyChallengeDone(true)
+                  setIsFriendlyChallengeDone(true);
                 }}
-                errorCallback={(error: any) => {
-                  console.error('FriendlyCaptcha encountered an error', error)
-                  setIsFriendlyChallengeDone(true)
+                errorCallback={() => {
+                  setIsFriendlyChallengeDone(false);
                 }}
               />
               {/*@ts-ignore: TODO: types*/}
               {errors?.root?.notCompletedCaptcha && (
                 <p
-                  role='alert'
-                  className='gap-2 border border-clear-red-100 px-6 py-4flex font-semibold text-slate-80'
+                  role="alert"
+                  className="gap-2 border border-clear-red-100 px-6 py-4flex font-semibold text-slate-80"
                 >
                   {/*@ts-ignore: TODO: types*/}
-                  <span className='mt-1'>
+                  <span className="mt-1">
                     {errors.root.notCompletedCaptcha.message}
                   </span>
-                  <Icon data={error_filled} aria-label='Error icon' />
+                  <Icon data={error_filled} aria-label="Error icon" />
                 </p>
               )}
             </div>
-            <Button type='submit'>
+            <Button type="submit">
               {isSubmitting
                 ? intl('form_sending')
                 : intl('career_fair_form_cta')}
@@ -329,19 +331,19 @@ const CareerFairForm = () => {
           </form>
         </>
       )}
-      <section aria-live='assertive'>
-        {isSuccessfullySubmitted && <FormMessageBox variant='success' />}
+      <section aria-live="assertive">
+        {isSuccessfullySubmitted && <FormMessageBox variant="success" />}
         {isSubmitted && isServerError && (
           <FormMessageBox
-            variant='error'
+            variant="error"
             onClick={() => {
-              reset(undefined, { keepValues: true })
-              setServerError(false)
+              reset(undefined, { keepValues: true });
+              setServerError(false);
             }}
           />
         )}
       </section>
     </>
-  )
-}
-export default CareerFairForm
+  );
+};
+export default CareerFairForm;

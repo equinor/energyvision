@@ -1,13 +1,22 @@
-import { pipe } from 'fp-ts/lib/function'
-import * as A from 'fp-ts/lib/Array'
-import { NewsIndex } from '../../common'
-import type { NewsArticle } from './sanity'
+import * as A from 'fp-ts/lib/Array';
+import { pipe } from 'fp-ts/lib/function';
+import type { NewsIndex } from '../../common';
+import type { NewsArticle } from './sanity';
 
-type MapDataType = (article: NewsArticle) => NewsIndex[]
+type MapDataType = (article: NewsArticle) => NewsIndex[];
 export const mapData: MapDataType = (article) => {
-  const { publishDateTime, topicTags, countryTags, title, ingress, slug, factboxes, heroImage } = article
+  const {
+    publishDateTime,
+    topicTags,
+    countryTags,
+    title,
+    ingress,
+    slug,
+    factboxes,
+    heroImage,
+  } = article;
   // Hu hei hvor det går
-  const year = publishDateTime ? new Date(publishDateTime).getFullYear() : ''
+  const year = publishDateTime ? new Date(publishDateTime).getFullYear() : '';
   return pipe(
     A.bindTo('blocks')(article.blocks),
     A.bind('children', ({ blocks }) => blocks.children),
@@ -25,7 +34,7 @@ export const mapData: MapDataType = (article) => {
           countryTags,
           year,
           heroImage,
-        } as NewsIndex),
+        }) as NewsIndex,
     ),
     A.concat(
       factboxes.map(
@@ -42,8 +51,8 @@ export const mapData: MapDataType = (article) => {
             countryTags,
             year,
             heroImage,
-          } as NewsIndex),
+          }) as NewsIndex,
       ),
     ),
-  )
-}
+  );
+};

@@ -301,11 +301,18 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
     }, [initialPositions])
 
     const getTranslatedItemCountLabel = (item: number) => {
-      return intl('carouselItemCountLabel', {
+      let label = `Item ${item} of ${items.length}`
+      const translatedLabel = intl('carouselItemCountLabel', {
         x: item,
         carouselLength: items.length,
-      })
+      }).toString()
+      if (translatedLabel && translatedLabel.length > 0) {
+        label = translatedLabel
+      }
+
+      return label
     }
+
     const cancelTimeout = () => {
       timeoutRef.current && clearTimeout(timeoutRef.current)
     }

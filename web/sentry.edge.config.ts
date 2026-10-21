@@ -3,14 +3,39 @@
 // Note that this config is unrelated to the Vercel Edge Runtime and is also required when running locally.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import * as Sentry from '@sentry/nextjs'
+import * as Sentry from '@sentry/nextjs';
+import { dataset } from './languageConfig';
+import {
+  allowUrlPattern,
+  sentryBeforeSend,
+  sentryDenyUrls,
+  sentryIgnoreErrors,
+} from './sentry.shared';
 
-Sentry.init({
-  dsn: 'https://8c4f308da7deed9aea83c76daa1938c0@o4509004923797504.ingest.de.sentry.io/4509010392121425',
-  environment: process.env.NEXT_PUBLIC_SANITY_DATASET || 'global-development',
-  // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
-  tracesSampleRate: 1,
+const isProd =
+  process.env.NODE_ENV === 'production' &&
+  dataset === 'global' &&
+  process.env.RADIX_ENVIRONMENT !== 'preprod';
 
-  // Setting this option to true will print useful information to the console while you're setting up Sentry.
-  debug: false,
-})
+isProd &&
+  Sentry.init({
+    dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+    environment: process.env.NEXT_PUBLIC_SANITY_DATASET,
+    tracesSampleRate: 0.01,
+    profilesSampleRate: 0,
+    replaysSessionSampleRate: 0,
+    replaysOnErrorSampleRate: 0,
+    enabled: isProd,
+    includeLocalVariables: false,
+    // Setting this option to true will print useful information to the console while you're setting up Sentry.
+    debug: false,
+    ignoreErrors: sentryIgnoreErrors,
+    allowUrls: [allowUrlPattern],
+    denyUrls: sentryDenyUrls,
+    beforeBreadcrumb(breadcrumb) {
+      return breadcrumb.category === 'ui.click' ? null : breadcrumb;
+    },
+    beforeSend: sentryBeforeSend,
+    // try to turn off max event listeners gzip error
+    skipOpenTelemetrySetup: true,
+  });

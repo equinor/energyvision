@@ -1,11 +1,11 @@
-import { table_chart } from '@equinor/eds-icons'
-import type { PortableTextBlock } from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
-import { EdsIcon } from '../../../icons'
+import { table_chart } from '@equinor/eds-icons';
+import type { PortableTextBlock } from 'sanity';
+import blocksToText from '../../../helpers/blocksToText';
+import { EdsIcon } from '../../../icons';
 
 export type Grid = {
-  _type: 'grid'
-}
+  _type: 'grid';
+};
 
 export default {
   title: 'Grid',
@@ -52,12 +52,12 @@ export default {
       title: 'title',
     },
     prepare({ title = [] }: { title: PortableTextBlock[] }) {
-      const plainTitle = blocksToText(title)
+      const plainTitle = blocksToText(title);
       return {
         title: plainTitle || 'Grid',
-        subtitle: 'Grid component',
+        subtitle: 'Grid',
         media: () => EdsIcon(table_chart),
-      }
+      };
     },
   },
-}
+};

@@ -1,13 +1,15 @@
-import { Flags } from '../../../src/lib/datasetHelpers'
-import { RolesBasedArrayInput } from '../../components/RolesBasedArrayInput'
-import { defaultColors } from '../../defaultColors'
+import { createElement } from 'react';
+import type { ArrayOfObjectsInputProps } from 'sanity';
+import { Flags } from '../../../src/lib/datasetHelpers';
+import { RolesBasedArrayInput } from '../../components/RolesBasedArrayInput';
+import { defaultColors } from '../../defaultColors';
 
 export const seo = {
   title: 'Meta information',
   name: 'seo',
   type: 'titleAndMeta',
   fieldset: 'other',
-}
+};
 export const openGraphImage = {
   title: 'Open Graph Image',
   name: 'openGraphImage',
@@ -15,14 +17,14 @@ export const openGraphImage = {
   description:
     'You can override the hero image as the SoMe image by uploading another image here.',
   fieldset: 'other',
-}
+};
 
 export const stickyMenu = {
   name: 'stickyMenu',
   title: 'Sticky Menu',
   type: 'stickyMenu',
   fieldset: 'other',
-}
+};
 
 export const content = {
   name: 'content',
@@ -48,6 +50,7 @@ export const content = {
     { type: 'iframeCarousel' },
     { type: 'videoPlayer' },
     { type: 'videoPlayerCarousel' },
+    { type: 'embeddedVideoList' },
     { type: 'tableV2' },
     { type: 'imageForText' },
     Flags.HAS_CAMPAIGN_BLOCKS && { type: 'grid' },
@@ -59,24 +62,32 @@ export const content = {
     { type: 'anchorLinkList' },
     { type: 'tabs' },
     { type: 'importTable' },
-    Flags.HAS_EVENT && { type: 'promoteEvents', title: 'Event promotion' },
+    Flags.HAS_EVENT && { type: 'promoteEvents' },
     Flags.HAS_MAGAZINE && {
       type: 'promoteMagazine',
-      title: 'Magazine promotion',
     },
-    { type: 'promotePeople', title: 'People promotion' },
-    { type: 'promoteTopics', title: 'Topic page promotion' },
-    Flags.HAS_NEWS && { type: 'promoteNews', title: 'News promotions' },
+    { type: 'promotePeople' },
+    { type: 'promoteTopics' },
+    Flags.HAS_NEWS && { type: 'promoteNews' },
+    Flags.HAS_PEOPLE && { type: 'personList' },
     { type: 'pieChartBlock', title: 'Pie chart' },
     { type: 'lineChartBlock', title: 'Line chart' },
     { type: 'barChartBlock', title: 'Bar chart' },
     { type: 'promotionsV2' },
-    { type: 'promoteTopicsV2' },
-    { type: 'promoteExternalLinkV2' },
     Flags.IS_DEV && { type: 'anchorSearch' },
-  ].filter(e => e),
+  ].filter((e) => e),
   components: {
-    input: RolesBasedArrayInput,
+    input: (props: ArrayOfObjectsInputProps) =>
+      createElement(RolesBasedArrayInput, {
+        ...props,
+        schemaType: {
+          ...props.schemaType,
+          of: props.schemaType.of.filter(
+            (member) =>
+              member.name !== 'promoteTopics' && member.name !== 'promotion',
+          ),
+        },
+      }),
   },
   options: {
     insertMenu: {
@@ -86,18 +97,12 @@ export const content = {
           name: 'promotions',
           title: 'Promotions',
           of: [
-            'promotion',
             'promoteMagazine',
-            'promoteTopics',
             'promotePeople',
+            'promotionsV2',
             'promoteEvents',
             'promoteNews',
           ],
-        },
-        {
-          name: 'promotionsV2',
-          title: 'Promotions(v2)',
-          of: ['promotionsV2'],
         },
         {
           name: 'carousels',
@@ -112,4 +117,4 @@ export const content = {
       ],
     },
   },
-}
+};

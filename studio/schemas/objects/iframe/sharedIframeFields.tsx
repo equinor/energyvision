@@ -8,7 +8,7 @@ export const title = {
   name: 'title',
   type: 'array',
   title: 'Title',
-  description: 'The (optional) title/heading',
+  description: 'Optional heading',
   components: { input: CompactBlockEditor },
   of: [configureBlockContent({ variant: 'title' })],
 }
@@ -49,7 +49,6 @@ export const cookiePolicy = (fieldset?: string) => {
     name: 'cookiePolicy',
     type: 'array',
     title: 'Cookie policy',
-    description: 'Select which cookie policy applies to this iframe.',
     ...(fieldset && { fieldset }),
     of: [{ type: 'string' }],
     options: {

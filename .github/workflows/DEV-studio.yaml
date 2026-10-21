@@ -1,0 +1,54 @@
+name: DEV - Build & deploy studio
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - staging
+    paths:
+      - 'studio/**/*'
+      - './FeatureFlags.js'
+      - '!./README.md'
+      - '!./.env.development.template'
+      - '!./studio/scripts/**/*'
+permissions:
+  id-token: write
+  packages: write
+jobs:
+  deploy-studio:
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+      url: https://studio-global-development-energyvision-dev.radix.equinor.com/
+    strategy:
+      matrix:
+        dataset: [global-development]
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v7
+      - id: deploy-satellite
+        uses: ./.github/workflows/deploy-studio/
+        with:
+          imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
+          datasetName: ${{ matrix.dataset }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          fotowareClientId: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
+          fotowareTenantUrl: ${{ secrets.SANITY_STUDIO_FOTOWARE_TENANT_URL }}
+          fotowareRedirectOrigin: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN }}
+          fotowareAfExportUrl: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL }}
+          fotowareAfExportKey: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY }}
+          fotowareRedirectUri: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_URI}}
+          screen9accountId: ${{ secrets.SANITY_STUDIO_SCREEN9_ACCOUNT_ID }}
+          screen9token: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
+          environment: ${{ secrets.ENV }}
+
+
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()

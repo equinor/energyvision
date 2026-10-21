@@ -1,10 +1,12 @@
 'use client'
 import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
+import { useLocale } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { BaseLink } from '@/core/Link/BaseLink'
+import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref'
 import { Typography } from '@/core/Typography'
 import { getEventDates } from '@/lib/helpers/dateUtilities'
 import Blocks from '@/portableText/Blocks'
@@ -23,13 +25,15 @@ const PastEventsListItem = forwardRef<
   ref,
 ) {
   const { title, eventDate, location, slug } = event
+  const iso = useLocale()
+  const href = getLocalizedHref(slug, iso)
 
   const { start } = getEventDates(eventDate)
 
   return (
     <BaseLink
       ref={ref}
-      href={slug}
+      href={href}
       className={twMerge(
         `group grid h-full w-full grid-cols-[18%_auto] flex-col dark:text-white-100`,
         className,

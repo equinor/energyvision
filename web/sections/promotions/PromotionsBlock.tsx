@@ -1,32 +1,34 @@
-'use client'
-import type { SanityImageObject } from '@sanity/image-url'
-import type { PortableTextBlock } from 'next-sanity'
-import { useId, useMemo } from 'react'
-import { twMerge } from 'tailwind-merge'
-import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+'use client';
+import type { SanityImageObject } from '@sanity/image-url';
+import { useLocale } from 'next-intl';
+import type { PortableTextBlock } from 'next-sanity';
+import { useId, useMemo } from 'react';
+import { twMerge } from 'tailwind-merge';
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime';
 import {
   getBackgroundPositionForImage,
   type ObjectPositions,
-} from '@/core/Image/imageUtilities'
-import { ResourceLink } from '@/core/Link/ResourceLink'
-import { Promotion } from '@/core/Promotion/Promotion'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import Blocks from '@/portableText/Blocks'
-import { resolveImage } from '@/sanity/lib/utils'
+} from '@/core/Image/imageUtilities';
+import { ResourceLink } from '@/core/Link/ResourceLink';
+import { Promotion } from '@/core/Promotion/Promotion';
+import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref';
+import Blocks from '@/portableText/Blocks';
+import { getIsoFromName } from '@/sanity/helpers/localization';
+import { resolveImage } from '@/sanity/lib/utils';
 import {
   type ColorKeys,
   getBgAndDarkFromBackground,
-} from '@/styles/colorKeyToUtilityMap'
+} from '@/styles/colorKeyToUtilityMap';
 import type {
   CardData,
   DesignOptions,
   LinkData,
   PeopleCardData,
   Tag,
-} from '@/types'
-import type { EventCardData } from '../cards/EventCard/EventCard'
-import PeopleCard from '../cards/PeopleCard/PeopleCard'
-import EventPromotions from './event/EventPromotions'
+} from '@/types';
+import type { EventCardData } from '../cards/EventCard/EventCard';
+import PeopleCard from '../cards/PeopleCard/PeopleCard';
+import EventPromotions from './event/EventPromotions';
 
 // Do we have a way to share types between studio and web?
 export type PromotionType =
@@ -34,64 +36,64 @@ export type PromotionType =
   | 'promoteNews'
   | 'promotePeople'
   | 'promoteEvents'
-  | 'promoteMagazine'
+  | 'promoteMagazine';
 
 type PromotionBlock = {
-  id: string
-  type: string
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  viewAllLink?: LinkData
+  id: string;
+  type: string;
+  title?: PortableTextBlock[];
+  ingress?: PortableTextBlock[];
+  viewAllLink?: LinkData;
   designOptions?: {
-    foreground?: ColorKeys
+    foreground?: ColorKeys;
     //event
-    backgroundImage?: SanityImageObject
-    dark?: boolean
-    backgroundPosition?: ObjectPositions
-    useGlassEffect?: boolean
-  } & DesignOptions
-}
+    backgroundImage?: SanityImageObject;
+    dark?: boolean;
+    backgroundPosition?: ObjectPositions;
+    useGlassEffect?: boolean;
+  } & DesignOptions;
+};
 
 export type NewsPromotion = {
-  tags?: Tag[]
-  countryTags?: Tag[]
-  localNewsTags?: Tag[]
-  promotions?: CardData[]
-} & PromotionBlock
+  tags?: Tag[];
+  countryTags?: Tag[];
+  localNewsTags?: Tag[];
+  promotions?: CardData[];
+} & PromotionBlock;
 
 export type PeoplePromotion = {
-  promotions?: PeopleCardData[]
-} & PromotionBlock
+  promotions?: PeopleCardData[];
+} & PromotionBlock;
 
 export type MagazinePromotion = {
-  manuallySelectArticles?: boolean
-  tags?: Tag[]
-  promotions?: CardData[]
-} & PromotionBlock
+  manuallySelectArticles?: boolean;
+  tags?: Tag[];
+  promotions?: CardData[];
+} & PromotionBlock;
 
 export type TopicPromotion = {
-  promotions?: CardData[]
-} & PromotionBlock
+  promotions?: CardData[];
+} & PromotionBlock;
 
 export type EventPromotion = {
-  tags?: Tag[]
-  promotionType?: 'automatic' | 'manual'
-  eventsCount?: number
-  promotePastEvents?: boolean
-  promotions?: EventCardData[]
-} & PromotionBlock
+  tags?: Tag[];
+  promotionType?: 'automatic' | 'manual';
+  eventsCount?: number;
+  promotePastEvents?: boolean;
+  promotions?: EventCardData[];
+} & PromotionBlock;
 
 export type PromotionsBlockProps = {
-  variant: PromotionType
+  variant: PromotionType;
   data:
     | EventPromotion
     | MagazinePromotion
     | TopicPromotion
     | NewsPromotion
-    | PeoplePromotion
-  anchor?: string
-  className?: string
-}
+    | PeoplePromotion;
+  anchor?: string;
+  className?: string;
+};
 
 const mapOldPromoType = (
   oldType:
@@ -105,18 +107,18 @@ const mapOldPromoType = (
 ) => {
   switch (oldType) {
     case 'people':
-      return 'promotePeople'
+      return 'promotePeople';
     case 'events':
-      return 'promoteEvents'
+      return 'promoteEvents';
     case 'news':
     case 'localNews':
-      return 'promoteNews'
+      return 'promoteNews';
     case undefined:
-      return undefined
+      return undefined;
     default:
-      return 'promoteTopics'
+      return 'promoteTopics';
   }
-}
+};
 
 const PromotionsBlock = ({
   variant,
@@ -124,7 +126,8 @@ const PromotionsBlock = ({
   anchor,
   className,
 }: PromotionsBlockProps) => {
-  const { title, ingress, viewAllLink, designOptions, promotions } = data
+  const locale = useLocale();
+  const { title, ingress, viewAllLink, designOptions, promotions } = data;
 
   const {
     backgroundImage,
@@ -132,70 +135,75 @@ const PromotionsBlock = ({
     dark: bgImageDark,
     useGlassEffect,
     foreground,
-  } = designOptions || {}
+  } = designOptions || {};
 
   const promotionVariant =
-    variant ?? mapOldPromoType(data.promotions?.[0]?.type) ?? 'promoteTopics'
+    variant ?? mapOldPromoType(data.promotions?.[0]?.type) ?? 'promoteTopics';
 
-  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions);
 
-  let imageUrl: string
+  let imageUrl: string;
   if (promotionVariant === 'promoteEvents' && backgroundImage) {
     const { url } = resolveImage({
       image: backgroundImage,
       grid: 'full',
       isLargerDisplays: true,
-    })
+    });
     if (url) {
-      imageUrl = url
+      imageUrl = url;
     }
   }
 
-  const sectionTitleId = useId()
+  const sectionTitleId = useId();
   const promotionList = useMemo(() => {
     return (
       ((data as EventPromotion)?.eventsCount
         ? promotions?.slice(0, (data as EventPromotion).eventsCount)
         : promotions) ?? []
-    )
-  }, [promotions, data])
+    );
+  }, [promotions, data]);
 
   const contentElements = (
     <>
       {/*@ts-ignore:todo */}
-      <Blocks variant='h2' id={sectionTitleId} value={title} />
+      <Blocks variant="h2" id={sectionTitleId} value={title} />
       {ingress && (
-        <Blocks group='paragraph' variant='ingress' value={ingress} />
+        <Blocks group="paragraph" variant="ingress" value={ingress} />
       )}
       {viewAllLink?.link?.slug && (
         <ResourceLink
-          type='internalUrl'
-          variant='fit'
-          href={getUrlFromAction(viewAllLink)}
+          type="internalUrl"
+          variant="fit"
+          href={getLocalizedHref(
+            viewAllLink.link.slug,
+            viewAllLink.link.lang
+              ? getIsoFromName(viewAllLink.link.lang)
+              : locale,
+          )}
         >
           {viewAllLink?.label}
         </ResourceLink>
       )}
     </>
-  )
+  );
 
   const backgroundUtility = designOptions?.background?.backgroundUtility
     ?.trim()
-    .toLowerCase()
+    .toLowerCase();
   const backgroundColor = designOptions?.background?.backgroundColor
     ?.toLowerCase()
-    .trim()
+    .trim();
 
   const onColorBg = backgroundUtility
     ? !['white', 'white-100'].includes(backgroundUtility)
-    : !!backgroundColor && backgroundColor !== 'white'
+    : !!backgroundColor && backgroundColor !== 'white';
 
   return (
     <section
       className={twMerge(`relative ${bg} ${dark ? 'dark' : ''}`, className)}
       id={anchor}
     >
-      <div className='mx-auto max-w-content'>
+      <div className="mx-auto max-w-content">
         {(title || ingress || viewAllLink?.link?.slug) && (
           <div
             className={twMerge(
@@ -214,8 +222,8 @@ const PromotionsBlock = ({
                   `glass-border relative w-fit rounded-card px-6 py-4 **:rounded-card before:z-2 lg:px-8 lg:py-6`,
                 )}
               >
-                <div className='backdrop-glass before:z-1' />
-                <div className='z-1 flex w-fit flex-col *:z-1'>
+                <div className="backdrop-glass before:z-1" />
+                <div className="z-1 flex w-fit flex-col *:z-1">
                   {contentElements}
                 </div>
               </div>
@@ -251,12 +259,12 @@ const PromotionsBlock = ({
             )}
           >
             {promotionList?.map((promotion: any) => {
-              let href: string | undefined
+              let href: string | undefined;
               if (promotionVariant !== 'promotePeople') {
-                href = getUrlFromAction({
-                  ...promotion,
-                  type: 'internalUrl',
-                })
+                const promotionIso = promotion?.link?.lang
+                  ? getIsoFromName(promotion.link.lang)
+                  : locale;
+                href = getLocalizedHref(promotion?.link?.slug, promotionIso);
               }
 
               return (
@@ -271,8 +279,8 @@ const PromotionsBlock = ({
                     />
                   ) : (
                     <Promotion
-                      variant='default'
-                      type='extended'
+                      variant="default"
+                      type="extended"
                       //@ts-ignore:todo
                       title={promotion?.title}
                       ingress={promotion?.ingress}
@@ -284,7 +292,7 @@ const PromotionsBlock = ({
                           <FormattedDateTime
                             datetime={promotion?.publishDateTime}
                             uppercase
-                            className='pb-2 font-medium text-xs'
+                            className="pb-2 font-medium text-xs"
                           />
                         ),
                       })}
@@ -294,7 +302,7 @@ const PromotionsBlock = ({
                     />
                   )}
                 </li>
-              )
+              );
             })}
           </ul>
         )}
@@ -313,7 +321,7 @@ const PromotionsBlock = ({
         )}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default PromotionsBlock
+export default PromotionsBlock;

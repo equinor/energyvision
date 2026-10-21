@@ -1,20 +1,23 @@
 import { forwardRef } from 'react'
 import {
-  Legend,
   LineChart as _LineChart,
-  Tooltip,
-  LineProps,
-  Line,
-  YAxis,
-  XAxis,
   CartesianGrid,
-  TooltipContentProps,
+  Legend,
+  Line,
+  type LineProps,
+  Tooltip,
+  type TooltipContentProps,
+  XAxis,
+  YAxis,
+  type YAxisProps,
 } from 'recharts'
 import { Typography } from '../Typography'
 
 type themeVariant = 'green' | 'blue' | 'red'
-
-
+type YAxisLabelPosition = Extract<
+  NonNullable<YAxisProps['label']>,
+  { position?: unknown }
+>['position']
 
 const themes: Record<themeVariant, string[]> = {
   green: ['#0e7c78', '#63a893', '#aad5bb', '#d6f0de'],
@@ -24,9 +27,14 @@ const themes: Record<themeVariant, string[]> = {
 
 type CustomTooltipProps = {
   headerNames?: any
-} & TooltipContentProps<string | number, string>
+} & TooltipContentProps
 
-const CustomTooltip = ({ active, payload, label, headerNames }:CustomTooltipProps) => {
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+  headerNames,
+}: CustomTooltipProps) => {
   const isVisible = active && payload && payload.length
   return (
     <div
@@ -36,11 +44,16 @@ const CustomTooltip = ({ active, payload, label, headerNames }:CustomTooltipProp
         <>
           <span>{label}:</span>
           {payload?.map((set: any) => {
-            const headerName = headerNames?.find((item: any) => item.value === set.name).title
+            const headerName = headerNames?.find(
+              (item: any) => item.value === set.name,
+            ).title
             return (
-              <span key={set.dataKey} className="flex gap-2">
-                <span className="aspect-square size-1 rounded-full" style={{ color: set.color }} />
-                <span className="text-slate-80">{`${headerName}: ${set.value}`}</span>
+              <span key={set.dataKey} className='flex gap-2'>
+                <span
+                  className='aspect-square size-1 rounded-full'
+                  style={{ color: set.color }}
+                />
+                <span className='text-slate-80'>{`${headerName}: ${set.value}`}</span>
               </span>
             )
           })}
@@ -53,7 +66,7 @@ const CustomTooltip = ({ active, payload, label, headerNames }:CustomTooltipProp
 export type LineChartProps = {
   data: any
   yUnitLabel?: string
-  yUnitLabelPlacement?: string
+  yUnitLabelPlacement?: YAxisLabelPosition | 'false'
   chartTitle?: string
   chartSource?: string
   showLegend?: boolean
@@ -63,70 +76,96 @@ export type LineChartProps = {
   unitLabel?: string
 } & LineProps
 
-export const LineChart = forwardRef<HTMLDivElement, LineChartProps>(function LineChart(
-  { chartTitle, chartSource, data = [], yUnitLabel, xAxisDataKey, yUnitLabelPlacement, showLegend, headerNames, theme = 'blue' },
-  ref,
-) {
- 
-  const dataKeys = Object.keys(data[0].data).filter((key: any) => key !== xAxisDataKey)
-  let hasNegatives = false
-  const chartData = data?.map((dataItem: any) => {
-    if (Object.values(dataItem.data).some((value) => Math.sign(Number(value)) <= -1)) {
-      hasNegatives = true
-    }
-    return dataItem.data
-  })
-  const COLORS = themes[theme]
-
-  const renderLegendText = (value: string, entry: any) => {
-    const { color } = entry
-    const headerName = headerNames?.find((item: any) => item.value === value).title
-    return <span className="text-slate-80">{headerName}</span>
-  }
-
-  let yAxisPadding = {
-    top: 20,
-  }
-  if (hasNegatives) {
-    yAxisPadding = Object.assign(yAxisPadding, {
-      ...yAxisPadding,
-      bottom: 20,
+export const LineChart = forwardRef<HTMLDivElement, LineChartProps>(
+  function LineChart(
+    {
+      chartTitle,
+      chartSource,
+      data = [],
+      yUnitLabel,
+      xAxisDataKey,
+      yUnitLabelPlacement,
+      showLegend,
+      headerNames,
+      theme = 'blue',
+    },
+    ref,
+  ) {
+    const dataKeys = Object.keys(data[0].data).filter(
+      (key: any) => key !== xAxisDataKey,
+    )
+    let hasNegatives = false
+    const chartData = data?.map((dataItem: any) => {
+      if (
+        Object.values(dataItem.data).some(
+          value => Math.sign(Number(value)) <= -1,
+        )
+      ) {
+        hasNegatives = true
+      }
+      return dataItem.data
     })
-  }
+    const COLORS = themes[theme]
 
-  return (
-    <div ref={ref} className="relative h-full w-full">
-      <Typography variant="div" group="plain" className="mb-2 text-base">
-        {chartTitle}
-      </Typography>
-      <Typography variant="div" group="plain" className="mb-4 text-sm">
-        {chartSource}
-      </Typography>
-      <_LineChart
-        responsive
-        data={chartData}
-        className="w-full max-w-[700px] max-h-[70vh] aspect-[1.618] m-5"
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey={xAxisDataKey} />
-        <YAxis
-          width="auto"
-          padding={yAxisPadding}
-          {...(yUnitLabelPlacement !== 'false' && {
-            label: {
-              value: yUnitLabel,
-              angle: -90,
-              position: yUnitLabelPlacement,
-            },
-          })}
-        />
-        {/**@ts-ignore:todo types */}
-        <Tooltip content={<CustomTooltip headerNames={headerNames} />}/>
-        {showLegend && <Legend formatter={renderLegendText} />}
-        {dataKeys.map((key: any, index: number) => (
-          <Line key={key} dataKey={key} fill={COLORS[index % COLORS.length]} />
-        ))}
-      </_LineChart>
-    </div>
-  )
-})
+    const renderLegendText = (value: string, entry: any) => {
+      const { color } = entry
+      const headerName = headerNames?.find(
+        (item: any) => item.value === value,
+      ).title
+      return <span className='text-slate-80'>{headerName}</span>
+    }
+
+    let yAxisPadding = {
+      top: 20,
+    }
+    if (hasNegatives) {
+      yAxisPadding = Object.assign(yAxisPadding, {
+        ...yAxisPadding,
+        bottom: 20,
+      })
+    }
+
+    return (
+      <div ref={ref} className='relative h-full w-full'>
+        <Typography variant='div' group='plain' className='mb-2 text-base'>
+          {chartTitle}
+        </Typography>
+        <Typography variant='div' group='plain' className='mb-4 text-sm'>
+          {chartSource}
+        </Typography>
+        <_LineChart
+          responsive
+          data={chartData}
+          className='m-5 aspect-[1.618] max-h-[70vh] w-full max-w-[700px]'
+        >
+          <CartesianGrid strokeDasharray='3 3' />
+          <XAxis dataKey={xAxisDataKey} />
+          <YAxis
+            width='auto'
+            padding={yAxisPadding}
+            {...(yUnitLabelPlacement !== 'false' && {
+              label: {
+                value: yUnitLabel,
+                angle: -90,
+                position: yUnitLabelPlacement,
+              },
+            })}
+          />
+          <Tooltip
+            content={props => (
+              <CustomTooltip {...props} headerNames={headerNames} />
+            )}
+          />
+          {showLegend && <Legend formatter={renderLegendText} />}
+          {dataKeys.map((key: any, index: number) => (
+            <Line
+              key={key}
+              dataKey={key}
+              fill={COLORS[index % COLORS.length]}
+            />
+          ))}
+        </_LineChart>
+      </div>
+    )
+  },
+)

@@ -1,13 +1,13 @@
-import { twMerge } from 'tailwind-merge'
-import type { LinkType } from '../../types/index'
-import { type ButtonProps, commonButtonStyling, getVariant } from '../Button'
-import { BaseLink, type BaseLinkProps } from './BaseLink'
+import { twMerge } from 'tailwind-merge';
+import type { LinkType } from '../../types/index';
+import { type ButtonProps, commonButtonStyling, getVariant } from '../Button';
+import { BaseLink, type BaseLinkProps } from './BaseLink';
 
 export type ButtonLinkProps = {
   /** What kind of content is it  */
-  type?: LinkType
+  type?: LinkType;
 } & Pick<ButtonProps, 'variant'> &
-  Omit<BaseLinkProps, 'type'>
+  Omit<BaseLinkProps, 'type'>;
 
 /** Read more link style */
 export const ButtonLink = ({
@@ -17,13 +17,18 @@ export const ButtonLink = ({
   variant = 'contained',
   className = '',
   href = '',
+  prefetch,
   onClick,
+  'aria-label': ariaLabel,
+  'aria-expanded': ariaExpanded,
+  'aria-current': ariaCurrent,
+  hrefLang,
 }: ButtonLinkProps) => {
   const classNames = twMerge(
     commonButtonStyling,
     getVariant(variant),
     className,
-  )
+  );
 
   return (
     <BaseLink
@@ -32,11 +37,16 @@ export const ButtonLink = ({
       ref={ref}
       type={type}
       href={href}
+      prefetch={prefetch}
       onClick={onClick}
+      aria-label={ariaLabel}
+      aria-expanded={ariaExpanded}
+      aria-current={ariaCurrent}
+      hrefLang={hrefLang}
     >
       {children}
     </BaseLink>
-  )
-}
+  );
+};
 
-export default ButtonLink
+export default ButtonLink;

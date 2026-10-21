@@ -1,38 +1,43 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import {
   type DocumentActionConfirmDialogProps,
   type DocumentActionProps,
-  isValidationErrorMarker,
   type SanityDocument,
   useDocumentOperation,
   useValidationStatus,
-} from 'sanity'
+} from 'sanity';
 
-const FIRST_PUBLISHED_AT_FIELD_NAME = 'firstPublishedAt'
-const LAST_MODIFIED_AT_FIELD_NAME = 'lastModifiedAt'
+const FIRST_PUBLISHED_AT_FIELD_NAME = 'firstPublishedAt';
+const LAST_MODIFIED_AT_FIELD_NAME = 'lastModifiedAt';
 
 export function SetAndPublishAction(props: DocumentActionProps) {
-  const { patch, publish } = useDocumentOperation(props.id, props.type)
-  const [dialogOpen, setDialogOpen] = useState(false)
+  const { patch, publish } = useDocumentOperation(props.id, props.type);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   // Check for validation errors
-  const validationStatus = useValidationStatus(props.id, props.type)
+  const validationStatus = useValidationStatus(
+    props.draft?._id ?? props.id, // check the status for draft id specifically.
+    props.type,
+    true,
+  );
+
   const hasValidationErrors = validationStatus.validation.some(
-    isValidationErrorMarker,
-  )
+    (item) => item.level === 'error',
+  );
 
   // check if the document is already published (default publish action is disabled if it is)
   const isDisabled =
+    validationStatus.isValidating ||
     hasValidationErrors ||
-    publish.disabled === 'ALREADY_PUBLISHED' ||
-    dialogOpen
+    Boolean(publish.disabled) ||
+    dialogOpen;
 
   return {
     disabled: isDisabled,
     label: 'Publish',
     onHandle: () => {
       // This will update the button text
-      setDialogOpen(true)
+      setDialogOpen(true);
     },
     dialog:
       dialogOpen &&
@@ -40,11 +45,11 @@ export function SetAndPublishAction(props: DocumentActionProps) {
       ({
         type: 'confirm',
         onCancel: () => {
-          props.onComplete()
-          setDialogOpen(false)
+          props.onComplete();
+          setDialogOpen(false);
         },
         onConfirm: () => {
-          const currentTimeStamp = new Date().toISOString()
+          const currentTimeStamp = new Date().toISOString();
           patch.execute(
             [
               {
@@ -55,16 +60,16 @@ export function SetAndPublishAction(props: DocumentActionProps) {
               { set: { [LAST_MODIFIED_AT_FIELD_NAME]: currentTimeStamp } },
             ],
             props.published as SanityDocument | undefined,
-          )
+          );
           // Perform the publish
-          publish.execute()
+          publish.execute();
 
           // Signal that the action is completed
-          props.onComplete()
+          props.onComplete();
 
-          setDialogOpen(false)
+          setDialogOpen(false);
         },
         message: 'Are you sure you want to publish?',
       } as DocumentActionConfirmDialogProps),
-  }
+  };
 }

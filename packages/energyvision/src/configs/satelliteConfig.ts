@@ -7,11 +7,11 @@
   }
 */
 export type Language = {
-  id: string
-  title: string
-  iso: string
-  locale: string
-}
+  id: string;
+  title: string;
+  iso: string;
+  locale: string;
+};
 const languages = [
   {
     id: 'english',
@@ -45,31 +45,29 @@ const languages = [
     iso: 'ja-JP',
     locale: 'ja',
   },
-  { id: 'korean', title: 'Korean', iso: 'ko-KR', locale: 'ko' },
   { id: 'welsh', title: 'Welsh', iso: 'cy-CY', locale: 'cy' },
-]
+];
 
 /**
  * @type {Record<string, string>}
  */
 export const newsSlug: Record<string, string> = {
-  'en-GB': 'news',
-  'nb-NO': 'nyheter',
-  'pt-BR': 'noticias',
-  'pl-PL': 'aktualnosci',
-  'de-DE': 'aktuelles',
-  'ja-JP': 'news',
-  'ko-KR': 'news',
-  'cy-CY': 'newyddion',
-}
+  en_GB: 'news',
+  nb_NO: 'nyheter',
+  pt_BR: 'noticias',
+  pl_PL: 'aktualnosci',
+  de_DE: 'aktuelles',
+  ja_JP: 'news',
+  cy_CY: 'newyddion',
+};
 
 /**
  * @type {Record<string, string>}
  */
 export const magazineSlug: Record<string, string> = {
-  'en-GB': 'magazine',
-  'nb-NO': 'magasin',
-}
+  en_GB: 'magazine',
+  nb_NO: 'magasin',
+};
 
 /*
   The first language will be set as the default language. The default language is used as
@@ -94,17 +92,17 @@ const datasets = {
   japan: ['english', 'japanese'],
   storage: ['english', 'german'],
   equinorfunds: ['norwegian'],
-  southkorea: ['english', 'korean'],
   celticsea: ['english', 'welsh'],
   sponsorship: ['norwegian', 'english'],
+  stemgapet: ['norwegian', 'english'],
   // Test datasets
   'global-development': ['english', 'norwegian', 'japanese'],
   // 'global-test': ['english', 'norwegian', 'japanese'],
-}
-export type DatasetsKeys = keyof typeof datasets
+};
+export type DatasetsKeys = keyof typeof datasets;
 
 /* export type Dataset = string[] */
-export type Dataset = (typeof datasets)[DatasetsKeys]
+export type Dataset = (typeof datasets)[DatasetsKeys];
 
 /**
  * The default language to be used on the website
@@ -114,10 +112,10 @@ export type Dataset = (typeof datasets)[DatasetsKeys]
 export const defaultWebLanguage: Partial<Record<DatasetsKeys, string>> = {
   argentina: 'spanish-ar',
   storage: 'german',
-  southkorea: 'korean',
   japan: 'japanese',
   sponsorship: 'norwegian',
-}
+  stemgapet: 'norwegian',
+};
 
 /**
  * Link between domain and datasets
@@ -159,10 +157,6 @@ const websiteDomains: Partial<
     url: 'https://www.equinor.jp',
     meta: 'equinor.jp',
   },
-  southkorea: {
-    url: 'https://www.equinor.co.kr',
-    meta: 'equinor.co.kr',
-  },
   celticsea: {
     url: 'https://www.equinorcelticsea.co.uk',
     meta: 'equinorcelticsea.co.uk',
@@ -175,7 +169,11 @@ const websiteDomains: Partial<
     url: 'https://www.sponsorship.equinor.com',
     meta: 'Sponsorship',
   },
-}
+  stemgapet: {
+    url: 'https://www.stemgapet.no',
+    meta: 'Stemgapet',
+  },
+};
 
 /**
  * @returns {{
@@ -186,48 +184,42 @@ const websiteDomains: Partial<
  */
 const filterLanguages = (dataset: Dataset) =>
   dataset
-    .map(lang => languages.find(e => e.id === lang))
-    .filter(e => e !== undefined)
+    .map((lang) => languages.find((e) => e.id === lang))
+    .filter((e) => e !== undefined);
 
 const logAndFallback = (dataset: DatasetsKeys) => {
   console.error(
     `Selected dataset (${dataset}) not found! Possibly a typo in the env variable.\nFalling back to first in the list.`,
-  )
-  return filterLanguages(Object.values(datasets)[0])
-}
+  );
+  return filterLanguages(Object.values(datasets)[0]);
+};
 
 export const localNewsTags: Record<string, string[]> = {
-  'en-GB': ['ev', 'uk', 'us'],
-}
+  en_GB: ['ev', 'uk', 'us'],
+};
 
 /**
  * @param {string} dataset
  */
 export const getLanguages = (dataset: DatasetsKeys) =>
-  Object.keys(datasets).some(name => name === dataset)
+  Object.keys(datasets).some((name) => name === dataset)
     ? filterLanguages(datasets[dataset])
-    : logAndFallback(dataset)
+    : logAndFallback(dataset);
 
 /**
  * @param {string} dataset
  */
 export const getDomain = (dataset: DatasetsKeys) =>
-  websiteDomains[dataset]?.url ?? 'Domain not set'
+  websiteDomains[dataset]?.url ?? 'Domain not set';
 
 /**
  * @param {string} dataset
  */
 export const getMetaTitleSuffix = (dataset: DatasetsKeys) => {
-  return websiteDomains[dataset]?.meta ?? 'Equinor'
-}
+  return websiteDomains[dataset]?.meta ?? 'Equinor';
+};
 
 export const getAllDomainUrls = () => {
-  return Object.values(websiteDomains).map(dataset => dataset.url)
+  return Object.values(websiteDomains).map((dataset) => dataset.url);
   //return Object.keys(datasets).map((dataset) => websiteDomains[dataset]?.url)
-}
-
-/**
- * Converts ISO locale code to Sanity schema field name format
- * Example: "en-GB" → "en_GB", "nb-NO" → "nb_NO"
- */
-export const isoToSchemaName = (iso: string): string => iso.replace('-', '_')
+};

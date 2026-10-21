@@ -129,8 +129,12 @@ export const getDnsRedirect = (host, pathname) => {
     return `https://www.equinor.com${pathname}`
   }
 
-  if (dns === 'equinor.kr') {
-    return `https://www.equinor.co.kr${pathname}`
+  if (dns === 'equinor.kr' || dns === 'equinor.co.kr') {
+    return "https://www.equinor.com/where-we-are/south-korea"
+  }
+
+  if (dns === 'morgendagenshelter.no') {
+    return 'https://www.sponsorship.equinor.com/'
   }
 
   const redirect =
@@ -200,10 +204,6 @@ const dnsRedirects = [
   {
     from: 'eu2nsea.eu',
     to: '/energy/eu2nsea',
-  },
-  {
-    from: 'morgendagenshelter.no',
-    to: '/no/om-oss/sponsing-og-stotte',
   },
   {
     from: 'data.equinor.com',

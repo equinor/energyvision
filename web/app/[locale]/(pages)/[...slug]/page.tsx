@@ -1,135 +1,175 @@
-import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig'
-import { stegaClean } from '@sanity/client/stega'
-import type { Metadata } from 'next'
-import dynamic from 'next/dynamic'
-import { cookies, draftMode } from 'next/headers'
-import { notFound } from 'next/navigation'
-import { setRequestLocale } from 'next-intl/server'
-import { getValidLanguagesLocales } from '@/languageConfig'
-import { decodeSlugs } from '@/lib/helpers/getFullUrl'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { routeSanityFetch } from '@/sanity/lib/live'
-import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
-import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
+import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig';
+import { stegaClean } from '@sanity/client/stega';
+import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
+import { notFound } from 'next/navigation';
+import { getLocale } from 'next-intl/server';
+import { Fragment, Suspense } from 'react';
+import { getValidLanguagesLocales } from '@/languageConfig';
+import { decodeSlugs } from '@/lib/helpers/getFullUrl';
+import { Flags } from '@/sanity/helpers/datasetHelpers';
+import { sanityFetchMetadata } from '@/sanity/lib/fetch';
+import { getDynamicFetchOptions, routeSanityFetch } from '@/sanity/lib/live';
+import { constructSanityMetadata, getPage } from '@/sanity/pages/utils';
+import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu';
 import {
   docWithSlugMetaQuery,
   magazineroomMetaQuery,
   pageMetaQuery,
-} from '@/sanity/queries/metaData'
-import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
-import Header from '@/sections/Header/Header'
+} from '@/sanity/queries/metaData';
+import { simpleMenuQuery } from '@/sanity/queries/simpleMenu';
+import Header from '@/sections/Header/Header';
+import LoadingPage from '@/sections/LoadingPage/LoadingPage';
 
 type Props = {
-  params: Promise<{ slug: string[]; locale: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
-const EventPage = dynamic(() => import('@/templates/event/Event'))
-const NewsPage = dynamic(() => import('@/templates/news/News'))
-const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
-const MagazineRoom = dynamic(() => import('@/templates/magazine/Magazineroom'))
+  params: Promise<{ slug: string[]; locale: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'));
+const EventPage = dynamic(() => import('@/templates/event/Event'));
+const NewsPage = dynamic(() => import('@/templates/news/News'));
+const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'));
+const MagazineRoom = dynamic(() => import('@/templates/magazine/Magazineroom'));
+
+export async function generateMetadata({
+  params,
+}: PageProps<'/[locale]/[...slug]'>): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
-  const { slug: encodedSlug, locale } = await params
+  const { slug: encodedSlug, locale } = await params;
 
-  if (!getValidLanguagesLocales().includes(locale)) notFound()
+  if (!getValidLanguagesLocales().includes(locale)) notFound();
 
-  const slug = decodeSlugs(encodedSlug) as string[]
+  const slug = decodeSlugs(encodedSlug) as string[];
 
-  const sanityLang = locale
+  const sanityLang = locale;
   //news, magazinepage has slug in document
-  const isNewsPage = slug[0] === newsSlug[sanityLang] && slug?.length > 1
+  const isNewsPage = slug[0] === newsSlug[sanityLang] && slug?.length > 1;
   const isMagazineRoom =
-    slug?.length === 1 && slug[0] === magazineSlug[sanityLang]
+    slug?.length === 1 && slug[0] === magazineSlug[sanityLang];
   const isNewsRoom =
-    slug?.length === 1 && slug[0] === newsSlug[sanityLang] && Flags.HAS_NEWSROOM
+    slug?.length === 1 &&
+    slug[0] === newsSlug[sanityLang] &&
+    Flags.HAS_NEWSROOM;
 
   const isMagazinePage =
-    slug?.length > 1 && slug[0] === magazineSlug[sanityLang]
-  let type = 'news'
+    slug?.length > 1 && slug[0] === magazineSlug[sanityLang];
+  let type = 'news';
   if (isMagazineRoom || isMagazinePage) {
-    type = isMagazineRoom ? 'magazineIndex' : 'magazine'
+    type = isMagazineRoom ? 'magazineIndex' : 'magazine';
   }
-  let query = pageMetaQuery
+  let query = pageMetaQuery;
   if (isNewsPage || isMagazinePage || isNewsRoom) {
-    query = docWithSlugMetaQuery
+    query = docWithSlugMetaQuery;
   }
   if (isMagazineRoom) {
-    query = magazineroomMetaQuery
+    query = magazineroomMetaQuery;
   }
 
-  const { data: metaData }: { data: any } = await routeSanityFetch({
+  const { data: metaData }: { data: any } = await sanityFetchMetadata({
     query,
     params: {
       lang: sanityLang,
       slug: `/${slug.join('/')}`,
       ...((isNewsPage || isMagazineRoom || isMagazinePage) && { type }),
     },
+    perspective: 'published',
     stega: false,
+    tags: [`page:/${slug.join('/')}`],
     requestTag: 'page-meta',
-  })
+  });
 
-  return constructSanityMetadata(slug, locale, metaData)
+  return constructSanityMetadata(slug, locale, metaData);
 }
 
-export default async function Page({ params }: Props) {
-  const { slug, locale } = await params
-  /*   const isInPresentationToolContext =
-    (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
-  const { isEnabled: isDraftMode } = await draftMode()
+export default function Page({ params, searchParams }: Props) {
+  return (
+    <Suspense fallback={<LoadingPage />}>
+      <DynamicContent params={params} searchParams={searchParams} />
+    </Suspense>
+  );
+}
 
-  if (!getValidLanguagesLocales().includes(locale)) notFound()
+async function DynamicContent({ params, searchParams }: Props) {
+  const [{ slug }, resolvedSearchParams] = await Promise.all([
+    params,
+    searchParams,
+  ]);
+  const dynamic = await getDynamicFetchOptions(resolvedSearchParams);
 
-  setRequestLocale(locale)
-  let pageContent = null
+  return (
+    <CachedContent
+      slug={slug}
+      searchParams={resolvedSearchParams}
+      dynamic={dynamic}
+    />
+  );
+}
+
+// Cached (performs sanityFetch)
+async function CachedContent({
+  slug,
+  searchParams,
+  dynamic,
+}: {
+  slug: string | string[];
+  dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
+  searchParams: { [key: string]: string[] | string | undefined };
+}) {
+  'use cache: remote';
+  const locale = await getLocale();
+  const decodedSlug = decodeSlugs(slug);
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: {
         lang: locale ?? 'en-GB',
       },
+      tags: [`siteMenu:${locale}`],
+      requestTag: 'site-menu',
+      ...dynamic,
     }),
     getPage({
-      slug: decodeSlugs(slug),
+      slug: decodedSlug,
       locale,
+      searchParams: searchParams,
+      fetch: routeSanityFetch,
+      ...dynamic,
+      stega: false,
+      tags: [`page:/${Array.isArray(slug) ? slug.join('/') : slug}`],
     }),
-  ])
-  pageContent = pageResults
+  ]);
 
-  if (isDraftMode) {
-    //Later when inside presentation tool, cant clea globally as it doesnt work with visual editing,
-    // must filter props together with visual editing,but is a big job.
-    pageContent = stegaClean(pageResults)
-  }
+  const pageContent = dynamic.stega ? stegaClean(pageResults) : pageResults;
 
-  const { headerData, pageData } = pageContent
-  const { data: siteMenuData } = siteMenuResult || {}
-  if (Object.keys(pageData).length === 0) notFound()
+  const { headerData, pageData } = pageContent;
+  const { data: siteMenuData } = siteMenuResult || {};
+  if (Object.keys(pageData).length === 0) notFound();
 
-  const template = pageData?.template
-  if (!template || typeof template === 'undefined')
-    console.warn('Missing template for', pageData?.slug)
+  const template = pageData?.template;
+  if (!template) console.warn('Missing template for', pageData?.slug);
 
   const getTemplate = () => {
     switch (template) {
       case 'event':
-        return <EventPage data={pageData} />
+        return <EventPage data={pageData} />;
       case 'news':
       case 'localNews':
-        return <NewsPage {...pageData} />
+        return <NewsPage {...pageData} />;
       case 'magazine':
-        return <MagazinePage {...pageData} />
+        return <MagazinePage {...pageData} />;
       case 'magazineIndex':
-        return <MagazineRoom {...pageData} />
+        return <MagazineRoom {...pageData} />;
       default:
-        return <TopicPage {...pageData} />
+        return <TopicPage {...pageData} />;
     }
-  }
+  };
   return (
-    <>
+    <Fragment
+      key={`${locale}:/${Array.isArray(slug) ? slug.join('/') : slug}:${JSON.stringify(searchParams)}`}
+    >
       <Header siteMenuData={siteMenuData} headerData={headerData} />
-      {getTemplate()}
-    </>
-  )
+      <article>{getTemplate()}</article>
+    </Fragment>
+  );
 }

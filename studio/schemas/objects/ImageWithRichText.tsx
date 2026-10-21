@@ -46,9 +46,12 @@ export default {
       type: 'array',
       of: [blockContentType],
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[]) => {
-          return validateCharCounterEditor(value, 600, true)
-        }).error(),
+        Rule.required()
+          .min(1)
+          .custom((value: PortableTextBlock[]) => {
+            return validateCharCounterEditor(value, 600, true)
+          })
+          .error(),
     },
     singleItemArray({
       name: 'action',

@@ -13,6 +13,7 @@ import type {
 } from '@portabletext/types'
 import dynamic from 'next/dynamic'
 import type { ElementType } from 'react'
+import { Image } from '@/core/Image/Image'
 import DownloadableLink from '@/core/Link/DownloadableLink'
 import { Link as CoreLink } from '@/core/Link/Link'
 import type { TypographyProps } from '@/core/Typography'
@@ -272,6 +273,17 @@ const typesSerializers = {
   positionedInlineImage: (props: any) => <FigureWithLayout {...props} />,
   pullQuote: (props: any) => <Quote {...props} />,
   thumbnail: (props: any) => <Thumbnail {...props} />,
+  image: ({ value }: any) => {
+    //@ts-ignore
+    return (
+      <Image
+        aspectRatio='original'
+        image={value}
+        useFitMax={true}
+        className='my-8 border border-gray-50 drop-shadow-md'
+      />
+    )
+  },
 }
 
 const footnoteSerializer = {
@@ -408,25 +420,8 @@ export default function Blocks({
           if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
           // Otherwise, render the group of text blocks we have
           const value = div
-          //const CustomElementType = as ?? (`div` as React.ElementType)
           div = []
 
-          /*
-          Find out why i, borghild put asOneElementTYpe           
-          return asOneElementType && as ? (
-            <CustomElementType key={block._key} className={className} id={id}>
-              <PortableText
-                value={value}
-                components={componentsProps}
-                onMissingComponent={(message, options) => {
-                  console.warn(
-                    `${message},type:${options.type},nodeType:${options.nodeType}`,
-                  )
-                  return false
-                }}
-              />
-            </CustomElementType>
-          ) : ( */
           return (
             <div
               key={block._key}
@@ -445,7 +440,6 @@ export default function Blocks({
               />
             </div>
           )
-          /*           ) */
         }
         /** Factbox block */
         if (block._type === 'factbox') {
@@ -508,11 +502,25 @@ export default function Blocks({
         }
         // Non-text blocks (modules, sections, etc.) — note that these can recursively render text
         // blocks again
+
         return (
           <PortableText
             key={block._key}
             value={block}
             components={{
+              types: {
+                image: ({ value }) => {
+                  //@ts-ignore
+                  return (
+                    <Image
+                      aspectRatio='original'
+                      image={value}
+                      useFitMax={true}
+                      className='my-8 border border-gray-50 drop-shadow-md'
+                    />
+                  )
+                },
+              },
               ...components,
             }}
           />

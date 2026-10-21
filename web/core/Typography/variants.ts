@@ -22,8 +22,8 @@ const variants = {
     unstyled: '',
     h1: 'text-3xl leading-earthy lg:leading-misty pt-4 mb-6 lg:mb-12 text-balance',
     h2: `text-xl leading-earthy lg:leading-misty mb-4 lg:mb-8 text-balance`,
-    h3: `text-lg leading-lofty mt-4 mb-8 text-balance`,
-    h4: 'text-md mt-2 mb-4 text-balance',
+    h3: `text-lg leading-lofty mt-10 mb-4 text-balance`,
+    h4: 'text-md mt-4 mb-2 text-balance',
     h5: 'text-md text-balance',
     h6: 'text-base text-balance',
     h7: 'text-xs leading-earthy text-balance',
@@ -59,7 +59,7 @@ const variants = {
     overline: 'text-md mb-2 text-pretty',
     ingress: 'text-md mt-5 mb-5 first:mt-0 last:mb-6 text-pretty', //last:mb-10
     eyebrow: 'text-xs font-medium uppercase text-pretty',
-    body: 'my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-base text-pretty',
+    body: 'my-6 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-base text-pretty',
     small:
       'text-sm my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-pretty',
     simple: 'text-base text-pretty',
@@ -83,7 +83,7 @@ const variants = {
     lg:ms-layout-lg`,
     body: `
     text-pretty
-    my-5 
+    my-6 
      :not-only-child:first:mt-0 
      :not-only-child:last:mb-0 
     me-layout-sm

@@ -1,25 +1,28 @@
 // Need to deploy using CLI
-import { defineCliConfig } from 'sanity/cli'
-import svgr from 'vite-plugin-svgr'
-import tsconfigPaths from 'vite-tsconfig-paths'
+import { defineCliConfig } from 'sanity/cli';
+import svgr from 'vite-plugin-svgr';
 
-import { dataset, projectId } from './sanity.client'
+import { dataset, projectId } from './sanity.client';
 
 export default defineCliConfig({
   api: {
     projectId,
     dataset,
   },
-  vite: async viteConfig => {
-    return {
-      ...viteConfig,
-      resolve: {
-        alias: {
-          '@': __dirname,
-        },
-      },
-      //@ts-ignore : testing getting tailwind css
-      plugins: [...viteConfig.plugins, tsconfigPaths(), svgr()],
-    }
+  deployment: {
+    appId: process.env.SANITY_STUDIO_APP_ID,
+    autoUpdates: false,
   },
-})
+  vite: (viteConfig) => ({
+    ...viteConfig,
+    resolve: {
+      ...viteConfig.resolve,
+      tsconfigPaths: true,
+      alias: {
+        ...viteConfig.resolve?.alias,
+        '@': __dirname,
+      },
+    },
+    plugins: [...(viteConfig.plugins ?? []), svgr()],
+  }),
+});

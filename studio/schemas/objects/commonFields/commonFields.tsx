@@ -140,7 +140,7 @@ export const gridColumns = ({
   initialValue?: string | undefined
   description?: string | undefined
   validation?: any
-}) => {
+} = {}) => {
   return {
     title: 'Number of grid columns',
     name: 'gridColumns',

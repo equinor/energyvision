@@ -1,67 +1,77 @@
-import { newsSlug } from '@energyvision/shared/satelliteConfig'
-import { algoliasearch } from 'algoliasearch'
-import type { Metadata } from 'next'
-import { unstable_cache } from 'next/cache'
-import dynamic from 'next/dynamic'
-import { setRequestLocale } from 'next-intl/server'
-import { algolia } from '@/lib/config'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { routeSanityFetch } from '@/sanity/lib/live'
-import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
-import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
-import { newsroomMetaQuery } from '@/sanity/queries/metaData'
-import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
-import Header from '@/sections/Header/Header'
-import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
+import { newsSlug } from '@energyvision/shared/satelliteConfig';
+import { algoliasearch } from 'algoliasearch';
+import type { Metadata } from 'next';
+import { cacheLife, cacheTag } from 'next/cache';
+import dynamic from 'next/dynamic';
+import { notFound } from 'next/navigation';
+import { getLocale } from 'next-intl/server';
+import { Suspense } from 'react';
+import { algolia } from '@/lib/config';
+import { Flags } from '@/sanity/helpers/datasetHelpers';
+import { routeSanityFetch, sanityFetchMetadata } from '@/sanity/lib/fetch';
+import { getDynamicFetchOptions } from '@/sanity/lib/live';
+import { constructSanityMetadata, getPage } from '@/sanity/pages/utils';
+import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu';
+import { newsroomMetaQuery } from '@/sanity/queries/metaData';
+import { simpleMenuQuery } from '@/sanity/queries/simpleMenu';
+import Header from '@/sections/Header/Header';
+import { NewsroomLoadingPage } from '@/sections/LoadingPage/NewsroomLoadingPage';
+import NewsRoomTemplate from '@/templates/newsroom/Newsroom';
 
-const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
+const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'));
 
 export async function generateStaticParams() {
-  if (Flags.HAS_NEWSROOM) {
-    return [{ locale: 'en-GB' }]
-  }
-  return []
+  // See: https://nextjs.org/docs/messages/empty-generate-static-params
+  return Flags.HAS_NEWSROOM
+    ? [{ locale: 'en-GB' }]
+    : [{ locale: '__placeholder__' }];
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = await params
-  const pageSlug = newsSlug[locale]
+  const locale = await getLocale();
+  if (locale === '__placeholder__') return notFound();
+  const pageSlug = newsSlug[locale];
+
   if (Flags.HAS_NEWSROOM) {
-    const { data: metaData }: { data: any } = await routeSanityFetch({
+    const { data: metaData }: { data: any } = await sanityFetchMetadata({
       query: newsroomMetaQuery,
       params: {
         lang: locale,
       },
       stega: false,
       requestTag: 'meta-news',
-    })
+      tags: [`newsroom:${locale}`],
+    });
 
-    return constructSanityMetadata(pageSlug, locale, metaData)
+    return constructSanityMetadata(pageSlug, locale, metaData);
   }
 
-  return constructSanityMetadata(pageSlug, locale, undefined)
+  return constructSanityMetadata(pageSlug, locale, undefined);
 }
 
-const getInitialResponse = unstable_cache(
+const getInitialResponse =
   // this gets revalidated by path
   async (locale: string) => {
-    const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
-    const indexName = `${envPrefix}_NEWS_${locale}`
+    'use cache: remote';
+    cacheLife('max');
+    cacheTag('newsroom');
+    const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev';
+    const indexName = `${envPrefix}_NEWS_${locale}`;
 
     console.log(
       new Date(),
       'Fetching initial response for',
       indexName,
       'after revalidation',
-    )
+    );
     const searchClient = algoliasearch(
       algolia.applicationId,
       algolia.searchApiKey,
-    )
+    );
     const response = await searchClient.searchSingleIndex({
       indexName: indexName,
       searchParams: {
@@ -70,23 +80,37 @@ const getInitialResponse = unstable_cache(
         facetingAfterDistinct: true,
         facets: ['countryTags', 'topicTags', 'year'],
       },
-    })
-    return response
-  },
-  undefined,
-  {
-    tags: [`newsroom_en-GB`],
-  },
-)
+    });
+    return response;
+  };
 
-export default async function NewsroomPage({
-  params,
+export default function NewsroomPage({
+  searchParams,
+}: PageProps<'/[locale]/news'>) {
+  return (
+    <Suspense fallback={<NewsroomLoadingPage />}>
+      <DynamicNewsroomPage searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+async function DynamicNewsroomPage({
+  searchParams,
+}: Pick<PageProps<'/[locale]/news'>, 'searchParams'>) {
+  const dynamic = await getDynamicFetchOptions(await searchParams);
+  return <CachedNewsroomPage dynamic={dynamic} />;
+}
+
+async function CachedNewsroomPage({
+  dynamic,
 }: {
-  params: Promise<{ slug: string; locale: string }>
+  dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
 }) {
-  const { locale, slug } = await params
-  // Enable static rendering
-  setRequestLocale(locale)
+  'use cache: remote';
+
+  const locale = await getLocale();
+
+  if (locale === '__placeholder__') return notFound();
 
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({
@@ -94,20 +118,25 @@ export default async function NewsroomPage({
       params: {
         lang: locale ?? 'en-GB',
       },
+      requestTag: 'site-menu',
+      tags: [`siteMenu:${locale}`],
+      ...dynamic,
     }),
     getPage({
-      slug: slug ?? newsSlug[locale],
+      slug: newsSlug[locale],
       locale,
-      tags: ['newsroom'],
+      tags: [`newsroom:${locale}`],
+      ...dynamic,
     }),
-  ])
+  ]);
 
-  const { headerData, pageData } = pageResults
-  const { data: siteMenuData } = siteMenuResult || {}
+  const { headerData, pageData } = pageResults;
+  const { data: siteMenuData } = siteMenuResult || {};
 
-  const response = Flags.HAS_NEWSROOM
-    ? await getInitialResponse(locale)
-    : undefined
+  const response =
+    Flags.HAS_NEWSROOM && ['en-GB', 'nb-NO'].includes(locale)
+      ? await getInitialResponse(locale)
+      : undefined;
 
   return (
     <>
@@ -123,5 +152,5 @@ export default async function NewsroomPage({
         <TopicPage {...pageData} />
       )}
     </>
-  )
+  );
 }

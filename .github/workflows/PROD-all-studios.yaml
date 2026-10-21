@@ -22,11 +22,12 @@ jobs:
       SANITY_STUDIO_FOTOWARE_REDIRECT_URI: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_URI }}
       SANITY_STUDIO_SCREEN9_ACCOUNT_ID: ${{ secrets.SANITY_STUDIO_SCREEN9_ACCOUNT_ID }}
       SANITY_STUDIO_SCREEN9_TOKEN: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
+      SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID }}
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -40,7 +41,7 @@ jobs:
           echo "sha=$(python ci/returnComponentVersion.py preprod studio-global)" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-main
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -52,16 +53,16 @@ jobs:
           echo "sha=$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
           ref: '${{ steps.get-long-sha.outputs.sha }}'
       - name: Install pnpm 📦
         id: install-pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: 'pnpm'
@@ -77,6 +78,7 @@ jobs:
           pnpm run deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
+          SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID }}
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
@@ -103,7 +105,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -117,7 +119,7 @@ jobs:
           echo "sha=$(python ci/returnGlobalStudioVersion.py preprod)" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-main
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -129,16 +131,16 @@ jobs:
           echo "sha=$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
           ref: '${{ steps.get-long-sha.outputs.sha }}'
       - name: Install pnpm 📦
         id: install-pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: 'pnpm'
@@ -154,6 +156,7 @@ jobs:
           pnpm run deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_SECRET_DEPLOY }}
+          SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID_SECRET }}
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
@@ -167,7 +170,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -207,7 +210,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       # PRODUCTION CLUSTERS
       - name: Deploy to Radix 🚀
@@ -233,16 +236,18 @@ jobs:
   store-image-tags:
     needs: [deploy-satellite-studios, deploy-global, deploy-secret]
     runs-on: ubuntu-latest
+    outputs:
+      STUDIO_SHA: ${{ steps.capture-studio-sha.outputs.STUDIO_SHA }}
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PADMS_PAT }}
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '24' # Or any version you prefer
 
@@ -251,9 +256,10 @@ jobs:
           npm install js-yaml
 
       - name: Run script for 'studio'
+        id: capture-studio-sha
         run: |
           STUDIO_SHA=$(node ci/storeImageTags.js studio)
-          echo "STUDIO_SHA=$(STUDIO_SHA)" >> $GITHUB_OUTPUT
+          echo "STUDIO_SHA=$STUDIO_SHA" >> $GITHUB_OUTPUT
 
       - name: Commit and push changes
         run: |
@@ -269,7 +275,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: 'Move cards and create discussion and post it to channel'
         id: 'get-list'

@@ -1,29 +1,29 @@
-import type { Image, PortableTextBlock, Reference, Rule } from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
-import { topicPromotionFilter } from '../../../helpers/referenceFilters'
-import { Flags } from '../../../src/lib/datasetHelpers'
-import { configureBlockContent } from '../../editors/blockContentType'
-import routes from '../../routes'
-import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
+import { LiaPagerSolid } from 'react-icons/lia';
+import type { Image, PortableTextBlock, Reference, Rule } from 'sanity';
+import blocksToText from '../../../helpers/blocksToText';
+import { topicPromotionFilter } from '../../../helpers/referenceFilters';
+import { configureBlockContent } from '../../editors/blockContentType';
+import routes from '../../routes';
+import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor';
 import {
   ingress,
   theme,
   title,
   viewAllLink,
   viewAllLinkLabel,
-} from '../commonFields/commonFields'
+} from '../commonFields/commonFields';
 
 type PromotedTopicPage = {
-  _key: string
-  _type: 'topics'
-  ingress: PortableTextBlock[]
-  reference: Reference
-}
+  _key: string;
+  _type: 'topics';
+  ingress: PortableTextBlock[];
+  reference: Reference;
+};
 
 export type TopicPromotion = {
-  _type: 'promoteTopics'
-  references: PromotedTopicPage[]
-}
+  _type: 'promoteTopics';
+  references: PromotedTopicPage[];
+};
 
 export default {
   title: 'Topic/magazine promotion',
@@ -52,10 +52,7 @@ export default {
               name: 'reference',
               description: 'Select the page you want to promote',
               type: 'reference',
-              to: [
-                ...routes,
-                Flags.HAS_MAGAZINE && { type: 'magazine' },
-              ].filter(e => e),
+              to: [...routes].filter((e) => e),
               options: {
                 filter: topicPromotionFilter,
                 disableNew: true,
@@ -87,18 +84,18 @@ export default {
               topicMedia,
               magazineMedia,
             }: {
-              topicTitle: PortableTextBlock[]
-              magazineTitle: PortableTextBlock[]
-              topicMedia: Image
-              magazineMedia: Image
+              topicTitle: PortableTextBlock[];
+              magazineTitle: PortableTextBlock[];
+              topicMedia: Image;
+              magazineMedia: Image;
             }) {
-              const title = topicTitle || magazineTitle || ''
-              const plainTitle = title ? blocksToText(title) : ''
+              const title = topicTitle || magazineTitle || '';
+              const plainTitle = title ? blocksToText(title) : '';
 
               return {
                 title: plainTitle,
                 media: topicMedia || magazineMedia,
-              }
+              };
             },
           },
         },
@@ -116,41 +113,20 @@ export default {
       fieldset: 'design',
       readonly: true,
       hidden: ({ value }: any) => {
-        return !value || value.title === 'White'
+        return !value || value.title === 'White';
       },
     },
   ],
   preview: {
     select: {
-      references: 'references',
-      // Annoyingly, the select lines below are needed to resolve the references in the references object above
-      reference1: 'references.0.reference.content.title',
-      reference2: 'references.1.reference.content.title',
-      reference3: 'references.2.reference.content.title',
-      magazineRef1: 'references.0.reference.title',
-      magazineRef2: 'references.1.reference.title',
-      magazineRef3: 'references.2.reference.title',
+      title: 'title',
     },
-    prepare({ references }: { references: any[] }) {
-      const titles = Object.entries(references)
-        .map(reference => {
-          if (reference[1]?.reference) {
-            const ref = reference[1].reference
-            if (ref?.title) {
-              return blocksToText(ref.title)
-            }
-
-            if (ref?.content?.title) {
-              return blocksToText(ref.content.title)
-            }
-          }
-          return ''
-        })
-        .filter(Boolean)
+    prepare({ title }: { title?: PortableTextBlock[] }) {
       return {
-        title: titles.join(', '),
-        subtitle: `Topic promotions.`,
-      }
+        title: blocksToText(title ?? [])?.trim() || 'Untitled',
+        subtitle: 'Update to type Promotion',
+        media: LiaPagerSolid,
+      };
     },
   },
-}
+};

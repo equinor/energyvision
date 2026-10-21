@@ -1,44 +1,43 @@
-'use client'
-import { Icon } from '@equinor/eds-core-react'
-import { world } from '@equinor/eds-icons'
-import { toPlainText } from '@portabletext/react'
-import type { PortableTextBlock } from '@portabletext/types'
-import { useLocale, useTranslations } from 'next-intl'
-import { forwardRef, type HTMLAttributes } from 'react'
-import { twMerge } from 'tailwind-merge'
+'use client';
+import { Icon } from '@equinor/eds-core-react';
+import { world } from '@equinor/eds-icons';
+import { toPlainText } from '@portabletext/react';
+import type { PortableTextBlock } from '@portabletext/types';
+import { useLocale, useTranslations } from 'next-intl';
+import { forwardRef, type HTMLAttributes } from 'react';
+import { twMerge } from 'tailwind-merge';
 import FormattedDateTime, {
   TimeIcon,
-} from '@/core/FormattedDateTime/FormattedDateTime'
-import { BaseLink } from '@/core/Link/BaseLink'
-import { defaultLanguage } from '@/languageConfig'
-import { getEventDates } from '@/lib/helpers/dateUtilities'
-import { getLocaleFromIso } from '@/sanity/helpers/localization'
+} from '@/core/FormattedDateTime/FormattedDateTime';
+import { BaseLink } from '@/core/Link/BaseLink';
+import { getEventDates } from '@/lib/helpers/dateUtilities';
+import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref';
 import {
   type ColorKeys,
   colorKeyToUtilityMap,
-} from '@/styles/colorKeyToUtilityMap'
-import type { EventProps } from '@/templates/event/Event'
-import AddToCalendar from '../../../core/AddToCalendar/AddToCalendar'
-import Blocks from '../../../portableText/Blocks'
+} from '@/styles/colorKeyToUtilityMap';
+import type { EventProps } from '@/templates/event/Event';
+import AddToCalendar from '../../../core/AddToCalendar/AddToCalendar';
+import Blocks from '../../../portableText/Blocks';
 
-type Variants = 'default' | 'single' | 'carousel'
+type Variants = 'default' | 'single' | 'carousel';
 
 type EventCardEventFields = Pick<
   EventProps['content'],
   'location' | 'eventDate' | 'ingress'
->
+>;
 
 export type EventCardData = {
-  type: 'events'
+  type: 'events';
 } & Pick<EventProps, 'id' | 'title' | 'slug'> &
-  EventCardEventFields
+  EventCardEventFields;
 
 export type EventCardProps = {
-  data: EventCardData
-  background?: ColorKeys
-  hasSectionTitle: boolean
-  variant?: Variants
-} & HTMLAttributes<HTMLDivElement>
+  data: EventCardData;
+  background?: ColorKeys;
+  hasSectionTitle: boolean;
+  variant?: Variants;
+} & HTMLAttributes<HTMLDivElement>;
 
 /**
  * Event Card component.
@@ -54,15 +53,14 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
   },
   ref,
 ) {
-  const { title, location, eventDate, slug, ingress } = data
+  const { title, location, eventDate, slug, ingress } = data;
 
-  const iso = useLocale()
-  const t = useTranslations()
-  const locale = iso !== defaultLanguage.iso ? getLocaleFromIso(iso) : ''
-  const href = '/' + locale + slug || ''
+  const iso = useLocale();
+  const t = useTranslations();
+  const href = getLocalizedHref(slug, iso);
 
-  const { start, end } = getEventDates(eventDate)
-  const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
+  const { start, end } = getEventDates(eventDate);
+  const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : '';
 
   return (
     <div
@@ -70,17 +68,17 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       className={twMerge(
         `has-focus-visible:envis-outline dark:has-focus-visible:envis-outline-invert flex h-full flex-col rounded-card px-6 py-8 text-slate-80 focus:outline-hidden dark:text-white-100`,
         colorKeyToUtilityMap[background ?? 'gray-20'].background,
-        variant === 'carousel' && 'w-[383px]',
+        variant === 'carousel' && 'w-event-carousel-card-w',
         variant === 'single' && 'max-w-prose',
         className,
       )}
     >
-      <BaseLink href={href} className='mb-6 hover:underline'>
+      <BaseLink href={href} className="mb-6 hover:underline">
         <Blocks
           value={title}
           as={hasSectionTitle ? 'h3' : 'h2'}
-          variant='h5'
-          blockClassName=''
+          variant="h5"
+          blockClassName=""
         />
       </BaseLink>
       <div
@@ -90,21 +88,21 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         <FormattedDateTime
           datetime={start ?? eventDate?.date}
           dateIcon={true}
-          className='text-sm **:text-sm **:leading-none'
+          className="text-sm **:text-sm **:leading-none"
         />
         {/* Time - Dont show if label is '-' or if event is more than one day*/}
-        <div className='flex items-end gap-1 **:text-sm **:leading-none'>
+        <div className="flex items-end gap-1 **:text-sm **:leading-none">
           {!start ? (
             <div className={`flex items-center gap-2`}>
               <TimeIcon />
-              <div className='mt-1 flex text-sm leading-none'>
+              <div className="mt-1 flex text-sm leading-none">
                 {t('tba') ?? 'To be announced'}
               </div>
             </div>
           ) : (
             <>
               <FormattedDateTime
-                variant='time'
+                variant="time"
                 datetime={start ?? eventDate?.date}
                 timeIcon={true}
                 showTimezone={!end}
@@ -112,9 +110,9 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
 
               {end && (
                 <>
-                  <span className=''>-</span>
+                  <span className="">-</span>
                   <FormattedDateTime
-                    variant='time'
+                    variant="time"
                     datetime={end}
                     timeIcon={false}
                   />
@@ -128,21 +126,21 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
             <Icon
               data={world}
               color={'currentColor'}
-              className='shrink-0 text-2xs text-norwegian-woods-100'
+              className="shrink-0 text-2xs text-norwegian-woods-100"
             />
-            <div className='mt-1 flex text-sm leading-none'>{location}</div>
+            <div className="mt-1 flex text-sm leading-none">{location}</div>
           </div>
         )}
       </div>
       {variant === 'single' && ingress && (
         <Blocks
-          group='card'
-          variant='ingress'
+          group="card"
+          variant="ingress"
           value={ingress}
-          blockClassName='pt-6'
+          blockClassName="pt-6"
         />
       )}
-      <div className='mt-auto min-h-[83.3px] pt-8'>
+      <div className="mt-auto min-h-[83.3px] pt-8">
         <AddToCalendar
           startDateTime={start}
           endDateTime={end}
@@ -151,6 +149,6 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         />
       </div>
     </div>
-  )
-})
-export default EventCard
+  );
+});
+export default EventCard;

@@ -16,6 +16,9 @@ import BarChartBlock, {
 import { CampaignBanner } from '@/sections/CampaignBanner'
 import CookieDeclaration from '@/sections/CookieDeclaration/CookieDeclaration'
 import CardsList from '@/sections/cards/CardsList/CardsList'
+import EmbeddedVideoList, {
+  type EmbeddedVideoListData,
+} from '@/sections/EmbeddedVideoList/EmbeddedVideoList'
 import FigureBlock, {
   type FigureData,
 } from '@/sections/FigureBlock/FigureBlock'
@@ -36,6 +39,7 @@ import LineChartBlock, {
   type LineChartBlockProps,
 } from '@/sections/LineChartBlock/LineChartBlock'
 import NewsList from '@/sections/NewsList/NewsList'
+import PersonList from '@/sections/PersonList/PersonList'
 import PieChartBlock, {
   type PieChartBlockProps,
 } from '@/sections/PieChartBlock/PieChartBlock'
@@ -116,6 +120,7 @@ export type ComponentSections =
   | StockValuesData
   | AnchorLinkData
   | VideoPlayerCarouselData
+  | EmbeddedVideoListData
   | CookieDeclarationData
   | TextTeaserData
   | KeyNumbersData
@@ -231,6 +236,15 @@ const applyPaddingTopIfApplicable = (
 ): string => {
   if (currentComponent?.type === 'anchorLink') {
     return ''
+  }
+
+  //If no hero and the first section after is textblock add pt-20
+  if (
+    index === 0 &&
+    heroProps?.heroType === 'noHero' &&
+    currentComponent?.type === 'textBlock'
+  ) {
+    return 'pt-20'
   }
   //the first section after hero does not need pt-20, as heroBlock types adds this
   //unless its background image hero
@@ -519,6 +533,15 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             className={allSpacings}
           />
         )
+      case 'personList':
+        return (
+          <PersonList
+            key={c.id}
+            {...commonProps}
+            data={c as any}
+            className={allSpacings}
+          />
+        )
       case 'stockValuesApi':
         return (
           <StockValues
@@ -562,6 +585,15 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as VideoPlayerCarouselData}
+            className={allSpacings}
+          />
+        )
+      case 'embeddedVideoList':
+        return (
+          <EmbeddedVideoList
+            key={c.id}
+            {...commonProps}
+            data={c as EmbeddedVideoListData}
             className={allSpacings}
           />
         )

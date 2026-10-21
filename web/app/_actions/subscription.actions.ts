@@ -2,6 +2,7 @@
 import { getTranslations } from 'next-intl/server'
 import type z from 'zod'
 import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas'
+import { getIsoFromLocale } from '@/sanity/helpers/localization'
 import {
   type newsletterCategoryLocale,
   newsletterCategoryMap,
@@ -29,7 +30,7 @@ export async function subscribe({
     }
   }
 
-  const t = await getTranslations()
+  const t = await getTranslations({ locale: getIsoFromLocale(locale) })
   const validatedData = subscribeSchema(t).safeParse(formData)
 
   if (!validatedData.success) {

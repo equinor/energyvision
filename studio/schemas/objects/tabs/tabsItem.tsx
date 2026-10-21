@@ -25,18 +25,24 @@ const tabPanelTypes = [
     title: 'Information panel',
     value: 'tabsInfoPanel',
   },
+  {
+    title: 'Embedded videos panel',
+    value: 'tabsEmbeddedVideosPanel',
+  },
 ]
 
 const getPanelType = (tabPanel?: {
   panelType?: string
   keyNumbersPanel?: { _type?: string }
   infoPanel?: { _type?: string }
+  videoPanel?: { _type?: string }
   panel?: Array<{ _type?: string }>
 }) => {
   return (
     tabPanel?.panelType ??
     tabPanel?.keyNumbersPanel?._type ??
     tabPanel?.infoPanel?._type ??
+    tabPanel?.videoPanel?._type ??
     tabPanel?.panel?.[0]?._type
   )
 }
@@ -45,6 +51,7 @@ type TabPanelValue = {
   panelType?: string
   keyNumbersPanel?: Record<string, unknown>
   infoPanel?: Record<string, unknown>
+  videoPanel?: Record<string, unknown>
   panel?: Array<{ _type?: string }>
 }
 
@@ -163,6 +170,21 @@ export default {
             }),
         },
         {
+          name: 'videoPanel',
+          title: 'Embedded videos panel',
+          type: 'tabsEmbeddedVideosPanel',
+          hidden: ({ parent }: { parent?: { panelType?: string } }) =>
+            parent?.panelType !== 'tabsEmbeddedVideosPanel',
+          validation: (rule: Rule) =>
+            rule.custom((value, context) => {
+              const parent = context.parent as { panelType?: string }
+
+              return parent?.panelType === 'tabsEmbeddedVideosPanel' && !value
+                ? 'Add embedded videos panel content'
+                : true
+            }),
+        },
+        {
           type: 'array',
           name: 'panel',
           deprecated: true,
@@ -178,6 +200,12 @@ export default {
               name: 'tabsInfoPanel',
               type: 'tabsInfoPanel',
             },
+            //Some more work is needed, will continue in new branch for this.
+            /*             {
+              name: 'tabsEmbeddedVideosPanel',
+              type: 'tabsEmbeddedVideosPanel',
+              title: 'Embedded videos panel',
+            }, */
           ],
           options: { sortable: false },
           hidden: ({

@@ -1,5 +1,5 @@
-import { Rule } from 'sanity'
-import { NumberIcon } from '@sanity/icons'
+import { NumberIcon } from '@sanity/icons/Number';
+import type { Rule } from 'sanity';
 
 export default {
   name: 'keyNumberItem',
@@ -15,7 +15,8 @@ export default {
     {
       name: 'unit',
       title: 'Unit',
-      description: 'A short abbreviated text describing the unit of the key number',
+      description:
+        'A short abbreviated text describing the unit of the key number',
       type: 'string',
     },
     {
@@ -33,12 +34,12 @@ export default {
       description: 'description',
     },
     prepare(selection: Record<string, string | number>) {
-      const { keyNumber, unit, description } = selection
+      const { keyNumber, unit, description } = selection;
       return {
         title: `${keyNumber} ${unit ?? ''}`,
         subtitle: description,
         media: NumberIcon,
-      }
+      };
     },
   },
-}
+};

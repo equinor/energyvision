@@ -48,12 +48,8 @@ export async function POST(req: NextRequest) {
     if (Number(response.status) === 200) {
       const algoliaTaskIds = await response.json()
       console.log('Algolia Indexing Success', algoliaTaskIds)
-      console.log(
-        new Date(),
-        'Revalidating by tag ',
-        `newsroom_${data.language}`,
-      )
-      revalidateTag(`newsroom_${data.language}`, 'max')
+      console.log(new Date(), 'Revalidating by tag ', `newsroom`)
+      revalidateTag(`newsroom`, 'max')
       return new Response(
         JSON.stringify({ message: 'Index updated and newsroom revalidated' }),
         { status: 200 },

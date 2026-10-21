@@ -1,84 +1,132 @@
-import { stegaClean } from '@sanity/client/stega'
-import type { Metadata } from 'next'
-import { draftMode } from 'next/headers'
-import { notFound } from 'next/navigation'
-import { setRequestLocale } from 'next-intl/server'
-import { OrganizationJsonLd } from 'next-seo'
-import { languages } from '@/languageConfig'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { routeSanityFetch } from '@/sanity/lib/live'
-import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
-import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
-import { homePageMetaQuery } from '@/sanity/queries/metaData'
-import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
-import Header from '@/sections/Header/Header'
-import HomePage from '@/templates/homepage/HomePage'
-import { FriendlyCaptchaSdkWrapper } from './FriendlyCaptchaWrapper'
+import type { Metadata } from 'next';
+import { draftMode } from 'next/headers';
+import { notFound } from 'next/navigation';
+import { connection } from 'next/server';
+import { getLocale } from 'next-intl/server';
+import { stegaClean } from 'next-sanity';
+import { OrganizationJsonLd } from 'next-seo';
+import { Suspense } from 'react';
+import { getValidLanguagesLocales } from '@/languageConfig';
+import { Flags } from '@/sanity/helpers/datasetHelpers';
+import { routeSanityFetch, sanityFetchMetadata } from '@/sanity/lib/fetch';
+import { getDynamicFetchOptions } from '@/sanity/lib/live';
+import { constructSanityMetadata, getPage } from '@/sanity/pages/utils';
+import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu';
+import { homePageMetaQuery } from '@/sanity/queries/metaData';
+import { simpleMenuQuery } from '@/sanity/queries/simpleMenu';
+import Header from '@/sections/Header/Header';
+import LoadingPage from '@/sections/LoadingPage/LoadingPage';
+import HomePage from '@/templates/homepage/HomePage';
+import { FriendlyCaptchaSdkWrapper } from './FriendlyCaptchaWrapper';
 
-type Props = {
-  params: Promise<{ slug: string; locale: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+export function generateStaticParams() {
+  return getValidLanguagesLocales().map((locale) => ({ locale }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params
-  const { data: metaData }: { data: any } = await routeSanityFetch({
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const { data: metaData }: { data: any } = await sanityFetchMetadata({
     query: homePageMetaQuery,
     params: {
       lang: locale,
     },
-    requestTag: 'meta-home',
-    stega: false,
-  })
+    perspective: 'published',
+    tags: [`homePage:${locale}`],
+  });
 
-  return constructSanityMetadata('', locale, metaData)
+  return constructSanityMetadata('', locale, metaData);
 }
 
-export default async function Home({ params }: Props) {
-  const { locale, slug } = await params
-  //const isInPresentationToolContext =
-  //  (await cookies()).get('preview-fetch-dest')?.value === 'iframe'
-  // Enable static rendering
-  setRequestLocale(locale)
-  const { isEnabled: isDraftMode } = await draftMode()
+async function DynamicMetadataMarker() {
+  return (
+    <Suspense>
+      <MetadataConnection />
+    </Suspense>
+  );
+}
 
-  if (!languages.map(it => it.iso).includes(locale)) notFound()
-  let pageContent = null
+async function MetadataConnection() {
+  await connection();
+  return null;
+}
+
+// Layer 1: branches on draft mode without awaiting any other dynamic API,
+// so the published route still prerenders into the static shell.
+export default async function Home({ searchParams }: PageProps<'/[locale]'>) {
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (!isDraftMode) {
+    return (
+      <>
+        <DynamicMetadataMarker />
+        <CachedHome dynamic={{ perspective: 'published', stega: false }} />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <DynamicMetadataMarker />
+      <Suspense fallback={<LoadingPage homepage />}>
+        <DynamicHome searchParams={searchParams} />
+      </Suspense>
+    </>
+  );
+}
+
+async function DynamicHome({
+  searchParams,
+}: Pick<PageProps<'/[locale]'>, 'searchParams'>) {
+  const resolvedSearchParams = await searchParams;
+  const dynamic = await getDynamicFetchOptions(resolvedSearchParams);
+
+  return <CachedHome dynamic={dynamic} />;
+}
+
+// Layer 3: fetches through the existing draft-aware/cached `routeSanityFetch`/`getPage`.
+async function CachedHome({
+  dynamic,
+}: {
+  dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
+}) {
+  'use cache: remote';
+  const locale = await getLocale();
+
   const [siteMenuResult, homePageData] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: {
         lang: locale ?? 'en-GB',
       },
+      tags: [`siteMenu:${locale}`],
+      requestTag: 'site-menu',
+      ...dynamic,
     }),
     getPage({
-      slug,
+      slug: '',
       locale,
-      tags: ['homePage'],
+      tags: [`homePage:${locale}`],
+      ...dynamic,
     }),
-  ])
-  pageContent = homePageData
-  if (isDraftMode) {
-    //Later when inside presentation tool, cant clean as it doesnt work with visual editing, must filter props together with visual editing,
-    pageContent = stegaClean(homePageData)
-  }
+  ]);
 
-  const { headerData, pageData } = pageContent
-  const { data: siteMenuData } = siteMenuResult || {}
+  const pageContent = dynamic.stega ? stegaClean(homePageData) : homePageData;
 
-  if (!pageData) notFound()
+  const { headerData, pageData } = pageContent;
+  const { data: siteMenuData } = siteMenuResult || {};
 
-  const template = pageData?.template || null
+  if (!pageData) notFound();
 
-  if (!template) console.warn('Missing homepage template', pageData?.slug)
+  const template = pageData?.template || null;
+
+  if (!template) console.warn('Missing homepage template', pageData?.slug);
 
   return (
     <FriendlyCaptchaSdkWrapper>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
       <OrganizationJsonLd
-        name='Equinor ASA'
-        url='https://www.equinor.com'
-        logo='https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red'
+        name="Equinor ASA"
+        url="https://www.equinor.com"
+        logo="https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red"
         description={pageData?.seoAndSome?.metaDescription}
         sameAs={[
           'https://twitter.com/Equinor',
@@ -90,5 +138,5 @@ export default async function Home({ params }: Props) {
       />
       <HomePage headerData={headerData} {...pageData} />
     </FriendlyCaptchaSdkWrapper>
-  )
+  );
 }

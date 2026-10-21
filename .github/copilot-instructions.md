@@ -2,7 +2,21 @@
 
 This file tells Copilot how to work inside the Energyvision monorepo. Prefer existing patterns and symbols, keep changes minimal, and reference real files in this repo.
 
+These instructions apply repository-wide.
+
 ## How to act in this monorepo (quick)
+Before proposing code changes, consult:
+- `README.md`
+- `web/README.md` (for web work)
+- `studio/README.md` (for studio work)
+- `search/README.md` (for search work)
+
+When the task is limited to a specific area of the repository, prefer scoped instruction files in `.github/instructions/` that apply to the touched paths.
+
+Then apply scoped skills from:
+- `.github/skills/web/SKILL.md`
+- `.github/skills/studio/SKILL.md`
+- `.github/skills/search/SKILL.md`
 
 - Edit only what’s asked. Don’t invent files/APIs or refactors.
 - One file at a time. Provide a single coherent diff per file.
@@ -44,10 +58,25 @@ This file tells Copilot how to work inside the Energyvision monorepo. Prefer exi
 Energyvision is a pnpm workspaces monorepo
 
 - Languages: TypeScript, CSS, React, Next.js
-- Package manager: PNPM (packageManager: `pnpm@10.24.0`)
-- Build: Per-package TypeScript builds (run via root scripts)
+- Package manager: pnpm
+- Build orchestration: Turborepo `2.10.11` (tasks defined in `turbo.json`)
+- Build: Per-package builds orchestrated via Turborepo
 
-Related files: `package.json`, `eslint.config.js`, `biome.json`, `tsconfig.json`.
+Related files: `package.json`, `eslint.config.js`, `biome.json`, `tsconfig.json`, `turbo.json`, `pnpm-workspace.yaml`.
+
+## Turborepo and monorepo structure
+
+- **Workspaces**: `web`, `studio`, `search`, `packages/energyvision`, `packages/typescript-config`
+- **Task definitions** (`turbo.json`):
+  - `energy-vision-web#build`: Next.js static build with caching
+  - `energy-vision-studio#build`: Sanity Studio build
+  - `lint`, `check-types`, `dev`: root-level tasks with workspace dependencies
+- **Building**: Run `pnpm web build` or `pnpm turbo build --filter=energy-vision-web` to build the web package
+- **Docker build**: Uses `turbo prune energy-vision-web --docker`, then installs from the generated `out/pnpm-lock.yaml`, `out/pnpm-workspace.yaml`, and `out/json/` with `pnpm install --frozen-lockfile`.
+- **Shared config**: TypeScript configs, Tailwind presets, and other shared utilities live in `packages/`
+- **pnpm-workspace.yaml**: The authoritative workspace definition. It explicitly lists all workspaces and contains pnpm settings, overrides, build approvals, and hoisting rules. Do not add a `workspaces` field to root `package.json`.
+- **Lockfile**: The root `pnpm-lock.yaml` is shared by the workspace. When package manifests or pnpm workspace settings change, update it with pnpm `11.24.0`; keep Docker installs frozen.
+- **Caching**: Turbo caches build outputs to speed up CI/CD and local rebuilds; outputs specified per task in `turbo.json`
 
 
 ## Linting and formatting
@@ -55,25 +84,30 @@ Related files: `package.json`, `eslint.config.js`, `biome.json`, `tsconfig.json`
 - Avoid disabling lint rules unless necessary; if you must, comment why.
 
 # Packages, import and export Conventions
+All dependencies must comply with with the cooldown period, minimumReleaseAge, specified in pnpm-workspace.yaml. Exceptions must be explicitly documented and approved by the team, and any deviations must be justified with a clear technical rationale.
+Packages that requires post-installation steps must be explicitly documented and approved by the team and added to allowBuilds in pnpm-workspace.yaml.
+
 - **No Barrel Files:** Never import from index.ts/index.tsx files.
 - **Direct Imports:** Always import directly from the specific source file (e.g., `import { Button } from './core/Button/Button'`).
 - **Pathing:** Avoid using directory-level exports to ensure clear dependency paths.
 - Keep props stable; prefer additive changes. Deprecate before removal when possible.
 - Ensure tree-shakeability; avoid side effects at module top-level.
 
+## Dependency Major Upgrades
+- When a major version upgrade is requested, always search for and list breaking changes first.
+- Flag deprecated methods, changed default behaviors, or renamed configuration properties.
+- Propose explicit code refactoring steps before altering package manifest files.
 
-## Website (Next.js)
-
-- The website uses Next.js 16. Place new files in the router that matches the surrounding code.
-- Prefer server components where already used; mark client components with `"use client"` only when needed.
-- Use Next Image, metadata APIs, and established utilities already in `energyvision/web`.
-- Use existing route conventions and file organization; don’t mix `app/` and `pages/` in the same hierarchy.
-- For Tailwind, prefer the shared preset in brand/tailwind in package `@energyvision/shared` and follow website `tailwind.config.js` patterns.
 
 ## Building and deployment
 - Never use ARG or ENV for sensitive data or secrets, as they are easily extractable via docker history.
 - Exclude Docker secret files, env.local and env.development from version control by adding them to .gitignore.
 - Limit secret size: Docker imposes a 500 KB limit on individual secret files
+- **Docker multistage build**: Web Dockerfile uses `node:24-bookworm-slim` and installs pnpm directly with npm, not Corepack. The complete repository is copied only into the prune stage; the builder gets only Turbo's pruned output so unrelated workspaces such as `search` cannot invalidate the frozen install.
+  - `turbo prune` creates the dependency manifests and pruned root lockfile.
+  - Builder runs `pnpm install --frozen-lockfile` before copying the pruned source and running `turbo build`.
+  - Runner uses the standalone `.next` output, public assets, static assets, and `/usr/bin/tini`.
+- **Standalone output**: Next.js `output: standalone` requires `outputFileTracingRoot: path.join(__dirname, '../')` in `next.config.ts` so tracing includes the shared workspace package.
 
 ## Code reviews (for Copilot)
 

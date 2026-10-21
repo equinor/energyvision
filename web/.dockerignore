@@ -26,6 +26,7 @@ yarn-error.log*
 # Ignore build outputs and cache (will be generated inside container)
 .next
 out
+build
 dist
 coverage
 
