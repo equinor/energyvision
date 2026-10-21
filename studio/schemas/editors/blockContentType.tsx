@@ -6,6 +6,7 @@ import {
 import { MdOutlineAnchor } from 'react-icons/md';
 import type { BlockDefinition, BlockStyleDefinition } from 'sanity';
 import type { Level2Keys } from '@/helpers/Level2KeyTypes';
+import { dataset } from '@/sanity.client';
 import { advancedHighlight } from '@/schemas/objects/advancedHighlight';
 import {
   EdsBlockEditorIcon,
@@ -344,7 +345,7 @@ export const configureBlockContent = (
           component: SuperScriptRenderer,
         },
       ],
-      annotations: [advancedHighlight],
+      annotations: dataset === 'stemgapet' ? [advancedHighlight] : [],
     },
   };
 

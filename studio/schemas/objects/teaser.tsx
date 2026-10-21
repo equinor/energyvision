@@ -6,6 +6,7 @@ import type {
   Reference,
   Rule,
 } from 'sanity';
+import { dataset } from '@/sanity.client';
 import blocksToText from '../../helpers/blocksToText';
 import {
   FullSizeImage,
@@ -198,6 +199,7 @@ export default {
       type: 'boolean',
       fieldset: 'design',
       hidden: ({ currentUser }: ConditionalPropertyCallbackContext) =>
+        (dataset !== 'global' && dataset !== 'stemgapet') ||
         !currentUser?.roles.some(
           (role) => role.name === 'designer' || role.name === 'developer',
         ),
