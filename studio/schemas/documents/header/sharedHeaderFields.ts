@@ -8,10 +8,12 @@ import type {
 } from 'sanity';
 import { RoleFilteredSelect } from '@/schemas/components/RoleFilteredSelect/RoleFilteredSelect';
 import { Select } from '@/schemas/components/Select/Select';
+import { advancedHighlight } from '@/schemas/editors/annotations/advancedHighlight';
 import {
   backgroundPosition as _backgroundPosition,
   layoutGrid as _layoutGrid,
 } from '@/schemas/objects/commonFields/commonFields';
+import { Flags } from '@/src/lib/datasetHelpers';
 import { CompactBlockEditor } from '../../components/CompactBlockEditor';
 import { configureBlockContent } from '../../editors';
 import type { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption';
@@ -93,7 +95,12 @@ const heroTitle = {
   components: {
     input: CompactBlockEditor,
   },
-  of: [configureBlockContent({ variant: 'title' })],
+  of: [
+    configureBlockContent({
+      variant: 'title',
+      annotations: Flags.HAS_ADVANCED_HIGHLIGHTER ? [advancedHighlight] : [],
+    }),
+  ],
   fieldset: 'hero',
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.FIFTY_FIFTY;

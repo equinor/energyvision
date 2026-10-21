@@ -6,7 +6,6 @@ import {
 import { MdOutlineAnchor } from 'react-icons/md';
 import type { BlockDefinition, BlockStyleDefinition } from 'sanity';
 import type { Level2Keys } from '@/helpers/Level2KeyTypes';
-import { advancedHighlight } from '@/schemas/objects/advancedHighlight';
 import {
   EdsBlockEditorIcon,
   EdsIcon,
@@ -101,6 +100,8 @@ export type BlockContentProps = {
   extendedStyles?: BlockStyleDefinition[];
   onlySubSupScriptDecorators?: boolean;
   strikeThrough?: boolean;
+  /** Additional annotations, alongside the links and attachments enabled above. */
+  annotations?: NonNullable<BlockDefinition['marks']>['annotations'];
 };
 
 // Use this when it should not have a dropdown for title variants
@@ -317,6 +318,7 @@ export const configureBlockContent = (
     footnote,
     onlySubSupScriptDecorators,
     strikeThrough,
+    annotations = [],
   } = defaultConfigOptions;
 
   const config: BlockDefinition = {
@@ -344,7 +346,7 @@ export const configureBlockContent = (
           component: SuperScriptRenderer,
         },
       ],
-      annotations: [advancedHighlight],
+      annotations: [...annotations],
     },
   };
 

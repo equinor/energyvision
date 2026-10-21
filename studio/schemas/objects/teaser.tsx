@@ -6,6 +6,9 @@ import type {
   Reference,
   Rule,
 } from 'sanity';
+import { dataset } from '@/sanity.client';
+import { advancedHighlight } from '@/schemas/editors/annotations/advancedHighlight';
+import { Flags } from '@/src/lib/datasetHelpers';
 import blocksToText from '../../helpers/blocksToText';
 import {
   FullSizeImage,
@@ -22,7 +25,6 @@ import { backgroundPosition } from './commonFields/commonFields';
 import type { DownloadableImage } from './downloadableImage';
 import type { DownloadableFile } from './files';
 import type { ImageWithAlt } from './imageWithAlt';
-import type { LinkSelector } from './linkSelector';
 
 const imageSizeOptions = [
   { value: 'full', icon: FullSizeImage },
@@ -39,16 +41,12 @@ export type Teaser = {
   overline?: string;
   title?: PortableTextBlock[];
   text?: PortableTextBlock[];
-  action?: (LinkSelector | DownloadableFile | DownloadableImage)[];
+  action?: (any | DownloadableFile | DownloadableImage)[];
   image: ImageWithAlt;
   imagePosition?: string;
   imageSize?: string;
   background?: ColorSelectorValue;
   graphPaperBackground?: boolean;
-};
-
-type TeaserDocument = {
-  parent: Teaser;
 };
 
 export default {
@@ -91,13 +89,27 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureBlockContent({ variant: 'titleWithDisplay' })],
+      of: [
+        configureBlockContent({
+          variant: 'titleWithDisplay',
+          annotations: Flags.HAS_ADVANCED_HIGHLIGHTER
+            ? [advancedHighlight]
+            : [],
+        }),
+      ],
     },
     {
       name: 'text',
       title: 'Content',
       type: 'array',
-      of: [configureBlockContent({ variant: 'simpleBlock' })],
+      of: [
+        configureBlockContent({
+          variant: 'simpleBlock',
+          annotations: Flags.HAS_ADVANCED_HIGHLIGHTER
+            ? [advancedHighlight]
+            : [],
+        }),
+      ],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 600, true);
@@ -198,6 +210,7 @@ export default {
       type: 'boolean',
       fieldset: 'design',
       hidden: ({ currentUser }: ConditionalPropertyCallbackContext) =>
+        (dataset !== 'global' && dataset !== 'stemgapet') ||
         !currentUser?.roles.some(
           (role) => role.name === 'designer' || role.name === 'developer',
         ),
