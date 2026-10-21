@@ -1,4 +1,9 @@
 import '../globals.css';
+import dynamic from 'next/dynamic';
+
+import { notFound } from 'next/navigation';
+import { routing } from '../../i18n/routing';
+import '../globals.css';
 import { GoogleTagManager } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
@@ -12,10 +17,7 @@ import { Suspense } from 'react';
 import { PageProvider } from '@/contexts/pageContext';
 import { getValidLanguagesLocales } from '@/languageConfig';
 import { crawlableDomains } from '@/lib/helpers/domainHelpers';
-import {
-  getLocaleFromIso,
-  getNameFromIso,
-} from '@/sanity/helpers/localization';
+import { getLocaleFromIso } from '@/sanity/helpers/localization';
 import { dataset } from '@/sanity/lib/api';
 import { IS_FETCH_OPTIMIZED, routeSanityFetch } from '@/sanity/lib/fetch';
 import { getDynamicFetchOptions, SanityLive } from '@/sanity/lib/live';
@@ -140,7 +142,7 @@ async function CachedContent({
   'use cache: remote';
   const locale = await getLocale();
   const queryParams = {
-    lang: getNameFromIso(locale) ?? 'en_GB',
+    lang: locale ?? 'en_GB',
   };
 
   const { data: footerAndErrorImageData }: { data: any } =

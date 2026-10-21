@@ -121,7 +121,7 @@ const validation =
         if (
           document.lang
             ? document.lang !== referenceLang
-            : defaultLanguage.name !== referenceLang
+            : defaultLanguage.iso !== referenceLang
         )
           return 'Reference must have the same language as the document';
         return true;

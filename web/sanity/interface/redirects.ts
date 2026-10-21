@@ -3,7 +3,7 @@
 
 //import { ConfigRedirect } from '@/next.config'
 import { dataset } from '../../languageConfig'
-import { getLocaleFromName } from '../helpers/localization'
+import { getLocaleFromIso } from '../helpers/localization'
 import { notSecuredTokenClient } from '../lib/client'
 
 /* export const getAllRedirects = async () => {
@@ -88,7 +88,7 @@ export const getInternalRedirects = async () => {
     .filter(e => e)
     .map(redirect => {
       const to = redirect.to === '/' ? '' : redirect.to
-      const locale = getLocaleFromName(redirect.lang)
+      const locale = getLocaleFromIso(redirect.lang)
       const des = `${locale !== 'en' ? `/${locale}` : ''}${to}`
 
       const nextRedirect = {

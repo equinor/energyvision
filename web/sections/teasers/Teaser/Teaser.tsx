@@ -13,7 +13,6 @@ import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import { getIsoFromName } from '../../../sanity/helpers/localization'
 import type { DesignOptions, LinkData } from '../../../types/index'
 
 export type TeaserData = {
@@ -124,7 +123,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
                   <ResourceLink
                     href={url as string}
                     {...(action.link?.lang && {
-                      hrefLang: getIsoFromName(action.link?.lang),
+                      hrefLang: action.link?.lang,
                     })}
                     type={action.type}
                     key={action.id || idx}

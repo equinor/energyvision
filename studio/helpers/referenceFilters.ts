@@ -2,7 +2,7 @@ import type { SanityDocument } from 'sanity';
 import { defaultLanguage } from '../languages';
 
 export const langOrDefault = (lang: string | unknown) =>
-  lang || defaultLanguage.name;
+  lang || defaultLanguage.iso;
 
 export const filterByLang = ({ document }: { document: SanityDocument }) => ({
   filter: `lang == $lang`,

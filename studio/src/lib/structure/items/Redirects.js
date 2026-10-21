@@ -15,11 +15,11 @@ const redirects = (S) =>
           .apiVersion(apiVersion)
           .title(`${lang.title} Redirects`)
           .schemaType('redirect')
-          .filter(`_type == 'redirect' && lang == '${lang.name}'`)
+          .filter(`_type == 'redirect' && lang == '${lang.iso}'`)
           .canHandleIntent(S.documentTypeList('redirect').getCanHandleIntent())
           .child((id) =>
             S.documentWithInitialValueTemplate('redirect-with-locale', {
-              isoCode: lang.name,
+              isoCode: lang.iso,
             }).documentId(id),
           ),
       ),

@@ -10,7 +10,6 @@ import { magazineIndexQuery, magazineQuery } from '@/sanity/queries/magazine'
 import { newsQuery } from '@/sanity/queries/news'
 import { routeQuery } from '@/sanity/queries/routes'
 import { newsroomQuery } from '../queries/newsroom'
-import { getNameFromIso } from './localization'
 
 export type QueryParams = {
   id?: string
@@ -38,7 +37,7 @@ const getQuery = async (
       //Check for local news. For now it seems only path /news/... has local news
       if (
         Flags.HAS_LOCAL_NEWS &&
-        lang === 'en_GB' &&
+        lang === 'en-GB' &&
         secondPiece &&
         localNewsTags[lang].includes(secondPiece.toLowerCase())
       ) {
@@ -77,14 +76,13 @@ export const getQueryFromSlug = async (
   } else if (slug) {
     topLevelRoute = slug
   }
-  const lang = getNameFromIso(locale) ?? 'en_GB'
 
-  const query = await getQuery(topLevelRoute, childRoute, lang)
+  const query = await getQuery(topLevelRoute, childRoute, locale ?? 'en-GB')
   return {
     query,
     queryParams: {
       slug: Array.isArray(slug) ? `/${slug.join('/')}` : `/${slug ?? ''}`,
-      lang,
+      lang: locale ?? 'en-GB',
     },
   }
 }
