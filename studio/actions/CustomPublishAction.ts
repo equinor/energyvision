@@ -2,12 +2,10 @@ import { useState } from 'react';
 import {
   type DocumentActionConfirmDialogProps,
   type DocumentActionProps,
-  isValidationErrorMarker,
   type SanityDocument,
   useDocumentOperation,
   useValidationStatus,
 } from 'sanity';
-import { validatePublishDateTime } from '../schemas/documents/news/sharedNewsFields';
 
 const FIRST_PUBLISHED_AT_FIELD_NAME = 'firstPublishedAt';
 const LAST_MODIFIED_AT_FIELD_NAME = 'lastModifiedAt';
@@ -15,29 +13,22 @@ const LAST_MODIFIED_AT_FIELD_NAME = 'lastModifiedAt';
 export function SetAndPublishAction(props: DocumentActionProps) {
   const { patch, publish } = useDocumentOperation(props.id, props.type);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const draft = props.draft as
-    | (SanityDocument & {
-        customPublicationDate?: boolean;
-        publishDateTime?: string;
-      })
-    | undefined;
 
   // Check for validation errors
-  const validationStatus = useValidationStatus(props.id, props.type, true);
-  const hasValidationErrors = validationStatus.validation.some(
-    isValidationErrorMarker,
+  const validationStatus = useValidationStatus(
+    props.draft?._id ?? props.id, // check the status for draft id specifically.
+    props.type,
+    true,
   );
-  const hasInvalidPublishDate =
-    validatePublishDateTime(
-      draft?.publishDateTime,
-      draft?.customPublicationDate,
-    ) !== true;
+
+  const hasValidationErrors = validationStatus.validation.some(
+    (item) => item.level === 'error',
+  );
 
   // check if the document is already published (default publish action is disabled if it is)
   const isDisabled =
     validationStatus.isValidating ||
     hasValidationErrors ||
-    hasInvalidPublishDate ||
     Boolean(publish.disabled) ||
     dialogOpen;
 

@@ -1,7 +1,7 @@
-import { puzzle_filled } from '@equinor/eds-icons'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import { configureBlockContent } from '../editors/blockContentType'
+import { puzzle_filled } from '@equinor/eds-icons';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import { configureBlockContent } from '../editors/blockContentType';
 
 const blockContentType = configureBlockContent({
   h2: false,
@@ -11,7 +11,7 @@ const blockContentType = configureBlockContent({
   externalLink: false,
   attachment: false,
   lists: false,
-})
+});
 
 export default {
   title: 'Short text with icon',
@@ -46,12 +46,20 @@ export default {
       text: `text`,
       icon: 'icon',
     },
-    prepare({ title = '', text = null, icon }: { title: string; text: any; icon: any }) {
+    prepare({
+      title = '',
+      text = null,
+      icon,
+    }: {
+      title: string;
+      text: any;
+      icon: any;
+    }) {
       return {
         title: text ? blocksToText(text) : title || 'Missing content',
-        subtitle: 'Text with icon component',
+        subtitle: 'Text with icon',
         media: icon?.asset || <div>{EdsIcon(puzzle_filled)}</div>,
-      }
+      };
     },
   },
-}
+};

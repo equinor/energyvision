@@ -1,14 +1,14 @@
-import { link } from '@equinor/eds-icons'
-import type { Reference, Rule } from 'sanity'
-import { filterByPages } from '../../helpers/referenceFilters'
-import { EdsIcon } from '../../icons'
-import { defaultReferenceTargets } from '../objects/linkSelector/common'
+import { link } from '@equinor/eds-icons';
+import type { Reference, Rule } from 'sanity';
+import { filterByPages } from '../../helpers/referenceFilters';
+import { EdsIcon } from '../../icons';
+import { defaultReferenceTargets } from '../objects/linkSelector/common';
 
 export type MenuLink = {
-  _type: 'menuLink'
-  label: string
-  route?: Reference
-}
+  _type: 'menuLink';
+  label: string;
+  route?: Reference;
+};
 
 export default {
   title: 'Menu link',
@@ -42,12 +42,14 @@ export default {
       route: 'route.slug',
     },
     prepare(selection: any) {
-      const { label, route } = selection
+      const { label, route } = selection;
       return {
         title: label || 'No label added yet',
-        subtitle: route?.current || 'No route selected yet',
+        subtitle: route?.current
+          ? `Single link: ${route.current}`
+          : 'Single link: No route selected yet',
         media: EdsIcon(link),
-      }
+      };
     },
   },
-}
+};

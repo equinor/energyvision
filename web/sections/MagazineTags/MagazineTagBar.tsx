@@ -1,71 +1,71 @@
-'use client'
-import { magazineSlug } from '@energyvision/shared/satelliteConfig'
-import { filter_alt } from '@equinor/eds-icons'
-import { usePathname, useSearchParams } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+'use client';
+import { magazineSlug } from '@energyvision/shared/satelliteConfig';
+import { filter_alt } from '@equinor/eds-icons';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import {
   type AnchorHTMLAttributes,
   forwardRef,
   useCallback,
   useMemo,
-} from 'react'
-import Link from '@/core/Link/Link'
-import { twMerge } from '@/lib/twMerge/twMerge'
-import { TransformableIcon } from '../../icons/TransformableIcon'
+} from 'react';
+import Link from '@/core/Link/Link';
+import { twMerge } from '@/lib/twMerge/twMerge';
+import { TransformableIcon } from '../../icons/TransformableIcon';
 
 export type TagLink = {
-  id: string
-  key: string
-  label: string
-  active: boolean
-} & AnchorHTMLAttributes<HTMLAnchorElement>
+  id: string;
+  key: string;
+  label: string;
+  active: boolean;
+} & AnchorHTMLAttributes<HTMLAnchorElement>;
 
-export type MagazineTag = { id: string; title: string; key: string }
+export type MagazineTag = { id: string; title: string; key: string };
 
 export type MagazineTagBarProps = {
-  tags: MagazineTag[]
-  className?: string
-}
+  tags: MagazineTag[];
+  className?: string;
+};
 
 const getPath = (pathname: string): string => {
-  const paths = pathname.split('/')
+  const paths = pathname.split('/');
   const isIndexPage =
     paths[paths.length - 1] === magazineSlug.en_GB ||
-    paths[paths.length - 1] === magazineSlug.nb_NO
-  return isIndexPage ? pathname : paths.slice(0, paths.length - 1).join('/')
-}
+    paths[paths.length - 1] === magazineSlug.nb_NO;
+  return isIndexPage ? pathname : paths.slice(0, paths.length - 1).join('/');
+};
 
 const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(
   function MagazineTagBar({ tags = [], className = '' }, ref) {
-    const pathname = usePathname()
-    const searchParams = useSearchParams()
-    const parentSlug = getPath(pathname) || ''
-    const query = searchParams?.get('tag') ?? null
-    const isAllActive = !query || query === 'all'
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const parentSlug = getPath(pathname) || '';
+    const query = searchParams?.get('tag') ?? null;
+    const isAllActive = !query || query === 'all';
 
     // Modern query string creation
     const createQueryString = useCallback(
       (name: string, value: string) => {
-        const params = new URLSearchParams(searchParams?.toString() ?? '')
-        params.set(name, value)
-        return params.toString()
+        const params = new URLSearchParams(searchParams?.toString() ?? '');
+        params.set(name, value);
+        return params.toString();
       },
       [searchParams],
-    )
+    );
 
     const formattedTags = useMemo(() => {
-      return (tags || []).map(tag => ({
+      return (tags || []).map((tag) => ({
         id: tag.id,
         label: tag.title,
         key: tag.key,
         active: query === tag.key,
-      }))
-    }, [tags, query])
+      }));
+    }, [tags, query]);
 
-    const intl = useTranslations()
+    const intl = useTranslations();
 
     const linkClassNames =
-      'inline-block text-base mx-5 lg:text-xs relative no-underline hover:underline hover:underline-offset-4 whitespace-nowrap'
+      'inline-block text-base mx-5 lg:text-xs relative no-underline hover:underline hover:underline-offset-4 whitespace-nowrap';
 
     return (
       <div
@@ -76,14 +76,14 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(
           className,
         )}
       >
-        <h2 className='flex w-max items-center gap-1 font-medium text-sm'>
+        <h2 className="flex w-max items-center gap-1 font-medium text-sm">
           <TransformableIcon
             iconData={filter_alt}
-            className='-mt-1 size-5 text-grey-50'
+            className="-mt-1 size-5 text-grey-50"
           />
           {intl('magazine_tag_filter')}
         </h2>
-        <ul className='flex items-center divide-x-2 divide-energy-red-100'>
+        <ul className="flex items-center divide-x-2 divide-energy-red-100">
           <li>
             <Link
               href={parentSlug + '?' + createQueryString('tag', 'all')}
@@ -104,8 +104,8 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(
           ))}
         </ul>
       </div>
-    )
+    );
   },
-)
+);
 
-export default MagazineTagBar
+export default MagazineTagBar;

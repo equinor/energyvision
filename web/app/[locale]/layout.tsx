@@ -1,13 +1,17 @@
 import '../globals.css';
 import { GoogleTagManager } from '@next/third-parties/google';
+import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import { draftMode } from 'next/headers';
+import { draftMode, headers } from 'next/headers';
 import NextLink from 'next/link';
 import Script from 'next/script';
+import { connection } from 'next/server';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getTranslations } from 'next-intl/server';
+import { Suspense } from 'react';
 import { PageProvider } from '@/contexts/pageContext';
 import { getValidLanguagesLocales } from '@/languageConfig';
+import { crawlableDomains } from '@/lib/helpers/domainHelpers';
 import {
   getLocaleFromIso,
   getNameFromIso,
@@ -28,15 +32,37 @@ const equinor = localFont({
   ],
 });
 
-/* export const metadata: Metadata = {
-  icons: {
-    icon: '/icon.svg',
-    shortcut: '/icon.svg',
-  },
-} */
+// Keep everything except crawlable production domains out of search engines.
+export async function generateMetadata(): Promise<Metadata> {
+  const host = String((await headers()).get('host'));
+  const isCrawlable =
+    process.env.RADIX_ENVIRONMENT === 'prod' && crawlableDomains.includes(host);
+
+  return isCrawlable
+    ? {}
+    : {
+        robots: {
+          index: false,
+          // Allows search engines to follow links on the page, but not index it
+          follow: true,
+        },
+      };
+}
+
+async function DynamicMetadataMarker() {
+  return (
+    <Suspense>
+      <MetadataConnection />
+    </Suspense>
+  );
+}
+
+async function MetadataConnection() {
+  await connection();
+  return null;
+}
 
 //the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
-
 export function generateStaticParams() {
   return getValidLanguagesLocales().map((locale) => ({ locale }));
 }
@@ -54,6 +80,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${equinor.className} `}>
       <body className="min-h-screen has-data-no-sticky:pt-topbar">
+        <DynamicMetadataMarker />
         {!isPreview && (
           // cookiebot script must strictly be inside body.
           <Script

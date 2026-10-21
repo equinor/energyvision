@@ -1,5 +1,5 @@
 import { useDocumentInternationalizationContext } from '@sanity/document-internationalization';
-import { TrashIcon } from '@sanity/icons';
+import { TrashIcon } from '@sanity/icons/Trash';
 import type { ButtonTone } from '@sanity/ui';
 import { useToast } from '@sanity/ui/toast';
 import { useCallback, useState } from 'react';

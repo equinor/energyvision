@@ -95,6 +95,7 @@ const generateAlternatesLinks = (
     canonical: canonicalSlug,
     languages: {
       ...alternateLinks,
+      [locale]: canonicalSlug,
       'x-default': xDefaultSlug,
     },
   };
@@ -107,7 +108,13 @@ export const constructSanityMetadata = (
     title: string;
     seoAndSome: SeoData;
     heroImage?: any;
-    slugs: any;
+    slugs?: LocaleSlug[];
+    allSlugs?:
+      | LocaleSlug[]
+      | {
+          currentSlug: LocaleSlug;
+          translationSlugs: LocaleSlug[];
+        };
     publishDateTime: any;
     updatedAt: any;
   },
@@ -119,6 +126,7 @@ export const constructSanityMetadata = (
     if (process.env.NODE_ENV !== 'production') {
       console.warn('[generateMetadata] metaData is null', { slug, locale });
     }
+
     return {
       title: metaTitleSuffix,
       openGraph: {
@@ -130,7 +138,7 @@ export const constructSanityMetadata = (
       },
       alternates: {
         ...(locale === defaultLanguage.iso && { canonical: fullSlug }),
-        languages: {},
+        languages: { [locale]: fullSlug },
       },
     };
   }
@@ -142,13 +150,21 @@ export const constructSanityMetadata = (
     publishDateTime,
     updatedAt,
     slugs: langSlugs,
+    allSlugs,
   } = metaData;
 
   const plainTitle = Array.isArray(title) ? toPlainText(title) : title;
   const ogImage = resolveOpenGraphImage(
     seoAndSome?.openGraphImage ?? heroImage?.image,
   );
-  const slugs = formatToValidPrefixedIsoSlugs(slug, langSlugs);
+
+  const metadataSlugs = Array.isArray(allSlugs)
+    ? allSlugs
+    : [
+        ...(allSlugs?.translationSlugs ?? langSlugs ?? []),
+        ...(allSlugs?.currentSlug ? [allSlugs.currentSlug] : []),
+      ];
+  const slugs = formatToValidPrefixedIsoSlugs(slug, metadataSlugs);
   const alternates = generateAlternatesLinks(slug, locale, slugs);
   const modifiedDate = isDateAfter(publishDateTime, updatedAt)
     ? publishDateTime

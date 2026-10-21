@@ -1,12 +1,14 @@
 'use client';
 
 import { toPlainText } from '@portabletext/react';
+import dynamic from 'next/dynamic';
 import type { PortableTextBlock } from 'next-sanity';
 import { forwardRef, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { IFrame } from '@/core/IFrame/IFrame';
 import Blocks from '@/portableText/Blocks';
 import type { CookieType } from '@/types';
+
+const IFrame = dynamic(() => import('@/core/IFrame/IFrame'));
 
 export type EmbeddedVideoListItem = {
   id: string;
@@ -53,7 +55,7 @@ const EmbeddedVideoList = forwardRef<HTMLDivElement, EmbeddedVideoListProps>(
       (item) => item.id !== featuredItemId,
     );
     const cookiePolicy = data.cookiePolicy || ['none'];
-    console.log('data', data);
+
     const columns = data.gridColumns ?? '3';
     const itemBasisClass = {
       '2': 'sm:basis-[calc(50%-0.75rem)]',

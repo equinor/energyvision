@@ -1,10 +1,10 @@
-import { anchor } from '@equinor/eds-icons'
-import type { Rule } from 'sanity'
-import { EdsBlockEditorIcon, EdsIcon } from '../../../icons'
+import { anchor } from '@equinor/eds-icons';
+import type { Rule } from 'sanity';
+import { EdsBlockEditorIcon, EdsIcon } from '../../../icons';
 
 export type AnchorLinkReference = {
-  _type: 'anchorLinkReference'
-}
+  _type: 'anchorLinkReference';
+};
 
 export default {
   title: 'Anchor Link Reference',
@@ -41,9 +41,9 @@ export default {
     prepare({ title }: { title: string }) {
       return {
         title: title,
-        subtitle: `Anchor Link Reference component`,
+        subtitle: `Anchor Link Reference`,
         media: EdsIcon(anchor),
-      }
+      };
     },
   },
-}
+};

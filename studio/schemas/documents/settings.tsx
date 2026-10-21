@@ -1,5 +1,5 @@
-import { CogIcon } from '@sanity/icons'
-import { defineType } from 'sanity'
+import { CogIcon } from '@sanity/icons/Cog';
+import { defineType } from 'sanity';
 
 export const settings = defineType({
   name: 'settings',
@@ -21,7 +21,7 @@ export const settings = defineType({
     prepare() {
       return {
         title: 'Common settings',
-      }
+      };
     },
   },
-})
+});

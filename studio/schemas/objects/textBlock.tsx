@@ -1,29 +1,27 @@
-import { text_field } from '@equinor/eds-icons'
+import { RiTextBlock } from 'react-icons/ri';
 import {
-  defineArrayMember,
   defineField,
   type PortableTextBlock,
   type Reference,
   type Rule,
-} from 'sanity'
-import { Flags } from '@/src/lib/datasetHelpers'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import type { ColorSelectorValue } from '../components/ColorSelector'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import { validateComponentAnchor } from '../validations/validateAnchorReference'
+} from 'sanity';
+import { Flags } from '@/src/lib/datasetHelpers';
+import blocksToText from '../../helpers/blocksToText';
+import type { ColorSelectorValue } from '../components/ColorSelector';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { configureBlockContent } from '../editors';
+import { validateComponentAnchor } from '../validations/validateAnchorReference';
 
 type TextBlock = {
-  overline?: string
-  title?: string
-  ingress?: string
-  text?: string
-  useBrandTheme?: boolean
-  action?: Reference[]
-  splitList?: boolean
-  background?: ColorSelectorValue
-}
+  overline?: string;
+  title?: string;
+  ingress?: string;
+  text?: string;
+  useBrandTheme?: boolean;
+  action?: Reference[];
+  splitList?: boolean;
+  background?: ColorSelectorValue;
+};
 
 export default {
   name: 'textBlock',
@@ -206,7 +204,7 @@ export default {
       type: 'colorlist',
       hidden: ({ value }: { value: any }) => !value,
     }),
-  ].filter(e => e),
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',
@@ -228,43 +226,38 @@ export default {
       backgroundImage,
       backgroundType,
     }: {
-      title: PortableTextBlock[]
-      ingress: PortableTextBlock[]
-      text: PortableTextBlock[]
-      anchor: string
-      designOptions: any
-      backgroundImageOld: any
-      backgroundImage: any
-      backgroundType: string
+      title: PortableTextBlock[];
+      ingress: PortableTextBlock[];
+      text: PortableTextBlock[];
+      anchor: string;
+      designOptions: any;
+      backgroundImageOld: any;
+      backgroundImage: any;
+      backgroundType: string;
     }) {
-      const plainTitle = blocksToText(title ?? ingress ?? text)
+      const plainTitle = blocksToText(title ?? ingress ?? text);
 
-      let subTitle = 'Text block'
-      if (anchor) {
-        subTitle = subTitle + ` | #${anchor}`
-      }
-      if (
+      const subtitleDetails = [
+        anchor ? `#${anchor}` : '',
         backgroundType === 'color' ||
         designOptions?.background?.[0]?._type === 'backgroundColor'
-      ) {
-        subTitle =
-          subTitle +
-          ` | ${backgroundType === 'color' ? designOptions?.background?.[0]?.title : ''}`
-      }
-      if (
+          ? designOptions?.background?.[0]?.title
+          : '',
         backgroundType === 'backgroundImage' ||
         designOptions?.background?.[0]?._type === 'backgroundImage'
-      ) {
-        subTitle = subTitle + ` | Background image`
-      }
+          ? 'Background image'
+          : '',
+      ]
+        .filter(Boolean)
+        .join(' | ');
 
-      const media = backgroundImage ?? backgroundImageOld ?? EdsIcon(text_field)
+      const media = backgroundImage ?? backgroundImageOld ?? RiTextBlock;
 
       return {
         title: plainTitle || 'Missing title/content',
-        subtitle: subTitle,
+        subtitle: `Text block${subtitleDetails ? `: ${subtitleDetails}` : ''}`,
         media,
-      }
+      };
     },
   },
-}
+};

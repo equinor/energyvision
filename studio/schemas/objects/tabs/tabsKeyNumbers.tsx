@@ -1,7 +1,7 @@
-import { NumberIcon } from '@sanity/icons'
-import type { Rule } from 'sanity'
-import { CompactBlockEditor } from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors'
+import { NumberIcon } from '@sanity/icons/Number';
+import type { Rule } from 'sanity';
+import { CompactBlockEditor } from '../../components/CompactBlockEditor';
+import { configureBlockContent } from '../../editors';
 
 const disclaimerContentType = configureBlockContent({
   h2: false,
@@ -9,7 +9,7 @@ const disclaimerContentType = configureBlockContent({
   h4: false,
   attachment: false,
   smallText: true,
-})
+});
 
 export default {
   name: 'tabsKeyNumbers',
@@ -40,7 +40,7 @@ export default {
       return {
         title: 'Key numbers',
         media: NumberIcon,
-      }
+      };
     },
   },
-}
+};

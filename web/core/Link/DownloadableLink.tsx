@@ -136,6 +136,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
 
     const commonResourceLinkWrapperClassName = `
     group
+    group/link
     text-base
     relative
     flex
@@ -199,7 +200,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
             className={
               type !== 'stickyMenu'
                 ? commonResourceLinkWrapperClassName
-                : `group relative flex w-fit cursor-pointer items-end justify-center text-slate-80 text-sm underline-offset-2`
+                : `group group/link relative flex w-fit cursor-pointer items-end justify-center text-slate-80 text-sm underline-offset-2`
             }
             title={`${assetLabel}`}
             aria-haspopup="dialog"
