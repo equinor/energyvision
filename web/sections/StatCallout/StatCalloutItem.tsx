@@ -44,7 +44,7 @@ export const StatCalloutItem = ({ item }: { item: StatCalloutItemData }) => {
           grid="xs"
           aspectRatio="original"
           className="absolute inset-0 text-slate-80 dark:text-white-100"
-          imageClassName={`h-full w-full object-cover ${
+          imageClassName={`h-full w-full object-contain ${
             item.useWhite ? 'brightness-0 invert' : ''
           }`}
         />
