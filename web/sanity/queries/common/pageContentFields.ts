@@ -393,7 +393,7 @@ _type == "keyNumbers" =>{
       _type == "promoteTopics" => {
         "promotions": references[
           !((reference->_id) in path("drafts.**"))
-          && !((reference->_originalId) in path("drafts.**"))
+          && !(coalesce(reference->_originalId, reference->_id) in path("drafts.**"))
         ][0...3]{
          "id": _key,
          "type": _type,

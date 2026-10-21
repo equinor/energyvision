@@ -1,8 +1,8 @@
-import { PiChartLineLight } from 'react-icons/pi'
-import type { PortableTextBlock, Rule } from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
-import { CompactBlockEditor } from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors'
+import { PiChartLineLight } from 'react-icons/pi';
+import type { PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../../helpers/blocksToText';
+import { CompactBlockEditor } from '../../components/CompactBlockEditor';
+import { configureBlockContent } from '../../editors';
 
 export default {
   title: 'Line chart block',
@@ -55,13 +55,13 @@ export default {
       title: 'title',
     },
     prepare({ title }: { title?: PortableTextBlock[] }) {
-      const plainTitle = title ? blocksToText(title) : 'Line Chart Block'
+      const plainTitle = title ? blocksToText(title) : 'Line Chart';
 
       return {
         title: plainTitle,
-        subtitle: 'Line chart block component',
+        subtitle: 'Line chart',
         media: PiChartLineLight,
-      }
+      };
     },
   },
-}
+};

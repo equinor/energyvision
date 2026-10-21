@@ -1,22 +1,22 @@
-import { label } from '@equinor/eds-icons'
-import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import type { ColorSelectorValue } from '../components/ColorSelector'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import { label } from '@equinor/eds-icons';
+import type { PortableTextBlock, Rule, ValidationContext } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import type { ColorSelectorValue } from '../components/ColorSelector';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { configureBlockContent } from '../editors'
-import type { ImageWithAlt } from './imageWithAlt'
-import type { LinkSelector } from './linkSelector/common'
+import { configureBlockContent } from '../editors';
+import type { ImageWithAlt } from './imageWithAlt';
+import type { LinkSelector } from './linkSelector/common';
 
 export type PromoTile = {
-  _type: 'promoTile'
-  title: any[]
-  linkLabelAsTitle?: boolean
-  image?: ImageWithAlt
-  link?: LinkSelector
-  background?: ColorSelectorValue
-}
+  _type: 'promoTile';
+  title: any[];
+  linkLabelAsTitle?: boolean;
+  image?: ImageWithAlt;
+  link?: LinkSelector;
+  background?: ColorSelectorValue;
+};
 
 export default {
   title: 'Promo tile',
@@ -55,9 +55,9 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom(
           (value: PortableTextBlock[], context: ValidationContext) => {
-            const { parent } = context as { parent: PromoTile }
-            if (parent?.linkLabelAsTitle || value) return true
-            return 'Required'
+            const { parent } = context as { parent: PromoTile };
+            if (parent?.linkLabelAsTitle || value) return true;
+            return 'Required';
           },
         ),
     },
@@ -92,20 +92,20 @@ export default {
       linkLabelAsTitle,
       link,
     }: {
-      title: any[]
-      imageUrl: string
-      linkLabelAsTitle: boolean
-      link: string
+      title: any[];
+      imageUrl: string;
+      linkLabelAsTitle: boolean;
+      link: string;
     }) {
       return {
         title: linkLabelAsTitle ? link : blocksToText(title as any[]),
-        subtitle: `Promo tile component`,
+        subtitle: `Promo tile`,
         media: imageUrl ? (
-          <img src={imageUrl} alt='' style={{ height: '100%' }} />
+          <img src={imageUrl} alt="" style={{ height: '100%' }} />
         ) : (
           EdsIcon(label)
         ),
-      }
+      };
     },
   },
-}
+};

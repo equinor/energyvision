@@ -1,4 +1,4 @@
-import { cacheLife } from 'next/cache';
+import { cacheLife, cacheTag } from 'next/cache';
 import { draftMode } from 'next/headers';
 import type { QueryParams } from 'next-sanity';
 import type { DefinedFetchType, LivePerspective } from 'next-sanity/live';
@@ -32,18 +32,25 @@ async function nextSanityMetadataFetch<const QueryString extends string>({
   query,
   params = {},
   perspective,
+  tags = [],
+  requestTag,
 }: {
   query: QueryString;
   params?: QueryParams;
   perspective: LivePerspective;
+  tags?: string[];
+  requestTag?: string;
 }) {
   'use cache: remote';
   cacheLife('max');
+  cacheTag(...tags);
   const { data } = await nextSanityFetch({
     query,
     params,
     perspective,
     stega: false,
+    tags,
+    requestTag,
   });
   return { data };
 }

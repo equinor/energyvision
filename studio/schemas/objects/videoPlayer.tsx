@@ -1,11 +1,11 @@
-import { play_circle } from '@equinor/eds-icons'
-import type { PortableTextBlock, Rule } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import type { ImageWithAlt } from './imageWithAlt'
-import singleItemArray from './singleItemArray'
+import { play_circle } from '@equinor/eds-icons';
+import type { PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { configureBlockContent } from '../editors';
+import type { ImageWithAlt } from './imageWithAlt';
+import singleItemArray from './singleItemArray';
 
 export default {
   name: 'videoPlayer',
@@ -124,17 +124,17 @@ export default {
       videoTitle,
       media,
     }: {
-      title: PortableTextBlock[]
-      videoTitle: string
-      media: ImageWithAlt
+      title: PortableTextBlock[];
+      videoTitle: string;
+      media: ImageWithAlt;
     }) {
-      const plainTitle = title ? blocksToText(title) : undefined
+      const plainTitle = title ? blocksToText(title) : undefined;
 
       return {
         title: plainTitle || videoTitle,
-        subtitle: `Video component`,
+        subtitle: `Video`,
         media: media || EdsIcon(play_circle),
-      }
+      };
     },
   },
-}
+};
