@@ -112,7 +112,7 @@ export default {
               name: 'caption',
               title: 'Caption',
               type: 'array',
-              of: [configureBlockContent({ variant: 'onlySubSup' })],
+              of: [configureBlockContent({ variant: 'onlyTextDecorations' })],
               description:
                 'Optional caption for the callout. Displayed below callout card',
             },

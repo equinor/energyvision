@@ -1,6 +1,9 @@
+'use client';
+
 import type { PortableTextBlock } from '@portabletext/types';
 import { Carousel } from '@/core/Carousel/Carousel';
 import { getLayoutPx } from '@/lib/helpers/getCommonUtilities';
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery';
 import { twMerge } from '@/lib/twMerge/twMerge';
 import Blocks from '@/portableText/Blocks';
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap';
@@ -41,6 +44,8 @@ export const StatCallout = ({
   const { bg, dark } = getBgAndDarkFromBackground(designOptions);
   const layoutPadding = getLayoutPx(layoutGrid);
   const hasMoreThanTwoItems = items.length > 2;
+  const isMedium = useMediaQuery('(min-width: 768px)');
+  const shouldUseHorizontalScroll = useHorizontalScroll || isMedium === false;
 
   if (items.length === 0) return null;
 
@@ -78,7 +83,7 @@ export const StatCallout = ({
             />
           </div>
         )}
-        {useHorizontalScroll ? (
+        {shouldUseHorizontalScroll ? (
           <Carousel
             items={items}
             variant="statCallout"
