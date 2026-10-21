@@ -5,6 +5,7 @@ import {
   type Reference,
   type Rule,
 } from 'sanity';
+import { advancedHighlight } from '@/schemas/editors/annotations/advancedHighlight';
 import { Flags } from '@/src/lib/datasetHelpers';
 import blocksToText from '../../helpers/blocksToText';
 import type { ColorSelectorValue } from '../components/ColorSelector';
@@ -89,7 +90,14 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureBlockContent({ variant: 'titleWithDisplay' })],
+      of: [
+        configureBlockContent({
+          variant: 'titleWithDisplay',
+          annotations: Flags.HAS_ADVANCED_HIGHLIGHTER
+            ? [advancedHighlight]
+            : [],
+        }),
+      ],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) =>
           !value ? 'A title is recommended' : true,
@@ -115,7 +123,12 @@ export default {
       title: 'Text content',
       type: 'array',
       of: [
-        configureBlockContent({ variant: 'textBlock' }),
+        configureBlockContent({
+          variant: 'textBlock',
+          annotations: Flags.HAS_ADVANCED_HIGHLIGHTER
+            ? [advancedHighlight]
+            : [],
+        }),
         // This enables the image upload/paste block
         ...(Flags.IS_DEV
           ? [
