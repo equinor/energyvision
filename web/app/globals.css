@@ -784,7 +784,7 @@ data-ui="checked active" class="data-checked:underline">
   .pen-circle-wrapper {
     position: relative;
     display: inline-block;
-    padding: 0.1em 0.15em 0.1em 0.3em;
+    padding: 0.1em 0.15em 0.1em 0.15em;
   }
 
   .pen-circle {
@@ -793,7 +793,7 @@ data-ui="checked active" class="data-checked:underline">
     left: 50%;
     transform: translate(-50%, -50%);
     width: 115%;
-    height: 120%;
+    height: 140%;
     pointer-events: none;
     overflow: visible;
   }
