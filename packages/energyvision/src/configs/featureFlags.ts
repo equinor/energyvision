@@ -51,6 +51,7 @@ const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV];
 
 const FETCH_OPTIMIZED = [...GLOBAL_PROD, ...SATELLITES, ...GLOBAL_DEV];
 const PEOPLE = [...GLOBAL_PROD, ...GLOBAL_DEV];
+const ADVANCED_HIGHLIGHTER = ['stemgapet', 'global-development'];
 
 /**
  * @param {string} dataset
@@ -89,4 +90,5 @@ export const FeatureFlags = (dataset: DatasetsKeys) => ({
   HAS_CAMPAIGN_BLOCKS: CAMPAIGN.includes(dataset),
   IS_FETCH_OPTIMIZED: FETCH_OPTIMIZED.includes(dataset),
   HAS_PEOPLE: PEOPLE.includes(dataset),
+  HAS_ADVANCED_HIGHLIGHTER: ADVANCED_HIGHLIGHTER.includes(dataset),
 });
