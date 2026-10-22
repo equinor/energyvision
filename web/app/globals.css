@@ -2,6 +2,19 @@
 @import "@energyvision/shared/brand.css";
 @source "../styles/components/cookiebot.css";
 
+@utility graph-paper-background {
+  --graph-paper-line: color-mix(
+    in srgb,
+    var(--color-black-100) 13%,
+    transparent
+  );
+  background-color: var(--color-gray-20);
+  background-image:
+    linear-gradient(to right, var(--graph-paper-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--graph-paper-line) 1px, transparent 1px);
+  background-size: calc(var(--spacing) * 6) calc(var(--spacing) * 6);
+}
+
 /* Custom theme for web, not common brand */
 @theme {
   /*   --spacing-layout-sm: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);
@@ -742,4 +755,22 @@ data-ui="checked active" class="data-checked:underline">
       );
     }
   }
+
+  .pen-circle-wrapper {
+    position: relative;
+    display: inline-block;
+    padding: 0.1em 0.15em 0.1em 0.15em;
+  }
+
+  .pen-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 115%;
+    height: 140%;
+    pointer-events: none;
+    overflow: visible;
+  }
+
 }
