@@ -21,8 +21,11 @@ jobs:
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ secrets.GH_APP_ID }}
-          repository: 'equinor/energyvision-internal'
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            energyvision-internal
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-packages: write
 
       - name: Checkout internal 🛎️
         id: checkout-internal
