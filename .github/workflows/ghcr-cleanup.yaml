@@ -33,7 +33,7 @@ jobs:
         id: delete-containers
         uses: snok/container-retention-policy@v2
         with:
-          token: ${{ secrets.PADMS_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           account-type: org
           org-name: Equinor
           image-names: energyvision/*
