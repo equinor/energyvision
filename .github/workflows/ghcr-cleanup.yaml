@@ -16,23 +16,6 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
-      - name: Normalize GitHub App PEM
-        id: github-app
-        env:
-          GH_APP_PRIVATE_KEY: ${{ secrets.GH_APP_PRIVATE_KEY }}
-        run: |
-          pem="${GH_APP_PRIVATE_KEY//\\n/$'\n'}"
-          printf '%s\n' "$pem" | while IFS= read -r line; do
-            if [[ -n "$line" ]]; then
-              printf '::add-mask::%s\n' "$line"
-            fi
-          done
-          delimiter="$(openssl rand -hex 16)"
-          {
-            printf 'app_pem<<%s\n' "$delimiter"
-            printf '%s\n' "$pem"
-            printf '%s\n' "$delimiter"
-          } >> "$GITHUB_OUTPUT"
       - name: Generate a token
         id: generate-token
         uses: actions/create-github-app-token@v1
@@ -41,7 +24,7 @@ jobs:
           owner: ${{ github.repository_owner }}
           repositories: |
             energyvision-internal
-          private-key: ${{ steps.github-app.outputs.app_pem }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
           permission-organization-packages: write
 
       - name: Checkout internal 🛎️
