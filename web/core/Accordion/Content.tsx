@@ -4,7 +4,7 @@ import {
   AccordionContent,
 } from '@radix-ui/react-accordion';
 import { AnimatePresence, motion } from 'framer-motion';
-import { forwardRef } from 'react';
+import { type ComponentPropsWithoutRef, forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery';
 import type { Variants } from './Accordion';
@@ -13,6 +13,23 @@ const contentVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
 };
+
+type ContentElementProps = ComponentPropsWithoutRef<'div'> & {
+  'data-state'?: 'open' | 'closed';
+};
+
+const ContentElement = forwardRef<HTMLDivElement, ContentElementProps>(
+  function ContentElement({ 'data-state': state, ...rest }, ref) {
+    return (
+      <div
+        {...rest}
+        ref={ref}
+        data-state={state}
+        aria-hidden={state === 'closed'}
+      />
+    );
+  },
+);
 
 export type AccordionContentProps = {
   variant?: Variants;
@@ -26,10 +43,17 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(
     const useComplex = useMediaQuery(`(min-width: 1280px)`);
 
     const variantClassName: Partial<Record<Variants, string>> = {
-      primary: 'accordion-content-transition',
+      primary: `grid grid-rows-[0fr] overflow-hidden
+    data-closed:invisible
+    data-open:visible
+    data-open:grid-rows-[1fr]
+    motion-safe:data-closed:[transition:visibility_0s_300ms]
+    motion-safe:data-closed:animate-accordionContentClose
+    motion-safe:data-open:animate-accordionContentOpen`,
       menu: `max-xl:overflow-hidden
     max-xl:data-closed:h-0
-    max-xl:data-closed:invisible
+    data-closed:invisible
+    data-open:visible
     max-xl:data-open:[transition-delay:0s]
     max-xl:[transition:visibility_0s_0.2s]
     max-xl:motion-safe:data-closed:animate-slideDown
@@ -38,7 +62,8 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(
     `,
       simpleMenu: `max-xl:overflow-hidden
     max-xl:data-closed:h-0
-    max-xl:data-closed:invisible
+    data-closed:invisible
+    data-open:visible
     max-xl:data-open:[transition-delay:0s]
     max-xl:[transition:visibility_0s_0.2s]
     max-xl:motion-safe:data-closed:animate-slideDown
@@ -79,12 +104,13 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(
     };
 
     return (
-      <AccordionContent
-        {...rest}
-        ref={ref}
-        className={twMerge(`${variantClassName[variant]}`, className)}
-      >
-        {getVariantBody()}
+      <AccordionContent {...rest} asChild>
+        <ContentElement
+          ref={ref}
+          className={twMerge(`${variantClassName[variant]}`, className)}
+        >
+          {getVariantBody()}
+        </ContentElement>
       </AccordionContent>
     );
   },
