@@ -25,7 +25,7 @@ jobs:
           repositories: |
             energyvision-internal
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-          permission-packages: write
+          permission-organization-packages: write
 
       - name: Checkout internal 🛎️
         id: checkout-internal
