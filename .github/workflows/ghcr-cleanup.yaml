@@ -16,6 +16,12 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
+      - name: "Escape GitHub App PEM"
+        id: github-app
+        run: |
+          pem_escaped=${{ secrets.GH_APP_PRIVATE_KEY }//$'\n'/\\n}
+          echo "::add-mask::$pem_escaped"
+          echo "app_pem=$pem_escaped" >> "$GITHUB_OUTPUT"
       - name: Generate a token
         id: generate-token
         uses: actions/create-github-app-token@v1
@@ -24,8 +30,7 @@ jobs:
           owner: ${{ github.repository_owner }}
           repositories: |
             energyvision-internal
-          client-id: ${{ vars.APP_CLIENT_ID }}
-          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          private-key: ${{ steps.github-app.outputs.app_pem }}
           permission-organization-packages: write
 
       - name: Checkout internal 🛎️
