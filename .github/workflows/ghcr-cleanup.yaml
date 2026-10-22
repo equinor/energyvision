@@ -20,7 +20,7 @@ jobs:
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Get tags to keep from latest-prod-tags.json
         id: get-tags
@@ -33,7 +33,7 @@ jobs:
         id: delete-containers
         uses: snok/container-retention-policy@v2
         with:
-          token: ${{ secrets.SSH_PRIVATE_KEY }}
+          token: ${{ secrets.PADMS_PAT }}
           account-type: org
           org-name: Equinor
           image-names: energyvision/*
