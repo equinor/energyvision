@@ -31,7 +31,7 @@ jobs:
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PADMS_PAT }}
+          token: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Get preprod sha 🏷️
         id: get-preprod-sha
         shell: bash
@@ -109,7 +109,7 @@ jobs:
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PADMS_PAT }}
+          token: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Get preprod sha 🏷️
         id: get-preprod-sha
         shell: bash
@@ -174,7 +174,7 @@ jobs:
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PADMS_PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+          token: ${{ secrets.SSH_PRIVATE_KEY }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
       - name: Promote preprod tag to prod 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash
@@ -185,9 +185,7 @@ jobs:
           source venv/bin/activate
           python -m pip install ruamel.yaml
           python ci/promoteAllToProduction.py studio
-          git config --global user.name 'github'
-          git config --global user.email 'padms@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
+          git remote set-url origin git@github.com:equinor/energyvision-internal.git
           if [[ `git status --porcelain` ]]
           then
             git commit -am "🚀 Deploy all studios to production"
@@ -245,7 +243,7 @@ jobs:
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PADMS_PAT }}
+          token: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
@@ -263,9 +261,7 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --global user.name 'github'
-          git config --global user.email 'padms@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
+          git remote set-url origin git@github.com:equinor/energyvision-internal.git
           git add latest-prod-tags.json
           git commit -m "Update latest-prod-tags.json with new tags" || echo "No changes to commit"
           git push

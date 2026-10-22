@@ -35,7 +35,7 @@ jobs:
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PADMS_PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+          token: ${{ secrets.SSH_PRIVATE_KEY }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
       - name: Promote preprod tag to prod 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash
@@ -46,9 +46,7 @@ jobs:
           source venv/bin/activate
           python -m pip install ruamel.yaml
           python ci/promoteToProduction.py web ${{ github.event.inputs.site }}
-          git config --global user.name 'github'
-          git config --global user.email 'padms@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
+          git remote set-url origin git@github.com:equinor/energyvision-internal.git
           if [[ `git status --porcelain` ]]
           then
             git commit -am "🚀 Deploy web for ${{ github.event.inputs.site }} to production"
