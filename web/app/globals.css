@@ -60,6 +60,10 @@
   --animate-fadeInOut: fade linear both;
   --animate-slideUp: slideUp 0.2s ease-out;
   --animate-slideDown: slideDown 0.2s ease-out;
+  --animate-accordionContentOpen: accordionContentOpen 300ms
+    cubic-bezier(0.87, 0, 0.13, 1);
+  --animate-accordionContentClose: accordionContentClose 300ms
+    cubic-bezier(0.87, 0, 0.13, 1);
 
   --grid-template-columns-auto-1: repeat(1, auto);
   --grid-template-columns-auto-2: repeat(2, auto);
@@ -101,59 +105,30 @@
       height: 0;
     }
   }
+
+  @keyframes accordionContentOpen {
+    from {
+      grid-template-rows: 0fr;
+    }
+    to {
+      grid-template-rows: 1fr;
+    }
+  }
+
+  @keyframes accordionContentClose {
+    from {
+      grid-template-rows: 1fr;
+    }
+    to {
+      grid-template-rows: 0fr;
+    }
+  }
 }
 @utility grid-overlay {
   grid: [overlay] 1fr / [overlay] 1fr;
 }
 @utility grid-area-overlay {
   grid-area: overlay;
-}
-
-.accordion-content-transition {
-  display: grid;
-  grid-template-rows: 0fr;
-  overflow: hidden;
-}
-
-.accordion-content-transition[data-state="open"] {
-  grid-template-rows: 1fr;
-  visibility: visible;
-  transition-delay: 0s;
-  animation: accordionContentOpen 300ms cubic-bezier(0.87, 0, 0.13, 1);
-}
-
-.accordion-content-transition[data-state="closed"] {
-  visibility: hidden;
-  transition: visibility 0s 300ms;
-  animation: accordionContentClose 300ms cubic-bezier(0.87, 0, 0.13, 1);
-}
-
-@keyframes accordionContentOpen {
-  from {
-    grid-template-rows: 0fr;
-  }
-  to {
-    grid-template-rows: 1fr;
-  }
-}
-
-@keyframes accordionContentClose {
-  from {
-    grid-template-rows: 1fr;
-  }
-  to {
-    grid-template-rows: 0fr;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .accordion-content-transition {
-    animation: none;
-  }
-
-  .accordion-content-transition[data-state="closed"] {
-    transition: none;
-  }
 }
 
 @theme inline {

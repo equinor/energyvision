@@ -39,6 +39,7 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(
       hasSectionTitle = false,
       className = '',
       headerClassName = '',
+      ...rest
     },
     ref,
   ) {
@@ -149,6 +150,7 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(
     return (
       <ChildElementType className={headerClassName}>
         <AccordionTrigger
+          {...rest}
           ref={ref}
           className={twMerge(
             `group focus-visible:envis-outline dark:focus-visible:envis-outline-invert flex w-full cursor-pointer decoration-1 underline-offset-4 outline-hidden hover:underline focus:no-underline focus:outline-hidden ${variantClassName[variant]} `,
