@@ -16,13 +16,20 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+
       - name: Checkout internal 🛎️
         id: checkout-internal
         uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-token: ${{ steps.generate-token.outputs.token }}
 
       - name: Get tags to keep from latest-prod-tags.json
         id: get-tags
@@ -30,12 +37,13 @@ jobs:
           TAGS=$(jq -r '[.web + .studio | unique[]] | join(", ")' latest-prod-tags.json)
           echo "TAGS_TO_KEEP=$TAGS" >> $GITHUB_ENV
           echo "TAGS TO KEEP: $TAGS"
+   
 
       - name: Clean up Docker images
         id: delete-containers
         uses: snok/container-retention-policy@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.generate-token.outputs.token }}
           account-type: org
           org-name: Equinor
           image-names: energyvision/*
