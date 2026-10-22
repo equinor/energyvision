@@ -100,6 +100,8 @@ export type BlockContentProps = {
   extendedStyles?: BlockStyleDefinition[];
   onlySubSupScriptDecorators?: boolean;
   strikeThrough?: boolean;
+  /** Additional annotations, alongside the links and attachments enabled above. */
+  annotations?: NonNullable<BlockDefinition['marks']>['annotations'];
 };
 
 // Use this when it should not have a dropdown for title variants
@@ -316,6 +318,7 @@ export const configureBlockContent = (
     footnote,
     onlySubSupScriptDecorators,
     strikeThrough,
+    annotations = [],
   } = defaultConfigOptions;
 
   const config: BlockDefinition = {
@@ -343,7 +346,7 @@ export const configureBlockContent = (
           component: SuperScriptRenderer,
         },
       ],
-      annotations: [],
+      annotations: [...annotations],
     },
   };
 
