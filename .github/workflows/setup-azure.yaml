@@ -33,7 +33,7 @@ jobs:
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
       # Do the actual deployment
       - name: deploy
         id: deploy

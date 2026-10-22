@@ -35,7 +35,7 @@ jobs:
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.SSH_PRIVATE_KEY }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }} 
       - name: Promote preprod tag to prod 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash

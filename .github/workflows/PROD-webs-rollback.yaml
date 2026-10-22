@@ -74,7 +74,7 @@ jobs:
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PADMS_PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Write to console 🗒️
         shell: bash
         run: |
