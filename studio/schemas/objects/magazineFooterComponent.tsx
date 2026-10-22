@@ -1,33 +1,33 @@
 /* eslint-disable react/display-name */
 
-import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { LeftAlignedImage, RightAlignedImage } from '../../icons'
-import { RadioIconSelector } from '../components'
-import type { ColorSelectorValue } from '../components/ColorSelector'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import type { DownloadableImage } from './downloadableImage'
-import type { DownloadableFile } from './files'
-import type { ImageWithAlt } from './imageWithAlt'
-import type { LinkSelector } from './linkSelector/linkSelector'
-import singleItemArray from './singleItemArray'
+import type { PortableTextBlock, Reference, Rule } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { LeftAlignedImage, RightAlignedImage } from '../../icons';
+import { RadioIconSelector } from '../components';
+import type { ColorSelectorValue } from '../components/ColorSelector';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { configureBlockContent } from '../editors';
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
+import type { DownloadableImage } from './downloadableImage';
+import type { DownloadableFile } from './files';
+import type { ImageWithAlt } from './imageWithAlt';
+import type { LinkSelector } from './linkSelector/linkSelector';
+import singleItemArray from './singleItemArray';
 
 const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
   { value: 'right', icon: RightAlignedImage },
-]
+];
 
 export type Teaser = {
-  _type: 'teaser'
-  title?: PortableTextBlock[]
-  text?: PortableTextBlock[]
-  action?: (LinkSelector | DownloadableFile | DownloadableImage)[]
-  image: ImageWithAlt
-  imagePosition?: string
-  background?: ColorSelectorValue
-}
+  _type: 'teaser';
+  title?: PortableTextBlock[];
+  text?: PortableTextBlock[];
+  action?: (LinkSelector | DownloadableFile | DownloadableImage)[];
+  image: ImageWithAlt;
+  imagePosition?: string;
+  background?: ColorSelectorValue;
+};
 
 export default {
   name: 'footerComponent',
@@ -95,18 +95,18 @@ export default {
           onChange,
           value,
         }: {
-          onChange: any
-          value: string
+          onChange: any;
+          value: string;
         }) {
           return (
             <RadioIconSelector
-              name='imageAlignmentSelector'
+              name="imageAlignmentSelector"
               options={imageAlignmentOptions}
-              defaultValue='left'
+              defaultValue="left"
               currentValue={value}
               onChange={onChange}
             />
-          )
+          );
         },
       },
     },
@@ -127,16 +127,16 @@ export default {
       title,
       image,
     }: {
-      title: PortableTextBlock[]
-      image: Reference
+      title: PortableTextBlock[];
+      image: Reference;
     }) {
-      const plainTitle = title ? blocksToText(title) : undefined
+      const plainTitle = title ? blocksToText(title) : undefined;
 
       return {
-        title: plainTitle || 'Missing title!',
-        subtitle: 'Teaser component',
+        title: plainTitle ?? 'Untitled',
+        subtitle: 'Teaser',
         media: image,
-      }
+      };
     },
   },
-}
+};

@@ -1,14 +1,19 @@
-import { HiOutlineViewColumns } from 'react-icons/hi2'
-import type { Image, PortableTextBlock, Rule, ValidationContext } from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
-import { ingress, layoutGrid, theme, title } from '../commonFields/commonFields'
-import { externalLink } from '../linkSelector/common'
+import { HiOutlineViewColumns } from 'react-icons/hi2';
+import type { Image, PortableTextBlock, Rule, ValidationContext } from 'sanity';
+import blocksToText from '../../../helpers/blocksToText';
+import {
+  ingress,
+  layoutGrid,
+  theme,
+  title,
+} from '../commonFields/commonFields';
+import { externalLink } from '../linkSelector/common';
 
-import { PromotionLayoutInput } from './promoteTopicsV2'
+import { PromotionLayoutInput } from './promoteTopicsV2';
 
 export type promoteExternal = {
-  _type: 'promoteExternalV2'
-}
+  _type: 'promoteExternalV2';
+};
 
 export default {
   title: 'Promotion v2 external links (deprecated)',
@@ -53,15 +58,15 @@ export default {
               title,
               image,
             }: {
-              title: PortableTextBlock[]
-              image: Image
+              title: PortableTextBlock[];
+              image: Image;
             }) {
-              const plainTitle = title ? blocksToText(title) : 'Untitled'
+              const plainTitle = title ? blocksToText(title) : 'Untitled';
 
               return {
                 title: plainTitle,
                 media: image,
-              }
+              };
             },
           },
         },
@@ -86,14 +91,14 @@ export default {
       initialValue: '3',
       //@ts-ignore:todo
       hidden: ({ parent }: DocumentType) => {
-        return parent?.layoutGrid === 'lg'
+        return parent?.layoutGrid === 'lg';
       },
       fieldset: 'design',
       validation: (Rule: Rule) =>
         Rule.custom((value: string, ctx: ValidationContext) => {
           //@ts-ignore:todo
           if (Number(ctx.parent?.promoteList?.length) < Number(value)) {
-            return 'Fewer promotions than grid columns. Please select lower grid columns'
+            return 'Fewer promotions than grid columns. Please select lower grid columns';
           }
 
           if (
@@ -103,10 +108,10 @@ export default {
             ctx.parent?.layoutGrid !== 'sm'
           ) {
             if (value === '4') {
-              return 'Please use only 2 or 3 cols when using the smaller layout grids with side by side promotions'
+              return 'Please use only 2 or 3 cols when using the smaller layout grids with side by side promotions';
             }
           }
-          return true
+          return true;
         }),
     },
     {
@@ -138,17 +143,17 @@ export default {
       title,
       promoteList,
     }: {
-      title?: PortableTextBlock[]
-      promoteList: any[]
-      theme?: any
+      title?: PortableTextBlock[];
+      promoteList: any[];
+      theme?: any;
     }) {
-      const plainTitle = title ? blocksToText(title) : 'Untitled'
-      const subTitle = `Promote ${promoteList && promoteList?.length > 0 ? promoteList.length : ''} topics`
+      const plainTitle = title ? blocksToText(title) : 'Untitled';
+      const subTitle = `Please update to Promotion`;
       return {
         title: plainTitle,
         subtitle: subTitle,
         media: HiOutlineViewColumns,
-      }
+      };
     },
   },
-}
+};

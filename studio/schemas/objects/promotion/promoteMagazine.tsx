@@ -1,20 +1,20 @@
-import { IoNewspaperOutline } from 'react-icons/io5'
-import type { Reference, Rule } from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
-import { filterMagazineByLang } from '../../../helpers/referenceFilters'
+import { IoNewspaperOutline } from 'react-icons/io5';
+import type { Reference, Rule } from 'sanity';
+import blocksToText from '../../../helpers/blocksToText';
+import { filterMagazineByLang } from '../../../helpers/referenceFilters';
 import {
   ingress,
   theme,
   title,
   viewAllLink,
   viewAllLinkLabel,
-} from '../commonFields/commonFields'
+} from '../commonFields/commonFields';
 
 export type MagazinePromotion = {
-  manuallySelectArticles: boolean
-  promotedArticles: Reference[]
-  tags: Reference[]
-}
+  manuallySelectArticles: boolean;
+  promotedArticles: Reference[];
+  tags: Reference[];
+};
 
 export default {
   title: 'Magazine promotion',
@@ -89,7 +89,7 @@ export default {
       fieldset: 'design',
       readonly: true,
       hidden: ({ value }: any) => {
-        return !value || value.title === 'White'
+        return !value || value.title === 'White';
       },
     },
   ],
@@ -106,26 +106,29 @@ export default {
       articles,
       manualSelection,
     }: {
-      title: any
-      tags: Reference[]
-      articles: Reference[]
-      manualSelection: boolean
+      title: any;
+      tags: Reference[];
+      articles: Reference[];
+      manualSelection: boolean;
     }) {
       //@ts-ignore:todo
-      const plainTitle = blocksToText(title) ?? 'No title, only articles'
-      let count = ''
+      const plainTitle = blocksToText(title) ?? 'No title, only articles';
+      let count = '';
       if (manualSelection && articles && articles?.length > 0) {
-        count = `${articles.length} articles`
+        count = `${articles.length} articles`;
       }
       if (!manualSelection && tags && tags?.length > 0) {
-        count = `${tags.length} tags`
+        count = `${tags.length} tags`;
       }
+      const selectionSummary = [manualSelection ? 'manual' : 'automatic', count]
+        .filter(Boolean)
+        .join(' | ');
 
       return {
         title: plainTitle,
-        subtitle: `Magazine promotion | ${manualSelection ? 'manual' : 'automatic'} ${count ? `| ${count}` : ''}`,
+        subtitle: `Magazine promotion: ${selectionSummary}`,
         media: IoNewspaperOutline,
-      }
+      };
     },
   },
-}
+};

@@ -519,6 +519,11 @@ const snippets: textSnippet = {
     defaultValue: 'Suspected recruitment scam',
     group: groups.careerContactForm,
   },
+  careers_contact_form_employment_verification: {
+    title: 'Verification of previous employment',
+    defaultValue: 'Verification of previous employment',
+    group: groups.careerContactForm,
+  },
   careers_contact_form_phone: {
     title: 'Phone number',
     defaultValue: 'Phone number',
@@ -736,6 +741,11 @@ const snippets: textSnippet = {
   magazine_tag_filter: {
     title: 'Magazine filter heading',
     defaultValue: 'Magazine Tag',
+    group: groups.magazine,
+  },
+  magazine_explore_topics: {
+    title: 'Magazine article: Explore our topics heading',
+    defaultValue: 'Explore our topics',
     group: groups.magazine,
   },
   magazine_tag_filter_all: {

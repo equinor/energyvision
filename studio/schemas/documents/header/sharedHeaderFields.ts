@@ -44,6 +44,7 @@ const title = {
     Rule.custom((value: string, ctx: ValidationContext) => {
       return value ? true : 'Required';
     }),
+  options: { search: { weight: 10 } },
 };
 
 const heroType = {

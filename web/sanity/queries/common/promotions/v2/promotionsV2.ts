@@ -17,13 +17,17 @@ const commonPromotionFields = /* groq */ `
 `;
 export const promotionsV2 = /* groq */ `
 ${commonPromotionFields},
+"viewAllLink": {
+    "label": viewAllLinkLabel,
+    ...links::getLinkFields(viewAllLink),
+},
 "promoteList": promoteList[
                 (
                     (linkSelector.link[0]._type != "reference"
             && linkSelector.link[0]._type != "referenceToOtherLanguage")
                     || (
             !((linkSelector.link[0]->_id) in path("drafts.**"))
-            && !((linkSelector.link[0]->_originalId) in path("drafts.**"))
+            && !(coalesce(linkSelector.link[0]->_originalId, linkSelector.link[0]->_id) in path("drafts.**"))
                     )
                 )
                 && (
@@ -56,7 +60,7 @@ export const topicsPromotionV2 = /* groq */ `
 ${commonPromotionFields},
 "promoteList": promoteList[
     !((reference->_id) in path("drafts.**"))
-    && !((reference->_originalId) in path("drafts.**"))
+    && !(coalesce(reference->_originalId, reference->_id) in path("drafts.**"))
 ]{
     "id": _key,
     "type": _type,
