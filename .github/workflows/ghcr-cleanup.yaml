@@ -20,6 +20,7 @@ jobs:
         id: generate-token
         uses: actions/create-github-app-token@v1
         with:
+          app-id: ${{ secrets.GH_APP_ID }}
           owner: ${{ github.repository_owner }}
           repositories: |
             energyvision-internal
