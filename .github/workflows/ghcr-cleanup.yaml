@@ -5,8 +5,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * 0' # every sunday at midnight
-permissions:
-  id-token: write
+
 jobs:
   clean-ghcr:
     name: Delete old unused container images
@@ -46,7 +45,7 @@ jobs:
 
       - name: Clean up Docker images
         id: delete-containers
-        uses: snok/container-retention-policy@v2
+        uses: snok/container-retention-policy@v3.1.0
         with:
           token: ${{ steps.generate-token.outputs.token }}
           account-type: org
@@ -55,7 +54,6 @@ jobs:
           cut-off: a week ago UTC
           keep-at-least: 5
           skip-tags: ${{ env.TAGS_TO_KEEP }}, *-latest
-          token-type: github-token
           # dry-run: true
 
       - name: log-errors-to-slack 📄
