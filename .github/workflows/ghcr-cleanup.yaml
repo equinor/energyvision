@@ -10,8 +10,6 @@ jobs:
   clean-ghcr:
     name: Delete old unused container images
     runs-on: ubuntu-latest
-    permissions: 
-      packages: write
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
@@ -53,7 +51,7 @@ jobs:
           keep-n-most-recent: 5
           image-tags: ${{ env.TAGS_TO_KEEP }}, !*-latest
           dry-run: true
-          token-type: app
+          rust-log: container_retention_policy=debug,hyper_util=info
 
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v2
