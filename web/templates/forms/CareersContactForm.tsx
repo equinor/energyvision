@@ -261,7 +261,7 @@ const CareersContactForm = () => {
                         {intl('careers_contact_form_technical_issues')}
                       </option>
                       <option>{suspectedRecruitmentScam}</option>
-                      <option>{employmentVerification}</option>
+                      {/* <option>{employmentVerification}</option>  // wait for confirmation from team */}
                     </Select>
                   )}
                 />
