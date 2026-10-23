@@ -92,7 +92,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: '24' # Or any version you prefer
+          node-version: '24.22.1'
 
       # Check if this can be removed
       - name: Install dependencies

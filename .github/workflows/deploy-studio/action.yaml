@@ -114,6 +114,16 @@ runs:
           ARG_FOTOWARE_AF_EXPORT_URL=${{ inputs.fotowareAfExportUrl }}
           ARG_SCREEN9_ACCOUNT_ID=${{ inputs.screen9accountId }}
           
+    - name: Log runner and Studio image Node.js versions
+      shell: bash
+      env:
+        IMAGE: ${{ inputs.imageName }}@${{ steps.build.outputs.digest }}
+      run: |
+        echo "CI runner Node.js:"
+        node --version
+        echo "Container Node.js ($IMAGE):"
+        docker run --rm "$IMAGE" node --version
+
     - name: Get component name
       id: get-component-name
       shell: bash

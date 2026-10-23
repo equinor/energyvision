@@ -1,8 +1,11 @@
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.192.0/containers/typescript-node/.devcontainer/base.Dockerfile
 
-# [Choice] Node.js version: 16, 14, 12
-ARG VARIANT="18-buster"
-FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-${VARIANT}
+ARG VARIANT="24-bookworm"
+FROM mcr.microsoft.com/devcontainers/typescript-node:5.2.3-${VARIANT}
+
+ARG NODE_VERSION="24.22.1"
+RUN su node -c "bash -c 'source /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} && nvm alias default ${NODE_VERSION}'"
+ENV PATH="/usr/local/share/nvm/versions/node/v${NODE_VERSION}/bin:${PATH}"
 
 ENV TZ Europe/Oslo
 
@@ -47,7 +50,7 @@ RUN fish install --noninteractive
 VOLUME [ "/var/lib/docker" ]
 
 # [Optional] Uncomment if you want to install more global node packages
-RUN su node -c "npm install -g pnpm@8.6.1"
+RUN su node -c "npm install -g pnpm@11.24.0"
 RUN su node -c "npm install -g gitmoji-cli"
 RUN su node -c "npm install -g azure-functions-core-tools@4 --unsafe-perm true"
 RUN su node -c "npm install -g azurite"
