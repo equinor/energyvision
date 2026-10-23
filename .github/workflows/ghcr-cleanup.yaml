@@ -50,9 +50,10 @@ jobs:
           account: Equinor
           image-names: energyvision/*
           cut-off: 1w
-          keep-at-least: 5
+          keep-n-most-recent: 5
           image-tags: ${{ env.TAGS_TO_KEEP }}, !*-latest
           dry-run: true
+          token-type: app
 
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v2
