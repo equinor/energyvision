@@ -3,26 +3,23 @@ import {
   add_circle_outlined,
   remove,
   remove_outlined,
-} from '@equinor/eds-icons'
-import {
-  type AccordionHeaderProps as _AccordionHeaderProps,
-  AccordionTrigger,
-  type AccordionTriggerProps,
-} from '@radix-ui/react-accordion'
-import { type ElementType, forwardRef } from 'react'
-import { GoDash, GoPlus } from 'react-icons/go'
-import { twMerge } from 'tailwind-merge'
-import { Typography } from '@/core/Typography'
-import { TransformableIcon } from '../../icons/TransformableIcon'
-import type { Variants } from './Accordion'
+} from '@equinor/eds-icons';
+import { AccordionTrigger } from '@radix-ui/react-accordion';
+import { type ElementType, forwardRef, type ReactNode } from 'react';
+import { GoDash, GoPlus } from 'react-icons/go';
+import { twMerge } from 'tailwind-merge';
+import { Typography } from '@/core/Typography';
+import { TransformableIcon } from '../../icons/TransformableIcon';
+import type { Variants } from './Accordion';
 
 export type AccordionHeaderProps = {
-  hasSectionTitle?: boolean
-  variant?: Variants
-  headerClassName?: string
-  className?: string
-} & _AccordionHeaderProps &
-  AccordionTriggerProps
+  children?: ReactNode;
+  hasSectionTitle?: boolean;
+  variant?: Variants;
+  headerClassName?: string;
+  className?: string;
+  id?: string;
+};
 
 /**
  * Accordion header with trigger element
@@ -39,6 +36,7 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(
       hasSectionTitle = false,
       className = '',
       headerClassName = '',
+      id,
     },
     ref,
   ) {
@@ -99,13 +97,13 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(
     max-xl:data-open:border-b
     max-xl:border-t
     max-xl:border-grey-20`,
-    }
+    };
 
     const textVariantClassName: Partial<Record<Variants, string>> = {
       primary: 'text-base',
       menu: 'flex justify-start text-lg xl:text-base',
       simpleMenu: 'group-hover:text-north-sea-50 flex justify-start text-lg',
-    }
+    };
 
     const defaultIconsElement = (
       <span className={`grid pr-4`}>
@@ -130,7 +128,7 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(
           iconData={remove}
         />
       </span>
-    )
+    );
 
     const menuIconsElement = (
       <div className={`mr-2 w-fit ${variant === 'menu' ? 'xl:hidden' : ''}`}>
@@ -143,12 +141,13 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(
           size={32}
         />
       </div>
-    )
-    const ChildElementType = hasSectionTitle ? 'h3' : ('h2' as ElementType)
+    );
+    const ChildElementType = hasSectionTitle ? 'h3' : ('h2' as ElementType);
 
     return (
       <ChildElementType className={headerClassName}>
         <AccordionTrigger
+          id={id}
           ref={ref}
           className={twMerge(
             `group focus-visible:envis-outline dark:focus-visible:envis-outline-invert flex w-full cursor-pointer decoration-1 underline-offset-4 outline-hidden hover:underline focus:no-underline focus:outline-hidden ${variantClassName[variant]} `,
@@ -157,9 +156,9 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(
         >
           {variant === 'primary' && defaultIconsElement}
           <Typography
-            as='span'
-            group='plain'
-            variant='div'
+            as="span"
+            group="plain"
+            variant="div"
             className={`grow ${
               variant === 'menu'
                 ? `xl:motion-safe:transition-all xl:motion-safe:duration-100 xl:motion-safe:ease-in-out`
@@ -171,6 +170,6 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(
           {(variant === 'menu' || variant === 'simpleMenu') && menuIconsElement}
         </AccordionTrigger>
       </ChildElementType>
-    )
+    );
   },
-)
+);

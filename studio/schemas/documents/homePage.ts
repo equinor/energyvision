@@ -61,6 +61,7 @@ export default {
         { type: 'textWithIconArray' },
         { type: 'keyNumbers' },
         { type: 'textTeaser' },
+        { type: 'statCallout' },
         { type: 'promotion' },
         { type: 'anchorLink' },
         { type: 'imageCarousel' },

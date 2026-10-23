@@ -9,6 +9,7 @@ import type { VideoPlayerCarouselData } from '@/sections/VideoPlayerCarousel/Vid
 import type { EventDate } from '@/templates/event/Event';
 import type { FigureData } from '../sections/FigureBlock/FigureBlock';
 import type { FullWidthImageData } from '../sections/FullwidthImage/FullWidthImage';
+import type { StatCalloutData } from '../sections/StatCallout/StatCallout';
 import type {
   CardData,
   DesignOptions,
@@ -61,6 +62,7 @@ export type ContentType =
   | CookieDeclarationData
   | NewsListData
   | StockValuesProps
+  | StatCalloutData
   | EmbeddedVideoListData
   | VideoPlayerCarouselData
   | VideoPlayerBlockProps
