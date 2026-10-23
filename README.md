@@ -14,6 +14,8 @@ The project is licensed under the [MIT license](https://github.com/equinor/energ
 
 This project uses [pnpm](https://pnpm.io) as main package manager. You can install pnpm using npm as shown below, or use one of the [alternative installation methods](https://pnpm.io/installation).
 
+Use Node.js 24.22.1 for development and builds. With nvm installed, run `nvm install` and `nvm use` to select the version in `.nvmrc`.
+
 ```bash
 # Install pnpm
 npm i -g pnpm
