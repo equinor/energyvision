@@ -57,10 +57,10 @@ const CareersContactForm = () => {
   const employmentVerification =
     intl('careers_contact_form_employment_verification') ??
     'Employment verification';
-  const onboarding = intl('careers_contact_form_onboarding');
-  const graduates = intl('careers_contact_form_graduates');
-  const interns = intl('careers_contact_form_interns');
-  const apprentices = intl('careers_contact_form_apprentices');
+  const onboarding = intl('careers_contact_form_onboarding') ?? 'Onboarding';
+  const graduates = intl('careers_contact_form_graduates') ?? 'Graduates';
+  const interns = intl('careers_contact_form_interns') ?? 'Interns';
+  const apprentices = intl('careers_contact_form_apprentices') ?? 'Apprentices';
 
   const watchCategory = useWatch({
     name: 'category',
