@@ -94,4 +94,4 @@ USER "$UID"
 EXPOSE 3000
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "--trace-warnings", "./web/server.js"]
+CMD ["sh", "-ec", "printf 'Web runtime Node.js: '; node --version; exec node --trace-warnings ./web/server.js"]

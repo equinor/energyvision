@@ -16,6 +16,8 @@ This project uses [pnpm](https://pnpm.io) as main package manager. You can insta
 
 Use Node.js 24.22.1 for development and builds. With nvm installed, run `nvm install` and `nvm use` to select the version in `.nvmrc`.
 
+Verify the actual runtime with `node --version` on each host and CI runner, and `docker run --rm <image> node --version` for each container image. The web and Studio deployment actions log both runner and built-image versions, and their containers log the runtime version at startup.
+
 ```bash
 # Install pnpm
 npm i -g pnpm

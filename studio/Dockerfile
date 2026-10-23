@@ -65,4 +65,4 @@ USER "$UID"
 EXPOSE "$PORT"
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["node", "server.js"]
+CMD ["sh", "-ec", "printf 'Studio runtime Node.js: '; node --version; exec node server.js"]
