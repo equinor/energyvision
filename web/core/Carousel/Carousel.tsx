@@ -71,6 +71,7 @@ type CarouselProps = {
   /* Outer container */
   containerClassName?: string;
   listClassName?: string;
+  controlsClassName?: string;
   autoRotation?: boolean;
   hasSectionTitle?: boolean;
   title?: PortableTextBlock[];
@@ -97,6 +98,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       className = '',
       containerClassName = '',
       listClassName = '',
+      controlsClassName = '',
       hasSectionTitle = false,
       sectionTitle,
       getVariantElementBody,
@@ -561,7 +563,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
               internalAutoRotation ? 'justify-between' : 'justify-end',
               displayMode === 'single' &&
                 `mx-auto w-single-carousel-card-w-sm md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg`,
-              displayMode === 'scroll' && `w-full px-layout-sm`,
+              displayMode === 'scroll' && `w-full`,
+              controlsClassName,
             )}
           >
             <legend className="sr-only">{intl('carousel_controls')}</legend>
