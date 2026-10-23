@@ -71,19 +71,6 @@ export default {
       fieldset: 'addonsAboveTitle',
     },
     {
-      name: 'anchorReference',
-      type: 'string',
-      title: 'Anchor reference',
-      fieldset: 'addonsAboveTitle',
-      description:
-        '# is not needed. Title will be used when compiling list of anchors on page together.',
-      validation: (Rule: Rule) =>
-        // @ts-ignore
-        Rule.custom((value: string, context: any) =>
-          validateComponentAnchor(value, context),
-        ),
-    },
-    {
       name: 'title',
       type: 'array',
       fieldset: 'titleOptions',
@@ -111,7 +98,18 @@ export default {
       type: 'boolean',
       fieldset: 'titleOptions',
     },
-
+    {
+      name: 'anchorReference',
+      type: 'string',
+      title: 'Anchor reference',
+      description:
+        '# is not needed. Title will be used when compiling list of anchors on page together.',
+      validation: (Rule: Rule) =>
+        // @ts-ignore
+        Rule.custom((value: string, context: any) =>
+          validateComponentAnchor(value, context),
+        ),
+    },
     {
       name: 'ingress',
       title: 'Ingress',

@@ -1,21 +1,20 @@
-import { newsSlug } from '@energyvision/shared/satelliteConfig'
-import { file_add } from '@equinor/eds-icons'
-import slugify from '@sindresorhus/slugify'
-import { formatDate } from '../../helpers/formatDate'
-import { EdsIcon } from '../../icons'
-import { defaultLanguage } from '../../languages'
-import { Flags } from '../../src/lib/datasetHelpers'
-import SlugInput from '../components/SlugInput'
-import { withSlugValidation } from '../validations/validateSlug'
-import { lang } from './langField'
+import { newsSlug } from '@energyvision/shared/satelliteConfig';
+import { file_add } from '@equinor/eds-icons';
+import slugify from '@sindresorhus/slugify';
+import { formatDate } from '../../helpers/formatDate';
+import { EdsIcon } from '../../icons';
+import { defaultLanguage } from '../../languages';
+import { Flags } from '../../src/lib/datasetHelpers';
+import SlugInput from '../components/SlugInput';
+import { SlugInfo } from '../components/SlugInfo';
+import { withSlugValidation } from '../validations/validateSlug';
+import { lang } from './langField';
 import {
   content,
   countryTags,
-  excludeFromSearch,
   heroImage,
   iframe,
   ingress,
-  isLive,
   newsSlugField,
   openGraphImage,
   publishDateTime,
@@ -24,7 +23,7 @@ import {
   subscriptionType,
   tags,
   title,
-} from './news/sharedNewsFields'
+} from './news/sharedNewsFields';
 
 export default {
   title: 'News',
@@ -32,6 +31,10 @@ export default {
   type: 'document',
   icon: () => EdsIcon(file_add),
   fieldsets: [
+    {
+      title: 'Newsletter',
+      name: 'newsletter',
+    },
     {
       title: 'SEO & metadata',
       name: 'metadata',
@@ -45,8 +48,6 @@ export default {
     {
       title: 'Slug',
       name: 'slug',
-      description:
-        '⚠️ Changing the slug after publishing it has negative impacts in the SEO ⚠️',
       options: {
         collapsible: true,
         collapsed: false,
@@ -63,20 +64,24 @@ export default {
   ],
   fields: [
     lang,
-    isLive,
-    {
-      ...seo,
-      fieldset: 'metadata',
-    },
-    {
-      ...openGraphImage,
-      fieldset: 'metadata',
-    },
     title,
     ...publishDateTime,
     Flags.HAS_NEWS && { ...tags, fieldset: 'tagFieldset' },
     Flags.HAS_NEWS && { ...countryTags, fieldset: 'tagFieldset' },
-    Flags.HAS_NEWS_SUBSCRIPTION && subscriptionType,
+    Flags.HAS_NEWS_SUBSCRIPTION && {
+      ...subscriptionType,
+      fieldset: 'newsletter',
+    },
+    {
+      name: 'slugInfo',
+      title: 'About slugs',
+      type: 'string',
+      fieldset: 'slug',
+      readOnly: true,
+      components: {
+        field: SlugInfo,
+      },
+    },
     {
       ...newsSlugField,
       fieldset: 'slug',
@@ -92,23 +97,21 @@ export default {
       options: withSlugValidation({
         source: (doc: { newsSlug: string }) => {
           // translated document ids end with _i18n__lang while base documents don't
-          return doc.newsSlug ? `${slugify(doc.newsSlug)}` : ''
+          return doc.newsSlug ? `${slugify(doc.newsSlug)}` : '';
         },
         slugify: (
           input: string,
           _schemaType: any,
           context: { parent: any },
         ) => {
-          const slug = slugify(input)
-          const { parent: document } = context
+          const slug = slugify(input);
+          const { parent: document } = context;
           const translatedNews = document.lang
             ? `/${newsSlug[document.lang]}`
-            : `/${newsSlug[defaultLanguage.name]}`
-          return `${translatedNews}/${slug}`
+            : `/${newsSlug[defaultLanguage.name]}`;
+          return `${translatedNews}/${slug}`;
         },
       }),
-      description:
-        '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule: { required: () => any }) => Rule.required(),
     },
     heroImage,
@@ -116,8 +119,15 @@ export default {
     content,
     iframe,
     relatedLinks,
-    excludeFromSearch,
-  ].filter(e => e),
+    {
+      ...seo,
+      fieldset: 'metadata',
+    },
+    {
+      ...openGraphImage,
+      fieldset: 'metadata',
+    },
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',
@@ -128,12 +138,12 @@ export default {
       isCustomDate: 'customPublicationDate',
     },
     prepare(selection: {
-      title: any
-      media: any
-      description: any
-      publishedDate: any
-      firstPublishedAt: any
-      isCustomDate: any
+      title: any;
+      media: any;
+      description: any;
+      publishedDate: any;
+      firstPublishedAt: any;
+      isCustomDate: any;
     }) {
       const {
         title,
@@ -142,23 +152,23 @@ export default {
         publishedDate,
         firstPublishedAt,
         isCustomDate,
-      } = selection
-      const currentDate = new Date()
+      } = selection;
+      const currentDate = new Date();
       const date =
         publishedDate && isCustomDate
           ? new Date(publishedDate)
           : firstPublishedAt
             ? new Date(firstPublishedAt)
-            : null
+            : null;
 
       const displayDate =
         date && date <= currentDate
           ? `Published ${formatDate(date)}`
-          : 'Not published'
+          : 'Not published';
 
       const ingressBlock = (description || []).find(
         (ingressBlock: { _type: string }) => ingressBlock._type === 'block',
-      )
+      );
       return {
         title,
         subtitle: displayDate,
@@ -169,7 +179,7 @@ export default {
               .join('')
           : 'Missing lead',
         media,
-      }
+      };
     },
   },
-}
+};

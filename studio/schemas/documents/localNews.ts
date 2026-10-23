@@ -1,6 +1,6 @@
-import { newsSlug } from '@energyvision/shared/satelliteConfig'
-import { file_description } from '@equinor/eds-icons'
-import slugify from '@sindresorhus/slugify'
+import { newsSlug } from '@energyvision/shared/satelliteConfig';
+import { file_description } from '@equinor/eds-icons';
+import slugify from '@sindresorhus/slugify';
 import type {
   SlugParent as DefaultSlugParent,
   Reference,
@@ -9,33 +9,31 @@ import type {
   SanityDocument,
   SlugSchemaType,
   SlugSourceContext,
-} from 'sanity'
-import { formatDate } from '../../helpers/formatDate'
-import { EdsIcon } from '../../icons'
-import { defaultLanguage } from '../../languages'
-import SlugInput from '../components/SlugInput'
-import { withSlugValidation } from '../validations/validateSlug'
-import { lang } from './langField'
+} from 'sanity';
+import { formatDate } from '../../helpers/formatDate';
+import { EdsIcon } from '../../icons';
+import { defaultLanguage } from '../../languages';
+import SlugInput from '../components/SlugInput';
+import { withSlugValidation } from '../validations/validateSlug';
+import { lang } from './langField';
 import {
   content,
   excludeFromSearch,
   heroImage,
   iframe,
   ingress,
-  isLive,
-  // We have asked Mette if this is relevant
   newsSlugField,
   openGraphImage,
   publishDateTime,
   relatedLinks,
   seo,
   title,
-} from './news/sharedNewsFields'
+} from './news/sharedNewsFields';
 
 type SlugParent = {
-  lang: string
-  localNewsTag: Reference
-} & DefaultSlugParent
+  lang: string;
+  localNewsTag: Reference;
+} & DefaultSlugParent;
 
 export default {
   title: 'Local news',
@@ -69,7 +67,6 @@ export default {
   ],
   fields: [
     lang,
-    isLive,
     {
       ...seo,
       fieldset: 'metadata',
@@ -105,29 +102,29 @@ export default {
       },
       options: withSlugValidation({
         source: (doc: SanityDocument) => {
-          return doc.newsSlug ? `${slugify(doc.newsSlug as string)}` : ''
+          return doc.newsSlug ? `${slugify(doc.newsSlug as string)}` : '';
         },
         slugify: async (
           input: string,
           _schemaType: SlugSchemaType,
           context: SlugSourceContext & { client: SanityClient },
         ) => {
-          const slug = slugify(input)
-          const { client, parent } = context
-          const document = parent as SlugParent
-          const query = /* groq */ `*[_id == $id && _type == "localNewsTag"][0]`
-          const params = { id: document.localNewsTag._ref }
+          const slug = slugify(input);
+          const { client, parent } = context;
+          const document = parent as SlugParent;
+          const query = /* groq */ `*[_id == $id && _type == "localNewsTag"][0]`;
+          const params = { id: document.localNewsTag._ref };
           return client
             .fetch(query, params)
             .then((localNewsTag: SanityDocument) => {
               const translatedNews = document.lang
                 ? `/${newsSlug[document.lang]}`
-                : `/${newsSlug[defaultLanguage.name]}`
+                : `/${newsSlug[defaultLanguage.name]}`;
               const localNewsPath = document.lang
                 ? (localNewsTag[document.lang] as string)
-                : (localNewsTag[defaultLanguage.name] as string)
-              return `${translatedNews}/${slugify(localNewsPath)}/${slug}`
-            })
+                : (localNewsTag[defaultLanguage.name] as string);
+              return `${translatedNews}/${slugify(localNewsPath)}/${slug}`;
+            });
         },
       }),
       description:
@@ -139,8 +136,7 @@ export default {
     content,
     iframe,
     relatedLinks,
-    excludeFromSearch,
-  ].filter(e => e),
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',
@@ -158,21 +154,21 @@ export default {
         publishedDate,
         firstPublishedAt,
         isCustomDate,
-      } = selection
-      const currentDate = new Date()
+      } = selection;
+      const currentDate = new Date();
       const date =
         publishedDate && isCustomDate
           ? new Date(publishedDate)
           : firstPublishedAt
             ? new Date(firstPublishedAt)
-            : null
+            : null;
 
       const displayDate =
-        date && date <= currentDate ? formatDate(date) : 'Not Published'
+        date && date <= currentDate ? formatDate(date) : 'Not Published';
 
       const ingressBlock = (description || []).find(
         (ingressBlock: any) => ingressBlock._type === 'block',
-      )
+      );
       return {
         title,
         subtitle: `Published date: ${displayDate}`,
@@ -183,7 +179,7 @@ export default {
               .join('')
           : 'Missing lead',
         media,
-      }
+      };
     },
   },
-}
+};
