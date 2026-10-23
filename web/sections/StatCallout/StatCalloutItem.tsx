@@ -77,7 +77,10 @@ export const StatCalloutItem = ({ item }: { item: StatCalloutItemData }) => {
         <div className="absolute inset-0 flex flex-col px-6 py-8">
           {alignment === 'justify-end' && icon}
           <div
-            className={twMerge(`flex flex-col ${alignment}`, !icon && 'flex-1')}
+            className={twMerge(
+              `flex flex-col ${alignment}`,
+              (!icon || Boolean(item.title?.length)) && 'flex-1',
+            )}
           >
             {item.title && (
               <Blocks
