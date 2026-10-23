@@ -183,7 +183,7 @@ export default {
               title: 'Icon',
               type: 'imageWithAlt',
               description:
-                'Black default. Other color is ignored, use option below for white. If present, it will displayed opposite title',
+                'Black default. Other color is ignored, use option below for white. If present, it will be displayed opposite title',
             },
             {
               name: 'useWhite',

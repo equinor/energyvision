@@ -95,6 +95,7 @@ export const StatCallout = ({
               title && !hideTitle && 'mt-6',
             )}
             listClassName="auto-cols-max gap-x-[34px] lg:gap-x-[34px]"
+            controlsClassName="px-layout-sm"
           />
         ) : (
           <ul
