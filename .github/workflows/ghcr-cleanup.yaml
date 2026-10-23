@@ -55,7 +55,7 @@ jobs:
           cut-off: a week ago UTC
           keep-at-least: 5
           skip-tags: ${{ env.TAGS_TO_KEEP }}, *-latest
-          rust-log: container_retention_policy=debug,hyper_util=info
+          token-type: github-app-token
           # dry-run: true
 
       - name: log-errors-to-slack 📄
