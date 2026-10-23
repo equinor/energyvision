@@ -44,6 +44,7 @@ export const content = {
     { type: 'textWithIconArray' },
     { type: 'keyNumbers' },
     { type: 'textTeaser' },
+    { type: 'statCallout' },
     { type: 'promotion' },
     { type: 'anchorLink' },
     { type: 'imageCarousel' },
@@ -100,13 +101,14 @@ export const content = {
       groups: [
         {
           name: 'promotions',
-          title: 'Promotions',
+          title: 'Promotional',
           of: [
             'promoteMagazine',
             'promotePeople',
             'promotionsV2',
             'promoteEvents',
             'promoteNews',
+            'statCallout',
           ],
         },
         {

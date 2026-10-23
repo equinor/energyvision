@@ -49,6 +49,10 @@ import PromotionsBlock, {
   type PromotionsBlockData,
 } from '@/sections/promotions/PromotionsBlock'
 import QuoteBlock from '@/sections/QuoteBlock/QuoteBlock'
+import {
+  StatCallout,
+  type StatCalloutData,
+} from '@/sections/StatCallout/StatCallout'
 import StockValues, {
   type StockValuesProps,
 } from '@/sections/StockValues/StockValues'
@@ -118,6 +122,7 @@ export type ComponentSections =
   | FormData
   | TableData
   | StockValuesData
+  | StatCalloutData
   | AnchorLinkData
   | VideoPlayerCarouselData
   | EmbeddedVideoListData
@@ -548,6 +553,15 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             {...(c as StockValuesProps)}
+            className={allSpacings}
+          />
+        )
+      case 'statCallout':
+        return (
+          <StatCallout
+            key={c.id}
+            {...commonProps}
+            data={c as StatCalloutData}
             className={allSpacings}
           />
         )
