@@ -26,7 +26,7 @@ jobs:
             energyvision-internal
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
           permission-organization-packages: write
-          rust-log: container_retention_policy=debug,hyper_util=info
+          
 
       - name: Checkout internal 🛎️
         id: checkout-internal
@@ -55,6 +55,7 @@ jobs:
           cut-off: a week ago UTC
           keep-at-least: 5
           skip-tags: ${{ env.TAGS_TO_KEEP }}, *-latest
+          rust-log: container_retention_policy=debug,hyper_util=info
           # dry-run: true
 
       - name: log-errors-to-slack 📄
