@@ -38,23 +38,21 @@ jobs:
       - name: Get tags to keep from latest-prod-tags.json
         id: get-tags
         run: |
-          TAGS=$(jq -r '[.web + .studio | unique[]] | join(", ")' latest-prod-tags.json)
+          TAGS=$(jq -r '[.web + .studio | unique[] | "!" + .] | join(", ")' latest-prod-tags.json)
           echo "TAGS_TO_KEEP=$TAGS" >> $GITHUB_ENV
           echo "TAGS TO KEEP: $TAGS"
    
-
       - name: Clean up Docker images
         id: delete-containers
         uses: snok/container-retention-policy@v3.1.0
         with:
           token: ${{ steps.generate-token.outputs.token }}
-          account-type: org
-          org-name: Equinor
+          account: Equinor
           image-names: energyvision/*
           cut-off: a week ago UTC
           keep-at-least: 5
-          skip-tags: ${{ env.TAGS_TO_KEEP }}, *-latest
-          # dry-run: true
+          image-tags: ${{ env.TAGS_TO_KEEP }}, !*-latest
+          dry-run: true
 
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v2
