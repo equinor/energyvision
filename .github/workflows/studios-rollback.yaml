@@ -119,7 +119,7 @@ jobs:
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version: '24.22.1'
           cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
@@ -184,7 +184,7 @@ jobs:
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version: '24.22.1'
           cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies

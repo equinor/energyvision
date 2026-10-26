@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # 1. Set up prune and build environment
-FROM node:24-alpine AS core-os
+FROM node:24.22.1-alpine AS core-os
 RUN apk update
 RUN apk add --no-cache libc6-compat curl
 
@@ -94,4 +94,4 @@ USER "$UID"
 EXPOSE 3000
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "--trace-warnings", "./web/server.js"]
+CMD ["sh", "-ec", "printf 'Web runtime Node.js: '; node --version; exec node --trace-warnings ./web/server.js"]

@@ -129,6 +129,16 @@ runs:
           ARG_OPTIMIZED_SANITY_FETCH=${{ inputs.optimizedSanityFetch }}
           ARG_DEPLOYMENT_ID=${{ env.IMAGE_TAG_SHA }}
    
+    - name: Log runner and web image Node.js versions
+      shell: bash
+      env:
+        IMAGE: ghcr.io/equinor/energyvision/web-${{ inputs.datasetName }}@${{ steps.build.outputs.digest }}
+      run: |
+        echo "CI runner Node.js:"
+        node --version
+        echo "Container Node.js ($IMAGE):"
+        docker run --rm "$IMAGE" node --version
+
     - name: Get component name
       id: get-component-name
       shell: bash
