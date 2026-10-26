@@ -20,19 +20,29 @@ on:
           - sponsorship
 permissions:
   id-token: write
+  contents: read
 jobs:
   update-radix-config:
     runs-on: ubuntu-latest
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
+      - name: Generate internal config write token
+        id: internal-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          owner: Equinor
+          repositories: energyvision-internal
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: write
       - name: Checkout internal 🛎️
         id: checkout-internal
         uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }} 
+          token: ${{ steps.internal-token.outputs.token }}
       - name: Promote preprod tag to prod 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash
@@ -43,7 +53,7 @@ jobs:
           source venv/bin/activate
           python -m pip install ruamel.yaml
           python ci/promoteToProduction.py studio ${{ github.event.inputs.site }}
-          git remote set-url origin git@github.com:equinor/energyvision-internal.git
+          git remote set-url origin https://github.com/equinor/energyvision-internal.git
           if [[ `git status --porcelain` ]]
           then
             git commit -am "🚀 Deploy ${{ github.event.inputs.site }} to production"
@@ -92,13 +102,22 @@ jobs:
     needs: deploy-satellite-studios
     runs-on: ubuntu-latest
     steps:
+      - name: Generate internal config write token
+        id: internal-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          owner: Equinor
+          repositories: energyvision-internal
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: write
       - name: Checkout internal 🛎️
         id: checkout-internal
         uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          token: ${{ steps.internal-token.outputs.token }}
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
@@ -113,7 +132,7 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git remote set-url origin git@github.com:equinor/energyvision-internal.git
+          git remote set-url origin https://github.com/equinor/energyvision-internal.git
           git add latest-prod-tags.json
           git commit -m "Update latest-prod-tags.json with new tags" || echo "No changes to commit"
           git push
