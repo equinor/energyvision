@@ -151,7 +151,7 @@ const MagazinePage = ({
       />
       {magazineTags && magazineTags.length > 0 && magazineIndexHref && (
         <section className="mx-auto w-full max-w-content px-layout-sm pb-12 lg:px-layout-lg">
-          <h2 className="mb-6 font-medium text-xl">{exploreTopicsTitle}</h2>
+          <h2 className="mb-6 text-xl">{exploreTopicsTitle}</h2>
           <ul className="flex flex-wrap gap-2">
             {magazineTags.map((tag) => (
               <li key={tag.id}>
