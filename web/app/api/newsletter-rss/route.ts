@@ -1,15 +1,15 @@
-import { tz } from '@date-fns/tz'
-import { format } from 'date-fns'
-import { enGB, nb } from 'date-fns/locale'
-import { NextResponse } from 'next/server'
-import { toPlainText } from 'next-sanity'
-import { noCdnClient as client } from '@/sanity/lib/client'
-import { urlForImage } from '@/sanity/lib/utils'
+import { tz } from '@date-fns/tz';
+import { format } from 'date-fns';
+import { enGB, nb } from 'date-fns/locale';
+import { NextResponse } from 'next/server';
+import { toPlainText } from 'next-sanity';
+import { noCdnClient as client } from '@/sanity/lib/client';
+import { urlForImage } from '@/sanity/lib/utils';
 import {
   type newsletterCategoryKeys,
   newsletterCategoryMap,
-} from '@/types/newsLetterTypes'
-import { type LatestNewsType, latestMagazine, latestNews } from './groq.global'
+} from '@/types/newsLetterTypes';
+import { type LatestNewsType, latestMagazine, latestNews } from './groq.global';
 
 const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
   try {
@@ -17,7 +17,7 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
     const [newsArticles, magazineArticles] = await Promise.all([
       client.fetch(latestNews, { lang: locale }),
       client.fetch(latestMagazine, { lang: locale }),
-    ])
+    ]);
 
     // Merge the articles and sort by publish date (newest first)
     const articles: LatestNewsType[] = [
@@ -27,15 +27,15 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
       (a, b) =>
         new Date(b.publishDateTime).getTime() -
         new Date(a.publishDateTime).getTime(),
-    )
+    );
     const newsLink =
       locale === 'en-GB'
         ? 'https://www.equinor.com/news/'
-        : 'https://www.equinor.com/no/nyheter/'
+        : 'https://www.equinor.com/no/nyheter/';
     const newsRSSLink =
       locale === 'en-GB'
         ? 'https://www.equinor.com/api/rss?lang=en'
-        : 'https://www.equinor.com/api/rss?lang=no'
+        : 'https://www.equinor.com/api/rss?lang=no';
 
     let rss = `<?xml version="1.0" encoding="UTF-8"?>
     <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:nl="http://www.w3.org" version="2.0">
@@ -50,24 +50,21 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
         <language>${locale === 'en-GB' ? 'en-gb' : 'no'}</language>
         <atom:link href="${newsLink}" type="text/html" rel="alternate"/>
         <atom:link href="${newsRSSLink}" type="application/rss+xml" rel="self"/>
-    `
+    `;
 
-    articles.forEach(article => {
-      const langPath = article.lang === 'nb_NO' ? '/no' : ''
+    articles.forEach((article) => {
+      const langPath = article.lang === 'nb_NO' ? '/no' : '';
 
-      const hero = article.hero
+      const hero = article.hero;
       const bannerImageUrl = hero?.image?.asset
         ? //@ts-ignore:todo
-          urlForImage(hero.image)
-            .size(560, 280)
-            .auto('format')
-            .toString()
-        : ''
-      const encodedUrl = bannerImageUrl.replace(/&/g, '&amp;')
+          urlForImage(hero.image).size(560, 280).auto('format').toString()
+        : '';
+      const encodedUrl = bannerImageUrl.replace(/&/g, '&amp;');
 
-      const publishDate = new Date(article.publishDateTime)
+      const publishDate = new Date(article.publishDateTime);
       const dateFormat =
-        article.lang === 'nb_NO' ? 'd. MMMM yyyy HH:mm' : 'd MMMM yyyy HH:mm'
+        article.lang === 'nb_NO' ? 'd. MMMM yyyy HH:mm' : 'd MMMM yyyy HH:mm';
 
       const tzName =
         new Intl.DateTimeFormat('en-GB', {
@@ -75,23 +72,23 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
           timeZoneName: 'short',
         })
           .formatToParts(publishDate)
-          .find(p => p.type === 'timeZoneName')?.value ?? ''
+          .find((p) => p.type === 'timeZoneName')?.value ?? '';
 
       const formattedPubDate = `${format(publishDate, dateFormat, {
         in: tz('Europe/Oslo'),
         locale: article.lang === 'nb_NO' ? nb : enGB,
-      })} (${tzName})`
+      })} (${tzName})`;
 
       const categoryTag = (
         article.type === 'magazine'
           ? 'magazineStories'
           : article.subscriptionType
-      ) as newsletterCategoryKeys
+      ) as newsletterCategoryKeys;
       const title =
         article.type === 'magazine'
           ? //@ts-ignore: todo
             toPlainText(article.title)
-          : article.title
+          : article.title;
 
       rss += `
         <item>
@@ -106,7 +103,7 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
           <description><![CDATA[${toPlainText(article.ingress)}]]></description>
           ${
             categoryTag
-              ? `<category>${newsletterCategoryMap[locale === 'nb_NO' ? 'no' : 'en'][categoryTag]}</category>`
+              ? `<category>${newsletterCategoryMap[locale === 'nb-NO' ? 'no' : 'en'][categoryTag]}</category>`
               : '<category />'
           }
           <nl:extra1>${formattedPubDate}</nl:extra1>
@@ -122,30 +119,30 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
           </media:content>`
               : ''
           }
-        </item>`
-    })
+        </item>`;
+    });
 
     rss += `
       </channel>
-    </rss>`
+    </rss>`;
 
-    return rss
+    return rss;
   } catch (error) {
-    console.error('Error generating RSS feed:', error)
-    throw new Error('Failed to generate RSS feed.')
+    console.error('Error generating RSS feed:', error);
+    throw new Error('Failed to generate RSS feed.');
   }
-}
+};
 
 export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url)
-  const lang = searchParams.get('lang')
-  const locale = lang === 'no' ? 'nb-NO' : 'en-GB'
-  const rss = await generateRssFeed(locale)
+  const { searchParams } = new URL(req.url);
+  const lang = searchParams.get('lang');
+  const locale = lang === 'no' ? 'nb-NO' : 'en-GB';
+  const rss = await generateRssFeed(locale);
 
   return new NextResponse(rss, {
     headers: {
       'Content-Type': 'text/xml; charset=utf-8',
       'Cache-Control': 'public, s-maxage=1200, stale-while-revalidate=600',
     },
-  })
+  });
 }

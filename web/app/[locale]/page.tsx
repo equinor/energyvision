@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import PageProps from 'next';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { connection } from 'next/server';

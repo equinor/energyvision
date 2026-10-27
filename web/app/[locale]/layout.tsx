@@ -1,6 +1,7 @@
 import '../globals.css';
 import { GoogleTagManager } from '@next/third-parties/google';
 import type { Metadata } from 'next';
+import LayoutProps from 'next';
 import localFont from 'next/font/local';
 import { draftMode, headers } from 'next/headers';
 import NextLink from 'next/link';
