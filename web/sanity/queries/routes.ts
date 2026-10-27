@@ -1,16 +1,16 @@
-import { breadcrumbsQuery } from './common/breadcrumbs'
-import { eventContentFields } from './common/eventContentFields'
-import { functions, pageContentFunctions } from './common/functions'
-import { heroFields } from './common/heroFields'
-import pageContentFields from './common/pageContentFields'
-import { seoAndSomeFields } from './common/seoAndSomeFields'
-import { stickyMenu } from './common/stickyMenu'
-import { contentRefSlugsQuery } from './metaData'
+import { breadcrumbsQuery } from './common/breadcrumbs';
+import { eventContentFields } from './common/eventContentFields';
+import { functions, pageContentFunctions } from './common/functions';
+import { heroFields } from './common/heroFields';
+import pageContentFields from './common/pageContentFields';
+import { seoAndSomeFields } from './common/seoAndSomeFields';
+import { stickyMenu } from './common/stickyMenu';
+import { contentRefSlugsQuery } from './metaData';
 
 export const routeQuery = /* groq */ `
   ${functions}
   ${pageContentFunctions}
-  *[(_type match "route_" + $lang) && slug.current == $slug] {
+  *[(_type match "route_" + $routeName) && slug.current == $slug] {
     _id, //used for data filtering
     "slug": slug.current,
     "slugs":{${contentRefSlugsQuery}},
@@ -36,4 +36,4 @@ export const routeQuery = /* groq */ `
       }
     },
   }[0]
-`
+`;
