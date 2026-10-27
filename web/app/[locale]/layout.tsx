@@ -1,7 +1,6 @@
 import '../globals.css';
 import { GoogleTagManager } from '@next/third-parties/google';
 import type { Metadata } from 'next';
-import LayoutProps from 'next';
 import localFont from 'next/font/local';
 import { draftMode, headers } from 'next/headers';
 import NextLink from 'next/link';
@@ -138,7 +137,7 @@ async function CachedContent({
   'use cache: remote';
   const locale = await getLocale();
   const queryParams = {
-    lang: locale ?? 'en_GB',
+    lang: locale ?? 'en-GB',
   };
 
   const { data: footerAndErrorImageData }: { data: any } =
