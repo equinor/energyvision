@@ -114,7 +114,7 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
   function PersonList({ anchor, data, className }, ref) {
     const backgroundUtility = data.designOptions?.background?.backgroundUtility;
     const foreground = data.designOptions?.foreground;
-    console.log('data.designOptions:', data.designOptions);
+
     const searchParams = useSearchParams();
     // URL hashtag param is set by ModalPromotion as encodeURIComponent(name)
     const activePersonName = searchParams.get('person')

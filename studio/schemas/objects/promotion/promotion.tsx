@@ -194,7 +194,10 @@ export default {
 
       return {
         title: plainTitle,
-        subtitle: `Deprecated - Change to Promotion or direct ${getPromotionType(type)} promotion`,
+        subtitle:
+          type === 'promoteTopics'
+            ? 'Change to Promotion'
+            : `Deprecated - Change to Promotion or direct ${getPromotionType(type)} promotion`,
         media: BsExclamationSquare,
       };
     },

@@ -61,6 +61,7 @@ export default {
         { type: 'textWithIconArray' },
         { type: 'keyNumbers' },
         { type: 'textTeaser' },
+        { type: 'statCallout' },
         { type: 'promotion' },
         { type: 'anchorLink' },
         { type: 'imageCarousel' },
@@ -86,6 +87,8 @@ export default {
         },
         { type: 'promotePeople', title: 'People promotion' },
         { type: 'promoteTopics', title: 'Topic page promotion' },
+        { type: 'promoteTopicsV2' },
+        { type: 'promoteExternalLinkV2' },
         Flags.HAS_NEWS && { type: 'promoteNews', title: 'News promotions' },
         { type: 'promotionsV2' },
       ].filter((e) => e),
@@ -98,6 +101,8 @@ export default {
               of: props.schemaType.of.filter(
                 (member) =>
                   member.name !== 'promoteTopics' &&
+                  member.name !== 'promoteTopicsV2' &&
+                  member.name !== 'promoteExternalLinkV2' &&
                   member.name !== 'promotion',
               ),
             },

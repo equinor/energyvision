@@ -54,10 +54,13 @@ const CareersContactForm = () => {
   const suspectedRecruitmentScam =
     intl('careers_contact_form_suspected_recruitment_scam') ??
     'Suspected recruitment scam';
-  const onboarding = intl('careers_contact_form_onboarding');
-  const graduates = intl('careers_contact_form_graduates');
-  const interns = intl('careers_contact_form_interns');
-  const apprentices = intl('careers_contact_form_apprentices');
+  const employmentVerification =
+    intl('careers_contact_form_employment_verification') ??
+    'Employment verification';
+  const onboarding = intl('careers_contact_form_onboarding') ?? 'Onboarding';
+  const graduates = intl('careers_contact_form_graduates') ?? 'Graduates';
+  const interns = intl('careers_contact_form_interns') ?? 'Interns';
+  const apprentices = intl('careers_contact_form_apprentices') ?? 'Apprentices';
 
   const watchCategory = useWatch({
     name: 'category',
@@ -74,6 +77,8 @@ const CareersContactForm = () => {
   ) => {
     if (category?.includes(suspectedRecruitmentScam))
       return 'b04a9748832d8610347af830feaad382';
+    if (category?.includes(employmentVerification))
+      return 'a7afc4bddb692600ff6272dabf96197e';
     if (
       candidateType?.includes(graduates) ||
       candidateType?.includes(interns) ||
@@ -256,6 +261,7 @@ const CareersContactForm = () => {
                         {intl('careers_contact_form_technical_issues')}
                       </option>
                       <option>{suspectedRecruitmentScam}</option>
+                      {/* <option>{employmentVerification}</option>  // wait for confirmation from team */}
                     </Select>
                   )}
                 />

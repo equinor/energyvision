@@ -519,6 +519,11 @@ const snippets: textSnippet = {
     defaultValue: 'Suspected recruitment scam',
     group: groups.careerContactForm,
   },
+  careers_contact_form_employment_verification: {
+    title: 'Verification of previous employment',
+    defaultValue: 'Verification of previous employment',
+    group: groups.careerContactForm,
+  },
   careers_contact_form_phone: {
     title: 'Phone number',
     defaultValue: 'Phone number',

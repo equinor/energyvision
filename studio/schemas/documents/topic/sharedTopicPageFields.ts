@@ -44,6 +44,7 @@ export const content = {
     { type: 'textWithIconArray' },
     { type: 'keyNumbers' },
     { type: 'textTeaser' },
+    { type: 'statCallout' },
     { type: 'promotion' },
     { type: 'anchorLink' },
     { type: 'imageCarousel' },
@@ -68,6 +69,8 @@ export const content = {
     },
     { type: 'promotePeople' },
     { type: 'promoteTopics' },
+    { type: 'promoteTopicsV2' },
+    { type: 'promoteExternalLinkV2' },
     Flags.HAS_NEWS && { type: 'promoteNews' },
     Flags.HAS_PEOPLE && { type: 'personList' },
     { type: 'pieChartBlock', title: 'Pie chart' },
@@ -84,7 +87,10 @@ export const content = {
           ...props.schemaType,
           of: props.schemaType.of.filter(
             (member) =>
-              member.name !== 'promoteTopics' && member.name !== 'promotion',
+              member.name !== 'promoteTopics' &&
+              member.name !== 'promoteTopicsV2' &&
+              member.name !== 'promoteExternalLinkV2' &&
+              member.name !== 'promotion',
           ),
         },
       }),
@@ -95,13 +101,14 @@ export const content = {
       groups: [
         {
           name: 'promotions',
-          title: 'Promotions',
+          title: 'Promotional',
           of: [
             'promoteMagazine',
             'promotePeople',
             'promotionsV2',
             'promoteEvents',
             'promoteNews',
+            'statCallout',
           ],
         },
         {

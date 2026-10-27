@@ -83,7 +83,7 @@ export default (isoCode: string, title: string) => {
           'The unique part of the URL for this page. Should probably be something like the page title.',
         // validation: (Rule) => Rule.max(200),
         fieldset: 'slug',
-        options: { search: { weight: 10 } },
+        options: { search: { weight: 8 } },
       }),
       defineField({
         title: 'Complete URL for this page',
