@@ -1,23 +1,23 @@
-import { Accordion as EnvisAccordion } from '@/core/Accordion'
-import { Image } from '@/core/Image/Image'
-import Blocks from '@/portableText/Blocks'
-import CallToActions from '@/sections/CallToActions'
-import type { AccordionListData } from '@/types'
+import { Accordion as EnvisAccordion } from '@/core/Accordion';
+import { Image } from '@/core/Image/Image';
+import Blocks from '@/portableText/Blocks';
+import CallToActions from '@/sections/CallToActions';
+import type { AccordionListData } from '@/types';
 
-const { Item, Header, Content } = EnvisAccordion
+const { Item, Header, Content } = EnvisAccordion;
 
 type AccordionProps = {
-  hasSectionTitle?: boolean
-  data: AccordionListData[]
-  queryParamName: string
-  id: string
-}
+  hasSectionTitle?: boolean;
+  data: AccordionListData[];
+  queryParamName: string;
+  id: string;
+};
 
 const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
   return (
-    <EnvisAccordion type='multiple' id={id}>
-      {data.map(item => {
-        const { id, title: itemTitle, links, content, image } = item
+    <EnvisAccordion type="multiple" id={id}>
+      {data.map((item) => {
+        const { id, title: itemTitle, links, content, image } = item;
 
         return (
           <Item key={id} value={id}>
@@ -25,27 +25,27 @@ const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
             <Content forceMount>
               {image?.asset && (
                 <Image
-                  grid='xs'
-                  aspectRatio='16:9'
+                  grid="xs"
+                  aspectRatio="16:9"
                   image={image}
-                  className='max-w-72'
-                  imageClassName='lg:aspect-video rounded-2xs'
+                  className="max-w-72"
+                  imageClassName="lg:aspect-video rounded-2xs"
                 />
               )}
-              {content && <Blocks value={content} variant='body' />}
+              {content && <Blocks value={content} variant="body" />}
               {links && (
                 <CallToActions
                   callToActions={links}
-                  linkVariant='fit'
-                  className='pt-0'
+                  linkVariant="fit"
+                  className="pt-0"
                 />
               )}
             </Content>
           </Item>
-        )
+        );
       })}
     </EnvisAccordion>
-  )
-}
+  );
+};
 
-export default Accordion
+export default Accordion;

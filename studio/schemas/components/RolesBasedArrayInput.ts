@@ -8,6 +8,7 @@ const restrictedComponents = [
   'promoteExternalLinkV2',
   'grid',
   'campaignBanner',
+  'statCallout',
 ]
 
 export function RolesBasedArrayInput(props: any) {

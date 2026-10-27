@@ -75,6 +75,32 @@ You are an expert coding assistant tasked with integrating, maintaining, and deb
 - **Content Security Policy (CSP):** Ensure any suggested CSP headers explicitly allow connectivity and script execution for `*.friendlycaptcha.com`.
 - **EU Data Isolation:** If the project configuration flags strict EU compliance, route all widget and server validation requests through the dedicated EU endpoint (`*.frcaptcha.com`).
 
+## Web design patters
+  On sections where title, hideTitle, ingress and view links are used, ensure it is in its own container and  use px-layout-sm by default then from lg (`lg`) and above it should be px-layout-lg.
+  Then the rest of the component can use the appropriate layout grid according to its design and intentions.
+
+### Scroll-driven animation and animation/transform patterns
+Scroll-driven animations tie an element's animation directly to the user's scroll position rather than a ticking time clock. While visually engaging, they present distinct accessibility challenges that require careful engineering.
+
+Vestibular Disorders & Motion Sickness: Unexpected movement, scaling, rotation, or fast parallax sliding across the screen can trigger dizziness, nausea, or headaches for users with vestibular or neurological disorders.
+
+Scroll-Driven vs. Scroll-Triggered Differences: Scroll-driven animations scrub back and forth with the scroll bar. Scroll-triggered animations start playing automatically once an element hits a threshold and keep running regardless of scroll speed. Both require restraint.
+
+Keyboard & Screen Reader Impact: Heavy motion or layout shifts can distract or disorient assistive technology users. Interactive elements driven by scroll must remain focusable via keyboard navigation (tabindex).
+
+Zoom and Step-Scrolling: Users relying on OS-level text zoom or step-scrolling devices need animations to scale gracefully without breaking layout or causing text clipping.
+
+Respect prefers-reduced-motion: Users who have enabled the `prefers-reduced-motion` setting in their operating system should experience minimal or no scroll-driven animations.
+
+Implement Feature Detection and Fallbacks: Ensure that scroll-driven animations are only applied if the browser supports the necessary CSS properties. Provide alternative experiences or static content for unsupported browsers.
+
+Avoid Abrupt Luminance and Contrast Shifts: Sudden changes in brightness or contrast can be jarring and uncomfortable for users, particularly those with visual sensitivities. Ensure transitions are smooth and gradual.
+
+Resources: 
+- [MDN Web Docs: Scroll-driven animations](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-driven_animations)
+- [Josh W. Comeau: Scroll-Driven Animations](https://www.joshwcomeau.com/animation/scroll-driven-animations/)
+- [Scroll-Driven Animations Style Guide](https://scroll-driven-animations.style/)
+
 
 ## Flag These Patterns
 

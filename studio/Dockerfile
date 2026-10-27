@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # 1. Set up prune and build environment
-FROM node:24-slim AS base
+FROM node:24.22.1-slim AS base
 WORKDIR /app
 RUN npm install --global pnpm@11.24.0 turbo@2.10.10
 
@@ -42,7 +42,7 @@ RUN --mount=type=secret,id=fotoware_af_export_key,env=SANITY_STUDIO_FOTOWARE_AF_
     pnpm turbo build --filter=energy-vision-studio
 
 # 4. Run Studio
-FROM node:24-slim AS runner
+FROM node:24.22.1-slim AS runner
 WORKDIR /opt/app
 RUN apt-get update \
     && apt-get install -y --no-install-recommends tini \
@@ -65,4 +65,4 @@ USER "$UID"
 EXPOSE "$PORT"
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["node", "server.js"]
+CMD ["sh", "-ec", "printf 'Studio runtime Node.js: '; node --version; exec node server.js"]
