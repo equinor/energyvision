@@ -237,12 +237,10 @@ const getConfig = (
       enabled: false,
     },
   },
-  auth: createAuthStore({
-    projectId: projectIdParam,
-    dataset: datasetParam,
+  auth: {
+    loginMethod: 'cookie',
     redirectOnSingle: true,
-    providers: (prev) => [
-      ...prev,
+    providers: [
       {
         name: 'saml',
         title: 'Equinor SSO',
@@ -250,7 +248,7 @@ const getConfig = (
         logo: '/static/favicon.ico',
       },
     ],
-  }),
+  },
   releases: {
     enabled: false,
   },
