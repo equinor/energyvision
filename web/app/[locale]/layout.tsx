@@ -1,9 +1,4 @@
 import '../globals.css';
-import dynamic from 'next/dynamic';
-
-import { notFound } from 'next/navigation';
-import { routing } from '../../i18n/routing';
-import '../globals.css';
 import { GoogleTagManager } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
@@ -101,7 +96,7 @@ export default async function LocaleLayout({
         >
           {t('skipToContent') ?? 'Skip to main content'}
         </NextLink>
-        {!IS_FETCH_OPTIMIZED && <SanityLive />}
+        {/*!IS_FETCH_OPTIMIZED && <SanityLive />*/}
         {/* Preview link is sent to stakeholders dont show draft toolbar, only use if needed in local development
         Must first filter all conditional rendering props in the page content, otherwise the visual editing will not work correctly inside presentation tool. This is a big job and will be done later. For now, we will not render the visual editing inside the presentation tool. 
         */}
