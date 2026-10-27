@@ -5,8 +5,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * 0' # every sunday at midnight
-permissions:
-  id-token: write
+
 jobs:
   clean-ghcr:
     name: Delete old unused container images
@@ -14,33 +13,46 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            energyvision-internal
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: read
+          permission-organization-packages: write
+          
+
       - name: Checkout internal 🛎️
         id: checkout-internal
         uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PADMS_PAT }}
+          token: ${{ steps.generate-token.outputs.token }}
 
       - name: Get tags to keep from latest-prod-tags.json
         id: get-tags
         run: |
-          TAGS=$(jq -r '[.web + .studio | unique[]] | join(", ")' latest-prod-tags.json)
+          TAGS=$(jq -r '[.web + .studio | unique[] | "!" + .] | join(", ")' latest-prod-tags.json)
           echo "TAGS_TO_KEEP=$TAGS" >> $GITHUB_ENV
           echo "TAGS TO KEEP: $TAGS"
-
+   
       - name: Clean up Docker images
         id: delete-containers
-        uses: snok/container-retention-policy@v2
+        uses: snok/container-retention-policy@v3.1.0
         with:
-          token: ${{ secrets.PADMS_PAT }}
-          account-type: org
-          org-name: Equinor
+          token: ${{ steps.generate-token.outputs.token }}
+          account: Equinor
           image-names: energyvision/*
-          cut-off: a week ago UTC
-          keep-at-least: 5
-          skip-tags: ${{ env.TAGS_TO_KEEP }}, *-latest
-          # dry-run: true
+          cut-off: 1w
+          keep-n-most-recent: 5
+          image-tags: ${{ env.TAGS_TO_KEEP }}, !*-latest
+          dry-run: true
+          rust-log: container_retention_policy=debug,hyper_util=info
 
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v2
