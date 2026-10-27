@@ -1,50 +1,49 @@
-'use server'
-import { getTranslations } from 'next-intl/server'
-import type z from 'zod'
-import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas'
-import { getIsoFromLocale } from '@/sanity/helpers/localization'
+'use server';
+import { getTranslations } from 'next-intl/server';
+import type z from 'zod';
+import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas';
 import {
   type newsletterCategoryLocale,
   newsletterCategoryMap,
-} from '@/types/newsLetterTypes'
-import verifyCaptcha from './verifyCaptcha'
+} from '@/types/newsLetterTypes';
+import verifyCaptcha from './verifyCaptcha';
 
-const REQUEST_TIMEOUT_MS = 10_000
+const REQUEST_TIMEOUT_MS = 10_000;
 
 type SubscribeProps = {
-  locale: newsletterCategoryLocale
-  frcCaptchaSolution: unknown
-  formData: z.infer<ReturnType<typeof subscribeSchema>>
-}
+  locale: newsletterCategoryLocale;
+  frcCaptchaSolution: unknown;
+  formData: z.infer<ReturnType<typeof subscribeSchema>>;
+};
 
 export async function subscribe({
   locale,
   frcCaptchaSolution,
   formData,
 }: SubscribeProps) {
-  const captchaResult = await verifyCaptcha(frcCaptchaSolution)
+  const captchaResult = await verifyCaptcha(frcCaptchaSolution);
   if (captchaResult !== true) {
     return {
       status: false,
       message: captchaResult,
-    }
+    };
   }
 
-  const t = await getTranslations({ locale: getIsoFromLocale(locale) })
-  const validatedData = subscribeSchema(t).safeParse(formData)
+  const t = await getTranslations({ locale: locale });
+  const validatedData = subscribeSchema(t).safeParse(formData);
 
   if (!validatedData.success) {
-    return { status: false, errors: validatedData.error }
+    return { status: false, errors: validatedData.error };
   }
 
-  const { email, categories } = validatedData.data
+  const { email, categories } = validatedData.data;
 
   try {
-    const baseUrl = process.env.MAKE_SUBSCRIBER_API_BASE_URL
-    const apiKey = process.env.MAKE_API_KEY
-    const apiUser = process.env.MAKE_API_USERID
-    const subscriberListIdEn = process.env.MAKE_SUBSCRIBER_LIST_ID_EN
-    const subscriberListIdNo = process.env.MAKE_SUBSCRIBER_LIST_ID_NO
+    const baseUrl = process.env.MAKE_SUBSCRIBER_API_BASE_URL;
+    const apiKey = process.env.MAKE_API_KEY;
+    const apiUser = process.env.MAKE_API_USERID;
+    const subscriberListIdEn = process.env.MAKE_SUBSCRIBER_LIST_ID_EN;
+    const subscriberListIdNo = process.env.MAKE_SUBSCRIBER_LIST_ID_NO;
 
     if (
       !baseUrl ||
@@ -53,14 +52,14 @@ export async function subscribe({
       !subscriberListIdEn ||
       !subscriberListIdNo
     ) {
-      console.error('Missing newsletter subscription configuration')
+      console.error('Missing newsletter subscription configuration');
       return {
         status: false,
         message: 'Error during subscription',
-      }
+      };
     }
 
-    const parsedBaseUrl = new URL(baseUrl)
+    const parsedBaseUrl = new URL(baseUrl);
 
     if (
       parsedBaseUrl.protocol !== 'https:' ||
@@ -69,28 +68,28 @@ export async function subscribe({
       parsedBaseUrl.search ||
       parsedBaseUrl.hash
     ) {
-      console.error('Invalid newsletter subscription base URL configuration')
+      console.error('Invalid newsletter subscription base URL configuration');
       return {
         status: false,
         message: 'Error during subscription',
-      }
+      };
     }
 
     const subscriberListId =
-      locale === 'no' ? subscriberListIdNo : subscriberListIdEn
-    const endpoint = new URL('/api/public/v2/subscribers', parsedBaseUrl)
-    endpoint.searchParams.set('subscriber_list_id', subscriberListId)
-    endpoint.searchParams.set('tag', 'merge')
+      locale === 'no' ? subscriberListIdNo : subscriberListIdEn;
+    const endpoint = new URL('/api/public/v2/subscribers', parsedBaseUrl);
+    endpoint.searchParams.set('subscriber_list_id', subscriberListId);
+    endpoint.searchParams.set('tag', 'merge');
 
     const tags = categories
-      ?.map(category => newsletterCategoryMap[locale][category])
-      .filter((tag): tag is string => Boolean(tag))
+      ?.map((category) => newsletterCategoryMap[locale][category])
+      .filter((tag): tag is string => Boolean(tag));
 
     if (!tags || tags.length === 0) {
       return {
         status: false,
         message: 'Error during subscription',
-      }
+      };
     }
 
     const response = await fetch(endpoint, {
@@ -106,31 +105,31 @@ export async function subscribe({
         email,
         tags,
       }),
-    })
+    });
 
     if (response.status === 200) {
       return {
         status: true,
         message: 'Successfully subscribed',
-      }
+      };
     }
 
     console.error(
       'Error occurred while newsletter subscription',
       response.status,
-    )
+    );
 
     return {
       status: false,
       message: 'Error during subscription',
-    }
+    };
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error'
-    console.error('Error in newsletter subscription action', message)
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error in newsletter subscription action', message);
 
     return {
       status: false,
       message: 'Error during subscription',
-    }
+    };
   }
 }

@@ -1,15 +1,15 @@
 import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig';
-import { stegaClean } from '@sanity/client/stega';
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
+import { stegaClean } from 'next-sanity';
 import { Fragment, Suspense } from 'react';
 import { getValidLanguagesLocales } from '@/languageConfig';
 import { decodeSlugs } from '@/lib/helpers/getFullUrl';
 import { Flags } from '@/sanity/helpers/datasetHelpers';
-import { sanityFetchMetadata } from '@/sanity/lib/fetch';
-import { getDynamicFetchOptions, routeSanityFetch } from '@/sanity/lib/live';
+import { routeSanityFetch, sanityFetchMetadata } from '@/sanity/lib/fetch';
+import { getDynamicFetchOptions } from '@/sanity/lib/live';
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils';
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu';
 import {
