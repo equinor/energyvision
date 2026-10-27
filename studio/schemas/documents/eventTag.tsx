@@ -1,17 +1,17 @@
-import { defaultLanguage, languages } from '../../languages'
+import { defaultLanguage, isoToSchemaName, languages } from '../../languages'
 import { EdsIcon, TagIcon } from '../../icons'
 import type { Rule } from 'sanity'
 import { tag_special_equipment } from '@equinor/eds-icons'
 
 //takes every allowed language and makes a string field for each
 const localeStrings = languages.map((lang) => ({
-  name: lang.name,
+  name: isoToSchemaName(lang.iso),
   type: 'string',
   title: lang.title,
   validation: (Rule: Rule) => Rule.required(),
 }))
 
-const title = `title.${defaultLanguage.name}`
+const title = `title.${isoToSchemaName(defaultLanguage.iso)}`
 
 export default {
   type: 'document',

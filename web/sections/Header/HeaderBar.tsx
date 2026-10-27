@@ -19,7 +19,7 @@ export type HeaderBarProps = {
 
 const HeaderBar = ({
   siteMenuData,
-  locale = 'en_GB',
+  locale = 'en-GB',
   searchLabel = 'Search',
   headerData,
 }: HeaderBarProps) => {

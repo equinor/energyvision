@@ -9,7 +9,6 @@ import type {
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
-import { getIsoFromName } from '@/sanity/helpers/localization'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import type { DesignOptions, LinkData } from '@/types'
 import Transcript from '../Transcript/Transcript'
@@ -84,7 +83,7 @@ const VideoPlayerBlock = ({
               variant='fit'
               hrefLang={
                 action?.type === 'internalUrl'
-                  ? getIsoFromName(action?.link?.lang)
+                  ? action?.link?.lang
                   : undefined
               }
               className='mt-4 mb-8'

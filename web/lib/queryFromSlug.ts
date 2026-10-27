@@ -11,7 +11,6 @@ import { magazineQuery } from '@/sanity/queries/magazine'
 import { newsQuery } from '@/sanity/queries/news'
 import { routeQuery } from '@/sanity/queries/routes'
 //import { contentQueryById } from '@/sanity/queries/contentById'
-import { getNameFromLocale } from '../sanity/helpers/localization'
 
 export type QueryParams = {
   id?: string
@@ -69,7 +68,7 @@ const getQuery = async (
   return {
     queryParams: {
       id: documentID,
-      lang: getNameFromLocale(locale),
+      lang: locale,
       date: currentDate,
     },
     query: contentQueryById,
@@ -90,11 +89,10 @@ export const getQueryFromSlug = async (
   } */
 
   const slug = `/${slugArray.join('/')}`
-  const lang = getNameFromLocale(locale)
 
-  const query = await getQuery(firstPiece, secondPiece, lang)
+  const query = await getQuery(firstPiece, secondPiece, locale)
   return {
     query,
-    queryParams: { slug, lang, date },
+    queryParams: { slug, lang: locale, date },
   }
 }

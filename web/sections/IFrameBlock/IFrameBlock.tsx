@@ -6,7 +6,6 @@ import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import { getIsoFromName } from '../../sanity/helpers/localization'
 import type { IFrameData } from '../../types/index'
 
 const IFrame = dynamic(() => import('@/core/IFrame/IFrame'))
@@ -66,7 +65,7 @@ const IFrameBlock = ({
               variant='fit'
               hrefLang={
                 action?.type === 'internalUrl'
-                  ? getIsoFromName(action?.link?.lang)
+                  ? action?.link?.lang
                   : undefined
               }
               file={{
