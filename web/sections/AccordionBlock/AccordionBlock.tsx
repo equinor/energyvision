@@ -1,27 +1,27 @@
-import { toPlainText } from '@portabletext/react'
-import { FAQJsonLd } from 'next-seo'
-import { twMerge } from 'tailwind-merge'
-import { Image } from '@/core/Image/Image'
-import Blocks from '@/portableText/Blocks'
-import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import { Typography } from '../../core/Typography'
-import type { AccordionData, AccordionListData } from '../../types/index'
-import Accordion from './Accordion'
+import { toPlainText } from '@portabletext/react';
+import { FAQJsonLd } from 'next-seo';
+import { twMerge } from 'tailwind-merge';
+import { Image } from '@/core/Image/Image';
+import Blocks from '@/portableText/Blocks';
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap';
+import { Typography } from '../../core/Typography';
+import type { AccordionData, AccordionListData } from '../../types/index';
+import Accordion from './Accordion';
 
 type AccordionBlockProps = {
-  data: AccordionData
-  anchor?: string
-  className?: string
-}
+  data: AccordionData;
+  anchor?: string;
+  className?: string;
+};
 
 const buildJsonLdElements = (data: AccordionListData[]) => {
-  return data.map(item => {
+  return data.map((item) => {
     return {
       question: item.title,
       answer: toPlainText(item.content),
-    }
-  })
-}
+    };
+  });
+};
 
 const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
   const {
@@ -32,35 +32,38 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
     id,
     image,
     enableStructuredMarkup,
-  } = data
-  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+  } = data;
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions);
   // check if section classname needs: [&_svg]:inline [&_svg]:align-baseline
   return (
     <>
       <section
         id={anchor}
-        className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}
+        className={twMerge(
+          `${bg} ${dark ? 'dark' : ''}; mb-page-content`,
+          className,
+        )}
       >
-        <div className='mx-auto max-w-content px-layout-lg'>
+        <div className="mx-auto max-w-content px-layout-lg">
           {image?.asset && (
-            <div className='w-1/4'>
+            <div className="w-1/4">
               <Image
                 image={image}
-                grid='xs'
+                grid="xs"
                 aspectRatio={'1:1'}
-                className='mb-4'
-                imageClassName='aspect-square rounded-full'
+                className="mb-4"
+                imageClassName="aspect-square rounded-full"
               />
             </div>
           )}
           {title &&
             (Array.isArray(title) ? (
-              <Blocks value={title} variant='h2' />
+              <Blocks value={title} variant="h2" />
             ) : (
-              <Typography variant='h2'>{title}</Typography>
+              <Typography variant="h2">{title}</Typography>
             ))}
-          <div className='flex flex-col'>
-            {ingress && <Blocks variant='ingress' value={ingress} />}
+          <div className="flex flex-col">
+            {ingress && <Blocks variant="ingress" value={ingress} />}
             {accordion && accordion.length > 0 && (
               <Accordion
                 data={accordion}
@@ -76,7 +79,7 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
         <FAQJsonLd questions={buildJsonLdElements(accordion)} />
       )}
     </>
-  )
-}
+  );
+};
 
-export default AccordionBlock
+export default AccordionBlock;
