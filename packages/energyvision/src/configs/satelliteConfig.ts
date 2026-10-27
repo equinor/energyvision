@@ -52,21 +52,21 @@ const languages = [
  * @type {Record<string, string>}
  */
 export const newsSlug: Record<string, string> = {
-  en_GB: 'news',
-  nb_NO: 'nyheter',
-  pt_BR: 'noticias',
-  pl_PL: 'aktualnosci',
-  de_DE: 'aktuelles',
-  ja_JP: 'news',
-  cy_CY: 'newyddion',
+  ['en-GB']: 'news',
+  ['nb-NO']: 'nyheter',
+  ['pt-BR']: 'noticias',
+  ['pl-PL']: 'aktualnosci',
+  ['de-DE']: 'aktuelles',
+  ['ja-JP']: 'news',
+  ['cy-CY']: 'newyddion',
 };
 
 /**
  * @type {Record<string, string>}
  */
 export const magazineSlug: Record<string, string> = {
-  en_GB: 'magazine',
-  nb_NO: 'magasin',
+  ['en-GB']: 'magazine',
+  ['nb-NO']: 'magasin',
 };
 
 /*
