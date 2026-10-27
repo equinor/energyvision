@@ -12,12 +12,21 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 permissions:
-  contents: read
+  contents: none
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Generate internal read token
+        id: internal-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          owner: Equinor
+          repositories: energyvision-internal
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: read
       - name: Login to azure
         id: login-to-azure
         uses: azure/login@v1
@@ -33,7 +42,7 @@ jobs:
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PADMS_PAT }}
+          token: ${{ steps.internal-token.outputs.token }}
       # Do the actual deployment
       - name: deploy
         id: deploy

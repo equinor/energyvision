@@ -5,19 +5,29 @@ on:
   workflow_dispatch:
 permissions:
   id-token: write
+  contents: read
 jobs:
   update-radix-config:
     runs-on: ubuntu-latest
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
+      - name: Generate internal config write token
+        id: internal-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          owner: Equinor
+          repositories: energyvision-internal
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: write
       - name: Checkout internal 🛎️
         id: checkout-internal
         uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PADMS_PAT }}
+          token: ${{ steps.internal-token.outputs.token }}
       - name: Promote preprod tag to prod 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash
@@ -29,9 +39,7 @@ jobs:
           python -m pip install ruamel.yaml
           python ci/promoteAllToProduction.py web
           python ci/promoteAllToProduction.py studio
-          git config --global user.name 'github'
-          git config --global user.email 'padms@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
+          git remote set-url origin https://github.com/equinor/energyvision-internal.git
           if [[ `git status --porcelain` ]]
           then
             git commit -am "🚀 Deploy all web sites and studios to production"
@@ -97,13 +105,22 @@ jobs:
       SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID }}
       DOCKER_BUILDKIT: 1
     steps:
+      - name: Generate internal read token
+        id: internal-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          owner: Equinor
+          repositories: energyvision-internal
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: read
       - name: Checkout internal 🛎️
         id: checkout-internal
         uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PADMS_PAT }}
+          token: ${{ steps.internal-token.outputs.token }}
       - name: Get preprod sha 🏷️
         id: get-preprod-sha
         shell: bash
@@ -172,13 +189,22 @@ jobs:
       SANITY_STUDIO_SCREEN9_TOKEN: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
       DOCKER_BUILDKIT: 1
     steps:
+      - name: Generate internal read token
+        id: internal-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          owner: Equinor
+          repositories: energyvision-internal
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: read
       - name: Checkout internal 🛎️
         id: checkout-internal
         uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PADMS_PAT }}
+          token: ${{ steps.internal-token.outputs.token }}
       - name: Get preprod sha 🏷️
         id: get-preprod-sha
         shell: bash
@@ -269,13 +295,22 @@ jobs:
       WEB_SHA: ${{ steps.capture-shas.outputs.WEB_SHA }}
       STUDIO_SHA: ${{ steps.capture-shas.outputs.STUDIO_SHA }}
     steps:
+      - name: Generate internal config write token
+        id: internal-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          owner: Equinor
+          repositories: energyvision-internal
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: write
       - name: Checkout internal 🛎️
         id: checkout-internal
         uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PADMS_PAT }}
+          token: ${{ steps.internal-token.outputs.token }}
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
@@ -293,9 +328,7 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --global user.name 'github'
-          git config --global user.email 'padms@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
+          git remote set-url origin https://github.com/equinor/energyvision-internal.git
           git add latest-prod-tags.json
           git commit -m "Update latest-prod-tags.json with new tags" || echo "No changes to commit"
           git push
@@ -304,13 +337,25 @@ jobs:
     needs: [store-image-tags]
     runs-on: ubuntu-latest
     steps:
+      - name: Generate release project token
+        id: release-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          owner: Equinor
+          repositories: energyvision
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: read
+          permission-issues: read
+          permission-discussions: write
+          permission-organization-projects: write
       - name: Checkout 🛎️
         uses: actions/checkout@v7
 
       - name: 'Move cards and create discussion and post it to channel'
         id: 'get-list'
         with:
-          token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
+          token: ${{ steps.release-token.outputs.token }}
           commitSHA: 'Web : ${{ needs.store-image-tags.outputs.WEB_SHA }} Studio: ${{ needs.store-image-tags.outputs.STUDIO_SHA }}'
           slackWebhook: ${{ secrets.SLACK_WEBHOOK_RELEASE_ANNOUNCEMENT}}
         uses: ./.github/workflows/project/
