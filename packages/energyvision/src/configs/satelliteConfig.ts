@@ -195,7 +195,7 @@ const logAndFallback = (dataset: DatasetsKeys) => {
 };
 
 export const localNewsTags: Record<string, string[]> = {
-  en_GB: ['ev', 'uk', 'us'],
+  ['en-GB']: ['ev', 'uk', 'us'],
 };
 
 /**
