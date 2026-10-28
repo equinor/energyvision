@@ -48,7 +48,7 @@ export const query = /* groq */ `*[_type == "magazine" && lang == $lang  && excl
       "content": pt::text(content)
     }
   },
-  "magazineTags": magazineTags[]->.title[$lang],
+  "magazineTags": magazineTags[]->translation[language == $lang][0].value,
   "heroFigure": select(
     heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail },
     heroFigure),
@@ -59,7 +59,7 @@ export const query = /* groq */ `*[_type == "magazine" && lang == $lang  && excl
 `
 
 const getQueryParams = (language: Language, id: string) => ({
-  lang: language.internalCode,
+  lang: language.isoCode,
   id: id,
 })
 

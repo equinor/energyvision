@@ -6,7 +6,7 @@ import { SanityClient } from '@sanity/client'
 import { Language, Page } from '../../common'
 import { plainTextExcludingStrikeThrough } from '../../common/queryHelpers'
 
-const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "event" &&  excludeFromSearch != true] {
+const query = /* groq */ `*[string::startsWith(_type, "route_") && _type != "route_homepage" && lang == $lang && content->_type == "event" &&  excludeFromSearch != true] {
   "slug": slug.current,
   _id,
   "content": content->{
@@ -20,7 +20,7 @@ const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type
 `
 
 const getQueryParams = (language: Language, id: string) => ({
-  lang: language.internalCode,
+  lang: language.isoCode,
   id: id,
 })
 

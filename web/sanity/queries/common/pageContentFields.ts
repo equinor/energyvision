@@ -442,7 +442,7 @@ _type == "keyNumbers" =>{
             "lang": reference-> content->lang
         },
 
-          reference->_type == 'route_' + $lang => {
+          string::startsWith(reference->_type, 'route_') && reference->_type != 'route_homepage' && reference->lang == $lang => {
             "title": reference->content->title,
             "heroImage": select(
               reference->content->heroType == 'loopingVideo' =>

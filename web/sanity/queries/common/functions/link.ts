@@ -7,7 +7,7 @@ fn links::getLinkFields($link) = $link{
     "internalUrl"
   ),
   "link": select(
-    _type == "homePageLink" => { "slug": "/", "lang": homePageLanguage},
+    _type == "homePageLink" => { "slug": "/", "lang": array::join(string::split(homePageLanguage, "_"), "-")},
     _type == "personListUrl" => @->{ "slug": personListUrl },
     @->{
     "slug": slug.current,

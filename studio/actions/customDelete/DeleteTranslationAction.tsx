@@ -1,13 +1,15 @@
+// eslint-disable-next-line import/namespace
+import { Patch, Transaction } from '@sanity/client';
 import { useDocumentInternationalizationContext } from '@sanity/document-internationalization';
-import { TrashIcon } from '@sanity/icons/Trash';
-import type { ButtonTone } from '@sanity/ui';
-import { useToast } from '@sanity/ui/toast';
+import { TrashIcon } from '@sanity/icons';
+import { type ButtonTone, useToast } from '@sanity/ui';
 import { useCallback, useState } from 'react';
 import {
   type DocumentActionComponent,
   type SanityDocument,
   useClient,
 } from 'sanity';
+import { LANGUAGE_FIELD_NAME } from 'sanity-plugin-internationalized-array';
 import { defaultLanguage } from '../../languages';
 import { apiVersion } from '../../sanity.client';
 import DeleteTranslationDialog from './components/DeleteTranslationDialog';
@@ -19,7 +21,7 @@ export const DeleteTranslationAction: DocumentActionComponent = (props) => {
 
   const doc = props.draft || props.published;
   const documentLanguage = doc ? doc[languageField] : null;
-  const isDefaultLanguageDocument = defaultLanguage.iso === documentLanguage;
+  const isDefaultLanguageDocument = defaultLanguage.name === documentLanguage;
 
   const { id: documentId } = props;
   const [isDialogOpen, setDialogOpen] = useState(false);
@@ -29,55 +31,55 @@ export const DeleteTranslationAction: DocumentActionComponent = (props) => {
 
   const toast = useToast();
   const client = useClient({ apiVersion: apiVersion });
-  type ClientTransaction = ReturnType<typeof client.transaction>;
 
-  const unsetAndDeleteCurrentTranslation = useCallback(
-    (tx: ClientTransaction) => {
-      //unset current translation reference from metadata
-      translations.forEach((translation) => {
-        tx.patch(translation._id, (patch) =>
-          patch.unset([
-            `${TRANSLATIONS_ARRAY_NAME}[_key == "${documentLanguage}"]`,
-          ]),
-        );
+  const translationLanguageFilter =
+    typeof documentLanguage === 'string' && documentLanguage.length > 0
+      ? `${TRANSLATIONS_ARRAY_NAME}[${LANGUAGE_FIELD_NAME} == ${JSON.stringify(documentLanguage)} || _key == ${JSON.stringify(documentLanguage)}]`
+      : null;
+
+  const unsetAndDeleteCurrentTranslation = (tx: Transaction) => {
+    if (!translationLanguageFilter) {
+      return;
+    }
+
+    //unset current translation reference from metadata
+    translations.forEach((translation) => {
+      tx.patch(translation._id, (patch: Patch) =>
+        patch.unset([translationLanguageFilter]),
+      );
+    });
+
+    // delete the current document
+    tx.delete(documentId);
+    tx.delete(`drafts.${documentId}`);
+  };
+
+  const unsetAndDeleteDefaultWithMetaData = (tx: Transaction) => {
+    //unset translation references array in metadata
+    translations.forEach((translation) => {
+      tx.patch(translation._id, (patch) =>
+        patch.unset([TRANSLATIONS_ARRAY_NAME]),
+      );
+    });
+
+    // delete each of the translations and delete metadata
+    if (translations.length > 0) {
+      translations.forEach((translation: any) => {
+        translation.translations.forEach((it: any) => {
+          tx.delete(it.id);
+          tx.delete(`drafts.${it.id}`);
+        });
+        tx.delete(translation._id);
+        // Shouldn't exist as this document type is in liveEdit
+        tx.delete(`drafts.${translation._id}`);
       });
+    } else {
+      //simply a doc without metadata.. so delete it.
 
-      // delete the current document
       tx.delete(documentId);
       tx.delete(`drafts.${documentId}`);
-    },
-    [documentLanguage, documentId, translations],
-  );
-
-  const unsetAndDeleteDefaultWithMetaData = useCallback(
-    (tx: ClientTransaction) => {
-      //unset translation references array in metadata
-      translations.forEach((translation) => {
-        tx.patch(translation._id, (patch) =>
-          patch.unset([TRANSLATIONS_ARRAY_NAME]),
-        );
-      });
-
-      // delete each of the translations and delete metadata
-      if (translations.length > 0) {
-        translations.forEach((translation: any) => {
-          translation.translations.forEach((it: any) => {
-            tx.delete(it.id);
-            tx.delete(`drafts.${it.id}`);
-          });
-          tx.delete(translation._id);
-          // Shouldn't exist as this document type is in liveEdit
-          tx.delete(`drafts.${translation._id}`);
-        });
-      } else {
-        //simply a doc without metadata.. so delete it.
-
-        tx.delete(documentId);
-        tx.delete(`drafts.${documentId}`);
-      }
-    },
-    [documentId, translations],
-  );
+    }
+  };
   // Remove translation reference and delete document in one transaction
   const onProceed = useCallback(() => {
     const tx = client.transaction();
@@ -102,14 +104,7 @@ export const DeleteTranslationAction: DocumentActionComponent = (props) => {
           description: err.message,
         });
       });
-  }, [
-    client,
-    isDefaultLanguageDocument,
-    onClose,
-    toast,
-    unsetAndDeleteCurrentTranslation,
-    unsetAndDeleteDefaultWithMetaData,
-  ]);
+  }, [client, onClose, toast, isDefaultLanguageDocument]);
 
   return {
     label: `Delete translation...`,
