@@ -48,7 +48,7 @@ export const singletonsSlugsQuery = /* groq */ `
 `
 
 export const pageMetaQuery = /* groq */ `
-  *[(_type match "route_" + $lang) && slug.current == $slug] {
+  *[string::startsWith(_type, "route_") && _type != "route_homepage" && lang == $lang && slug.current == $slug] {
     _id, //used for data filtering
     "slug": slug.current,
     "slugs": {${contentRefSlugsQuery}}.translationSlugs,
