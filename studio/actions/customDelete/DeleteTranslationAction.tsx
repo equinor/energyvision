@@ -1,8 +1,9 @@
 // eslint-disable-next-line import/namespace
 import { Patch, Transaction } from '@sanity/client';
 import { useDocumentInternationalizationContext } from '@sanity/document-internationalization';
-import { TrashIcon } from '@sanity/icons';
-import { type ButtonTone, useToast } from '@sanity/ui';
+import { TrashIcon } from '@sanity/icons/Trash';
+import type { ButtonTone } from '@sanity/ui';
+import { useToast } from '@sanity/ui/toast';
 import { useCallback, useState } from 'react';
 import {
   type DocumentActionComponent,
