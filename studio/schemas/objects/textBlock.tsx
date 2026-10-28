@@ -116,7 +116,14 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      of: [configureBlockContent({ variant: 'ingress' })],
+      of: [
+        configureBlockContent({
+          variant: 'ingress',
+          annotations: Flags.HAS_ADVANCED_HIGHLIGHTER
+            ? [advancedHighlight]
+            : [],
+        }),
+      ],
     },
     {
       name: 'text',
