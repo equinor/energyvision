@@ -1,10 +1,8 @@
-import { Accordion as EnvisAccordion } from '@/core/Accordion';
+import { Details } from '@/core/Details/Details';
 import { Image } from '@/core/Image/Image';
 import Blocks from '@/portableText/Blocks';
 import CallToActions from '@/sections/CallToActions';
 import type { AccordionListData } from '@/types';
-
-const { Item, Header, Content } = EnvisAccordion;
 
 type AccordionProps = {
   hasSectionTitle?: boolean;
@@ -15,14 +13,16 @@ type AccordionProps = {
 
 const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
   return (
-    <EnvisAccordion type="multiple" id={id}>
+    <div id={id}>
       {data.map((item) => {
         const { id, title: itemTitle, links, content, image } = item;
 
         return (
-          <Item key={id} value={id}>
-            <Header hasSectionTitle={hasSectionTitle}>{itemTitle}</Header>
-            <Content forceMount>
+          <Details key={id}>
+            <Details.Header hasSectionTitle={hasSectionTitle}>
+              {itemTitle}
+            </Details.Header>
+            <Details.Content>
               {image?.asset && (
                 <Image
                   grid="xs"
@@ -40,11 +40,11 @@ const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
                   className="pt-0"
                 />
               )}
-            </Content>
-          </Item>
+            </Details.Content>
+          </Details>
         );
       })}
-    </EnvisAccordion>
+    </div>
   );
 };
 

@@ -1,13 +1,14 @@
-import { newsSlug } from '@energyvision/shared/satelliteConfig'
-import { file_add } from '@equinor/eds-icons'
-import slugify from '@sindresorhus/slugify'
-import { formatDate } from '../../helpers/formatDate'
-import { EdsIcon } from '../../icons'
-import { defaultLanguage } from '../../languages'
-import { Flags } from '../../src/lib/datasetHelpers'
-import SlugInput from '../components/SlugInput'
-import { withSlugValidation } from '../validations/validateSlug'
-import { lang } from './langField'
+import { newsSlug } from '@energyvision/shared/satelliteConfig';
+import { file_add } from '@equinor/eds-icons';
+import slugify from '@sindresorhus/slugify';
+import type { Rule } from 'sanity';
+import { formatDate } from '../../helpers/formatDate';
+import { EdsIcon } from '../../icons';
+import { defaultLanguage } from '../../languages';
+import { Flags } from '../../src/lib/datasetHelpers';
+import SlugInput from '../components/SlugInput';
+import { withSlugValidation } from '../validations/validateSlug';
+import { lang } from './langField';
 import {
   content,
   countryTags,
@@ -24,7 +25,7 @@ import {
   subscriptionType,
   tags,
   title,
-} from './news/sharedNewsFields'
+} from './news/sharedNewsFields';
 
 export default {
   title: 'News',
@@ -92,19 +93,19 @@ export default {
       options: withSlugValidation({
         source: (doc: { newsSlug: string }) => {
           // translated document ids end with _i18n__lang while base documents don't
-          return doc.newsSlug ? `${slugify(doc.newsSlug)}` : ''
+          return doc.newsSlug ? `${slugify(doc.newsSlug)}` : '';
         },
         slugify: (
           input: string,
           _schemaType: any,
           context: { parent: any },
         ) => {
-          const slug = slugify(input)
-          const { parent: document } = context
+          const slug = slugify(input);
+          const { parent: document } = context;
           const translatedNews = document.lang
             ? `/${newsSlug[document.lang]}`
-            : `/${newsSlug[defaultLanguage.name]}`
-          return `${translatedNews}/${slug}`
+            : `/${newsSlug[defaultLanguage.name]}`;
+          return `${translatedNews}/${slug}`;
         },
       }),
       description:
@@ -115,9 +116,55 @@ export default {
     ingress,
     content,
     iframe,
+    {
+      name: 'relations',
+      title: 'Relations',
+      type: 'object',
+      fields: [
+        {
+          name: 'title',
+          title: 'Title',
+          type: 'string',
+        },
+        {
+          name: 'persons',
+          title: 'Persons',
+          type: 'array',
+          of: [
+            {
+              name: 'personRelation',
+              title: 'Relation',
+              type: 'object',
+              fields: [
+                {
+                  name: 'title',
+                  title: 'Title',
+                  type: 'string',
+                },
+                {
+                  name: 'person',
+                  title: 'Person',
+                  type: 'reference',
+                  to: [{ type: 'person' }],
+                  options: { disableNew: true },
+                  validation: (Rule: Rule) => Rule.required(),
+                },
+              ],
+              preview: {
+                select: {
+                  title: 'person.name',
+                  subtitle: 'title',
+                  media: 'person.image',
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
     relatedLinks,
     excludeFromSearch,
-  ].filter(e => e),
+  ].filter((e) => e),
   preview: {
     select: {
       title: 'title',
@@ -128,12 +175,12 @@ export default {
       isCustomDate: 'customPublicationDate',
     },
     prepare(selection: {
-      title: any
-      media: any
-      description: any
-      publishedDate: any
-      firstPublishedAt: any
-      isCustomDate: any
+      title: any;
+      media: any;
+      description: any;
+      publishedDate: any;
+      firstPublishedAt: any;
+      isCustomDate: any;
     }) {
       const {
         title,
@@ -142,23 +189,23 @@ export default {
         publishedDate,
         firstPublishedAt,
         isCustomDate,
-      } = selection
-      const currentDate = new Date()
+      } = selection;
+      const currentDate = new Date();
       const date =
         publishedDate && isCustomDate
           ? new Date(publishedDate)
           : firstPublishedAt
             ? new Date(firstPublishedAt)
-            : null
+            : null;
 
       const displayDate =
         date && date <= currentDate
           ? `Published ${formatDate(date)}`
-          : 'Not published'
+          : 'Not published';
 
       const ingressBlock = (description || []).find(
         (ingressBlock: { _type: string }) => ingressBlock._type === 'block',
-      )
+      );
       return {
         title,
         subtitle: displayDate,
@@ -169,7 +216,7 @@ export default {
               .join('')
           : 'Missing lead',
         media,
-      }
+      };
     },
   },
-}
+};

@@ -1,27 +1,28 @@
-'use client'
-import { Carousel } from '@/core/Carousel/Carousel'
-import { twMerge } from '@/lib/twMerge/twMerge'
-import { EventCard } from '@/sections/cards/EventCard'
-import type { EventCardData } from '@/sections/cards/EventCard/EventCard'
+'use client';
+import { Carousel } from '@/core/Carousel/Carousel';
+import { CarouselItem } from '@/core/Carousel/CarouselItem';
+import { twMerge } from '@/lib/twMerge/twMerge';
+import { EventCard } from '@/sections/cards/EventCard';
+import type { EventCardData } from '@/sections/cards/EventCard/EventCard';
 import {
   type ColorKeyTokens,
   colorKeyToUtilityMap,
-} from '@/styles/colorKeyToUtilityMap'
-import type { EventPromotionSettings } from '../../../types/index'
-import PastEvents from './pastEvents/PastEvents'
+} from '@/styles/colorKeyToUtilityMap';
+import type { EventPromotionSettings } from '../../../types/index';
+import PastEvents from './pastEvents/PastEvents';
 
 type EventPromotionsProp = {
-  promotions: EventCardData[]
-  hasSectionTitle: boolean
-  eventPromotionSettings?: EventPromotionSettings
-  labelledbyId?: string
-  promotePastEvents?: boolean
+  promotions: EventCardData[];
+  hasSectionTitle: boolean;
+  eventPromotionSettings?: EventPromotionSettings;
+  labelledbyId?: string;
+  promotePastEvents?: boolean;
   /**
    * If event is on colored default background send white-100 here. If theme send the foreground color of the theme.
    */
-  background?: keyof ColorKeyTokens
-  hasBackgroundImage?: boolean
-}
+  background?: keyof ColorKeyTokens;
+  hasBackgroundImage?: boolean;
+};
 
 const EventPromotions = ({
   promotions,
@@ -31,7 +32,7 @@ const EventPromotions = ({
   background,
   hasBackgroundImage = false,
 }: EventPromotionsProp) => {
-  const bg = colorKeyToUtilityMap[background ?? 'white-100'].background
+  const bg = colorKeyToUtilityMap[background ?? 'white-100'].background;
 
   return (
     <div
@@ -45,7 +46,7 @@ const EventPromotions = ({
             <EventCard
               data={promotions[0]}
               hasSectionTitle={hasSectionTitle}
-              variant='single'
+              variant="single"
               className={twMerge(
                 background && !hasBackgroundImage && bg,
                 hasBackgroundImage && `relative z-10 mb-12`,
@@ -58,7 +59,7 @@ const EventPromotions = ({
                 <ul
                   className={`light grid auto-rows-auto grid-cols-1 content-center justify-center gap-x-4 gap-y-3 md:grid-cols-2 2xl:grid-cols-3`}
                 >
-                  {promotions.map(item => {
+                  {promotions.map((item) => {
                     return (
                       <li key={item.id}>
                         <EventCard
@@ -69,36 +70,42 @@ const EventPromotions = ({
                           )}
                         />
                       </li>
-                    )
+                    );
                   })}
                 </ul>
               ) : (
                 <Carousel
-                  variant='event'
-                  displayMode='scroll'
-                  items={promotions}
+                  displayMode="scroll"
+                  listClassName="p-0.5"
                   {...(hasSectionTitle && {
                     labelledbyId: labelledbyId,
                   })}
                   hasSectionTitle={hasSectionTitle}
-                  getVariantElementBody={(itemData: EventCardData) => (
-                    <EventCard
-                      hasSectionTitle={hasSectionTitle}
-                      data={itemData}
-                      variant='carousel'
-                      className={twMerge(
-                        background && !hasBackgroundImage && bg,
-                      )}
-                    />
-                  )}
-                />
+                >
+                  {promotions.map((itemData, index) => (
+                    <CarouselItem
+                      key={itemData.id}
+                      index={index}
+                      className="w-event-carousel-card-w"
+                    >
+                      <EventCard
+                        hasSectionTitle={hasSectionTitle}
+                        data={itemData}
+                        variant="carousel"
+                        className={twMerge(
+                          background && !hasBackgroundImage && bg,
+                        )}
+                      />
+                    </CarouselItem>
+                  ))}
+                </Carousel>
               )}{' '}
             </>
           )}
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default EventPromotions
+export default EventPromotions;

@@ -49,6 +49,23 @@ export const newsQuery = /* groq */ `
     "iframe": ${iframeForNewsQuery},
     "content": ${contentForNewsQuery},
     "relatedLinks": ${relatedLinksForNewsQuery},
+    relations{
+      title,
+      "persons": persons[defined(person->) || defined(@->)]{
+        "id": _key,
+        title,
+        "person": coalesce(person->, @->){
+          "id": _id,
+          name,
+          title,
+          image,
+          mobileNumber,
+          linkedinProfileUrl,
+          employmentDate,
+          metadata
+        }
+      }
+    },
     "latestNews": *[
       _type == "news" &&
       slug.current != $slug &&

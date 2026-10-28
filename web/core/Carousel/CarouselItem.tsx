@@ -1,45 +1,33 @@
-'use client'
-import { mergeRefs } from '@equinor/eds-utils'
-import type { PortableTextBlock } from '@portabletext/types'
-import {
-  forwardRef,
-  type HTMLAttributes,
-  type ReactNode,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-} from 'react'
-import { twMerge } from 'tailwind-merge'
-import { Typography } from '@/core/Typography'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import Blocks from '../../portableText/Blocks'
-import { getIsoFromName } from '../../sanity/helpers/localization'
-import type { LinkData } from '../../types'
-import ResourceLink from '../Link/ResourceLink'
-import type { DisplayModes } from './Carousel'
+'use client';
+import type { PortableTextBlock } from '@portabletext/types';
+import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
+import { Typography } from '@/core/Typography';
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction';
+import Blocks from '../../portableText/Blocks';
+import { getIsoFromName } from '../../sanity/helpers/localization';
+import type { LinkData } from '../../types';
+import ResourceLink from '../Link/ResourceLink';
+import { useCarouselItem } from './CarouselContext';
 
-export type Variants = 'richTextBelow' | 'default'
+export type Variants = 'richTextBelow' | 'default';
 
 type CarouselItemProps = {
-  variant?: Variants
-  displayMode?: DisplayModes
-  active?: boolean
+  index: number;
+  variant?: Variants;
   /* The component to use to display custom carousel item */
-  children: ReactNode
+  children: ReactNode;
   /* With richTextBelow */
-  title?: PortableTextBlock[] | string
+  title?: PortableTextBlock[] | string;
   /* With richTextBelow. Use for captions, descriptions etc */
-  content?: PortableTextBlock[] | string
+  content?: PortableTextBlock[] | string;
   /* With richTextBelow. */
-  action?: LinkData
+  action?: LinkData;
   /* With richTextBelow or default. */
-  attribution?: string
+  attribution?: string;
   /* Override heights in the richTextBelow */
-  overrideHeights?: boolean
-  /** Single container */
-  wasUserPress?: boolean
-} & HTMLAttributes<HTMLLIElement>
+  overrideHeights?: boolean;
+} & Omit<HTMLAttributes<HTMLLIElement>, 'title' | 'content'>;
 
 /* Carousel item
  * Use when there no extra configurations
@@ -49,13 +37,11 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(
   function CarouselItem(
     {
       variant = 'default',
-      displayMode = 'scroll',
-      wasUserPress = false,
+      index,
       overrideHeights = false,
       children,
       title,
       content,
-      active,
       action,
       attribution,
       className = '',
@@ -63,41 +49,36 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(
     },
     ref,
   ) {
-    const id = useId()
-    const itemRef = useRef<HTMLLIElement>(null)
-    const combinedItemRef = useMemo(
-      () => mergeRefs<HTMLLIElement>(itemRef, ref),
-      [ref],
-    )
+    const { displayMode, active, style, ...itemProps } = useCarouselItem(index);
 
     const getTitleElement = () => {
       if (title && (title === 'string' || typeof title === 'string')) {
         return (
-          <Typography as='h3' variant='h6'>
+          <Typography as="h3" variant="h6">
             {title}
           </Typography>
-        )
+        );
       }
       if (title && Array.isArray(title)) {
-        return <Blocks as='h3' variant='h6' value={title} />
+        return <Blocks as="h3" variant="h6" value={title} />;
       }
-      return null
-    }
+      return null;
+    };
 
     const getContentElement = () => {
       if (content && (content === 'string' || typeof content === 'string')) {
-        return <Typography variant='caption'>{content}</Typography>
+        return <Typography variant="caption">{content}</Typography>;
       }
       if (content && Array.isArray(content)) {
-        return <Blocks value={content} variant='body' />
+        return <Blocks value={content} variant="body" />;
       }
-      return null
-    }
+      return null;
+    };
 
     const singleWidths = `
   w-single-carousel-card-w-sm
   md:w-single-carousel-card-w-md
-  lg:w-single-carousel-card-w-lg`
+  lg:w-single-carousel-card-w-lg`;
 
     const scrollVariantClassNames = `
   group
@@ -106,7 +87,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(
   snap-start
   scroll-ml-0.5
   first:pl-0.5
-  last:pr-6`
+  last:pr-6`;
     //  max-h-[500px]
     //lg:max-h-[740px]
 
@@ -123,7 +104,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(
   duration-1000
   ease-ease
   ${!active ? 'opacity-30' : 'opacity-100'}
-  `
+  `;
 
     const getVariantBody = () => {
       switch (variant) {
@@ -160,8 +141,8 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(
                         label: action?.label,
                       }}
                       aria-label={action?.['aria-label']}
-                      variant='fit'
-                      className='mt-auto'
+                      variant="fit"
+                      className="mt-auto"
                       hrefLang={
                         action?.type === 'internalUrl'
                           ? getIsoFromName(action?.link?.lang)
@@ -174,30 +155,19 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(
                 </div>
               </figcaption>
             </figure>
-          )
+          );
         }
         default:
-          return <>{children}</>
+          return <>{children}</>;
       }
-    }
-
-    useEffect(() => {
-      if (displayMode === 'single') {
-        if (active && itemRef?.current && wasUserPress) {
-          itemRef?.current?.focus()
-        }
-      }
-    }, [active, wasUserPress, displayMode])
+    };
 
     return (
       <li
         {...rest}
-        key={id}
-        ref={combinedItemRef}
-        {...(displayMode === 'single' && {
-          'aria-current': active,
-          tabIndex: active ? 0 : -1,
-        })}
+        {...itemProps}
+        ref={ref}
+        style={{ ...rest.style, ...style }}
         className={twMerge(
           `relative mt-1 focus:outline-hidden focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-grey-50 focus-visible:outline-offset-2 dark:focus-visible:outline-white-100 ${displayMode === 'single' ? singleVariantClassNames : scrollVariantClassNames}`,
           className,
@@ -205,6 +175,6 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(
       >
         {getVariantBody()}
       </li>
-    )
+    );
   },
-)
+);
