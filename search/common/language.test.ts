@@ -1,12 +1,12 @@
 import * as E from 'fp-ts/lib/Either'
-import { languageFromInternalCode, languageFromIso, languageOrDefault } from "."
+import { languageFromIso, languageOrDefault } from "."
 
 describe('Language function tests', () => {
   describe('languageFromIso tests', () => {
     const sut = languageFromIso
 
     describe('With english iso code', () => {
-      const english = { internalCode: 'en-GB', isoCode: 'en-GB' }
+      const english = { isoCode: 'en-GB' }
       const res = sut('en-GB')
       it('english language object is returned', () => {
         E.foldW(
@@ -18,32 +18,6 @@ describe('Language function tests', () => {
 
     describe('With invalid iso code', () => {
       const res = sut('en_GB')
-      it('Gives an error', () => {
-        E.foldW(
-          (left) => expect(left).toBeDefined(),
-          () => fail('No object expected'),
-        )(res)
-      })
-    })
-  })
-
-
-  describe('languageFromInternalCode tests', () => {
-    const sut = languageFromInternalCode
-
-    describe('With english iso code', () => {
-      const english = { internalCode: 'en_GB', isoCode: 'en-GB' }
-      const res = sut('en_GB')
-      it('english language object is returned', () => {
-        E.foldW(
-          () => fail('Language object not returned'),
-          (right) => expect(right).toEqual(english),
-        )(res)
-      })
-    })
-
-    describe('With invalid iso code', () => {
-      const res = sut('en-GB')
       it('Gives an error', () => {
         E.foldW(
           (left) => expect(left).toBeDefined(),
@@ -57,7 +31,7 @@ describe('Language function tests', () => {
     const sut = languageOrDefault
 
     describe('With english iso code', () => {
-      const norwegian = { internalCode: 'nb_NO', isoCode: 'nb-NO' }
+      const norwegian = { isoCode: 'nb-NO' }
       const languageResult = languageFromIso('nb-NO')
       const res = sut(languageResult)
       it('english language object is returned', () => {
@@ -66,7 +40,7 @@ describe('Language function tests', () => {
     })
 
     describe('With invalid iso code', () => {
-      const english = { internalCode: 'en_GB', isoCode: 'en-GB' }
+      const english = { isoCode: 'en-GB' }
       const languageResult = languageFromIso('foobar')
       const res = sut(languageResult)
       it('Gives default language', () => {
