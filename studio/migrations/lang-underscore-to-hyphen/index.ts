@@ -1,4 +1,4 @@
-import { at, defineMigration, set } from 'sanity/migrate'
+import { at, defineMigration, set } from 'sanity/migrate';
 
 /**
  * Migrates all documents' `lang` field from underscore format (e.g. "en_GB")
@@ -17,36 +17,48 @@ import { at, defineMigration, set } from 'sanity/migrate'
  *   japan, southkorea, celticsea, sponsorship, equinorfunds, storage, secret
  */
 
-const LANG_REGEX = /^[a-z]{2}_[A-Z]{2}$/
+const LANG_REGEX = /^[a-z]{2}_[A-Z]{2}$/;
 
-const toIso = (lang: string) => lang.replace('_', '-')
+const toIso = (lang: string) => lang.replace('_', '-');
 
 export default defineMigration({
   title: 'lang underscore → hyphen (en_GB → en-GB)',
 
   migrate: {
     document(doc, _context) {
-      const patches = []
+      const patches = [];
 
       // 1. Update top-level `lang` field on any document that has it
       if (typeof doc.lang === 'string' && LANG_REGEX.test(doc.lang)) {
-        patches.push(at('lang', set(toIso(doc.lang))))
+        patches.push(at('lang', set(toIso(doc.lang))));
       }
 
       // 2. Update `language` field inside translation.metadata translations array
-      if (doc._type === 'translation.metadata' && Array.isArray(doc.translations)) {
-        ;(doc.translations as Array<{ _key: string; language?: string }>).forEach((item, index) => {
-          if (typeof item.language === 'string' && LANG_REGEX.test(item.language)) {
-            patches.push(at(`translations[${index}].language`, set(toIso(item.language))))
+      if (
+        doc._type === 'translation.metadata' &&
+        Array.isArray(doc.translations)
+      ) {
+        (
+          doc.translations as Array<{ _key: string; language?: string }>
+        ).forEach((item, index) => {
+          if (
+            typeof item.language === 'string' &&
+            LANG_REGEX.test(item.language)
+          ) {
+            patches.push(
+              at(`translations[${index}].language`, set(toIso(item.language))),
+            );
           }
           // Also update _key if it matches the old format
           if (typeof item._key === 'string' && LANG_REGEX.test(item._key)) {
-            patches.push(at(`translations[${index}]._key`, set(toIso(item._key))))
+            patches.push(
+              at(`translations[${index}]._key`, set(toIso(item._key))),
+            );
           }
-        })
+        });
       }
 
-      return patches.length > 0 ? patches : undefined
+      return patches.length > 0 ? patches : undefined;
     },
   },
-})
+});

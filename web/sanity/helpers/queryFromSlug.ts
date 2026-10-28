@@ -1,5 +1,4 @@
 import {
-  isoToSchemaName,
   localNewsTags,
   magazineSlug,
   newsSlug,
@@ -17,7 +16,6 @@ export type QueryParams = {
   slug?: string;
   lang?: string;
   date?: string;
-  routeName?: string;
 };
 
 const getQuery = async (
@@ -85,7 +83,6 @@ export const getQueryFromSlug = async (
     queryParams: {
       slug: Array.isArray(slug) ? `/${slug.join('/')}` : `/${slug ?? ''}`,
       lang: locale ?? 'en-GB',
-      routeName: isoToSchemaName(locale ?? 'en-GB'),
     },
   };
 };

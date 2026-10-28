@@ -224,6 +224,6 @@ export const getAllDomainUrls = () => {
   //return Object.keys(datasets).map((dataset) => websiteDomains[dataset]?.url)
 };
 
-export const isoToSchemaName = (iso: string) => {
+/*export const isoToSchemaName = (iso: string) => {
   return iso.replace('-', '_');
-};
+};*/

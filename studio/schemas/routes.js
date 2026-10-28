@@ -1,7 +1,8 @@
-import { isoToSchemaName, languages } from '../languages';
+import { languages } from '../languages';
+import { getRouteType } from '../src/lib/localization';
 
 const routes = languages.map((lang) => ({
-  type: `route_${isoToSchemaName(lang.iso)}`,
+  type: getRouteType(lang.iso),
 }));
 const routesHomepage = { type: `route_homepage` };
 
