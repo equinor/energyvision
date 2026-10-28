@@ -10,7 +10,7 @@ import { contentRefSlugsQuery } from './metaData';
 export const routeQuery = /* groq */ `
   ${functions}
   ${pageContentFunctions}
-  *[(_type match "route_" + $routeName) && slug.current == $slug] {
+  *[string::startsWith(_type, "route_") && _type != "route_homepage" && lang == $lang && slug.current == $slug] {
     _id, //used for data filtering
     "slug": slug.current,
     "slugs":{${contentRefSlugsQuery}},

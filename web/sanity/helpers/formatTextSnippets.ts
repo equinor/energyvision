@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { isoToSchemaName } from '@energyvision/shared/satelliteConfig';
 import { languages } from '@/languageConfig';
+
+type TranslationValue = { language?: string; value?: string };
 
 const getFormattedSnippets = (lang: string, snippets: any) => {
   return Object.assign(
@@ -10,9 +11,12 @@ const getFormattedSnippets = (lang: string, snippets: any) => {
       const key = snippet._id
         .replace('text_snippet_', '')
         .replace('drafts.', '');
+      const translation = (
+        snippet.translation as TranslationValue[] | undefined
+      )?.find((item) => item.language === lang);
 
       return {
-        [key]: snippet[lang] || '',
+        [key]: translation?.value || '',
       };
     }),
   );
@@ -26,7 +30,7 @@ const formatTextSnippets = (
   return langs.reduce(
     (o: any, lang: any) => ({
       ...o,
-      [lang]: getFormattedSnippets(isoToSchemaName(lang), snippets),
+      [lang]: getFormattedSnippets(lang, snippets),
     }),
     {},
   );

@@ -5,7 +5,6 @@ import { client } from '@/sanity/lib/client';
 import { sanityFetch } from '../lib/live';
 import { sameLang } from '../queries/common/langAndDrafts';
 import { publishDateTimeQuery } from '../queries/common/publishDateTime';
-import { isoToSchemaName } from './localization';
 
 const getHomePages = async () => {
   const data: { lang: string; _updatedAt: string }[] = await client.fetch(
@@ -23,29 +22,28 @@ const getHomePages = async () => {
   return data;
 };
 
-const getTopicRoutesForLocale = async (locale: string) => {
-  const lang = isoToSchemaName(locale);
+const ROUTE_FILTER = groq`string::startsWith(_type, "route_") && _type != "route_homepage" && lang == $lang`;
 
+const getTopicRoutesForLocale = async (locale: string) => {
   const data: { slug: string; _updatedAt: string }[] = await client.fetch(
-    groq`*[_type match "route_" + $lang && defined(slug.current)][] {
+    groq`*[${ROUTE_FILTER} && defined(slug.current)][] {
       _updatedAt,
       "slug": slug.current,
     }`,
     {
-      lang,
+      lang: locale,
     },
   );
   return data;
 };
 const getTopicRoutesForLocaleToStaticallyBuild = async (locale: string) => {
-  const lang = isoToSchemaName(locale);
   const data: { slug: string; _updatedAt: string }[] = await client.fetch(
-    groq`*[_type match "route_" + $lang  && includeInBuild && defined(slug.current)][] {
+    groq`*[${ROUTE_FILTER} && includeInBuild && defined(slug.current)][] {
       _updatedAt,
       "slug": slug.current,
     }`,
     {
-      lang,
+      lang: locale,
     },
   );
   return data;
