@@ -1,4 +1,3 @@
-import { language } from '@equinor/eds-icons';
 import { groq } from 'next-sanity';
 import { languages } from '@/languageConfig';
 import { client } from '@/sanity/lib/client';
