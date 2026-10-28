@@ -29,7 +29,9 @@ export async function subscribe({
     };
   }
 
-  const t = await getTranslations({ locale: locale });
+  const t = await getTranslations({
+    locale: locale === 'no' ? 'nb-NO' : 'en-GB',
+  });
   const validatedData = subscribeSchema(t).safeParse(formData);
 
   if (!validatedData.success) {

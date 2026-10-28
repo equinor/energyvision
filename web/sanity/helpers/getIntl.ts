@@ -7,6 +7,8 @@ export default async (locale: string) => {
   'use cache: remote';
   const { data: textSnippetsArray } = await routeSanityFetch({
     query: `*[_type == "textSnippet"]`,
+    tags: ['textSnippet'],
+    requestTag: 'text-snippets',
   });
   const textSnippetsData = formatTextSnippets(textSnippetsArray ?? []);
 

@@ -20,9 +20,9 @@ const buildPersonUrl = (
   routeLang: string | undefined,
   personName: string,
 ) => {
-  const locale = languages.find(language => language.name === routeLang)?.locale
+  const locale = languages.find(language => language.iso === routeLang)?.locale
   const localePrefix =
-    routeLang && routeLang !== defaultWebLang?.name && locale
+    routeLang && routeLang !== defaultWebLang?.iso && locale
       ? `/${locale}`
       : ''
   const normalizedRouteSlug = routeSlug.startsWith('/')

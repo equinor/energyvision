@@ -17,7 +17,7 @@ export const Organization = S =>
             .filter(
               '_type == "person" && (!defined(lang) || lang == $baseLang)',
             )
-            .params({ baseLang: defaultLanguage.name })
+            .params({ baseLang: defaultLanguage.iso })
             .canHandleIntent((_name, params) => params.type === 'person'),
         )
     : S.EmptyItem

@@ -30,7 +30,8 @@ const getTopicRoutesForLocale = async (locale: string) => {
       "slug": slug.current,
     }`,
     {
-      lang: locale,
+      lang:
+        languages.find((language) => language.locale === locale)?.iso ?? locale,
     },
   );
   return data;
@@ -42,7 +43,8 @@ const getTopicRoutesForLocaleToStaticallyBuild = async (locale: string) => {
       "slug": slug.current,
     }`,
     {
-      lang: locale,
+      lang:
+        languages.find((language) => language.locale === locale)?.iso ?? locale,
     },
   );
   return data;
@@ -59,7 +61,8 @@ const getDocumentsForLocale = async (
     }`,
     {
       type,
-      lang: locale,
+      lang:
+        languages.find((language) => language.locale === locale)?.iso ?? locale,
     },
   );
   return data;
