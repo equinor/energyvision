@@ -15,7 +15,7 @@ const tagFilter = /* groq */ `
 `;
 
 export const pastEventsQuery = (withTags = true): string => /* groq */ `
-    *[_type match "route_" + $lang + "*"
+  *[string::startsWith(_type, "route_") && _type != "route_homepage" && lang == $lang
     && ${notDraft}
     && content->_type == "event"
     && content->eventDate.date < string::split(now(),"T")[0]
@@ -24,7 +24,7 @@ export const pastEventsQuery = (withTags = true): string => /* groq */ `
 `;
 
 export const futureEventsQuery = (withTags = true): string => /* groq */ `
-  *[_type match "route_" + $lang + "*"
+  *[string::startsWith(_type, "route_") && _type != "route_homepage" && lang == $lang
     && ${notDraft}
     && content->_type == "event"
     && content->eventDate.date >= string::split(now(),"T")[0]

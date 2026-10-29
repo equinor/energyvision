@@ -13,7 +13,6 @@ import { ResourceLink } from '@/core/Link/ResourceLink';
 import { Promotion } from '@/core/Promotion/Promotion';
 import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref';
 import Blocks from '@/portableText/Blocks';
-import { getIsoFromName } from '@/sanity/helpers/localization';
 import { resolveImage } from '@/sanity/lib/utils';
 import {
   type ColorKeys,
@@ -176,9 +175,7 @@ const PromotionsBlock = ({
           variant="fit"
           href={getLocalizedHref(
             viewAllLink.link.slug,
-            viewAllLink.link.lang
-              ? getIsoFromName(viewAllLink.link.lang)
-              : locale,
+            viewAllLink.link.lang ? viewAllLink.link.lang : locale,
           )}
         >
           {viewAllLink?.label}
@@ -262,7 +259,7 @@ const PromotionsBlock = ({
               let href: string | undefined;
               if (promotionVariant !== 'promotePeople') {
                 const promotionIso = promotion?.link?.lang
-                  ? getIsoFromName(promotion.link.lang)
+                  ? promotion.link.lang
                   : locale;
                 href = getLocalizedHref(promotion?.link?.slug, promotionIso);
               }

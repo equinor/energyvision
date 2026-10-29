@@ -6,7 +6,7 @@ import { Language } from '../../common'
 import { MappableAccordionType, MappableTextBlockType } from '../common/mappers'
 import { plainTextExcludingStrikeThrough } from '../../common/queryHelpers'
 
-export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "page" && excludeFromSearch != true] {
+export const query = /* groq */ `*[string::startsWith(_type, "route_") && _type != "route_homepage" && lang == $lang && content->_type == "page" && excludeFromSearch != true] {
   "slug": slug.current,
   _id,
   "title": ${plainTextExcludingStrikeThrough('content->title')},
@@ -36,7 +36,7 @@ export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content
 `
 
 const getQueryParams = (language: Language, id: string) => ({
-  lang: language.internalCode,
+  lang: language.isoCode,
   id: id,
 })
 

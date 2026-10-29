@@ -1,34 +1,38 @@
-import type { Template } from 'sanity'
-import { defaultLanguage, languages } from './languages'
-import textSnippets from './schemas/textSnippets'
-import { Flags } from './src/lib/datasetHelpers'
+import { uuid } from '@sanity/uuid';
+import type { Template } from 'sanity';
+import { createTranslations } from './helpers/translation';
+import { defaultLanguage, languages } from './languages';
+import textSnippets from './schemas/textSnippets';
+import { Flags } from './src/lib/datasetHelpers';
+import { getRouteType } from './src/lib/localization';
 
 const ParentRoutesTemplates: Template<any, any>[] = languages.map(
-  ({ name, title }) => ({
-    id: `parent-route-${name}`,
+  ({ iso, title }) => ({
+    id: `parent-route-${iso}`,
     title: `Parent route - ${title}`,
-    schemaType: `route_${name}`,
+    schemaType: getRouteType(iso),
     parameters: [{ name: 'parentId', type: 'string' }],
     value: (params: Record<string, unknown>) => ({
+      lang: iso,
       parent: { _type: 'reference', _ref: params.parentId },
     }),
   }),
-)
+);
 
 const TextSnippetsTemplates: Template<any, any>[] = Object.keys(
   textSnippets,
-).map(key => ({
+).map((key) => ({
   id: `text-snippet-${key}`,
   title: `Text Snippet - ${textSnippets[key].title}`,
   schemaType: `textSnippet`,
   parameters: [{ name: 'defaultValue', type: 'string' }],
-  value: (params: Record<string, unknown>) => {
-    const fields = languages.map(({ name }) => ({
-      [name]: params.defaultValue,
-    }))
-    return Object.assign({}, ...fields)
-  },
-}))
+  value: (params: Record<string, unknown>) => ({
+    translation: createTranslations(
+      () => params.defaultValue as string | undefined,
+      uuid,
+    ),
+  }),
+}));
 
 const MenuTemplates: Template<any, any>[] = Flags.HAS_FANCY_MENU
   ? [
@@ -61,7 +65,7 @@ const MenuTemplates: Template<any, any>[] = Flags.HAS_FANCY_MENU
           lang: params.isoCode,
         }),
       },
-    ]
+    ];
 
 const footerWithLocaleTemplate: Template<any, any> = {
   id: 'footer-with-locale',
@@ -71,7 +75,7 @@ const footerWithLocaleTemplate: Template<any, any> = {
   value: (params: Record<string, unknown>) => ({
     lang: params.isoCode,
   }),
-}
+};
 
 const redirectWithLocaleTemplate: Template<any, any> = {
   id: 'redirect-with-locale',
@@ -81,7 +85,7 @@ const redirectWithLocaleTemplate: Template<any, any> = {
   value: (params: Record<string, unknown>) => ({
     lang: params.isoCode,
   }),
-}
+};
 
 const localNewsWithTagTemplate: Template<any, any> = {
   id: 'localnews-with-tag',
@@ -93,9 +97,9 @@ const localNewsWithTagTemplate: Template<any, any> = {
   ],
   value: (params: Record<string, unknown>) => ({
     localNewsTag: params.localNewsTag,
-    lang: params.lang || defaultLanguage.name,
+    lang: params.lang || defaultLanguage.iso,
   }),
-}
+};
 
 export const initialValueTemplates = [
   //promotedMagazineTagTemplate,
@@ -105,4 +109,4 @@ export const initialValueTemplates = [
   ...MenuTemplates,
   ...TextSnippetsTemplates,
   ...ParentRoutesTemplates,
-]
+];

@@ -9,17 +9,16 @@ const datasetSpecificSchemas = [
   !Flags.HAS_MAGAZINE && documentsWithI18n.magazine.name,
   !Flags.HAS_MAGAZINE && documentsWithI18n.magazineIndex.name,
   !Flags.HAS_NEWSROOM && documentsWithI18n.newsroom.name,
-  !Flags.HAS_PEOPLE && documentsWithI18n.person.name,
 ].filter((e) => e);
 
 export const i18n = {
   supportedLanguages: languages.map((it) => {
     return {
-      id: it.name,
+      id: it.iso,
       title: it.title,
     };
   }),
-  referenceBehavior: 'weak',
+  weakReferences: true,
   languageField: 'lang',
   allowCreateMetaDoc: true,
   schemaTypes: Object.keys(documentsWithI18n)

@@ -1,15 +1,15 @@
-import downloadableFileFields from './common/actions/downloadableFileFields'
-import downloadableImageFields from './common/actions/downloadableImageFields'
-import linkSelectorFields from './common/actions/linkSelectorFields'
-import background from './common/background'
-import markDefs from './common/blockEditorMarks'
-import { functions, pageContentFunctions } from './common/functions'
-import { heroFields } from './common/heroFields'
-import { sameLang } from './common/langAndDrafts'
-import pageContentFields from './common/pageContentFields'
-import { publishDateTimeQuery } from './common/publishDateTime'
-import { seoAndSomeFields } from './common/seoAndSomeFields'
-import { inlineSlugsQuery, singletonsSlugsQuery } from './metaData'
+import downloadableFileFields from './common/actions/downloadableFileFields';
+import downloadableImageFields from './common/actions/downloadableImageFields';
+import linkSelectorFields from './common/actions/linkSelectorFields';
+import background from './common/background';
+import markDefs from './common/blockEditorMarks';
+import { functions, pageContentFunctions } from './common/functions';
+import { heroFields } from './common/heroFields';
+import { sameLang } from './common/langAndDrafts';
+import pageContentFields from './common/pageContentFields';
+import { publishDateTimeQuery } from './common/publishDateTime';
+import { seoAndSomeFields } from './common/seoAndSomeFields';
+import { inlineSlugsQuery, singletonsSlugsQuery } from './metaData';
 
 const footerComponentFields = /* groq */ `
   title,
@@ -30,13 +30,13 @@ const footerComponentFields = /* groq */ `
     ${downloadableFileFields},
     ${downloadableImageFields},
   },
-`
+`;
 
 const promotedmagazineTags = /* groq */ `... *[_type == "magazineIndex" && ${sameLang}][0] {"magazineTags":promotedMagazineTags[]->{
   "id": _id,
   "key": key.current,
-  "title":title[$lang],
-}}`
+  "title":translation[language == $lang][0].value,
+}}`;
 
 export const magazineQuery = /* groq */ `
   ${functions}
@@ -51,7 +51,7 @@ export const magazineQuery = /* groq */ `
     "slugs": {${inlineSlugsQuery}},
     "template": _type,
     ${promotedmagazineTags},
-    "tags": magazineTags[]->title[$lang],
+    "tags": magazineTags[]->translation[language == $lang][0].value,
     "content": content[] {
           ${pageContentFields}
       },
@@ -62,7 +62,7 @@ export const magazineQuery = /* groq */ `
       }
     },
     hideFooterComponent,
-}[0]`
+}[0]`;
 
 export const magazineIndexQuery = /* groq */ `
  ${functions}
@@ -81,12 +81,12 @@ export const magazineIndexQuery = /* groq */ `
     "magazineTags": promotedMagazineTags[]->{
       "id": _id,
       "key": key.current,
-      "title":title[$lang],
+      "title":translation[language == $lang][0].value,
     },
     "footerComponent": footerComponent{
       ${footerComponentFields}
     }
-}[0]`
+}[0]`;
 
 export const allMagazineDocuments = /* groq */ `
   ${functions}
@@ -102,16 +102,16 @@ export const allMagazineDocuments = /* groq */ `
     ${markDefs},
     },
   "hero": ${heroFields}
-}`
+}`;
 
 //&& (${publishDateTimeQuery} < $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id < $lastId))
 const prevDirectionFilter = /* groq */ `
 && (${publishDateTimeQuery} > $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id > $lastId))
-`
+`;
 //&& (${publishDateTimeQuery} > $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id > $lastId))
 const nextDirectionFilter = /* groq */ `
 && (${publishDateTimeQuery} < $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id < $lastId))
-`
+`;
 
 export const getMagazineArticlesByTag = (
   hasFirstId = false,
@@ -141,12 +141,12 @@ ${functions}
     "hero": ${heroFields}
   }
 }.articles
-`
+`;
 
 export const allMagazineTags = /* groq */ `
   ${functions}
-*[_type == "magazineTag"}]{
+*[_type == "magazineTag"]{
 "id": _id,
 "key": key.current,
-"title":title[$lang],
-}`
+  "title":translation[language == $lang][0].value,
+}`;

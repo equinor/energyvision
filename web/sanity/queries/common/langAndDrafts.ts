@@ -10,5 +10,5 @@ export const notDraft = /* groq */ `
 `;
 
 export const fixPreviewForDrafts = /* groq */ `
-  ((defined(lang) && ${sameLang}) || (!defined(lang) && $lang == "${defaultLanguage.name}"))
+  ((defined(lang) && ${sameLang}) || (!defined(lang) && $lang == "${defaultLanguage.iso}"))
 `;

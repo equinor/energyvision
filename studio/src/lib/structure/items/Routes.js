@@ -5,6 +5,7 @@ import { RouteDocuments } from '../../../../icons'
 import flags from '../../../../icons/countries'
 import { languages } from '../../../../languages'
 import { apiVersion } from '../../../../sanity.client'
+import { getRouteType } from '../../localization'
 import { singletonListItem } from './SingletonItem'
 
 /**
@@ -19,19 +20,17 @@ import { singletonListItem } from './SingletonItem'
 
 const views = S => [S.view.form().title('Edit route')]
 
-const schema = 'route'
-
 const topicRoutes = (S, context) =>
   languages.map(lang =>
     S.listItem()
       .title(`${lang.title} routes`)
       .icon(flags[lang.id])
-      .child(routeStructure(S, context, lang.name)),
+      .child(routeStructure(S, context, lang.iso)),
   )
 
 function routeStructure(S, context, isoCode) {
   const { documentStore } = context
-  const documentName = `${schema}_${isoCode}`
+  const documentName = getRouteType(isoCode)
   const categoryParents = `_type == "${documentName}" && !defined(parent) && !(_id in path("drafts.**"))`
   const categoryParentsWithDrafts = `_type == "${documentName}" && !defined(parent)`
 

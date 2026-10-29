@@ -2,22 +2,21 @@ import {
   localNewsTags,
   magazineSlug,
   newsSlug,
-} from '@energyvision/shared/satelliteConfig'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { homePageQuery } from '@/sanity/queries/homePage'
-import { localNewsQuery } from '@/sanity/queries/localNews'
-import { magazineIndexQuery, magazineQuery } from '@/sanity/queries/magazine'
-import { newsQuery } from '@/sanity/queries/news'
-import { routeQuery } from '@/sanity/queries/routes'
-import { newsroomQuery } from '../queries/newsroom'
-import { getNameFromIso } from './localization'
+} from '@energyvision/shared/satelliteConfig';
+import { Flags } from '@/sanity/helpers/datasetHelpers';
+import { homePageQuery } from '@/sanity/queries/homePage';
+import { localNewsQuery } from '@/sanity/queries/localNews';
+import { magazineIndexQuery, magazineQuery } from '@/sanity/queries/magazine';
+import { newsQuery } from '@/sanity/queries/news';
+import { routeQuery } from '@/sanity/queries/routes';
+import { newsroomQuery } from '../queries/newsroom';
 
 export type QueryParams = {
-  id?: string
-  slug?: string
-  lang?: string
-  date?: string
-}
+  id?: string;
+  slug?: string;
+  lang?: string;
+  date?: string;
+};
 
 const getQuery = async (
   firstPiece: string,
@@ -25,26 +24,26 @@ const getQuery = async (
   lang: string,
 ) => {
   if (!firstPiece || typeof firstPiece === 'undefined' || firstPiece === '') {
-    return homePageQuery
+    return homePageQuery;
   }
   if (newsSlug[lang] === firstPiece) {
     if (
       Flags.HAS_NEWSROOM &&
       (!secondPiece || typeof secondPiece === 'undefined' || secondPiece === '')
     ) {
-      return newsroomQuery
+      return newsroomQuery;
     }
     if (secondPiece) {
       //Check for local news. For now it seems only path /news/... has local news
       if (
         Flags.HAS_LOCAL_NEWS &&
-        lang === 'en_GB' &&
+        lang === 'en-GB' &&
         secondPiece &&
         localNewsTags[lang].includes(secondPiece.toLowerCase())
       ) {
-        return localNewsQuery
+        return localNewsQuery;
       }
-      return newsQuery
+      return newsQuery;
     }
   }
   if (Flags.HAS_MAGAZINE && magazineSlug[lang] === firstPiece) {
@@ -53,38 +52,37 @@ const getQuery = async (
       typeof secondPiece === 'undefined' ||
       secondPiece === ''
     ) {
-      return magazineIndexQuery
+      return magazineIndexQuery;
     }
     if (secondPiece) {
-      return magazineQuery
+      return magazineQuery;
     }
   }
-  return routeQuery
-}
+  return routeQuery;
+};
 
 export const getQueryFromSlug = async (
   slug: string | string[] | undefined,
   locale = '',
 ): Promise<{ query: string; queryParams: QueryParams }> => {
-  let topLevelRoute = ''
-  let childRoute: string | undefined
+  let topLevelRoute = '';
+  let childRoute: string | undefined;
   if (slug && Array.isArray(slug)) {
     const [firstPiece, secondPiece] = slug.filter(
       (part: string) => part !== locale,
-    )
-    topLevelRoute = firstPiece
-    childRoute = secondPiece
+    );
+    topLevelRoute = firstPiece;
+    childRoute = secondPiece;
   } else if (slug) {
-    topLevelRoute = slug
+    topLevelRoute = slug;
   }
-  const lang = getNameFromIso(locale) ?? 'en_GB'
 
-  const query = await getQuery(topLevelRoute, childRoute, lang)
+  const query = await getQuery(topLevelRoute, childRoute, locale ?? 'en-GB');
   return {
     query,
     queryParams: {
       slug: Array.isArray(slug) ? `/${slug.join('/')}` : `/${slug ?? ''}`,
-      lang,
+      lang: locale ?? 'en-GB',
     },
-  }
-}
+  };
+};

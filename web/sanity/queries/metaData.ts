@@ -48,7 +48,7 @@ export const singletonsSlugsQuery = /* groq */ `
 `
 
 export const pageMetaQuery = /* groq */ `
-  *[(_type match "route_" + $lang) && slug.current == $slug] {
+  *[string::startsWith(_type, "route_") && _type != "route_homepage" && lang == $lang && slug.current == $slug] {
     _id, //used for data filtering
     "slug": slug.current,
     "slugs": {${contentRefSlugsQuery}}.translationSlugs,
@@ -59,7 +59,7 @@ export const pageMetaQuery = /* groq */ `
   }[0]
 `
 export const homePageMetaQuery = /* groq */ `
-coalesce(*[_type == "translation.metadata" && references(*[_id=="route_homepage"][0].content._ref)][0].translations[_key==$lang][0].value->{
+coalesce(*[_type == "translation.metadata" && references(*[_id=="route_homepage"][0].content._ref)][0].translations[language == $lang || _key==$lang][0].value->{
     "title": title,
     "seoAndSome": ${seoAndSomeFields},
     "heroImage": coalesce(heroImage, heroFigure),

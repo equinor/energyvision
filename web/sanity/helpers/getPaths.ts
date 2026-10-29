@@ -4,7 +4,6 @@ import { client } from '@/sanity/lib/client';
 import { sanityFetch } from '../lib/live';
 import { sameLang } from '../queries/common/langAndDrafts';
 import { publishDateTimeQuery } from '../queries/common/publishDateTime';
-import { getNameFromLocale } from './localization';
 
 const getHomePages = async () => {
   const data: { lang: string; _updatedAt: string }[] = await client.fetch(
@@ -22,29 +21,30 @@ const getHomePages = async () => {
   return data;
 };
 
-const getTopicRoutesForLocale = async (locale: string) => {
-  const lang = getNameFromLocale(locale);
+const ROUTE_FILTER = groq`string::startsWith(_type, "route_") && _type != "route_homepage" && lang == $lang`;
 
+const getTopicRoutesForLocale = async (locale: string) => {
   const data: { slug: string; _updatedAt: string }[] = await client.fetch(
-    groq`*[_type match "route_" + $lang && defined(slug.current)][] {
+    groq`*[${ROUTE_FILTER} && defined(slug.current)][] {
       _updatedAt,
       "slug": slug.current,
     }`,
     {
-      lang,
+      lang:
+        languages.find((language) => language.locale === locale)?.iso ?? locale,
     },
   );
   return data;
 };
 const getTopicRoutesForLocaleToStaticallyBuild = async (locale: string) => {
-  const lang = getNameFromLocale(locale);
   const data: { slug: string; _updatedAt: string }[] = await client.fetch(
-    groq`*[_type match "route_" + $lang  && includeInBuild && defined(slug.current)][] {
+    groq`*[${ROUTE_FILTER} && includeInBuild && defined(slug.current)][] {
       _updatedAt,
       "slug": slug.current,
     }`,
     {
-      lang,
+      lang:
+        languages.find((language) => language.locale === locale)?.iso ?? locale,
     },
   );
   return data;
@@ -54,7 +54,6 @@ const getDocumentsForLocale = async (
   type: 'news' | 'localNews' | 'magazine',
   locale: string,
 ) => {
-  const lang = getNameFromLocale(locale);
   const data: { slug: string; _updatedAt: string }[] = await client.fetch(
     groq`*[_type == $type && defined(slug.current) && ${sameLang} ][] {
       _updatedAt,
@@ -62,7 +61,8 @@ const getDocumentsForLocale = async (
     }`,
     {
       type,
-      lang,
+      lang:
+        languages.find((language) => language.locale === locale)?.iso ?? locale,
     },
   );
   return data;
@@ -109,7 +109,7 @@ export const getHomePagePaths = async (): Promise<PathType[]> => {
     .filter((e) => e)
     .map((it) => ({
       locale:
-        languages.find((language) => language.name === it.lang)?.locale || '',
+        languages.find((language) => language.iso === it.lang)?.locale || '',
       updatedAt: it._updatedAt,
       slug: '/',
     }));
@@ -173,7 +173,7 @@ export const getLocalNewsPaths = async (
 export const getNewsroomPaths = async (): Promise<PathType[]> => {
   // Use last published news as updatedAt field for newsroom
   const getUpdatedAt = async (
-    lang: 'en_GB' | 'nb_NO',
+    lang: 'en-GB' | 'nb-NO',
   ): Promise<{ _updatedAt: string }> =>
     await client.fetch(
       groq`*[_type == 'news' && ${sameLang}] | order(${publishDateTimeQuery} desc)[0] {
@@ -184,8 +184,8 @@ export const getNewsroomPaths = async (): Promise<PathType[]> => {
       },
     );
 
-  const { _updatedAt: englishUpdatedAt } = await getUpdatedAt('en_GB');
-  const { _updatedAt: norwegianUpdatedAt } = await getUpdatedAt('nb_NO');
+  const { _updatedAt: englishUpdatedAt } = await getUpdatedAt('en-GB');
+  const { _updatedAt: norwegianUpdatedAt } = await getUpdatedAt('nb-NO');
 
   return [
     {
@@ -204,7 +204,7 @@ export const getNewsroomPaths = async (): Promise<PathType[]> => {
 export const getMagazineIndexPaths = async (): Promise<PathType[]> => {
   // Use last published news as updatedAt field for newsroom
   const getUpdatedAt = async (
-    lang: 'en_GB' | 'nb_NO',
+    lang: 'en-GB' | 'nb-NO',
   ): Promise<{ _updatedAt: string }> =>
     await client.fetch(
       groq`*[_type == 'magazine' && ${sameLang}] | order(_createdAt desc)[0] {
@@ -215,8 +215,8 @@ export const getMagazineIndexPaths = async (): Promise<PathType[]> => {
       },
     );
 
-  const { _updatedAt: englishUpdatedAt } = await getUpdatedAt('en_GB');
-  const { _updatedAt: norwegianUpdatedAt } = await getUpdatedAt('nb_NO');
+  const { _updatedAt: englishUpdatedAt } = await getUpdatedAt('en-GB');
+  const { _updatedAt: norwegianUpdatedAt } = await getUpdatedAt('nb-NO');
 
   return [
     {

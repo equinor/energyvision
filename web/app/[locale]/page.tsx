@@ -8,7 +8,6 @@ import { OrganizationJsonLd } from 'next-seo';
 import { Suspense } from 'react';
 import { getValidLanguagesLocales } from '@/languageConfig';
 import { Flags } from '@/sanity/helpers/datasetHelpers';
-import { getNameFromIso } from '@/sanity/helpers/localization';
 import { routeSanityFetch, sanityFetchMetadata } from '@/sanity/lib/fetch';
 import { getDynamicFetchOptions } from '@/sanity/lib/live';
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils';
@@ -29,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const { data: metaData }: { data: any } = await sanityFetchMetadata({
     query: homePageMetaQuery,
     params: {
-      lang: getNameFromIso(locale),
+      lang: locale,
     },
     perspective: 'published',
     tags: [`homePage:${locale}`],
@@ -96,7 +95,7 @@ async function CachedHome({
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: {
-        lang: getNameFromIso(locale) ?? 'en_GB',
+        lang: locale ?? 'en-GB',
       },
       tags: [`siteMenu:${locale}`],
       requestTag: 'site-menu',

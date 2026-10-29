@@ -1,21 +1,20 @@
-import { ProfilePageJsonLd } from 'next-seo'
-import { forwardRef, type HTMLAttributes } from 'react'
-import BaseLink from '@/core/Link/BaseLink'
-import ResourceLink from '@/core/Link/ResourceLink'
-import { Typography } from '@/core/Typography'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import { twMerge } from '@/lib/twMerge/twMerge'
-import { urlForImage } from '@/sanity/lib/utils'
-import { Image } from '../../../core/Image/Image'
-import { getIsoFromName } from '../../../sanity/helpers/localization'
-import type { PeopleCardData } from '../../../types/index'
+import { ProfilePageJsonLd } from 'next-seo';
+import { forwardRef, type HTMLAttributes } from 'react';
+import BaseLink from '@/core/Link/BaseLink';
+import ResourceLink from '@/core/Link/ResourceLink';
+import { Typography } from '@/core/Typography';
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction';
+import { twMerge } from '@/lib/twMerge/twMerge';
+import { urlForImage } from '@/sanity/lib/utils';
+import { Image } from '../../../core/Image/Image';
+import type { PeopleCardData } from '../../../types/index';
 
 export type PeopleCardProps = {
-  data: PeopleCardData
+  data: PeopleCardData;
   //background?: ColorKeys
-  hasSectionTitle: boolean
-  variant?: 'default' | 'single'
-} & HTMLAttributes<HTMLDivElement>
+  hasSectionTitle: boolean;
+  variant?: 'default' | 'single';
+} & HTMLAttributes<HTMLDivElement>;
 
 /**
  * People Card component.
@@ -42,11 +41,11 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
       email,
       cv,
       enableStructuredMarkup,
-    } = data
+    } = data;
 
-    const cvUrl = cv ? getUrlFromAction(cv) : ''
+    const cvUrl = cv ? getUrlFromAction(cv) : '';
     const linkClassNames =
-      'text-norwegian-woods-100 no-underline hover:underline text-sm'
+      'text-norwegian-woods-100 no-underline hover:underline text-sm';
 
     return (
       <>
@@ -62,15 +61,15 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
           )}
         >
           {image && (
-            <div className='aspect-square w-24 shrink-0 self-start overflow-hidden rounded-full sm:w-28 lg:w-32 lg:self-center'>
+            <div className="aspect-square w-24 shrink-0 self-start overflow-hidden rounded-full sm:w-28 lg:w-32 lg:self-center">
               <Image
                 image={image}
                 fill
-                grid='xs'
-                aspectRatio='1:1'
+                grid="xs"
+                aspectRatio="1:1"
                 keepRatioOnMobile
-                className='h-full w-full'
-                imageClassName='h-full w-full object-cover'
+                className="h-full w-full"
+                imageClassName="h-full w-full object-cover"
               />
             </div>
           )}
@@ -85,17 +84,17 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
             <Typography
               as={hasSectionTitle ? 'h3' : 'h2'}
               variant={`${variant === 'single' ? 'md' : 'sm'}`}
-              className='font-medium'
+              className="font-medium"
             >
               {name}
             </Typography>
             {title && (
-              <div className='text-balance text-slate-80 text-sm dark:text-white-100'>
+              <div className="text-balance text-slate-80 text-sm dark:text-white-100">
                 {title}
               </div>
             )}
             {department && (
-              <div className='text-balance text-slate-80 text-sm dark:text-white-100'>
+              <div className="text-balance text-slate-80 text-sm dark:text-white-100">
                 {department}
               </div>
             )}
@@ -103,12 +102,10 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
               <ResourceLink
                 href={cvUrl}
                 hrefLang={
-                  cv?.type === 'internalUrl'
-                    ? getIsoFromName(cv?.link?.lang)
-                    : undefined
+                  cv?.type === 'internalUrl' ? cv?.link?.lang : undefined
                 }
-                variant='fit'
-                className='m-0 mt-2 p-0'
+                variant="fit"
+                className="m-0 mt-2 p-0"
               >
                 {cv?.label}
               </ResourceLink>
@@ -143,7 +140,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
           />
         )}
       </>
-    )
+    );
   },
-)
-export default PeopleCard
+);
+export default PeopleCard;

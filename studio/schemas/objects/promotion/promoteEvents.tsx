@@ -12,7 +12,10 @@ import { defaultBackgroundColors } from '@/schemas/defaultColors';
 import blocksToText from '../../../helpers/blocksToText';
 import { capitalizeFirstLetter } from '../../../helpers/formatters';
 import { filterByRouteEvents } from '../../../helpers/referenceFilters';
-import { defaultLanguage } from '../../../languages';
+import {
+  getTranslation,
+  type TranslationValue,
+} from '../../../helpers/translation';
 import routes from '../../routes';
 import { createColorSelectField } from '../colorList';
 import {
@@ -36,13 +39,13 @@ export type EventPromotion = {
 
 const EventTagLabel = ({ documentId }: { documentId: string }) => {
   const { value, isLoading, error } = useDocumentValues<{
-    title?: Record<string, string>;
+    translation?: TranslationValue[];
     key?: { current?: string };
-  }>(documentId, ['title', 'key']);
+  }>(documentId, ['translation', 'key']);
 
   return (
     <>
-      {value?.title?.[defaultLanguage.name] ||
+      {getTranslation(value?.translation) ||
         value?.key?.current ||
         (isLoading ? 'Loading tag' : error ? 'Unavailable tag' : 'Unnamed tag')}
     </>
