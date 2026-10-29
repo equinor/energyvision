@@ -74,7 +74,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
       draftId: getDraftId(params.id),
       publishedId: params.id.replace(/^drafts\./, ''),
       //default language here because we want the language setup for studio, not web
-      defaultLang: defaultLanguage?.name,
+      defaultLang: defaultLanguage?.iso,
     };
 
     const doc$ = context.documentStore.listenQuery(
@@ -107,7 +107,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
                 const locale = getLocaleFromName(translation?.lang);
                 return {
                   title: `${blocksToText(translation?.title)}`,
-                  href: `${translation?.lang !== defaultWebLang?.name ? `${locale}` : ''}${translation?.slug}`,
+                  href: `${translation?.lang !== defaultWebLang?.iso ? `${locale}` : ''}${translation?.slug}`,
                 };
               });
           } else if (doc?.slugs?.filter((slug: string) => slug)?.length > 0) {
@@ -117,7 +117,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
                 const locale = getLocaleFromName(doc?.lang);
                 return {
                   title: `${blocksToText(doc?.title)}`,
-                  href: `${doc?.lang !== defaultWebLang?.name ? `${locale}` : ''}${slug}`,
+                  href: `${doc?.lang !== defaultWebLang?.iso ? `${locale}` : ''}${slug}`,
                 };
               });
           } else {
@@ -131,7 +131,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
         } else if (doc?._type === 'homePage' && doc?.isActive) {
           if (!doc?.translationSlugs || doc?.translationSlugs?.length === 0) {
             const localeId = capitalizeFirstLetter(
-              getIdFromName(defaultWebLang?.name),
+              getIdFromName(defaultWebLang?.iso),
             );
             locs = [
               {
@@ -150,7 +150,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
                 );
                 return {
                   title: `${localeId} homepage`,
-                  href: `${item?.lang !== defaultWebLang?.name ? `/${itemLocale}` : '/'}`,
+                  href: `${item?.lang !== defaultWebLang?.iso ? `/${itemLocale}` : '/'}`,
                 };
               });
           }
@@ -163,7 +163,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
           locs = [
             {
               title: doc.title ? plainTitle : 'Untitled',
-              href: `${doc?.lang !== defaultWebLang?.name ? `${locale}/` : ''}${doc?.slug?.current}`,
+              href: `${doc?.lang !== defaultWebLang?.iso ? `${locale}/` : ''}${doc?.slug?.current}`,
             },
           ];
         }
