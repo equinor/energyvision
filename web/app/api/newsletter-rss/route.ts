@@ -53,7 +53,7 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
     `;
 
     articles.forEach((article) => {
-      const langPath = article.lang === 'nb_NO' ? '/no' : '';
+      const langPath = article.lang === 'nb-NO' ? '/no' : '';
 
       const hero = article.hero;
       const bannerImageUrl = hero?.image?.asset
@@ -64,7 +64,7 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
 
       const publishDate = new Date(article.publishDateTime);
       const dateFormat =
-        article.lang === 'nb_NO' ? 'd. MMMM yyyy HH:mm' : 'd MMMM yyyy HH:mm';
+        article.lang === 'nb-NO' ? 'd. MMMM yyyy HH:mm' : 'd MMMM yyyy HH:mm';
 
       const tzName =
         new Intl.DateTimeFormat('en-GB', {
@@ -76,7 +76,7 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
 
       const formattedPubDate = `${format(publishDate, dateFormat, {
         in: tz('Europe/Oslo'),
-        locale: article.lang === 'nb_NO' ? nb : enGB,
+        locale: article.lang === 'nb-NO' ? nb : enGB,
       })} (${tzName})`;
 
       const categoryTag = (

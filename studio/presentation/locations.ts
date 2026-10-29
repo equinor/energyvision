@@ -1,10 +1,27 @@
 import { map } from 'rxjs';
-import { getDraftId } from 'sanity';
+import { getDraftId, type PortableTextBlock } from 'sanity';
 import type { DocumentLocationResolver } from 'sanity/presentation';
 import blocksToText from '@/helpers/blocksToText';
 import { capitalizeFirstLetter } from '@/helpers/formatters';
 import { defaultLanguage, defaultWebLang } from '@/languages';
 import { getIdFromName, getLocaleFromName } from '../src/lib/localization';
+
+type TranslationLocation = {
+  lang?: string;
+  slug?: string;
+  title?: PortableTextBlock[];
+};
+
+type LocationDocument = {
+  _id: string;
+  _type: string;
+  lang?: string;
+  title?: string | PortableTextBlock[];
+  isActive?: boolean;
+  slug?: { current?: string };
+  slugs?: (string | null)[];
+  translationSlugs?: (TranslationLocation | null)[];
+};
 
 export const locations: DocumentLocationResolver = (params, context) => {
   let query = null;
@@ -16,6 +33,8 @@ export const locations: DocumentLocationResolver = (params, context) => {
     'magazineIndex',
     'localNews',
   ];
+  const isRoutePage = routePages.includes(params.type);
+  const hasOwnSlug = pagesWithSlugOnThem.includes(params.type);
 
   if (params.type === 'homePage') {
     query = {
@@ -37,7 +56,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
       `,
       listen: `*[_id in [$id,$draftId]]`,
     };
-  } else if (routePages?.includes(params.type)) {
+  } else if (isRoutePage) {
     query = {
       fetch: `*[_id==$id][0]{
       lang,
@@ -52,7 +71,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
       `,
       listen: `*[_id in [$id,$draftId]]`,
     };
-  } else if (pagesWithSlugOnThem?.includes(params.type)) {
+  } else if (hasOwnSlug) {
     //pages with slugs on them
     query = {
       fetch: `*[_id==$id][0]{
@@ -79,98 +98,106 @@ export const locations: DocumentLocationResolver = (params, context) => {
 
     const doc$ = context.documentStore.listenQuery(
       query,
-      //@ts-ignore
       pageParams,
       { perspective: 'drafts' }, // returns a draft article if it exists
     );
 
-    // Return a streaming list of locations
     return doc$.pipe(
-      map((doc) => {
-        // If the document doesn't exist or have a slug, return null
-        if (!doc || (doc?._type === 'homePage' && !doc?.isActive)) {
+      map((doc: LocationDocument | null) => {
+        if (!doc || (doc._type === 'homePage' && !doc.isActive)) {
           return null;
         }
-        let locs = [];
-        if (routePages?.includes(params.type)) {
-          if (
-            doc?.translationSlugs?.filter(
-              (translationSlug: any) => translationSlug?.slug,
-            )?.length > 0
-          ) {
-            locs = doc?.translationSlugs
-              ?.filter(
-                (translation: any) =>
-                  translation?.slug && doc?.lang === translation?.lang,
-              )
-              ?.map((translation: any) => {
-                const locale = getLocaleFromName(translation?.lang);
+
+        const plainTitle = Array.isArray(doc.title)
+          ? blocksToText(doc.title)
+          : doc.title;
+
+        if (isRoutePage) {
+          const translatedRoutes = (doc.translationSlugs ?? []).filter(
+            (translation): translation is TranslationLocation =>
+              Boolean(translation?.slug && doc.lang === translation.lang),
+          );
+
+          if (translatedRoutes.length > 0) {
+            return {
+              locations: translatedRoutes.map((translation) => {
+                const locale = getLocaleFromName(translation.lang);
                 return {
-                  title: `${blocksToText(translation?.title)}`,
-                  href: `${translation?.lang !== defaultWebLang?.iso ? `${locale}` : ''}${translation?.slug}`,
+                  title: `${blocksToText(translation.title)}`,
+                  href: `${translation.lang !== defaultWebLang?.iso ? locale : ''}${translation.slug}`,
                 };
-              });
-          } else if (doc?.slugs?.filter((slug: string) => slug)?.length > 0) {
-            locs = doc?.slugs
-              ?.filter((slug: string) => slug)
-              ?.map((slug: string) => {
-                const locale = getLocaleFromName(doc?.lang);
-                return {
-                  title: `${blocksToText(doc?.title)}`,
-                  href: `${doc?.lang !== defaultWebLang?.iso ? `${locale}` : ''}${slug}`,
-                };
-              });
-          } else {
-            locs = [
-              {
-                title: `${doc?.title ? blocksToText(doc?.title) : 'Untitled'}`,
-                href: `/preview/${doc?._id}`,
-              },
-            ];
+              }),
+            };
           }
-        } else if (doc?._type === 'homePage' && doc?.isActive) {
-          if (!doc?.translationSlugs || doc?.translationSlugs?.length === 0) {
+
+          const routeSlugs = (doc.slugs ?? []).filter(
+            (slug): slug is string => Boolean(slug),
+          );
+          const locale = getLocaleFromName(doc.lang);
+
+          if (routeSlugs.length > 0) {
+            return {
+              locations: routeSlugs.map((slug) => ({
+                title: `${plainTitle}`,
+                href: `${doc.lang !== defaultWebLang?.iso ? locale : ''}${slug}`,
+              })),
+            };
+          }
+
+          return {
+            locations: [
+              {
+                title: doc.title ? `${plainTitle}` : 'Untitled',
+                href: `/preview/${doc._id}`,
+              },
+            ],
+          };
+        }
+
+        if (doc._type === 'homePage') {
+          const translations = doc.translationSlugs ?? [];
+
+          if (translations.length === 0) {
             const localeId = capitalizeFirstLetter(
               getIdFromName(defaultWebLang?.iso),
             );
-            locs = [
-              {
-                title: `${localeId} homepage`,
-                href: `/`,
-              },
-            ];
+            return {
+              locations: [{ title: `${localeId} homepage`, href: '/' }],
+            };
           }
-          if (doc?.translationSlugs?.length > 0) {
-            locs = doc?.translationSlugs
-              ?.filter((item: any) => item?.lang === doc?.lang)
-              ?.map((item: any) => {
-                const itemLocale = getLocaleFromName(item?.lang);
+
+          return {
+            locations: translations
+              .filter(
+                (translation): translation is TranslationLocation =>
+                  translation !== null && translation.lang === doc.lang,
+              )
+              .map((translation) => {
+                const locale = getLocaleFromName(translation.lang);
                 const localeId = capitalizeFirstLetter(
-                  getIdFromName(item?.lang),
+                  getIdFromName(translation.lang),
                 );
                 return {
                   title: `${localeId} homepage`,
-                  href: `${item?.lang !== defaultWebLang?.iso ? `/${itemLocale}` : '/'}`,
+                  href: translation.lang !== defaultWebLang?.iso ? `/${locale}` : '/',
                 };
-              });
-          }
-        } else if (pagesWithSlugOnThem?.includes(params.type)) {
-          const locale = getLocaleFromName(doc?.lang);
-          const plainTitle = Array.isArray(doc.title)
-            ? blocksToText(doc.title)
-            : doc.title;
-
-          locs = [
-            {
-              title: doc.title ? plainTitle : 'Untitled',
-              href: `${doc?.lang !== defaultWebLang?.iso ? `${locale}/` : ''}${doc?.slug?.current}`,
-            },
-          ];
+              }),
+          };
         }
 
-        return {
-          locations: locs ?? [],
-        };
+        if (hasOwnSlug) {
+          const locale = getLocaleFromName(doc.lang);
+          return {
+            locations: [
+              {
+                title: doc.title ? (plainTitle ?? 'Untitled') : 'Untitled',
+                href: `${doc.lang !== defaultWebLang?.iso ? `${locale}/` : ''}${doc.slug?.current}`,
+              },
+            ],
+          };
+        }
+
+        return { locations: [] };
       }),
     );
   }
