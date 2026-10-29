@@ -53,7 +53,7 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
     `;
 
     articles.forEach((article) => {
-      const langPath = article.lang === 'nb_NO' ? '/no' : '';
+      const langPath = article.lang === 'nb-NO' ? '/no' : '';
 
       const hero = article.hero;
       const bannerImageUrl = hero?.image?.asset
