@@ -28,7 +28,7 @@
     "@portabletext/react": "^5.0.0",
     "@reach/auto-id": "^0.18.0",
     "@sanity/client": "^7.23.1",
-    "@sanity/document-internationalization": "6.2.19",
+    "@sanity/document-internationalization": "^6.2.19",
     "blob-util": "^2.0.2",
     "buffer": "^6.0.3",
     "date-fns": "^4.4.0",
