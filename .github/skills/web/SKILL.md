@@ -16,6 +16,7 @@ description: Web application React/NextJS/TypeScript coding standards, state man
 - Use `type` aliases (not `interface`) for shared shapes.
 - Prefer named exports for types/utilities.
 - Use functional components.
+- Always use `Typography` from `@/core/Typography/Typography` for paragraphs and text instead of raw `<p>` elements or unstyled text wrappers. Set `as` for the semantic element and `variant` (and `group` when needed) for the intended styling; preserve semantic links and controls.
 - Keep components and Hooks pure; do not mutate props/state.
 - Keep one source of truth for each piece of state (lift state up instead of duplicating it).
 

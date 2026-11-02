@@ -2,6 +2,35 @@
 @import "@energyvision/shared/brand.css";
 @source "../styles/components/cookiebot.css";
 
+@utility carousel-scroll-progress {
+  @supports (animation-timeline: scroll()) and
+    (timeline-scope: --carousel-scroll) {
+    @media (prefers-reduced-motion: no-preference) {
+      timeline-scope: --carousel-scroll;
+
+      & > ul {
+        scroll-timeline: --carousel-scroll inline;
+      }
+
+      &::before {
+        inset-inline-start: 0;
+        inset-inline-end: auto;
+        animation: carousel-scroll-progress steps(100, end) both;
+        animation-timeline: --carousel-scroll;
+      }
+    }
+  }
+}
+
+@keyframes carousel-scroll-progress {
+  from {
+    width: 10%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
 @utility graph-paper-background {
   --graph-paper-line: color-mix(
     in srgb,
