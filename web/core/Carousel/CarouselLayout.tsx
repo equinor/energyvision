@@ -99,7 +99,7 @@ export function CarouselLayout({
             className={
               single
                 ? 'contents'
-                : 'carousel-scroll-progress relative isolate min-w-0 pb-[calc(var(--spacing)*2+3.5px)] before:pointer-events-none before:absolute before:inset-x-0 before:bottom-0 before:-z-10 before:h-2 before:rounded-[calc(var(--radius-base)/3.5)] before:border before:border-current before:bg-[image:repeating-linear-gradient(315deg,currentColor_0,currentColor_1px,transparent_0,transparent_50%)] before:bg-size-[4px_4px] before:text-black/15 dark:before:text-white/10'
+                : 'carousel-scroll-progress relative isolate min-w-0 pb-[calc(var(--spacing)*2+3.5px)] before:pointer-events-none before:absolute before:inset-x-0 before:bottom-0 before:-z-10 before:h-2 before:rounded-[calc(var(--radius-base)/3.5)] before:border before:border-current before:bg-[image:repeating-linear-gradient(315deg,currentColor_0,currentColor_1px,transparent_0,transparent_50%)] before:bg-size-[4px_4px] before:text-black/15 after:pointer-events-none after:absolute after:inset-e-layout-sm after:inset-s-0 after:bottom-0 after:-z-20 after:h-2 after:rounded-[calc(var(--radius-base)/3.5)] after:bg-gray-20 dark:before:text-white/10'
             }
           >
             <ul
