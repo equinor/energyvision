@@ -626,10 +626,9 @@ _type == "keyNumbers" =>{
       "foreground": theme.theme.foreground.key,
     },
     "items": items[person->lang == $lang]{
-      "id": _key,
+      "id": person->_id,
       highlighted,
       "person": person->{
-        "id": _id,
         name,
         title,
         linkedinProfileUrl,

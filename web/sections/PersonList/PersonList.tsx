@@ -24,7 +24,6 @@ export type PersonListItem = {
   id: string;
   highlighted?: boolean;
   person: {
-    id: string;
     name: string;
     title?: string;
     linkedinProfileUrl?: string;
@@ -116,10 +115,7 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
     const foreground = data.designOptions?.foreground;
 
     const searchParams = useSearchParams();
-    // URL hashtag param is set by ModalPromotion as encodeURIComponent(name)
-    const activePersonName = searchParams.get('person')
-      ? decodeURIComponent(searchParams.get('person') ?? '')
-      : null;
+    const activePersonId = searchParams.get('person');
 
     return (
       <>
@@ -165,6 +161,7 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
               const renderCard = (item: PersonListItem) => (
                 <ModalPromotion
                   className="h-full"
+                  id={item.id}
                   title={item.person?.name}
                   image={item.person?.image}
                   ingress={item.person?.title}
@@ -172,9 +169,7 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
                   imageClassName=""
                   ingressClassName="lg:line-clamp-none"
                   modalTitle={item.person?.name}
-                  initialOpen={
-                    !!activePersonName && item.person?.name === activePersonName
-                  }
+                  initialOpen={!!activePersonId && item.id === activePersonId}
                   modalContent={
                     <div className="flex flex-col gap-6">
                       <div className="flex items-center gap-6">
