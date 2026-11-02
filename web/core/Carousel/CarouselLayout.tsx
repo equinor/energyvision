@@ -111,7 +111,7 @@ export function CarouselLayout({
                 'w-full focus:outline-dashed focus:outline-1 focus:outline-grey-60',
                 single
                   ? 'grid [--carousel-slide-stride:calc(var(--spacing-single-carousel-card-w-sm)+var(--spacing)*5)] md:[--carousel-slide-stride:calc(var(--spacing-single-carousel-card-w-md)+var(--spacing)*5)] lg:[--carousel-slide-stride:calc(var(--spacing-single-carousel-card-w-lg)+var(--spacing)*5)]'
-                  : 'no-scrollbar grid h-fit snap-x auto-cols-auto grid-flow-col gap-3 overflow-x-auto lg:gap-6',
+                  : 'no-scrollbar grid h-fit snap-x scroll-pe-6 auto-cols-auto grid-flow-col gap-3 overflow-x-auto pe-layout-sm lg:gap-6',
                 listClassName,
                 !single && 'pb-0',
               )}
