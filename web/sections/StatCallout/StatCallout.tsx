@@ -87,8 +87,6 @@ export const StatCallout = ({
         )}
         {shouldUseHorizontalScroll ? (
           <Carousel
-            items={itemsWithAspectRatio}
-            variant="statCallout"
             displayMode="scroll"
             hasSectionTitle
             title={title}
@@ -99,7 +97,7 @@ export const StatCallout = ({
             listClassName="auto-cols-max gap-x-[34px] lg:gap-x-[34px]"
             controlsClassName="px-layout-sm"
           >
-            {items.map((item, index) => (
+            {itemsWithAspectRatio.map((item, index) => (
               <CarouselItem
                 key={item.id}
                 index={index}
