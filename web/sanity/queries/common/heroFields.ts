@@ -1,5 +1,10 @@
+import { Flags } from '@/sanity/helpers/datasetHelpers';
 import linkSelectorFields from './actions/linkSelectorFields';
 import markDefs from './blockEditorMarks';
+
+const advancedHighlightFields = Flags.HAS_ADVANCED_HIGHLIGHTER
+  ? `[]{..., ${markDefs}}`
+  : '';
 
 export const heroFields = /* groq */ `{
     "type": coalesce(heroType, 'default'),
@@ -24,9 +29,9 @@ export const heroFields = /* groq */ `{
     layoutGrid,
     useBlurCenter,
     alignContentY,
-    "heroTitle": heroTitle,
+    "heroTitle": heroTitle${advancedHighlightFields},
     heroType == 'fiftyFifty' && isBigTitle => {
-      "heroTitle" : heroBigTitleFiftyFifty,
+      "heroTitle" : heroBigTitleFiftyFifty${advancedHighlightFields},
     },
     "figure":  select(
       heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail},

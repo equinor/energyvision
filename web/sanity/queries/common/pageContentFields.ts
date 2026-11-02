@@ -59,7 +59,6 @@ _type == "keyNumbers" =>{
     title[]{..., ${markDefs}},
     hideTitle,
     useHorizontalScroll,
-    layoutGrid,
     "items": items[]{
       "id": _key,
       title[]{..., ${markDefs}},
