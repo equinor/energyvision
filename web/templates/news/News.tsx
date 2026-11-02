@@ -16,7 +16,7 @@ import type { CardData, IFrameData, RelatedLinksData } from '@/types';
 import Blocks from '../../portableText/Blocks';
 //import Footnotes from '../../portableText/components/Footnotes';
 import RelatedContent from '../../sections/RelatedContent/RelatedContent';
-import { NewsRelations } from './NewsRelations';
+// import { NewsRelations } from './NewsRelations';
 
 export type NewsPageProps = {
   slug: string;
@@ -31,6 +31,7 @@ export type NewsPageProps = {
   ingress: PortableTextBlock[];
   content: PortableTextBlock[];
   relatedLinks: RelatedLinksData;
+  /*
   relations?: {
     title?: string | null;
     persons:
@@ -50,6 +51,7 @@ export type NewsPageProps = {
         }[]
       | null;
   } | null;
+  */
   iframe: IFrameData;
   latestNews: CardData[];
 };
@@ -64,7 +66,7 @@ const NewsPage = async ({
   content,
   iframe,
   relatedLinks,
-  relations,
+  // relations,
   latestNews,
   slug,
 }: NewsPageProps) => {
@@ -159,7 +161,7 @@ const NewsPage = async ({
                 />
               )}
 
-              <NewsRelations relations={relations} />
+              {/* <NewsRelations relations={relations} /> */}
 
               {relatedLinks?.links && relatedLinks.links.length > 0 && (
                 <RelatedContent data={relatedLinks} className={``} />
