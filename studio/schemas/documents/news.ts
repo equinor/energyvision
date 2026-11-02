@@ -120,6 +120,7 @@ export default {
       name: 'relations',
       title: 'Relations',
       type: 'object',
+      hidden: true,
       fields: [
         {
           name: 'title',
