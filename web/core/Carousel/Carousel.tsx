@@ -543,7 +543,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
               displayMode === 'single' &&
                 `grid transition-transform duration-800 ease-scroll`,
               displayMode === 'scroll' &&
-                `no-scrollbar grid h-fit snap-x auto-cols-auto grid-flow-col gap-3 overflow-x-auto pb-2 lg:gap-6`,
+                `no-scrollbar grid h-fit snap-x scroll-pe-6 auto-cols-auto grid-flow-col gap-3 overflow-x-auto pe-layout-sm pb-2 lg:gap-6`,
               listClassName,
             )}
             {...(displayMode === 'single' && {
