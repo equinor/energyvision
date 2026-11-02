@@ -116,7 +116,7 @@ export default {
     ingress,
     content,
     iframe,
-    {
+    Flags.HAS_PEOPLE && {
       name: 'relations',
       title: 'Relations',
       type: 'object',

@@ -14,7 +14,6 @@ import { DefaultHero } from '@/sections/Hero/DefaultHero';
 import LatestNews from '@/sections/LatestNews/LatestNews';
 import type { CardData, IFrameData, RelatedLinksData } from '@/types';
 import Blocks from '../../portableText/Blocks';
-//import Footnotes from '../../portableText/components/Footnotes';
 import RelatedContent from '../../sections/RelatedContent/RelatedContent';
 // import { NewsRelations } from './NewsRelations';
 
@@ -131,20 +130,10 @@ const NewsPage = async ({
           />
           <div className="mx-auto max-w-content">
             {ingress && ingress.length > 0 && (
-              <Blocks
-                group="article"
-                variant="ingress"
-                value={ingress}
-                includeFootnotes
-              />
+              <Blocks group="article" variant="ingress" value={ingress} />
             )}
             {content && content.length > 0 && (
-              <Blocks
-                group="article"
-                variant="body"
-                value={formattedContent}
-                includeFootnotes
-              />
+              <Blocks group="article" variant="body" value={formattedContent} />
             )}
             <div className="w-full px-layout-sm lg:px-layout-lg">
               {iframe && (
