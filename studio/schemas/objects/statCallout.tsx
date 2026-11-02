@@ -3,7 +3,6 @@ import blocksToText from '../../helpers/blocksToText';
 import type { ColorSelectorValue } from '../components/ColorSelector';
 import { StatCalloutBackgroundTypeInput } from '../components/StatCalloutBackgroundTypeInput';
 import { configureBlockContent } from '../editors';
-import { layoutGrid } from './commonFields/commonFields';
 import type { ImageWithAlt } from './imageWithAlt';
 
 type StatCalloutItem = {
@@ -57,9 +56,6 @@ export default {
       type: 'boolean',
       initialValue: false,
     },
-    layoutGrid(({ parent }: { parent?: StatCallout }) =>
-      Boolean(parent?.useHorizontalScroll),
-    ),
     {
       name: 'items',
       title: 'Callouts',

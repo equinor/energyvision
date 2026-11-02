@@ -1,8 +1,8 @@
-import { RiPagesLine } from 'react-icons/ri'
-import { defaultLanguage } from '../../../../languages'
-import { apiVersion } from '../../../../sanity.client'
+import { RiPagesLine } from 'react-icons/ri';
+import { defaultLanguage } from '../../../../languages';
+import { apiVersion } from '../../../../sanity.client';
 
-export const TopicContent = S =>
+export const TopicContent = (S) =>
   S.listItem()
     .title('Topic page')
     .icon(RiPagesLine)
@@ -12,10 +12,15 @@ export const TopicContent = S =>
         .id('pages')
         .title('Topic pages')
         .apiVersion(apiVersion)
-        .filter('_type == "page" && (!defined(lang) || lang == $baseLang)')
-        .params({ baseLang: defaultLanguage.name })
+        .filter(
+          '_type == "page" && (!defined(lang) || lang == $baseLang || lang == $baseIso)',
+        )
+        .params({
+          baseLang: defaultLanguage.name,
+          baseIso: defaultLanguage.iso,
+        })
         .canHandleIntent((_name, params) => {
           // Assume we can handle all intents (actions) regarding post documents
-          return params.type === 'page'
+          return params.type === 'page';
         }),
-    )
+    );
