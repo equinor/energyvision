@@ -30,11 +30,11 @@
     "typescript": "5.9.3"
   },
   "dependencies": {
-    "@azure/storage-blob": "12.33.0",
+    "@azure/storage-blob": "12.34.0",
     "@sanity/client": "^8.7.0",
     "algoliasearch": "^5.57.0",
     "@azure/app-configuration-provider": "2.6.0",
-    "@azure/identity": "4.13.3",
+    "@azure/identity": "4.14.0",
     "fp-ts": "^2.16.11",
     "dotenv": "17.4.2"
   }
