@@ -45,7 +45,7 @@ jobs:
         id: delete-containers
         uses: snok/container-retention-policy@v3.1.0
         with:
-          token: ${{ steps.generate-token.outputs.token }}
+          token: ${{ secrets.PADMS_PAT }}
           account: Equinor
           image-names: energyvision/*
           cut-off: 1w
