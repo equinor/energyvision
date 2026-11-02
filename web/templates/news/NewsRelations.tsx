@@ -1,14 +1,28 @@
 import { Image } from '@/core/Image/Image';
+import type { Image as ImageType } from '@/core/Image/imageUtilities';
 import { BaseLink } from '@/core/Link/BaseLink';
 import { Typography } from '@/core/Typography/Typography';
 import { removeWhiteSpace } from '@/lib/helpers/removeWhiteSpace';
-import type { NewsPageProps } from './News';
 
-export const NewsRelations = ({
-  relations,
-}: {
-  relations: NewsPageProps['relations'];
-}) => {
+type NewsRelationsProps = {
+  relations: {
+    title?: string | null;
+    persons:
+      | {
+          id: string;
+          title?: string | null;
+          person: {
+            name: string;
+            title?: string | null;
+            image?: ImageType | null;
+            mobileNumber?: string | null;
+          };
+        }[]
+      | null;
+  } | null;
+};
+
+export const NewsRelations = ({ relations }: NewsRelationsProps) => {
   if (!relations?.persons?.length) return null;
 
   return (
