@@ -11,6 +11,7 @@ import { StatCalloutBackgroundVideo } from './StatCalloutBackgroundVideo';
 
 export type StatCalloutItemData = {
   id: string;
+  aspectRatio?: '16:9' | '1:1' | '8:11';
   title?: PortableTextBlock[];
   caption?: PortableTextBlock[];
   titleVerticalAlignment?: 'top' | 'center' | 'bottom';
@@ -29,6 +30,13 @@ const titleAlignment = {
 
 export const StatCalloutItem = ({ item }: { item: StatCalloutItemData }) => {
   const alignment = titleAlignment[item.titleVerticalAlignment ?? 'center'];
+  const aspectRatio = item.aspectRatio ?? '8:11';
+  const aspectClassName =
+    aspectRatio === '16:9'
+      ? 'aspect-video'
+      : aspectRatio === '1:1'
+        ? 'aspect-square'
+        : 'aspect-8/11';
   const cardColor = item.backgroundColor?.backgroundUtility
     ? colorKeyToUtilityMap[item.backgroundColor.backgroundUtility]
     : undefined;
@@ -56,7 +64,7 @@ export const StatCalloutItem = ({ item }: { item: StatCalloutItemData }) => {
     <figure>
       <div
         className={twMerge(
-          'relative aspect-[8/11] overflow-hidden rounded-card',
+          `relative ${aspectClassName} overflow-hidden rounded-card`,
           cardColor?.background ?? 'bg-gray-20',
           (item.useWhite || cardColor?.dark) && 'dark',
         )}
@@ -69,7 +77,7 @@ export const StatCalloutItem = ({ item }: { item: StatCalloutItemData }) => {
             image={item.backgroundImage}
             fill
             grid="xs"
-            aspectRatio="8:11"
+            aspectRatio={aspectRatio}
             className="absolute inset-0"
             imageClassName="object-cover"
           />
@@ -87,7 +95,10 @@ export const StatCalloutItem = ({ item }: { item: StatCalloutItemData }) => {
                 value={item.title}
                 group="paragraph"
                 variant="simple"
-                blockClassName="text-center text-md"
+                blockClassName={twMerge(
+                  'text-center text-md',
+                  icon && !item.useWhite && 'text-slate-80 dark:text-slate-80',
+                )}
               />
             )}
           </div>
