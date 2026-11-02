@@ -11,7 +11,7 @@ fn links::getLinkFields($link) = $link{
     _type == "personListUrl" => @->{ "slug": personListUrl },
     @->{
     "slug": slug.current,
-    "lang":  select(_type match 'route_*' =>
+    "lang":  select(^._type match 'route_*' =>
     content->lang,
     lang
   ),
