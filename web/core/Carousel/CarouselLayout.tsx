@@ -72,7 +72,7 @@ export function CarouselLayout({
       id={itemsId}
       tabIndex={0}
       className={twMerge(
-        'w-full focus:outline-dashed focus:outline-1 focus:outline-grey-60',
+        'focus-visible:envis-outline dark:focus-visible:envis-outline-invert w-full outline-none',
         single
           ? 'grid [--carousel-slide-stride:calc(var(--spacing-single-carousel-card-w-sm)+var(--spacing)*5)] md:[--carousel-slide-stride:calc(var(--spacing-single-carousel-card-w-md)+var(--spacing)*5)] lg:[--carousel-slide-stride:calc(var(--spacing-single-carousel-card-w-lg)+var(--spacing)*5)]'
           : 'carousel-scrollbar grid h-fit snap-x scroll-pe-6 auto-cols-auto grid-flow-col gap-3 overflow-x-auto pe-12 lg:gap-6',
