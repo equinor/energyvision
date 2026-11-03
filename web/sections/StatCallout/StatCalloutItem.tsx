@@ -44,7 +44,7 @@ export const StatCalloutItem = ({ item }: { item: StatCalloutItemData }) => {
   const cardHasImage =
     !backgroundVideoSrc && Boolean(item.backgroundImage?.asset);
   const icon = item.icon?.asset && (
-    <div className="flex min-h-0 min-w-0 flex-1 items-center justify-center px-20">
+    <div className="flex min-h-0 min-w-0 flex-1 items-center justify-center px-20 pt-16 pb-12">
       <div className="relative h-full w-full">
         <Image
           image={item.icon}
