@@ -2,6 +2,7 @@
 
 import type { PortableTextBlock } from '@portabletext/types';
 import { Carousel } from '@/core/Carousel/Carousel';
+import { CarouselItem } from '@/core/Carousel/CarouselItem';
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery';
 import { twMerge } from '@/lib/twMerge/twMerge';
 import Blocks from '@/portableText/Blocks';
@@ -39,6 +40,7 @@ export const StatCallout = ({
   } = data;
   const { bg, dark } = getBgAndDarkFromBackground(designOptions);
   const hasMoreThanTwoItems = items.length > 2;
+
   const aspectRatio: NonNullable<StatCalloutItemData['aspectRatio']> =
     items.length === 1 ? '16:9' : items.length === 2 ? '1:1' : '8:11';
   const itemsWithAspectRatio = items.map((item) => ({
@@ -86,8 +88,6 @@ export const StatCallout = ({
         )}
         {shouldUseHorizontalScroll ? (
           <Carousel
-            items={itemsWithAspectRatio}
-            variant="statCallout"
             displayMode="scroll"
             hasSectionTitle
             title={title}
@@ -97,7 +97,17 @@ export const StatCallout = ({
             )}
             listClassName="auto-cols-max gap-x-[34px] lg:gap-x-[34px]"
             controlsClassName="px-layout-sm"
-          />
+          >
+            {itemsWithAspectRatio.map((item, index) => (
+              <CarouselItem
+                key={item.id}
+                index={index}
+                className="w-[min(25rem,calc(100vw-3rem))] max-w-[25rem] grow-0 first:pl-0 last:pr-0"
+              >
+                <StatCalloutItem item={item} />
+              </CarouselItem>
+            ))}
+          </Carousel>
         ) : (
           <ul
             className={twMerge(

@@ -1,38 +1,37 @@
-'use client'
-import type { PortableTextBlock } from '@portabletext/types'
-import { useTranslations } from 'next-intl'
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import { forwardRef, type HTMLAttributes, useId, useState } from 'react'
-import { twMerge } from 'tailwind-merge'
-import type { DisplayModes } from '@/core/Carousel/Carousel'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import Blocks from '../../portableText/Blocks'
-import type { LinkData } from '../../types'
-import { Image } from '../Image/Image'
-import type { Image as ImageType } from '../Image/imageUtilities'
-import ResourceLink from '../Link/ResourceLink'
-import { Typography } from '../Typography'
+'use client';
+import type { PortableTextBlock } from '@portabletext/types';
+import { useTranslations } from 'next-intl';
+import { forwardRef, type HTMLAttributes, useId, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
+import type { DisplayModes } from '@/core/Carousel/Carousel';
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction';
+import Blocks from '../../portableText/Blocks';
+import type { LinkData } from '../../types';
+import { Image } from '../Image/Image';
+import type { Image as ImageType } from '../Image/imageUtilities';
+import ResourceLink from '../Link/ResourceLink';
+import { Typography } from '../Typography';
 
 export type ImageWithLinkOrOverlay = {
-  id: string
-  type: 'imageWithLinkOrOverlay'
-  image: ImageType
-  action?: LinkData
-  captionTitle?: PortableTextBlock[]
-  captionText?: PortableTextBlock[]
-}
+  id: string;
+  type: 'imageWithLinkOrOverlay';
+  image: ImageType;
+  action?: LinkData;
+  captionTitle?: PortableTextBlock[];
+  captionText?: PortableTextBlock[];
+};
 
 export type ImageWithOverlayProps = {
-  image?: ImageType
-  className?: string
-  teaserTitle?: string
-  title?: PortableTextBlock[] | string
-  text?: PortableTextBlock[]
+  image?: ImageType;
+  className?: string;
+  teaserTitle?: string;
+  title?: PortableTextBlock[] | string;
+  text?: PortableTextBlock[];
   /** When in carousel use this to control active hidden or block */
-  captionClassname?: string
-  action?: LinkData
-  displayMode?: DisplayModes
-} & HTMLAttributes<HTMLDivElement>
+  captionClassname?: string;
+  action?: LinkData;
+  displayMode?: DisplayModes;
+} & Omit<HTMLAttributes<HTMLDivElement>, 'title'>;
 
 export const ImageWithOverlay = forwardRef<
   HTMLDivElement,
@@ -49,11 +48,11 @@ export const ImageWithOverlay = forwardRef<
   },
   ref,
 ) {
-  const [showOverlay, setShowOverlay] = useState(false)
-  const toggleButtonId = useId()
-  const overlayId = useId()
-  const url = action && getUrlFromAction(action)
-  const intl = useTranslations()
+  const [showOverlay, setShowOverlay] = useState(false);
+  const toggleButtonId = useId();
+  const overlayId = useId();
+  const url = action && getUrlFromAction(action);
+  const intl = useTranslations();
 
   return (
     <figure
@@ -61,10 +60,10 @@ export const ImageWithOverlay = forwardRef<
       className={twMerge(`h-full w-full rounded-card`, className)}
     >
       <Image
-        grid='sm'
+        grid="sm"
         image={image}
         fill
-        className='absolute'
+        className="absolute"
         imageClassName={`aspect-4/3 rounded-card md:aspect-video`}
       />
       <figcaption
@@ -104,14 +103,14 @@ export const ImageWithOverlay = forwardRef<
             <div className={`pb-1 lg:pb-6`}>
               {title && (
                 <Typography
-                  as='h2'
-                  variant='h4'
-                  className='text-md text-white-100 lg:text-lg'
+                  as="h2"
+                  variant="h4"
+                  className="text-md text-white-100 lg:text-lg"
                 >
                   {Array.isArray(title)
                     ? title
-                        .map(block =>
-                          block.children.map(span => span.text).join(''),
+                        .map((block) =>
+                          block.children.map((span) => span.text).join(''),
                         )
                         .join('\n')
                         .replace(/\n/g, ' ')
@@ -135,7 +134,7 @@ export const ImageWithOverlay = forwardRef<
                   label: action?.label,
                 }}
                 type={action.type}
-                variant='fit'
+                variant="fit"
               >
                 {action.label}
               </ResourceLink>
@@ -149,7 +148,7 @@ export const ImageWithOverlay = forwardRef<
           onClick={() => setShowOverlay(!showOverlay)}
           className={`focus-visible:envis-outline absolute right-0 bottom-0 z-3 flex items-end justify-end p-1.5 focus:outline-hidden lg:px-8 lg:py-6`}
         >
-          <span className='sr-only'>{intl('readMore') ?? 'Read more'}</span>
+          <span className="sr-only">{intl('readMore') ?? 'Read more'}</span>
           <div
             className={`group focus-visible:envis-outline-invert flex size-3 items-center justify-center rounded-full p-5 text-2xl focus:outline-hidden md:size-4 md:p-6 ${
               showOverlay
@@ -163,7 +162,7 @@ export const ImageWithOverlay = forwardRef<
                   ? '*:bg-slate-80 *:group-hover:bg-white-100'
                   : '*:bg-white-100 *:group-hover:bg-slate-80'
               } relative flex h-4 min-h-4 w-4 min-w-4 flex-col items-center justify-center gap-3 overflow-hidden *:transition-transform *:duration-250 md:h-6 md:min-h-6 md:w-6 md:min-w-6`}
-              aria-hidden='true'
+              aria-hidden="true"
             >
               <span
                 className={twMerge(
@@ -182,5 +181,5 @@ export const ImageWithOverlay = forwardRef<
         </button>
       </figcaption>
     </figure>
-  )
-})
+  );
+});

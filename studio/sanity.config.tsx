@@ -13,7 +13,6 @@ import type {
 import {
   buildLegacyTheme,
   type ConfigContext,
-  createAuthStore,
   type DocumentActionComponent,
   defineConfig,
   type PluginOptions,
@@ -253,7 +252,7 @@ const getConfig = (
     enabled: false,
   },
   scheduledPublishing: {
-    enabled: true,
+    enabled: false,
   },
 });
 
