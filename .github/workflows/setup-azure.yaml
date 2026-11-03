@@ -12,21 +12,12 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 permissions:
-  contents: none
+  contents: read
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Generate internal read token
-        id: internal-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.GH_APP_ID }}
-          owner: Equinor
-          repositories: energyvision-internal
-          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-          permission-contents: read
       - name: Login to azure
         id: login-to-azure
         uses: azure/login@v1
@@ -35,14 +26,17 @@ jobs:
           allow-no-subscriptions: true
       - name: Show Azure account
         run: az account show
-      # Checkout internal repository where the bicep files are located
-      - name: Checout internal
-        id: checkout-internal
+      - name: Checkout 🛎️
         uses: actions/checkout@v7
         with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ steps.internal-token.outputs.token }}
+          sparse-checkout: .github/workflows/checkout-internal
+      # Checkout internal repository where the bicep files are located
+      - name: Checkout internal as GitHub App 🛎️
+        uses: ./.github/workflows/checkout-internal
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: read
       # Do the actual deployment
       - name: deploy
         id: deploy

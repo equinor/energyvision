@@ -26,22 +26,16 @@ jobs:
       SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID }}
       DOCKER_BUILDKIT: 1
     steps:
-      - name: Generate internal read token
-        id: internal-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.GH_APP_ID }}
-          owner: Equinor
-          repositories: energyvision-internal
-          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-          permission-contents: read
-      - name: Checkout internal 🛎️
-        id: checkout-internal
+      - name: Checkout 🛎️
         uses: actions/checkout@v7
         with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ steps.internal-token.outputs.token }}
+          sparse-checkout: .github/workflows/checkout-internal
+      - name: Checkout internal as GitHub App 🛎️
+        uses: ./.github/workflows/checkout-internal
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: read
       - name: Get preprod sha 🏷️
         id: get-preprod-sha
         shell: bash
@@ -113,22 +107,16 @@ jobs:
       SANITY_STUDIO_FOTOWARE_REDIRECT_URI: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_URI }}
       DOCKER_BUILDKIT: 1
     steps:
-      - name: Generate internal read token
-        id: internal-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.GH_APP_ID }}
-          owner: Equinor
-          repositories: energyvision-internal
-          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-          permission-contents: read
-      - name: Checkout internal 🛎️
-        id: checkout-internal
+      - name: Checkout 🛎️
         uses: actions/checkout@v7
         with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ steps.internal-token.outputs.token }}
+          sparse-checkout: .github/workflows/checkout-internal
+      - name: Checkout internal as GitHub App 🛎️
+        uses: ./.github/workflows/checkout-internal
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: read
       - name: Get preprod sha 🏷️
         id: get-preprod-sha
         shell: bash
@@ -187,22 +175,15 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
-      - name: Generate internal config write token
-        id: internal-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.GH_APP_ID }}
-          owner: Equinor
-          repositories: energyvision-internal
-          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-          permission-contents: write
-      - name: Checkout internal 🛎️
-        id: checkout-internal
+      - name: Checkout 🛎️
         uses: actions/checkout@v7
         with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ steps.internal-token.outputs.token }}
+          sparse-checkout: .github/workflows/checkout-internal
+      - name: Checkout internal as GitHub App 🛎️
+        uses: ./.github/workflows/checkout-internal
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
       - name: Promote preprod tag to prod 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash
@@ -265,22 +246,15 @@ jobs:
     outputs:
       STUDIO_SHA: ${{ steps.capture-studio-sha.outputs.STUDIO_SHA }}
     steps:
-      - name: Generate internal config write token
-        id: internal-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.GH_APP_ID }}
-          owner: Equinor
-          repositories: energyvision-internal
-          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-          permission-contents: write
-      - name: Checkout internal 🛎️
-        id: checkout-internal
+      - name: Checkout 🛎️
         uses: actions/checkout@v7
         with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ steps.internal-token.outputs.token }}
+          sparse-checkout: .github/workflows/checkout-internal
+      - name: Checkout internal as GitHub App 🛎️
+        uses: ./.github/workflows/checkout-internal
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
