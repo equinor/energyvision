@@ -62,6 +62,7 @@ runs:
         ref: main
         token: ${{ steps.internal-token.outputs.token }}
     - name: Restore action definition
+      if: always()
       shell: bash
       env:
         ACTION_PATH: ${{ github.action_path }}
