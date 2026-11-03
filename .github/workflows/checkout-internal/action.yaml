@@ -4,7 +4,9 @@
 # git identity so commits are attributed to the GitHub App bot user.
 #
 # Local actions must exist on disk, so callers need a (sparse) checkout
-# of this repository before using it:
+# of this repository before using it. The internal checkout replaces the
+# workspace, so this action re-creates itself afterwards (git-excluded) to
+# keep the runner's post steps working:
 #   - uses: actions/checkout@v7
 #     with:
 #       sparse-checkout: .github/workflows/checkout-internal
@@ -42,12 +44,35 @@ runs:
         repositories: energyvision-internal
         private-key: ${{ inputs.private-key }}
         permission-contents: ${{ inputs.permission-contents }}
+    # Checking out energyvision-internal into the workspace root deletes this
+    # action from disk, but the runner re-reads it at job end to run the
+    # nested post steps (token revoke, credential cleanup). Keep a copy so it
+    # can be restored after the checkout.
+    - name: Preserve action definition
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+      run: |
+        rm -rf "${RUNNER_TEMP}/checkout-internal-action"
+        cp -R "${ACTION_PATH}" "${RUNNER_TEMP}/checkout-internal-action"
     - name: Checkout internal 🛎️
       uses: actions/checkout@v7
       with:
         repository: 'equinor/energyvision-internal'
         ref: main
         token: ${{ steps.internal-token.outputs.token }}
+    - name: Restore action definition
+      if: always()
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+      run: |
+        mkdir -p "${ACTION_PATH}"
+        cp -R "${RUNNER_TEMP}/checkout-internal-action/." "${ACTION_PATH}"
+        # Hide the restored files from the internal checkout so callers'
+        # `git status --porcelain` / `git commit -a` never see them.
+        RELATIVE_PATH="${ACTION_PATH#"${GITHUB_WORKSPACE}/"}"
+        echo "/${RELATIVE_PATH}/" >> "${GITHUB_WORKSPACE}/.git/info/exclude"
     - name: Configure git identity as GitHub App 🤖
       if: inputs.permission-contents == 'write'
       shell: bash
