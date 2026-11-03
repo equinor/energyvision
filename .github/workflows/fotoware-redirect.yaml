@@ -22,7 +22,7 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 permissions:
-  contents: read
+  contents: none
 
 jobs:
   build-function-application:
@@ -30,11 +30,20 @@ jobs:
     environment:
       name: ${{ github.event.inputs.environment }}
     steps:
+      - name: Generate Fotoware repository read token
+        id: fotoware-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          owner: Equinor
+          repositories: energyvision-fotoware-redirect
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: read
       - name: Checkout fotoware redirect code🛎️
         uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-fotoware-redirect'
-          token: ${{ secrets.PADMS_PAT }}
+          token: ${{ steps.fotoware-token.outputs.token }}
           ref: ${{ github.event.inputs.branch }}
 
       - name: Install pnpm 📦

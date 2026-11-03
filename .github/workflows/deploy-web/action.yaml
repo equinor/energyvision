@@ -59,6 +59,7 @@ runs:
     - name: Checkout 🛎 ️
       uses: actions/checkout@v6
       with:
+        token: ${{ inputs.githubToken }}
         fetch-depth: 0
     - name: Get long sha ️🏷️
       if: "${{ inputs.commitSha != '' }}"
@@ -72,6 +73,7 @@ runs:
       uses: actions/checkout@v6
       with:
         repository: 'equinor/energyvision'
+        token: ${{ inputs.githubToken }}
         fetch-depth: 0
         ref: '${{ steps.get-long-sha.outputs.sha }}'
     - name: Set default image tag 🏷

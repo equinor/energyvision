@@ -10,6 +10,7 @@ on:
         type: string
 permissions:
   id-token: write
+  contents: read
 jobs:
   find-image:
     runs-on: ubuntu-latest
@@ -18,6 +19,15 @@ jobs:
     outputs:
       imageExists: ${{ steps.find-image-in-ghcr.outputs.found }}
     steps:
+      - name: Generate GHCR read token
+        id: registry-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          owner: Equinor
+          repositories: energyvision
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-packages: read
       - name: Regex 👾
         uses: actions-ecosystem/action-regex-match@v2
         id: regex-match
@@ -45,7 +55,7 @@ jobs:
           set -u
           set -o pipefail
           set -x
-          TOKEN=$(curl -u padms:${{ secrets.PADMS_PAT }} https://ghcr.io/token\?scope\="repository:equinor/energyvision>:pull" | jq -r .token)
+          TOKEN=$(curl -u "x-access-token:${REGISTRY_TOKEN}" https://ghcr.io/token\?scope\="repository:equinor/energyvision>:pull" | jq -r .token)
           statusCode=$(curl --head --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Bearer $TOKEN" https://ghcr.io/v2/equinor/energyvision/web-global/manifests/${{ github.event.inputs.image-sha }})
           if [[ $statusCode -eq 200 ]]
           then
@@ -53,6 +63,8 @@ jobs:
           else
             echo "found=false" >> $GITHUB_OUTPUT
           fi
+        env:
+          REGISTRY_TOKEN: ${{ steps.registry-token.outputs.token }}
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
@@ -68,13 +80,22 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
+      - name: Generate internal config write token
+        id: internal-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          owner: Equinor
+          repositories: energyvision-internal
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: write
       - name: Checkout internal 🛎️
         id: checkout-internal
         uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
-          token: ${{ secrets.PADMS_PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+          token: ${{ steps.internal-token.outputs.token }}
       - name: Write to console 🗒️
         shell: bash
         run: |
@@ -85,7 +106,7 @@ jobs:
           python ci/upgradeEnvironment.py web ${{ github.event.inputs.image-sha }} ${{ secrets.ENV }}
           git config --global user.name 'github'
           git config --global user.email 'padms@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
+          git remote set-url origin https://github.com/equinor/energyvision-internal.git
           if [[ `git status --porcelain` ]]
           then
             git commit -am "🔙 Rolling back all websites in production to version ${{ github.event.inputs.image-sha }}"
