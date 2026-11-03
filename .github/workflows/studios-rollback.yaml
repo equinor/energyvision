@@ -213,30 +213,21 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
-      - name: Generate internal config write token
-        id: internal-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.GH_APP_ID }}
-          owner: Equinor
-          repositories: energyvision-internal
-          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-          permission-contents: write
-      - name: Checkout internal 🛎️
-        id: checkout-internal
+      - name: Checkout 🛎️
         uses: actions/checkout@v7
         with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ steps.internal-token.outputs.token }}
+          sparse-checkout: .github/workflows/checkout-internal
+      - name: Checkout internal as GitHub App 🛎️
+        uses: ./.github/workflows/checkout-internal
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
       - name: Write to console 🗒️
         shell: bash
         run: |
           # Install pre-requisite
           python -m pip install --user ruamel.yaml
           python ci/upgradeEnvironment.py studio ${{ github.event.inputs.image-sha }} ${{ secrets.ENV }}
-          git config --global user.name 'github'
-          git config --global user.email 'padms@users.noreply.github.com'
           git remote set-url origin https://github.com/equinor/energyvision-internal.git
           if [[ `git status --porcelain` ]]
           then

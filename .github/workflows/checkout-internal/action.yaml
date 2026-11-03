@@ -1,0 +1,60 @@
+# This composite action mints a GitHub App installation token for
+# equinor/energyvision-internal, checks that repository out into the
+# workspace root and, when write access is requested, configures the
+# git identity so commits are attributed to the GitHub App bot user.
+#
+# Local actions must exist on disk, so callers need a (sparse) checkout
+# of this repository before using it:
+#   - uses: actions/checkout@v7
+#     with:
+#       sparse-checkout: .github/workflows/checkout-internal
+#   - uses: ./.github/workflows/checkout-internal
+#     with:
+#       app-id: ${{ secrets.GH_APP_ID }}
+#       private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+name: Checkout energyvision-internal
+description: 'Generate a GitHub App token, check out equinor/energyvision-internal and configure the git identity as the app'
+inputs:
+  app-id:
+    description: 'GitHub App ID'
+    required: true
+  private-key:
+    description: 'GitHub App private key'
+    required: true
+  permission-contents:
+    description: 'Contents permission for the installation token (read or write)'
+    required: false
+    default: 'write'
+outputs:
+  token:
+    description: 'Installation token scoped to equinor/energyvision-internal'
+    value: ${{ steps.internal-token.outputs.token }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Generate internal token
+      id: internal-token
+      uses: actions/create-github-app-token@v1
+      with:
+        app-id: ${{ inputs.app-id }}
+        owner: Equinor
+        repositories: energyvision-internal
+        private-key: ${{ inputs.private-key }}
+        permission-contents: ${{ inputs.permission-contents }}
+    - name: Checkout internal 🛎️
+      uses: actions/checkout@v7
+      with:
+        repository: 'equinor/energyvision-internal'
+        ref: main
+        token: ${{ steps.internal-token.outputs.token }}
+    - name: Configure git identity as GitHub App 🤖
+      if: inputs.permission-contents == 'write'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ steps.internal-token.outputs.token }}
+        APP_SLUG: ${{ steps.internal-token.outputs.app-slug }}
+      run: |
+        USER_ID=$(gh api "/users/${APP_SLUG}[bot]" --jq .id)
+        git config --global user.name "${APP_SLUG}[bot]"
+        git config --global user.email "${USER_ID}+${APP_SLUG}[bot]@users.noreply.github.com"
