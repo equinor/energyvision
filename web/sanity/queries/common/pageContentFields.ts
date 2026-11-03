@@ -524,7 +524,7 @@ _type == "keyNumbers" =>{
           },
         },
         manuallySelectEvents => {
-          "promotions": promotedEvents[]->[${notDraft}]{
+          "promotions": (promotedEvents[]->)[${notDraft} && content->_type == "event"]{
             ${eventPromotionFields}
           },
         },
