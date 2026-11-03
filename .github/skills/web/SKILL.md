@@ -19,7 +19,7 @@ description: Web application React/NextJS/TypeScript coding standards, state man
 - Always use `Typography` from `@/core/Typography/Typography` for paragraphs and text instead of raw `<p>` elements or unstyled text wrappers. Set `as` for the semantic element and `variant` (and `group` when needed) for the intended styling; preserve semantic links and controls.
 - Keep components and Hooks pure; do not mutate props/state.
 - Keep one source of truth for each piece of state (lift state up instead of duplicating it).
-- Dont rest spread props blindly onto HTML elements; be explicit about which props are passed down to avoid the risks outlined below.
+- Don't rest spread props blindly onto HTML elements; be explicit about which props are passed down to avoid the risks outlined below.
 
 ### The Main Risks of Rest Spreading
 
