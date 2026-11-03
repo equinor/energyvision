@@ -44,8 +44,8 @@ export const StatCalloutItem = ({ item }: { item: StatCalloutItemData }) => {
   const cardHasImage =
     !backgroundVideoSrc && Boolean(item.backgroundImage?.asset);
   const icon = item.icon?.asset && (
-    <div className="flex min-w-[130px] flex-1 items-center justify-center px-20 py-10">
-      <div className={twMerge('relative aspect-square w-full')}>
+    <div className="flex min-h-0 min-w-0 flex-1 items-center justify-center px-20 pt-16 pb-12">
+      <div className="relative h-full w-full">
         <Image
           image={item.icon}
           fill
@@ -82,12 +82,12 @@ export const StatCalloutItem = ({ item }: { item: StatCalloutItemData }) => {
             imageClassName="object-cover"
           />
         )}
-        <div className="absolute inset-0 flex flex-col px-6 py-8">
+        <div className="absolute inset-0 flex flex-col gap-6 px-6 py-8">
           {alignment === 'justify-end' && icon}
           <div
             className={twMerge(
               `flex flex-col ${alignment}`,
-              (!icon || Boolean(item.title?.length)) && 'flex-1',
+              icon ? 'shrink-0' : 'flex-1',
             )}
           >
             {item.title && (
