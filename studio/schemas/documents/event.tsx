@@ -35,8 +35,6 @@ export default {
     {
       title: 'SEO & metadata',
       name: 'metadata',
-      description:
-        'This part is used for meta information when this content is used on the web',
       options: {
         collapsible: true,
         collapsed: true,
@@ -116,6 +114,9 @@ export default {
       title: 'Title',
       name: 'promotedPeopleTitle',
       type: 'array',
+      description: 'Use title below',
+      deprecated: { reason: 'Use title below' },
+      hidden: ({ value }: { value?: PortableTextBlock[] }) => !value?.length,
       fieldset: 'people',
       of: [configureBlockContent({ variant: 'title' })],
     },

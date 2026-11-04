@@ -189,10 +189,9 @@ export const heroImage = {
 export const ingress = {
   name: 'ingress',
   title: 'Ingress',
-  description:
-    'Lead paragraph. Shown in article and on cards. Max 400 characters',
   type: 'array',
   of: [configureBlockContent({ variant: 'ingress' })],
+  options: { maxLength: 400 },
   validation: (Rule: Rule) =>
     Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
 };
