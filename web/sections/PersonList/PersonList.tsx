@@ -171,20 +171,21 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
                   modalTitle={item.person?.name}
                   initialOpen={!!activePersonId && item.id === activePersonId}
                   modalContent={
-                    <div className="flex flex-col gap-6">
-                      <div className="flex items-center gap-6">
+                    <div className="flex flex-col">
+                      <div className="flex flex-col items-start gap-x-12 md:flex-row md:items-center">
                         {item.person?.image && (
-                          <div className="w-[30%] shrink-0">
+                          <div className="w-3/5 shrink-0 md:w-[30%]">
                             <Image
                               image={item.person.image}
                               aspectRatio="1:1"
+                              keepRatioOnMobile
                               imageClassName="rounded-full"
                               className="w-full"
                             />
                           </div>
                         )}
                         <div className="flex flex-col justify-center">
-                          <Typography as="h2" variant="h3">
+                          <Typography as="h2" variant="h3" className="md:mt-0">
                             {item.person?.name}
                           </Typography>
                           {item.person?.title && (
@@ -200,7 +201,11 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
                           <PersonSocialLinks person={item.person} />
                         </div>
                       </div>
-                      {item.person?.bio && <Blocks value={item.person.bio} />}
+                      {item.person?.bio && (
+                        <div className="pt-8">
+                          <Blocks value={item.person.bio} />
+                        </div>
+                      )}
                       {item.person?.callToActions && (
                         <CallToActions
                           callToActions={item.person.callToActions}
