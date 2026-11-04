@@ -1,17 +1,7 @@
 'use client';
-import { mergeRefs } from '@equinor/eds-utils';
 import type { PortableTextBlock } from '@portabletext/types';
-import {
-  forwardRef,
-  type HTMLAttributes,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
-import {
-  type ImageWithLinkOrOverlay,
-  ImageWithOverlay,
-} from '@/core/ImageWithOverlay/ImageWithOverlay';
+import { forwardRef, type HTMLAttributes } from 'react';
+import { ImageWithOverlay } from '@/core/ImageWithOverlay/ImageWithOverlay';
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction';
 import { twMerge } from '@/lib/twMerge/twMerge';
 import type { LinkData } from '@/types/index';
@@ -19,30 +9,38 @@ import { ArrowRight } from '../../icons';
 import Blocks from '../../portableText/Blocks';
 import { getIsoFromName } from '../../sanity/helpers/localization';
 import { Image } from '../Image/Image';
-import type { Figure, Image as ImageType } from '../Image/imageUtilities';
+import type { Image as ImageType } from '../Image/imageUtilities';
 import BaseLink from '../Link/BaseLink';
 import ResourceLink from '../Link/ResourceLink';
-import type { DisplayModes } from './Carousel';
+import { useCarouselItem } from './CarouselContext';
 
-export type ImageCarouselItem = Figure | ImageWithLinkOrOverlay;
+export type ImageCarouselItem = {
+  id: string;
+  _key?: string;
+  type?: CarouselImageItemProps['type'];
+  image?: ImageType;
+  caption?: PortableTextBlock[] | string;
+  attribution?: string;
+  captionTeaserTitle?: string;
+  captionTitle?: PortableTextBlock[];
+  captionText?: PortableTextBlock[];
+  action?: LinkData;
+};
 
 type CarouselImageItemProps = {
+  index: number;
   type:
     | 'imageWithAltAndCaption'
     | 'imageWithRichTextBelow'
     | 'imageWithLinkAndOrOverlay';
   image?: ImageType;
-  displayMode?: DisplayModes;
   className?: string;
   caption?: PortableTextBlock[] | string;
   attribution?: string;
   captionTeaserTitle?: string;
   captionTitle?: PortableTextBlock[];
   captionText?: PortableTextBlock[];
-  active?: boolean;
   action?: LinkData;
-  /** Single container */
-  wasUserPress?: boolean;
 } & HTMLAttributes<HTMLLIElement>;
 
 export const CarouselImageItem = forwardRef<
@@ -51,28 +49,27 @@ export const CarouselImageItem = forwardRef<
 >(function CarouselImageItem(
   {
     type,
-    active = false,
+    index,
     image,
     caption,
     attribution,
     captionTitle,
     captionText,
     captionTeaserTitle,
-    displayMode = 'single',
     className = '',
     action,
-    wasUserPress = false,
-    ['aria-label']: ariaLabel,
+    'aria-label': ariaLabel,
     style,
     onFocus,
   },
   ref,
 ) {
-  const itemRef = useRef<HTMLLIElement>(null);
-  const combinedItemRef = useMemo(
-    () => mergeRefs<HTMLLIElement>(itemRef, ref),
-    [ref],
-  );
+  const {
+    displayMode,
+    active,
+    style: itemStyle,
+    ...itemProps
+  } = useCarouselItem(index);
   const isJustImage =
     type === 'imageWithAltAndCaption' && !caption && !attribution;
   const isImageWithSimpleCaption =
@@ -118,26 +115,30 @@ export const CarouselImageItem = forwardRef<
             }`}
           >
             <div className={`h-fit w-full px-4 pt-20 pb-6 lg:px-8`}>
-              <span className="flex w-full flex-col gap-1">
+              <div className="flex w-full flex-col gap-1">
                 {caption && (
-                  <span
+                  <div
                     className={`text-left text-md text-white-100 lg:text-lg`}
                   >
-                    {caption as string}
-                  </span>
+                    {typeof caption === 'string' ? (
+                      caption
+                    ) : (
+                      <Blocks value={caption} />
+                    )}
+                  </div>
                 )}
                 {attribution && (
                   <span className={`text-base text-white-100`}>
                     {attribution}
                   </span>
                 )}
-              </span>
+              </div>
             </div>
           </figcaption>
         </figure>
       );
     }
-    if (isImageWithJustLink && image) {
+    if (isImageWithJustLink && image && url) {
       return (
         <figure className="h-full w-full">
           <Image
@@ -149,7 +150,7 @@ export const CarouselImageItem = forwardRef<
           />
           <div className="fade-in-black-gradient flex h-full w-full items-end rounded-b-card pt-10 lg:pt-20">
             <BaseLink
-              href={url as string}
+              href={url}
               {...(action.link?.lang && {
                 hrefLang: getIsoFromName(action.link?.lang),
               })}
@@ -170,8 +171,7 @@ export const CarouselImageItem = forwardRef<
         <ImageWithOverlay
           className={`aspect-4/3 rounded-card md:aspect-video`}
           teaserTitle={captionTeaserTitle}
-          //@ts-ignore:TODO
-          title={captionTitle as PortableTextBlock[]}
+          title={captionTitle}
           text={captionText}
           image={image}
           action={action}
@@ -197,12 +197,12 @@ export const CarouselImageItem = forwardRef<
               displayMode === 'single' && active ? 'opacity-100' : 'opacity-50',
             )}
           >
-            {caption && (
-              <Blocks
-                //@ts-ignore:TODO
-                value={caption}
-              />
-            )}
+            {caption &&
+              (typeof caption === 'string' ? (
+                caption
+              ) : (
+                <Blocks value={caption} />
+              ))}
             {action && url && (
               <ResourceLink
                 href={url}
@@ -227,26 +227,15 @@ export const CarouselImageItem = forwardRef<
     }
   };
 
-  useEffect(() => {
-    if (displayMode === 'single') {
-      if (active && itemRef?.current && wasUserPress) {
-        itemRef?.current?.focus();
-      }
-    }
-  }, [active, wasUserPress, displayMode]);
-
   return (
     <li
-      ref={combinedItemRef}
-      aria-label={ariaLabel}
-      {...(displayMode === 'single' && {
-        'aria-current': active,
-        tabIndex: active ? 0 : -1,
-      })}
+      {...itemProps}
+      ref={ref}
+      aria-label={ariaLabel ?? itemProps['aria-label']}
       {...(displayMode === 'scroll' && {
         tabIndex: 0,
       })}
-      style={style}
+      style={{ ...style, ...itemStyle }}
       onFocus={onFocus}
       className={twMerge(
         `relative mt-1 focus:outline-hidden focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-grey-50 focus-visible:outline-offset-2 dark:focus-visible:outline-white-100`,

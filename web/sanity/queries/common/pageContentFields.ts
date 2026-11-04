@@ -59,7 +59,6 @@ _type == "keyNumbers" =>{
     title[]{..., ${markDefs}},
     hideTitle,
     useHorizontalScroll,
-    layoutGrid,
     "items": items[]{
       "id": _key,
       title[]{..., ${markDefs}},
@@ -525,7 +524,7 @@ _type == "keyNumbers" =>{
           },
         },
         manuallySelectEvents => {
-          "promotions": promotedEvents[]->[${notDraft}]{
+          "promotions": (promotedEvents[]->)[${notDraft} && content->_type == "event"]{
             ${eventPromotionFields}
           },
         },
@@ -626,10 +625,9 @@ _type == "keyNumbers" =>{
       "foreground": theme.theme.foreground.key,
     },
     "items": items[person->lang == $lang]{
-      "id": _key,
+      "id": person->_id,
       highlighted,
       "person": person->{
-        "id": _id,
         name,
         title,
         linkedinProfileUrl,

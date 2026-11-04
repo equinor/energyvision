@@ -1,14 +1,17 @@
 import { newsSlug } from '@energyvision/shared/satelliteConfig';
 import { file_add } from '@equinor/eds-icons';
 import slugify from '@sindresorhus/slugify';
+import type { Rule } from 'sanity';
 import { formatDate } from '../../helpers/formatDate';
 import { EdsIcon } from '../../icons';
 import { defaultLanguage } from '../../languages';
 import { Flags } from '../../src/lib/datasetHelpers';
-import SlugInput from '../components/SlugInput';
 import { SlugInfo } from '../components/SlugInfo';
+import SlugInput from '../components/SlugInput';
 import { withSlugValidation } from '../validations/validateSlug';
+
 import { lang } from './langField';
+
 import {
   content,
   countryTags,
@@ -118,6 +121,53 @@ export default {
     ingress,
     content,
     iframe,
+    Flags.HAS_PEOPLE && {
+      name: 'relations',
+      title: 'Relations',
+      type: 'object',
+      hidden: true,
+      fields: [
+        {
+          name: 'title',
+          title: 'Title',
+          type: 'string',
+        },
+        {
+          name: 'persons',
+          title: 'Persons',
+          type: 'array',
+          of: [
+            {
+              name: 'personRelation',
+              title: 'Relation',
+              type: 'object',
+              fields: [
+                {
+                  name: 'title',
+                  title: 'Title',
+                  type: 'string',
+                },
+                {
+                  name: 'person',
+                  title: 'Person',
+                  type: 'reference',
+                  to: [{ type: 'person' }],
+                  options: { disableNew: true },
+                  validation: (Rule: Rule) => Rule.required(),
+                },
+              ],
+              preview: {
+                select: {
+                  title: 'person.name',
+                  subtitle: 'title',
+                  media: 'person.image',
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
     relatedLinks,
     {
       ...seo,

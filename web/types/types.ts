@@ -306,7 +306,7 @@ export type AnchorLinkData = {
 export type IFrameCarouselItemData = {
   id?: string;
   type?: string;
-  _key?: string;
+  _key: string;
   title?: PortableTextBlock[];
   description?: PortableTextBlock[];
   frameTitle: string;

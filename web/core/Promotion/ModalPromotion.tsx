@@ -18,6 +18,7 @@ import { LogoPrimary } from '../Logo/Logo';
 
 export type ModalPromotionProps = {
   background?: ColorKeys;
+  id: string;
   image?: ImageType;
   title: string | PortableTextBlock[];
   ingress?: string | PortableTextBlock[];
@@ -46,6 +47,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
   function ModalPromotion(
     {
       background,
+      id,
       title,
       ingress,
       image,
@@ -80,9 +82,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
     const handleOpenModal = (e: React.MouseEvent) => {
       e.preventDefault();
       const searchParams = new URLSearchParams();
-      if (plainText) {
-        searchParams.set('person', encodeURIComponent(plainText));
-      }
+      searchParams.set('person', id);
       window.history.pushState({}, '', `?${searchParams.toString()}`);
       setIsModalOpen(true);
     };

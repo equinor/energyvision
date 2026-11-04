@@ -26,14 +26,17 @@ jobs:
           allow-no-subscriptions: true
       - name: Show Azure account
         run: az account show
-      # Checkout internal repository where the bicep files are located
-      - name: Checout internal
-        id: checkout-internal
+      - name: Checkout 🛎️
         uses: actions/checkout@v7
         with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ secrets.PADMS_PAT }}
+          sparse-checkout: .github/workflows/checkout-internal
+      # Checkout internal repository where the bicep files are located
+      - name: Checkout internal as GitHub App 🛎️
+        uses: ./.github/workflows/checkout-internal
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+          permission-contents: read
       # Do the actual deployment
       - name: deploy
         id: deploy
