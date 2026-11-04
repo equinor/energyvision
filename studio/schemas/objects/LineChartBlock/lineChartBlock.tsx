@@ -1,7 +1,6 @@
 import { PiChartLineLight } from 'react-icons/pi';
 import type { PortableTextBlock, Rule } from 'sanity';
 import blocksToText from '../../../helpers/blocksToText';
-import { CompactBlockEditor } from '../../components/CompactBlockEditor';
 import { configureBlockContent } from '../../editors';
 
 export default {
@@ -13,9 +12,6 @@ export default {
       title: 'Title',
       name: 'title',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) =>
         Rule.required().warning('In most cases you should add a title'),

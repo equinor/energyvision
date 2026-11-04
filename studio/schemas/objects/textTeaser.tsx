@@ -1,26 +1,25 @@
 /* eslint-disable react/display-name */
 
-import type { PortableTextBlock, Rule } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { LeftAlignedImage, RightAlignedImage } from '../../icons'
-import { RadioIconSelector } from '../components'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import type { PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { LeftAlignedImage, RightAlignedImage } from '../../icons';
+import { RadioIconSelector } from '../components';
 import type {
   ThemeSelectorColor,
   ThemeSelectorValue,
-} from '../components/ThemeSelector'
-import { defaultColors } from '../defaultColors'
-import { configureBlockContent } from '../editors'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import type { DownloadableImage } from './downloadableImage'
-import type { DownloadableFile } from './files'
-import type { LinkSelector } from './linkSelector/common'
-import singleItemArray from './singleItemArray'
+} from '../components/ThemeSelector';
+import { defaultColors } from '../defaultColors';
+import { configureBlockContent } from '../editors';
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
+import type { DownloadableImage } from './downloadableImage';
+import type { DownloadableFile } from './files';
+import type { LinkSelector } from './linkSelector/common';
+import singleItemArray from './singleItemArray';
 
 const titleAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
   { value: 'right', icon: RightAlignedImage },
-]
+];
 
 //Keep in sync with web/pageComponents/shared/textTeaser/theme
 export const textTeaserThemeColors = [
@@ -37,7 +36,7 @@ export const textTeaserThemeColors = [
   { title: 'Mist Blue 2', value: 10 },
   { title: 'Black text', value: 11 },
   { title: 'White text', value: 12 },
-]
+];
 
 export const fromLargerTextThemeColors = [
   { title: 'White', value: 0 },
@@ -45,7 +44,7 @@ export const fromLargerTextThemeColors = [
   { title: 'Mid Blue 1', value: 6 },
   { title: 'Mid Blue 2', value: 7 },
   { title: 'Mist Blue 2', value: 10 },
-]
+];
 export const fromNormalTextThemeColors = [
   { title: 'Moss Green Light', value: 13 },
   { title: 'Spruce Wood', value: 2 },
@@ -57,7 +56,7 @@ export const fromNormalTextThemeColors = [
   { title: 'Mid Green', value: 9 },
   { title: 'Black text', value: 11 },
   { title: 'White text', value: 12 },
-]
+];
 
 //Keep in sync with web/pageComponents/shared/textTeaser/theme
 export const getColorForThemeTextTeaser = (
@@ -75,7 +74,7 @@ export const getColorForThemeTextTeaser = (
           value: defaultColors[8].value,
           key: defaultColors[8].key,
         },
-      }
+      };
     case 2:
       return {
         background: {
@@ -86,7 +85,7 @@ export const getColorForThemeTextTeaser = (
           value: defaultColors[9].value,
           key: defaultColors[9].key,
         },
-      }
+      };
     case 3:
       return {
         background: {
@@ -97,7 +96,7 @@ export const getColorForThemeTextTeaser = (
           value: defaultColors[9].value,
           key: defaultColors[9].key,
         },
-      }
+      };
     case 4:
       return {
         background: {
@@ -108,7 +107,7 @@ export const getColorForThemeTextTeaser = (
           value: defaultColors[9].value,
           key: defaultColors[9].key,
         },
-      }
+      };
     case 5:
       return {
         background: {
@@ -119,7 +118,7 @@ export const getColorForThemeTextTeaser = (
           value: defaultColors[9].value,
           key: defaultColors[9].key,
         },
-      }
+      };
     case 6:
       return {
         background: {
@@ -130,7 +129,7 @@ export const getColorForThemeTextTeaser = (
           value: defaultColors[5].value,
           key: defaultColors[5].key,
         },
-      }
+      };
     case 7:
       return {
         background: {
@@ -141,7 +140,7 @@ export const getColorForThemeTextTeaser = (
           value: defaultColors[4].value,
           key: defaultColors[4].key,
         },
-      }
+      };
     case 8:
       return {
         background: {
@@ -152,7 +151,7 @@ export const getColorForThemeTextTeaser = (
           value: defaultColors[0].value,
           key: defaultColors[0].key,
         },
-      }
+      };
     case 9:
       return {
         background: {
@@ -163,7 +162,7 @@ export const getColorForThemeTextTeaser = (
           value: defaultColors[9].value,
           key: defaultColors[9].key,
         },
-      }
+      };
     case 10:
       return {
         background: {
@@ -174,7 +173,7 @@ export const getColorForThemeTextTeaser = (
           value: defaultColors[6].value,
           key: defaultColors[6].key,
         },
-      }
+      };
     case 11:
       return {
         background: {
@@ -185,7 +184,7 @@ export const getColorForThemeTextTeaser = (
           value: defaultColors[9].value,
           key: defaultColors[9].key,
         },
-      }
+      };
     case 12:
       return {
         background: {
@@ -196,7 +195,7 @@ export const getColorForThemeTextTeaser = (
           value: defaultColors[0].value,
           key: defaultColors[0].key,
         },
-      }
+      };
     case 13: {
       //black on moss green light
       return {
@@ -208,7 +207,7 @@ export const getColorForThemeTextTeaser = (
           value: defaultColors[9].value,
           key: defaultColors[9].key,
         },
-      }
+      };
     }
     default:
       return {
@@ -220,18 +219,18 @@ export const getColorForThemeTextTeaser = (
           value: defaultColors[8].value,
           key: defaultColors[8].key,
         },
-      }
+      };
   }
-}
+};
 
 export type TextTeaser = {
-  _type: 'textTeaser'
-  title?: PortableTextBlock[]
-  text?: PortableTextBlock[]
-  action?: (LinkSelector | DownloadableFile | DownloadableImage)[]
-  titlePosition?: string
-  theme?: ThemeSelectorValue
-}
+  _type: 'textTeaser';
+  title?: PortableTextBlock[];
+  text?: PortableTextBlock[];
+  action?: (LinkSelector | DownloadableFile | DownloadableImage)[];
+  titlePosition?: string;
+  theme?: ThemeSelectorValue;
+};
 
 export default {
   name: 'textTeaser',
@@ -253,9 +252,6 @@ export default {
     {
       name: 'title',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [
         configureBlockContent({
           variant: 'titleWithDisplay',
@@ -269,9 +265,10 @@ export default {
       title: 'Text content',
       type: 'array',
       of: [configureBlockContent({ variant: 'simpleBlock' })],
+      options: { maxLength: 600 },
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
-          return validateCharCounterEditor(value, 600)
+          return validateCharCounterEditor(value, 600);
         }).error(),
     },
 
@@ -298,18 +295,18 @@ export default {
           onChange,
           value,
         }: {
-          onChange: any
-          value: string
+          onChange: any;
+          value: string;
         }) {
           return (
             <RadioIconSelector
-              name='imageAlignmentSelector'
+              name="imageAlignmentSelector"
               options={titleAlignmentOptions}
-              defaultValue='left'
+              defaultValue="left"
               currentValue={value}
               onChange={onChange}
             />
-          )
+          );
         },
       },
     },
@@ -331,14 +328,14 @@ export default {
       title,
       text,
     }: {
-      title: PortableTextBlock[]
-      text: PortableTextBlock[]
+      title: PortableTextBlock[];
+      text: PortableTextBlock[];
     }) {
-      const plainTitle = blocksToText(title)
+      const plainTitle = blocksToText(title);
       return {
         title: plainTitle || 'Missing teaser title',
         subtitle: blocksToText(text) || 'Mising teaser text',
-      }
+      };
     },
   },
-}
+};

@@ -9,7 +9,6 @@ import { advancedHighlight } from '@/schemas/editors/annotations/advancedHighlig
 import { Flags } from '@/src/lib/datasetHelpers';
 import blocksToText from '../../helpers/blocksToText';
 import type { ColorSelectorValue } from '../components/ColorSelector';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors';
 import { validateComponentAnchor } from '../validations/validateAnchorReference';
 
@@ -30,16 +29,15 @@ export default {
   type: 'object',
   fieldsets: [
     {
-      title: 'Addons above title',
+      title: 'Thumbnail/Eyebrow',
       name: 'addonsAboveTitle',
-      description: 'Thumbnail, eyebrow title and anchor reference',
       options: {
         collapsible: true,
         collapsed: true,
       },
     },
     {
-      title: 'Call to action(s)',
+      title: 'Call to actions',
       name: 'actions',
       options: {
         collapsible: true,
@@ -74,9 +72,6 @@ export default {
       name: 'title',
       type: 'array',
       fieldset: 'titleOptions',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [
         configureBlockContent({
           variant: 'titleWithDisplay',

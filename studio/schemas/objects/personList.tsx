@@ -2,7 +2,6 @@ import { MdOutlinePeopleAlt } from 'react-icons/md';
 import type { PortableTextBlock, Rule } from 'sanity';
 import blocksToText from '../../helpers/blocksToText';
 import { filterByLang } from '../../helpers/referenceFilters';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors';
 import { theme } from './commonFields/commonFields';
 
@@ -21,9 +20,6 @@ export default {
       name: 'title',
       type: 'array',
       title: 'Title',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
     },
     {
@@ -36,9 +32,6 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'ingress' })],
     },
     {

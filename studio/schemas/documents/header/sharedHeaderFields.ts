@@ -1,6 +1,7 @@
 import type {
   ConditionalPropertyCallbackContext,
   CurrentUser,
+  PortableTextBlock,
   Rule,
   StringInputProps,
   StringSchemaType,
@@ -14,7 +15,6 @@ import {
   layoutGrid as _layoutGrid,
 } from '@/schemas/objects/commonFields/commonFields';
 import { Flags } from '@/src/lib/datasetHelpers';
-import { CompactBlockEditor } from '../../components/CompactBlockEditor';
 import { configureBlockContent } from '../../editors';
 import type { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption';
 import singleItemArray from '../../objects/singleItemArray';
@@ -38,9 +38,6 @@ const title = {
   name: 'title',
   type: 'array',
   title: 'Title',
-  components: {
-    input: CompactBlockEditor,
-  },
   of: [configureBlockContent({ variant: 'title' })],
   validation: (Rule: Rule) =>
     Rule.custom((value: string, ctx: ValidationContext) => {
@@ -92,9 +89,6 @@ const heroTitle = {
   name: 'heroTitle',
   type: 'array',
   title: 'Hero Title',
-  components: {
-    input: CompactBlockEditor,
-  },
   of: [
     configureBlockContent({
       variant: 'title',
@@ -106,12 +100,11 @@ const heroTitle = {
     return parent?.heroType !== HeroTypes.FIFTY_FIFTY;
   },
   validation: (Rule: Rule) =>
-    Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as unknown as DocumentType;
-      if (parent?.heroType === HeroTypes.FIFTY_FIFTY && !value)
-        return 'Field is required';
-      return true;
-    }),
+    Rule.custom<PortableTextBlock[]>((value, { document }) =>
+      document?.heroType === HeroTypes.FIFTY_FIFTY && !value
+        ? 'Field is required'
+        : true,
+    ),
 };
 
 const heroRatio = {

@@ -1,16 +1,15 @@
 /* eslint-disable react/display-name */
 
-import { BsCardHeading } from 'react-icons/bs'
-import type { PortableTextBlock, Rule } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
+import { BsCardHeading } from 'react-icons/bs';
+import type { PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { configureBlockContent } from '../editors';
 
 export type Card = {
-  _type: 'card'
-  title?: PortableTextBlock[]
-  content?: PortableTextBlock[]
-}
+  _type: 'card';
+  title?: PortableTextBlock[];
+  content?: PortableTextBlock[];
+};
 
 export default {
   name: 'card',
@@ -26,9 +25,9 @@ export default {
       validation: (Rule: Rule) =>
         Rule.required().custom((value: string) => {
           if (!value || value.trim() === '') {
-            return 'Card title cannot be empty.'
+            return 'Card title cannot be empty.';
           }
-          return true
+          return true;
         }),
     },
     {
@@ -36,9 +35,6 @@ export default {
       type: 'array',
       title: 'Content',
       description: 'Optional',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'simpleBlock' })],
     },
   ],
@@ -51,15 +47,15 @@ export default {
       title,
       text,
     }: {
-      title: PortableTextBlock[]
-      text: PortableTextBlock[]
+      title: PortableTextBlock[];
+      text: PortableTextBlock[];
     }) {
-      const plainTitle = blocksToText(title)
+      const plainTitle = blocksToText(title);
       return {
         title: plainTitle || 'Missing title',
         subtitle: blocksToText(text) || '',
         media: <BsCardHeading />,
-      }
+      };
     },
   },
-}
+};

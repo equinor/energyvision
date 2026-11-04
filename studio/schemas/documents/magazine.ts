@@ -1,17 +1,19 @@
 import { magazineSlug } from '@energyvision/shared/satelliteConfig';
 import { bookmarks } from '@equinor/eds-icons';
+import { toPlainText } from '@portabletext/react';
 import slugify from '@sindresorhus/slugify';
-import type { Rule, SanityDocument } from 'sanity';
+import type { PortableTextBlock, Rule, SanityDocument } from 'sanity';
 import { formatDate } from '@/helpers/formatDate';
 import blocksToText from '../../helpers/blocksToText';
 import { EdsIcon } from '../../icons';
 import { defaultLanguage } from '../../languages';
 import { Flags } from '../../src/lib/datasetHelpers';
+import { MagazinePublicationDateInfo } from '../components/MagazinePublicationDateInfo';
+import { RequiredField } from '../components/RequiredField';
 import { SlugInfo } from '../components/SlugInfo';
 import SlugInput from '../components/SlugInput';
 import { defaultColors } from '../defaultColors';
 import { configureBlockContent } from '../editors/blockContentType';
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
 import { withSlugValidation } from '../validations/validateSlug';
 import sharedHeaderFields from './header/sharedHeaderFields';
 import { lang } from './langField';
@@ -33,8 +35,7 @@ export default {
   icon: () => EdsIcon(bookmarks),
   fieldsets: [
     {
-      title: 'More page options',
-      description: 'SEO, meta and sticky menu',
+      title: 'SEO & meta',
       options: {
         collapsible: true,
         collapsed: true,
@@ -70,6 +71,15 @@ export default {
     lang,
     ...sharedHeaderFields,
     {
+      name: 'publicationDateInfo',
+      title: 'Publication date information',
+      type: 'string',
+      readOnly: true,
+      components: {
+        field: MagazinePublicationDateInfo,
+      },
+    },
+    {
       // Set automatically in the custom action "ConfirmPublishWithi18n"
       title: 'Date and time of when the document was first published at',
       name: 'firstPublishedAt',
@@ -93,27 +103,33 @@ export default {
       fieldset: 'tagFieldset',
     },
     {
-      title: 'Meta information',
-      name: 'seo',
-      type: 'titleAndMeta',
-      fieldset: 'other',
-    },
-    {
-      title: 'Open Graph Image',
-      name: 'openGraphImage',
-      type: 'imageWithAlt',
-      description:
-        'You can override the hero image as the SoMe image by uploading another image here.',
-      fieldset: 'other',
-    },
-    {
       name: 'ingress',
       title: 'Description',
-      description: 'Shown in newsletters and promotions. Max 400 characters',
+      description: 'Shown in newsletters and promotions',
       type: 'array',
       of: [ingressBlockContentType],
+      options: { maxLength: 400 },
+      /*       components: {
+        portableText: {
+          plugins: (props: PortableTextPluginsProps) =>
+            createElement(PortableTextEditorPlugins, {
+              ...props,
+              maxChar: 400,
+            }),
+        },
+      }, */
       validation: (Rule: Rule) =>
-        Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
+        Rule.required().custom<PortableTextBlock[]>((value, context) => {
+          const { maxLength } = (context.type?.options ?? {}) as {
+            maxLength?: number;
+          };
+          if (!value || !maxLength) return true;
+          const length = toPlainText(value).length;
+          return (
+            length <= maxLength ||
+            `Must be at most ${maxLength} characters (currently ${length})`
+          );
+        }),
     },
     Flags.HAS_MAGAZINE_SUBSCRIPTION && {
       title: 'Send to subscribers',
@@ -148,6 +164,7 @@ export default {
       type: 'slug',
       fieldset: 'slug',
       components: {
+        field: RequiredField(true),
         input: SlugInput,
       },
       options: withSlugValidation({
@@ -162,6 +179,20 @@ export default {
         slugify: (value: string) => value,
       }),
       validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      title: 'Meta information',
+      name: 'seo',
+      type: 'titleAndMeta',
+      fieldset: 'other',
+    },
+    {
+      title: 'Open Graph Image',
+      name: 'openGraphImage',
+      type: 'imageWithAlt',
+      description:
+        'You can override the hero image as the SoMe image by uploading another image here.',
+      fieldset: 'other',
     },
     {
       name: 'content',

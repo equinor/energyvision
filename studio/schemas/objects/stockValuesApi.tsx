@@ -5,7 +5,6 @@ import { defineField } from 'sanity';
 import blocksToText from '../../helpers/blocksToText';
 import { EdsIcon } from '../../icons';
 import type { ColorSelectorValue } from '../components/ColorSelector';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors';
 
 // eslint-disable-next-line react/display-name
@@ -45,7 +44,6 @@ export default {
     {
       name: 'title',
       type: 'array',
-      inputComponent: CompactBlockEditor,
       of: [configureBlockContent({ variant: 'title' })],
       title: 'Title',
       description:
