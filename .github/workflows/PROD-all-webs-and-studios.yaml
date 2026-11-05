@@ -6,7 +6,6 @@ on:
 permissions:
   id-token: write
   contents: read
-  contents: read
 jobs:
   update-radix-config:
     runs-on: ubuntu-latest
@@ -370,7 +369,6 @@ jobs:
       - name: 'Move cards and create discussion and post it to channel'
         id: 'get-list'
         with:
-          token: ${{ steps.release-token.outputs.token }}
           token: ${{ steps.release-token.outputs.token }}
           commitSHA: 'Web : ${{ needs.store-image-tags.outputs.WEB_SHA }} Studio: ${{ needs.store-image-tags.outputs.STUDIO_SHA }}'
           slackWebhook: ${{ secrets.SLACK_WEBHOOK_RELEASE_ANNOUNCEMENT}}

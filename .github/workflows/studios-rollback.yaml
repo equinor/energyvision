@@ -19,7 +19,6 @@ on:
 permissions:
   id-token: write
   contents: read
-  contents: read
 jobs:
   find-image:
     runs-on: ubuntu-latest
@@ -79,8 +78,6 @@ jobs:
           else
             echo "found=false" >> $GITHUB_OUTPUT
           fi
-        env:
-          REGISTRY_TOKEN: ${{ steps.registry-token.outputs.token }}
         env:
           REGISTRY_TOKEN: ${{ steps.registry-token.outputs.token }}
       - uses: act10ns/slack@v2
