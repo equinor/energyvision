@@ -1,22 +1,23 @@
-import { languages } from '../../languages'
-import type { CurrentUser } from 'sanity'
-import { EdsIcon } from '../../icons'
-import { tag_more } from '@equinor/eds-icons'
+import { tag_more } from '@equinor/eds-icons';
+import type { CurrentUser } from 'sanity';
+import { EdsIcon } from '../../icons';
+import { languages } from '../../languages';
 
 const LocalNewsTagDescription = () => (
   <>
     <span style={{ display: 'block', marginTop: '8px' }}>
-      The translated names used to display the tag on the web and generate the slugs.
+      The translated names used to display the tag on the web and generate the
+      slugs.
     </span>
     <span style={{ display: 'block', marginTop: '8px' }}>
       <span role="img" aria-label="warning icon">
         ⚠️
       </span>{' '}
-      Since these values are used to automatically generate slugs; they should only be changed if you know what you are
-      doing.
+      Since these values are used to automatically generate slugs; they should
+      only be changed if you know what you are doing.
     </span>
   </>
-)
+);
 
 const fields = languages.map((lang) => ({
   title: `${lang.title} value`,
@@ -24,7 +25,7 @@ const fields = languages.map((lang) => ({
   description: `The ${lang.id} translation`,
   type: 'string',
   fieldset: 'tagName',
-}))
+}));
 
 export default {
   type: 'document',
@@ -53,4 +54,4 @@ export default {
     },
     ...fields,
   ],
-}
+};

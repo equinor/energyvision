@@ -1,7 +1,7 @@
-import { defaultLanguage, languages } from '../../languages'
-import { EdsIcon } from '../../icons'
-import type { Rule } from 'sanity'
-import { tag_main_equipment } from '@equinor/eds-icons'
+import { tag_main_equipment } from '@equinor/eds-icons';
+import type { Rule } from 'sanity';
+import { EdsIcon } from '../../icons';
+import { defaultLanguage, languages } from '../../languages';
 
 //takes every allowed language and makes a string field for each
 const localeStrings = languages.map((lang) => ({
@@ -9,9 +9,9 @@ const localeStrings = languages.map((lang) => ({
   type: 'string',
   title: lang.title,
   validation: (Rule: Rule) => Rule.required(),
-}))
+}));
 
-const title = `title.${defaultLanguage.name}`
+const title = `title.${defaultLanguage.name}`;
 
 export default {
   type: 'document',
@@ -29,7 +29,8 @@ export default {
       title: 'Key',
       name: 'key',
       type: 'slug',
-      description: "This is a data point, no need to alter it beyond 'generate'",
+      description:
+        "This is a data point, no need to alter it beyond 'generate'",
       validation: (Rule: Rule) => Rule.required(),
 
       options: {
@@ -56,12 +57,12 @@ export default {
       title: title,
     },
     prepare(selection: { title: string }) {
-      const { title } = selection
+      const { title } = selection;
       // For debugging purposes
       return {
         title: title,
         media: EdsIcon(tag_main_equipment),
-      }
+      };
     },
   },
-}
+};

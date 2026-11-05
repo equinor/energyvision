@@ -124,10 +124,6 @@ export default (isoCode: string, title: string) => {
         type: 'breadcrumbs',
       },
       {
-        type: 'excludeFromSearch',
-        name: 'excludeFromSearch',
-      },
-      {
         type: 'boolean',
         name: 'includeInBuild',
         title: 'Include in static build',

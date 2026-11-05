@@ -20,6 +20,12 @@ export default {
     hotspot: true,
     collapsed: false,
   },
+  validation: (Rule: Rule) =>
+    Rule.custom<ImageWithAlt>((image) => {
+      if (!image?.asset || image.isDecorative || image.alt) return true;
+
+      return 'Alt attribute is required. Expand Accessibility to add alternative text or mark the image as decorative.';
+    }),
   fieldsets: [
     {
       name: 'accessibility',
@@ -64,8 +70,6 @@ export default {
             return true;
           },
         ),
-      // hidden: ({ parent }: { parent: ImageWithAlt }) =>
-      //   parent?.isDecorative === true,
     },
   ],
 };

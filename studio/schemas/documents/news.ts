@@ -41,8 +41,6 @@ export default {
     {
       title: 'SEO & metadata',
       name: 'metadata',
-      description:
-        'This part is used for meta information when this content is used on the web',
       options: {
         collapsible: true,
         collapsed: true,
