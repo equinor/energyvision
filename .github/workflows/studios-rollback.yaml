@@ -36,15 +36,6 @@ jobs:
           repositories: energyvision
           private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
           permission-packages: read
-      - name: Generate GHCR read token
-        id: registry-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.GH_APP_ID }}
-          owner: Equinor
-          repositories: energyvision
-          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-          permission-packages: read
       - name: Regex 👾
         uses: actions-ecosystem/action-regex-match@v2
         id: regex-match
