@@ -7,7 +7,6 @@ import type { ArrayOfObjectsInputProps, PortableTextInputProps } from 'sanity';
 export function CharacterCountInputPTE(props: ArrayOfObjectsInputProps) {
   const ptProps = props as unknown as PortableTextInputProps;
   const characters = ptProps.value ? toPlainText(ptProps.value).length : 0;
-  console.log(' props.schemaType.options:', props.schemaType.options);
   // the character limit set with `options.maxLength` on the type or the field
   const { maxLength: max, editorVariant } = props.schemaType.options ?? {};
   const fieldName = props.path[props.path.length - 1];
