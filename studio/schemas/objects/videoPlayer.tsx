@@ -2,7 +2,6 @@ import { play_circle } from '@equinor/eds-icons';
 import type { PortableTextBlock, Rule } from 'sanity';
 import blocksToText from '../../helpers/blocksToText';
 import { EdsIcon } from '../../icons';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors';
 import type { ImageWithAlt } from './imageWithAlt';
 import singleItemArray from './singleItemArray';
@@ -28,7 +27,6 @@ export default {
       type: 'array',
       title: 'Title',
       description: 'The (optional) title/heading shown above the video.',
-      components: { input: CompactBlockEditor },
       of: [configureBlockContent({ variant: 'title' })],
     },
     {

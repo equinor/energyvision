@@ -41,6 +41,7 @@ type PromotionBlock = {
   id: string;
   type: string;
   title?: PortableTextBlock[];
+  hideTitle?: boolean;
   ingress?: PortableTextBlock[];
   viewAllLink?: LinkData;
   designOptions?: {
@@ -126,7 +127,14 @@ const PromotionsBlock = ({
   className,
 }: PromotionsBlockProps) => {
   const locale = useLocale();
-  const { title, ingress, viewAllLink, designOptions, promotions } = data;
+  const {
+    title,
+    hideTitle = false,
+    ingress,
+    viewAllLink,
+    designOptions,
+    promotions,
+  } = data;
 
   const {
     backgroundImage,
@@ -164,8 +172,14 @@ const PromotionsBlock = ({
 
   const contentElements = (
     <>
-      {/*@ts-ignore:todo */}
-      <Blocks variant="h2" id={sectionTitleId} value={title} />
+      {title && (
+        <Blocks
+          variant="h2"
+          id={sectionTitleId}
+          value={title}
+          blockClassName={hideTitle ? 'sr-only' : ''}
+        />
+      )}
       {ingress && (
         <Blocks group="paragraph" variant="ingress" value={ingress} />
       )}

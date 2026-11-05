@@ -40,13 +40,18 @@ export function CarouselLayout({
   onFocusCapture,
   onMouseEnter,
   onMouseLeave,
-  ...rest
+  id,
+  style,
+  role,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  'aria-describedby': ariaDescribedBy,
 }: CarouselLayoutProps) {
   const intl = useTranslations();
   const itemsId = useId();
   const Tag = hasSectionTitle ? 'div' : 'section';
   const single = state.displayMode === 'single';
-  const labelId = labelledbyId ?? rest['aria-labelledby'];
+  const labelId = labelledbyId ?? ariaLabelledBy;
   const rotationTitle = toPlainText((labelId ? sectionTitle : title) ?? []);
   const rotationLabel = intl(
     rotation?.stopped ? 'carouselPlay' : 'carouselPause',
@@ -60,16 +65,36 @@ export function CarouselLayout({
     [ref],
   );
 
+  const list = (
+    <ul
+      {...listProps}
+      ref={sliderRef}
+      id={itemsId}
+      tabIndex={0}
+      className={twMerge(
+        'focus-visible:envis-outline dark:focus-visible:envis-outline-invert w-full outline-none',
+        single
+          ? 'grid [--carousel-slide-stride:calc(var(--spacing-single-carousel-card-w-sm)+var(--spacing)*5)] md:[--carousel-slide-stride:calc(var(--spacing-single-carousel-card-w-md)+var(--spacing)*5)] lg:[--carousel-slide-stride:calc(var(--spacing-single-carousel-card-w-lg)+var(--spacing)*5)]'
+          : 'carousel-scrollbar grid h-fit snap-x scroll-pe-6 auto-cols-auto grid-flow-col gap-3 overflow-x-auto pe-12 lg:gap-6',
+        listClassName,
+        !single && 'pb-3',
+      )}
+    >
+      {children}
+    </ul>
+  );
+
   return (
     <CarouselContext.Provider value={state}>
       <Tag
-        {...rest}
+        id={id}
+        style={style}
         ref={setRef}
-        role={rest.role ?? (hasSectionTitle ? 'group' : 'region')}
+        role={role ?? (hasSectionTitle ? 'group' : 'region')}
         aria-labelledby={labelId}
+        aria-describedby={ariaDescribedBy}
         aria-label={
-          rest['aria-label'] ??
-          (!labelId && title ? toPlainText(title) : undefined)
+          ariaLabel ?? (!labelId && title ? toPlainText(title) : undefined)
         }
         className={twMerge(
           single ? 'relative flex flex-col overflow-hidden' : 'w-full',
@@ -95,30 +120,7 @@ export function CarouselLayout({
             className,
           )}
         >
-          <div
-            className={
-              single
-                ? 'contents'
-                : 'carousel-scroll-progress relative isolate min-w-0 pb-[calc(var(--spacing)*2+3.5px)] before:pointer-events-none before:absolute before:inset-x-0 before:bottom-0 before:-z-10 before:h-2 before:rounded-[calc(var(--radius-base)/3.5)] before:border before:border-current before:bg-[image:repeating-linear-gradient(315deg,currentColor_0,currentColor_1px,transparent_0,transparent_50%)] before:bg-size-[4px_4px] before:text-black/15 after:pointer-events-none after:absolute after:inset-e-layout-sm after:inset-s-0 after:bottom-0 after:-z-20 after:h-2 after:rounded-[calc(var(--radius-base)/3.5)] after:bg-gray-20 dark:before:text-white/10'
-            }
-          >
-            <ul
-              {...listProps}
-              ref={sliderRef}
-              id={itemsId}
-              tabIndex={0}
-              className={twMerge(
-                'w-full focus:outline-dashed focus:outline-1 focus:outline-grey-60',
-                single
-                  ? 'grid [--carousel-slide-stride:calc(var(--spacing-single-carousel-card-w-sm)+var(--spacing)*5)] md:[--carousel-slide-stride:calc(var(--spacing-single-carousel-card-w-md)+var(--spacing)*5)] lg:[--carousel-slide-stride:calc(var(--spacing-single-carousel-card-w-lg)+var(--spacing)*5)]'
-                  : 'no-scrollbar grid h-fit snap-x scroll-pe-6 auto-cols-auto grid-flow-col gap-3 overflow-x-auto pe-layout-sm lg:gap-6',
-                listClassName,
-                !single && 'pb-0',
-              )}
-            >
-              {children}
-            </ul>
-          </div>
+          {list}
           <fieldset
             className={twMerge(
               'flex pt-6 pb-2',

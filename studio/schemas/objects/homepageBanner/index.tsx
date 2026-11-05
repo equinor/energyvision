@@ -1,25 +1,24 @@
 /* eslint-disable react/display-name */
-import { Flex, Stack, Text } from '@sanity/ui'
+import { Flex, Stack, Text } from '@sanity/ui';
 import {
   defineField,
   type PortableTextBlock,
   type PreviewProps,
   type Rule,
-} from 'sanity'
-import styled from 'styled-components'
-import blocksToText from '../../../helpers/blocksToText'
-import { CompactBlockEditor } from '../../components/CompactBlockEditor'
+} from 'sanity';
+import styled from 'styled-components';
+import blocksToText from '../../../helpers/blocksToText';
 import {
   CardTheme,
   ThemePreview,
   ThemeSelector,
   type ThemeSelectorColor,
   type ThemeSelectorValue,
-} from '../../components/ThemeSelector'
-import { defaultColors } from '../../defaultColors'
-import { configureBlockContent } from '../../editors'
-import { backgroundPosition } from '../commonFields/commonFields'
-import type { ImageWithAlt } from '../imageWithAlt'
+} from '../../components/ThemeSelector';
+import { defaultColors } from '../../defaultColors';
+import { configureBlockContent } from '../../editors';
+import { backgroundPosition } from '../commonFields/commonFields';
+import type { ImageWithAlt } from '../imageWithAlt';
 
 const MediaContainer = styled.div`
   position: relative;
@@ -32,7 +31,7 @@ const MediaContainer = styled.div`
   overflow: clip;
   align-items: center;
   justify-content: center;
-`
+`;
 const StyledImage = styled.img`
   position: absolute;
   left: 0;
@@ -41,13 +40,13 @@ const StyledImage = styled.img`
   height: 100%;
   object-fit: cover;
   border-radius: inherit;
-`
+`;
 
 export const homepageBannerThemeColors = [
   { title: 'Green', value: 0 },
   { title: 'White', value: 1 },
   { title: 'Blue', value: 2 },
-]
+];
 
 //Keep in sync with web/sections/HomePageBanner/homepageBannerthemes
 export const getColorForHomePageBannerTheme = (
@@ -65,7 +64,7 @@ export const getColorForHomePageBannerTheme = (
           value: defaultColors[12].value,
           key: defaultColors[12].key,
         },
-      }
+      };
     //Blue
     case 2:
       return {
@@ -77,7 +76,7 @@ export const getColorForHomePageBannerTheme = (
           value: defaultColors[0].value,
           key: defaultColors[0].key,
         },
-      }
+      };
     //Green
     default:
       return {
@@ -89,26 +88,26 @@ export const getColorForHomePageBannerTheme = (
           value: defaultColors[0].value,
           key: defaultColors[0].key,
         },
-      }
+      };
   }
-}
+};
 
 type HomepageBannerPreviewProps = {
-  backgroundType?: string
-  colorTheme?: any
-  imageUrl?: string
-} & PreviewProps
+  backgroundType?: string;
+  colorTheme?: any;
+  imageUrl?: string;
+} & PreviewProps;
 
 export function HomepageBannerPreview(props: HomepageBannerPreviewProps) {
-  const { title, backgroundType, colorTheme, imageUrl } = props
+  const { title, backgroundType, colorTheme, imageUrl } = props;
   //@ts-ignore:todo
-  const plainTitle = title ? blocksToText(title) : undefined
-  const subTitle = `Homepage banner`
+  const plainTitle = title ? blocksToText(title) : undefined;
+  const subTitle = `Homepage banner`;
 
   const color: ThemeSelectorValue = {
     title: colorTheme?.background?.[0]?.title as string,
     value: colorTheme?.background?.[0]?.value,
-  }
+  };
   return (
     <Flex gap={2} padding={2} align={'center'}>
       {backgroundType !== '0' ? (
@@ -120,7 +119,7 @@ export function HomepageBannerPreview(props: HomepageBannerPreviewProps) {
         />
       ) : (
         <MediaContainer>
-          <StyledImage src={imageUrl} alt='' />
+          <StyledImage src={imageUrl} alt="" />
         </MediaContainer>
       )}
       <Stack space={2}>
@@ -130,16 +129,16 @@ export function HomepageBannerPreview(props: HomepageBannerPreviewProps) {
         </Text>
       </Stack>
     </Flex>
-  )
+  );
 }
 
 export type HomepageBanner = {
-  _type: 'homepageBanner'
-  title?: PortableTextBlock[]
-  image: ImageWithAlt
-  ctaCards: any[]
-  background?: ThemeSelectorValue
-}
+  _type: 'homepageBanner';
+  title?: PortableTextBlock[];
+  image: ImageWithAlt;
+  ctaCards: any[];
+  background?: ThemeSelectorValue;
+};
 
 export default {
   name: 'homepageBanner',
@@ -157,9 +156,6 @@ export default {
       name: 'title',
       title: 'Tagline',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
     },
     {
@@ -223,12 +219,12 @@ export default {
         input: (props: any) => {
           return (
             <ThemeSelector
-              variant='cards'
+              variant="cards"
               themeColors={homepageBannerThemeColors}
               getColorForThemeHandler={getColorForHomePageBannerTheme}
               {...props}
             />
-          )
+          );
         },
         //@ts-ignore
         preview: ThemePreview,
@@ -290,4 +286,4 @@ export default {
       colorTheme: 'colorTheme',
     },
   },
-}
+};

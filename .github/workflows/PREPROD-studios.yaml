@@ -15,6 +15,7 @@ on:
 permissions:
   id-token: write
   contents: read
+  contents: read
   packages: write
 jobs:
   update-radix-config:
@@ -42,9 +43,8 @@ jobs:
         run: |
           echo "IMAGE_TAG_SHA=$(git rev-parse --short=12 ${GITHUB_SHA})" >> $GITHUB_ENV
 
-      - name: Checkout internal 🛎️
-        id: checkout-internal
-        uses: actions/checkout@v7
+      - name: Checkout internal as GitHub App 🛎️
+        uses: ./.github/workflows/checkout-internal
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -59,6 +59,7 @@ jobs:
           source venv/bin/activate
           python -m pip install ruamel.yaml
           python ci/upgradeEnvironment.py studio ${{ env.IMAGE_TAG_SHA }} ${{ secrets.ENV }}
+          git remote set-url origin https://github.com/equinor/energyvision-internal.git
           git remote set-url origin https://github.com/equinor/energyvision-internal.git
           if [[ `git status --porcelain` ]]
           then

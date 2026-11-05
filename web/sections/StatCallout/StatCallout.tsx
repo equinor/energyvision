@@ -40,6 +40,7 @@ export const StatCallout = ({
   } = data;
   const { bg, dark } = getBgAndDarkFromBackground(designOptions);
   const hasMoreThanTwoItems = items.length > 2;
+
   const aspectRatio: NonNullable<StatCalloutItemData['aspectRatio']> =
     items.length === 1 ? '16:9' : items.length === 2 ? '1:1' : '8:11';
   const itemsWithAspectRatio = items.map((item) => ({

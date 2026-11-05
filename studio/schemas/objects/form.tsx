@@ -2,7 +2,6 @@ import { LiaClipboardListSolid } from 'react-icons/lia';
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity';
 import blocksToText from '../../helpers/blocksToText';
 import { Flags } from '../../src/lib/datasetHelpers';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors';
 import { validateRequiredIfVisible } from '../validations/validateRequiredIfVisible';
 import type { DownloadableFile } from './files';
@@ -36,9 +35,6 @@ export default {
       type: 'array',
       title: 'Title',
       description: 'The (optional) title/heading shown above the form.',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [titleContentType],
     },
     {

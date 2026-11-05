@@ -1,0 +1,85 @@
+# This composite action mints a GitHub App installation token for
+# equinor/energyvision-internal, checks that repository out into the
+# workspace root and, when write access is requested, configures the
+# git identity so commits are attributed to the GitHub App bot user.
+#
+# Local actions must exist on disk, so callers need a (sparse) checkout
+# of this repository before using it. The internal checkout replaces the
+# workspace, so this action re-creates itself afterwards (git-excluded) to
+# keep the runner's post steps working:
+#   - uses: actions/checkout@v7
+#     with:
+#       sparse-checkout: .github/workflows/checkout-internal
+#   - uses: ./.github/workflows/checkout-internal
+#     with:
+#       app-id: ${{ secrets.GH_APP_ID }}
+#       private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+name: Checkout energyvision-internal
+description: 'Generate a GitHub App token, check out equinor/energyvision-internal and configure the git identity as the app'
+inputs:
+  app-id:
+    description: 'GitHub App ID'
+    required: true
+  private-key:
+    description: 'GitHub App private key'
+    required: true
+  permission-contents:
+    description: 'Contents permission for the installation token (read or write)'
+    required: false
+    default: 'write'
+outputs:
+  token:
+    description: 'Installation token scoped to equinor/energyvision-internal'
+    value: ${{ steps.internal-token.outputs.token }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Generate internal token
+      id: internal-token
+      uses: actions/create-github-app-token@v1
+      with:
+        app-id: ${{ inputs.app-id }}
+        owner: Equinor
+        repositories: energyvision-internal
+        private-key: ${{ inputs.private-key }}
+        permission-contents: ${{ inputs.permission-contents }}
+    # Checking out energyvision-internal into the workspace root deletes this
+    # action from disk, but the runner re-reads it at job end to run the
+    # nested post steps (token revoke, credential cleanup). Keep a copy so it
+    # can be restored after the checkout.
+    - name: Preserve action definition
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+      run: |
+        rm -rf "${RUNNER_TEMP}/checkout-internal-action"
+        cp -R "${ACTION_PATH}" "${RUNNER_TEMP}/checkout-internal-action"
+    - name: Checkout internal 🛎️
+      uses: actions/checkout@v7
+      with:
+        repository: 'equinor/energyvision-internal'
+        ref: main
+        token: ${{ steps.internal-token.outputs.token }}
+    - name: Restore action definition
+      if: always()
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+      run: |
+        mkdir -p "${ACTION_PATH}"
+        cp -R "${RUNNER_TEMP}/checkout-internal-action/." "${ACTION_PATH}"
+        # Hide the restored files from the internal checkout so callers'
+        # `git status --porcelain` / `git commit -a` never see them.
+        RELATIVE_PATH="${ACTION_PATH#"${GITHUB_WORKSPACE}/"}"
+        echo "/${RELATIVE_PATH}/" >> "${GITHUB_WORKSPACE}/.git/info/exclude"
+    - name: Configure git identity as GitHub App 🤖
+      if: inputs.permission-contents == 'write'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ steps.internal-token.outputs.token }}
+        APP_SLUG: ${{ steps.internal-token.outputs.app-slug }}
+      run: |
+        USER_ID=$(gh api "/users/${APP_SLUG}[bot]" --jq .id)
+        git config --global user.name "${APP_SLUG}[bot]"
+        git config --global user.email "${USER_ID}+${APP_SLUG}[bot]@users.noreply.github.com"

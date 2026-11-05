@@ -3,14 +3,14 @@ import type {
   Reference,
   Rule,
   ValidationContext,
-} from 'sanity'
+} from 'sanity';
 
 export type ImageWithAlt = {
-  _type: string
-  asset: Reference
-  isDecorative?: boolean
-  alt?: string
-}
+  _type: string;
+  asset: Reference;
+  isDecorative?: boolean;
+  alt?: string;
+};
 
 export default {
   name: 'imageWithAlt',
@@ -20,9 +20,20 @@ export default {
     hotspot: true,
     collapsed: false,
   },
+  fieldsets: [
+    {
+      name: 'accessibility',
+      title: 'Accessibility',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
+  ],
   fields: [
     {
       name: 'isDecorative',
+      fieldset: 'accessibility',
       type: 'boolean',
       title: 'Image is only decorative',
       description:
@@ -30,6 +41,7 @@ export default {
     },
     {
       name: 'alt',
+      fieldset: 'accessibility',
       type: 'string',
       title: 'Alternative text for screen readers',
       description: 'Recommended. Describe whats seen in the image.',
@@ -39,21 +51,21 @@ export default {
             value: string,
             context: ValidationContext,
           ): CustomValidatorResult => {
-            const { parent } = context as { parent: ImageWithAlt }
+            const { parent } = context as { parent: ImageWithAlt };
 
             // Only  make the alt tag required if an image has been selected
-            if (!parent?.asset) return true
+            if (!parent?.asset) return true;
 
             // Alt tag should only be required if the image is not decorative
             if (!parent?.isDecorative && !value) {
-              return 'Alt attribute is required'
+              return 'Alt attribute is required';
             }
 
-            return true
+            return true;
           },
         ),
       // hidden: ({ parent }: { parent: ImageWithAlt }) =>
       //   parent?.isDecorative === true,
     },
   ],
-}
+};

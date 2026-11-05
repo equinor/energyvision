@@ -1,9 +1,9 @@
-import { MdOutlineEvent } from 'react-icons/md'
-import { defaultLanguage } from '../../../../languages'
-import { apiVersion } from '../../../../sanity.client'
-import { Flags } from '../../datasetHelpers'
+import { MdOutlineEvent } from 'react-icons/md';
+import { defaultLanguage } from '../../../../languages';
+import { apiVersion } from '../../../../sanity.client';
+import { Flags } from '../../datasetHelpers';
 
-export const Event = S =>
+export const Event = (S) =>
   Flags.HAS_EVENT
     ? S.listItem()
         .title('Event')
@@ -14,11 +14,15 @@ export const Event = S =>
             .apiVersion(apiVersion)
             .id('events')
             .title('Events')
-            .filter('_type == "event" && (!defined(lang) || lang == $baseLang)')
-            .params({ baseLang: defaultLanguage.iso })
+            .filter(
+              '_type == "event" && (!defined(lang) || lang in $baseLanguages)',
+            )
+            .params({
+              baseLanguages: [defaultLanguage.name, defaultLanguage.iso],
+            })
             .canHandleIntent((_name, params) => {
               // Assume we can handle all intents (actions) regarding post documents
-              return params.type === 'event'
+              return params.type === 'event';
             }),
         )
-    : S.EmptyItem
+    : S.EmptyItem;

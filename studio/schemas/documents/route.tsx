@@ -90,7 +90,7 @@ export default (iso: string, title: string) => {
         type: 'string',
         placeholder: 'For example "Experienced professionals"',
         description:
-          'The unique part of the URL for this page. Should probably be something like the page title.',
+          'The unique part of the URL. For example, use the page title.',
         // validation: (Rule) => Rule.max(200),
         fieldset: 'slug',
         options: { search: { weight: 8 } },

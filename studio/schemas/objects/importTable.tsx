@@ -1,8 +1,7 @@
-import type { Rule } from 'sanity'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import { layoutGrid } from './commonFields/commonFields'
-import { TablePreview } from './tableV2'
+import type { Rule } from 'sanity';
+import { configureBlockContent } from '../editors';
+import { layoutGrid } from './commonFields/commonFields';
+import { TablePreview } from './tableV2';
 
 export default {
   title: 'Import Table',
@@ -24,9 +23,6 @@ export default {
       name: 'title',
       type: 'array',
       description: 'Will render h2',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) =>
         Rule.required().warning('In most cases you should add a title'),
@@ -100,4 +96,4 @@ export default {
       theme: 'theme',
     },
   },
-}
+};

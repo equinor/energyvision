@@ -1,7 +1,6 @@
 import { NumberIcon } from '@sanity/icons/Number';
 import type { PortableTextBlock, Rule } from 'sanity';
 import blocksToText from '../../helpers/blocksToText';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors';
 import singleItemArray from './singleItemArray';
 
@@ -21,9 +20,6 @@ export default {
       title: 'Title',
       name: 'title',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) =>
         Rule.required().warning('In most cases you should add a title'),
@@ -60,9 +56,6 @@ export default {
       name: 'disclaimer',
       title: 'Disclaimer',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'ingress' })],
     },
     singleItemArray({

@@ -1,20 +1,38 @@
-import type { PortableTextBlock } from 'sanity'
+import type { PortableTextBlock } from 'sanity';
 
-export const validateCharCounterEditor = (value: PortableTextBlock[], charLimit: number, allowZeroLength = false) => {
+export const validateCharCounterEditor = (
+  value: PortableTextBlock[],
+  charLimit: number,
+  allowZeroLength = false,
+) => {
   if (!value || (value.length === 0 && !allowZeroLength)) {
-    return allowZeroLength ? true : 'Required'
+    return allowZeroLength ? true : 'Required';
   }
+
+  const hasText = value.some(
+    (block) =>
+      Array.isArray(block.children) &&
+      block.children.some(
+        (child) =>
+          'text' in child &&
+          typeof child.text === 'string' &&
+          child.text.trim().length > 0,
+      ),
+  );
+
+  if (!hasText && !allowZeroLength) return 'Required';
 
   const count = value[0]?.children
     ? (value[0].children as { text: string }[]).reduce(
-        (total: number, current: { text: string }) => total + current.text.length,
+        (total: number, current: { text: string }) =>
+          total + current.text.length,
         0,
       )
-    : null
+    : null;
 
   if (count !== null && count > charLimit) {
-    return `The introduction should be no longer than ${charLimit} characters. Currently ${count} characters long.`
+    return `The introduction should be no longer than ${charLimit} characters. Currently ${count} characters long.`;
   }
 
-  return true
-}
+  return true;
+};

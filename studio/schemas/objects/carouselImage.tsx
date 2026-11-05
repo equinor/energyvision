@@ -1,17 +1,16 @@
-import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import type { ImageWithAlt } from './imageWithAlt'
-import singleItemArray from './singleItemArray'
+import type { PortableTextBlock, Reference, Rule } from 'sanity';
+import { configureBlockContent } from '../editors';
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
+import type { ImageWithAlt } from './imageWithAlt';
+import singleItemArray from './singleItemArray';
 
 export type CarouselImage = {
-  _type: 'imageWithLinkOrOverlay'
-  image: ImageWithAlt
-  captionPositionUnderImage?: boolean
-  action?: Reference[]
-  captionType?: string
-}
+  _type: 'imageWithLinkOrOverlay';
+  image: ImageWithAlt;
+  captionPositionUnderImage?: boolean;
+  action?: Reference[];
+  captionType?: string;
+};
 
 export default {
   name: 'imageWithLinkOrOverlay',
@@ -33,9 +32,6 @@ export default {
       name: 'captionTitle',
       title: 'Caption title',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
     },
     {
@@ -43,9 +39,10 @@ export default {
       title: 'Caption content',
       type: 'array',
       of: [configureBlockContent({ variant: 'simpleBlock' })],
+      options: { maxLength: 600 },
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
-          return validateCharCounterEditor(value, 600)
+          return validateCharCounterEditor(value, 600);
         }).error(),
     },
     singleItemArray({
@@ -67,15 +64,15 @@ export default {
       caption,
       alt,
     }: {
-      imageUrl: string
-      alt: string
-      caption: string
+      imageUrl: string;
+      alt: string;
+      caption: string;
     }) {
       return {
         title: alt || 'No alt text',
         subtitle: caption || 'No caption',
         media: <img src={imageUrl} alt={alt} style={{ height: '100%' }} />,
-      }
+      };
     },
   },
-}
+};

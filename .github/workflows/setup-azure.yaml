@@ -35,9 +35,7 @@ jobs:
           allow-no-subscriptions: true
       - name: Show Azure account
         run: az account show
-      # Checkout internal repository where the bicep files are located
-      - name: Checout internal
-        id: checkout-internal
+      - name: Checkout 🛎️
         uses: actions/checkout@v7
         with:
           repository: 'equinor/energyvision-internal'

@@ -258,5 +258,5 @@
 }
 #PTE-height-container [data-testid="pt-editor__scroller"],
 #PTE-height-container [data-testid="pt-editor"][data-fullscreen="false"] {
-  height: 150px;
+  height: 120px;
 }

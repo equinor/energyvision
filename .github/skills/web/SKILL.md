@@ -19,6 +19,26 @@ description: Web application React/NextJS/TypeScript coding standards, state man
 - Always use `Typography` from `@/core/Typography/Typography` for paragraphs and text instead of raw `<p>` elements or unstyled text wrappers. Set `as` for the semantic element and `variant` (and `group` when needed) for the intended styling; preserve semantic links and controls.
 - Keep components and Hooks pure; do not mutate props/state.
 - Keep one source of truth for each piece of state (lift state up instead of duplicating it).
+- Don't rest spread props blindly onto HTML elements; be explicit about which props are passed down to avoid the risks outlined below.
+
+### The Main Risks of Rest Spreading
+
+1. Passing Invalid HTML Attributes (Console Errors)
+
+When you spread props onto a standard HTML element (like a <div> or <button>), React attempts to apply every single property in that object as a DOM attribute. If your rest object contains custom props meant only for JavaScript logic, React will throw a warning in the console.
+
+2. Accidental Prop Overrides
+
+The order of properties matters in JavaScript object spreading. If you spread rest after explicit props, you might accidentally let the consumer of your component override critical, intentional behavior.
+
+
+3. Hidden Dependencies & Reduced Readability
+
+Rest spreading creates a "black box." When looking at a component's source code, it becomes difficult to tell exactly what props the component relies on or passes down. This makes refactoring highly error-prone because you cannot easily search for prop usage across your codebase.
+
+4. Unnecessary Re-renders
+
+If you pass down a large rest object that changes its reference on every render (even if the values inside haven't changed), the child component might re-render unnecessarily, degrading performance.
 
 ## Website (Next.js)
 Before any Next.js work, find and read the relevant doc in node_modules/next/dist/docs/. Your training data is outdated — the docs are the source of truth.

@@ -16,8 +16,12 @@ export const News = (S) =>
             .apiVersion(apiVersion)
             .id('news')
             .title('Newspages')
-            .filter(' _type == "news" && (!defined(lang) || lang == $baseLang)')
-            .params({ baseLang: defaultLanguage.iso })
+            .filter(
+              ' _type == "news" && (!defined(lang) || lang in $baseLanguages)',
+            )
+            .params({
+              baseLanguages: [defaultLanguage.name, defaultLanguage.iso],
+            })
             .canHandleIntent((_name, params) => {
               // Assume we can handle all intents (actions) regarding post documents
               return params.type === 'news';

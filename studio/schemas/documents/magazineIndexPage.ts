@@ -1,13 +1,12 @@
-import { magazineSlug } from '@energyvision/shared/satelliteConfig'
-import { bookmarks } from '@equinor/eds-icons'
-import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors/blockContentType'
-import MagazineFooterComponent from '../objects/magazineFooterComponent'
-import { HeroTypes } from './header/sharedHeaderFields'
-import { lang } from './langField'
+import { magazineSlug } from '@energyvision/shared/satelliteConfig';
+import { bookmarks } from '@equinor/eds-icons';
+import type { PortableTextBlock, Rule, ValidationContext } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import { configureBlockContent } from '../editors/blockContentType';
+import MagazineFooterComponent from '../objects/magazineFooterComponent';
+import { HeroTypes } from './header/sharedHeaderFields';
+import { lang } from './langField';
 
 export default {
   type: 'document',
@@ -32,9 +31,6 @@ export default {
       name: 'title',
       type: 'array',
       title: 'Title',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'titleWithDisplay' })],
       validation: (Rule: Rule) => Rule.required(),
     },
@@ -43,14 +39,14 @@ export default {
       title: 'Slug',
       type: 'slug',
       readOnly: (props: any) => {
-        const { value, document } = props
+        const { value, document } = props;
         if (typeof value === 'undefined' || !value) {
-          return false
+          return false;
         }
         if (value?.current === `/${magazineSlug[document?.lang as string]}`) {
-          return true
+          return true;
         }
-        return false
+        return false;
       },
       validation: (Rule: Rule) =>
         Rule.custom((value: { current: string }, ctx: ValidationContext) => {
@@ -59,11 +55,11 @@ export default {
               value?.current ===
               `/${magazineSlug[ctx?.document?.lang as string]}`
             ) {
-              return true
+              return true;
             }
-            return `Must be /${magazineSlug[ctx?.document?.lang as string]}`
+            return `Must be /${magazineSlug[ctx?.document?.lang as string]}`;
           }
-          return 'Required'
+          return 'Required';
         }),
     },
     {
@@ -92,7 +88,7 @@ export default {
             title: 'Title and/or ingress on background image',
             value: HeroTypes.BACKGROUND_IMAGE,
           },
-        ].filter(e => e),
+        ].filter((e) => e),
       },
       initialValue: HeroTypes.FULL_WIDTH_IMAGE,
     },
@@ -113,14 +109,14 @@ export default {
         ],
       },
       hidden: ({ parent }: any) => {
-        return parent?.heroType !== HeroTypes.FULL_WIDTH_IMAGE
+        return parent?.heroType !== HeroTypes.FULL_WIDTH_IMAGE;
       },
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext) => {
-          const { parent } = context as any
+          const { parent } = context as any;
           if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE && !value)
-            return 'Field is required'
-          return true
+            return 'Field is required';
+          return true;
         }),
       initialValue: 'narrow',
     },
@@ -160,15 +156,15 @@ export default {
       title,
       ingress,
     }: {
-      title: PortableTextBlock[]
-      ingress: PortableTextBlock[]
+      title: PortableTextBlock[];
+      ingress: PortableTextBlock[];
     }) {
-      const plainTitle = title ? blocksToText(title) : ''
+      const plainTitle = title ? blocksToText(title) : '';
 
       return {
         title: plainTitle,
         subtitle: blocksToText(ingress) || '',
-      }
+      };
     },
   },
-}
+};

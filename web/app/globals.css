@@ -2,68 +2,11 @@
 @import "@energyvision/shared/brand.css";
 @source "../styles/components/cookiebot.css";
 
-@utility carousel-scroll-progress {
-  @supports (animation-timeline: scroll()) and
-    (timeline-scope: --carousel-scroll) {
-    @media (prefers-reduced-motion: no-preference) {
-      timeline-scope: --carousel-scroll;
-
-      & > ul {
-        scroll-timeline: --carousel-scroll inline;
-      }
-
-      &::before {
-        inset-inline-start: 0;
-        inset-inline-end: auto;
-        animation: carousel-scroll-progress steps(100, end) both;
-        animation-timeline: --carousel-scroll;
-      }
-    }
-  }
-}
-
-@keyframes carousel-scroll-progress {
-  from {
-    width: 10%;
-  }
-  to {
-    width: calc(100% - var(--spacing-layout-sm));
-  }
-}
-
-@utility graph-paper-background {
-  --graph-paper-line: color-mix(
-    in srgb,
-    var(--color-black-100) 13%,
-    transparent
-  );
-  background-color: var(--color-gray-20);
-  background-image:
-    linear-gradient(to right, var(--graph-paper-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--graph-paper-line) 1px, transparent 1px);
-  background-size: calc(var(--spacing) * 6) calc(var(--spacing) * 6);
-}
-
 /* Custom theme for web, not common brand */
 @theme {
-  /*   --spacing-layout-sm: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);
-  --spacing-layout-md: clamp(16px, calc(-69.4369px + 22.7832vw), 368px); 
-  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 31.3269vw), 500px);  */
-  --spacing-layout-sm: clamp(
-    16px,
-    calc(-38.3689px + 14.4984cqw),
-    250px
-  ); /*calc(-38.3689px + 15.4984vw), 13dvw*/
-  --spacing-layout-md: clamp(
-    16px,
-    calc(-69.4369px + 22.7832cqw),
-    368px
-  ); /*calc(-69.4369px + 22.7832vw), 17.8dvw*/
-  --spacing-layout-lg: clamp(
-    16px,
-    calc(-101.4757px + 31.3269cqw),
-    500px
-  ); /*calc(-101.4757px + 32.3269vw), 23.3dvw*/
+  --spacing-layout-sm: clamp(16px, calc(-38.3689px + 14.4984cqw), 250px);
+  --spacing-layout-md: clamp(16px, calc(-69.4369px + 22.7832cqw), 368px);
+  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 31.3269cqw), 500px);
   --spacing-text-end: clamp(16px, calc(-150px + 38vw), 26dvw);
   --spacing-content: 1920px;
   --spacing-fullwidth: 2560px;
@@ -75,6 +18,10 @@
   --spacing-single-carousel-card-h-md: 430px;
   --spacing-single-carousel-card-h-lg: 516px;
   --spacing-event-carousel-card-w: 383px;
+  --spacing-event-carousel-card-h: calc(
+    var(--spacing-event-carousel-card-w) *
+    3 / 4
+  );
   --spacing-arrow-right: 1.58rem;
   --spacing-text: 80ch; /*75em;*/ /*800px;*/
   --spacing-card: 13px;
@@ -172,6 +119,18 @@
 @utility grid-area-overlay {
   grid-area: overlay;
 }
+@utility graph-paper-background {
+  --graph-paper-line: color-mix(
+    in srgb,
+    var(--color-black-100) 13%,
+    transparent
+  );
+  background-color: var(--color-gray-20);
+  background-image:
+    linear-gradient(to right, var(--graph-paper-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--graph-paper-line) 1px, transparent 1px);
+  background-size: calc(var(--spacing) * 6) calc(var(--spacing) * 6);
+}
 
 @theme inline {
   --spacing-page-content: --spacing(20);
@@ -258,6 +217,42 @@ data-ui="checked active" class="data-checked:underline">
     @apply bg-neutral-400;
   }
 }
+@utility carousel-scrollbar {
+  --carousel-track-color: color-mix(
+    in srgb,
+    var(--color-black-100) 2.5%,
+    transparent
+  );
+  @variant dark {
+    --carousel-track-color: color-mix(
+      in srgb,
+      var(--color-white-100) 2.5%,
+      transparent
+    );
+  }
+  &::-webkit-scrollbar {
+    @apply h-2;
+  }
+  &::-webkit-scrollbar-track {
+    @apply rounded-2xs;
+    background-color: var(--carousel-track-color);
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply rounded-2xs border border-black-100/9 bg-gray-20;
+    background-image: repeating-linear-gradient(
+      315deg,
+      color-mix(in srgb, var(--color-black-100) 9%, transparent) 0,
+      color-mix(in srgb, var(--color-black-100) 9%, transparent) 1px,
+      transparent 0,
+      transparent 50%
+    );
+    background-size: 4px 4px;
+  }
+  @supports not selector(::-webkit-scrollbar) {
+    @apply scrollbar-thin scrollbar-thumb-grey-40 scrollbar-track-(--carousel-track-color);
+  }
+}
+
 @utility transparent-gradient {
   background-image: linear-gradient(
     to right,

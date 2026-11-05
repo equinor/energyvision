@@ -1,18 +1,17 @@
-import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import type { ImageWithAlt } from './imageWithAlt'
-import singleItemArray from './singleItemArray'
+import type { PortableTextBlock, Reference, Rule } from 'sanity';
+import { configureBlockContent } from '../editors';
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
+import type { ImageWithAlt } from './imageWithAlt';
+import singleItemArray from './singleItemArray';
 
 export type CarouselImageWithLinkAndOrOverlay = {
-  _type: 'imageWithLinkAndOrOverlay'
-  image: ImageWithAlt
-  captionTeaserTitle?: string
-  captionTitle?: PortableTextBlock[]
-  captionText?: PortableTextBlock[]
-  action?: Reference[]
-}
+  _type: 'imageWithLinkAndOrOverlay';
+  image: ImageWithAlt;
+  captionTeaserTitle?: string;
+  captionTitle?: PortableTextBlock[];
+  captionText?: PortableTextBlock[];
+  action?: Reference[];
+};
 
 export default {
   name: 'imageWithLinkAndOrOverlay',
@@ -41,9 +40,6 @@ export default {
       title: 'Caption title',
       description: 'Displays title in overlay',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
     },
     {
@@ -52,9 +48,10 @@ export default {
       description: 'Displays title in overlay',
       type: 'array',
       of: [configureBlockContent({ variant: 'simpleBlock' })],
+      options: { maxLength: 200 },
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
-          return validateCharCounterEditor(value, 200, true)
+          return validateCharCounterEditor(value, 200, true);
         }).error(),
     },
     singleItemArray({
@@ -75,14 +72,14 @@ export default {
       imageUrl,
       captionTeaserTitle,
     }: {
-      imageUrl: string
-      captionTeaserTitle: string
+      imageUrl: string;
+      captionTeaserTitle: string;
     }) {
       return {
         title: 'Image with link and or overlay',
         subtitle: captionTeaserTitle || '',
-        media: <img src={imageUrl} alt='' style={{ height: '100%' }} />,
-      }
+        media: <img src={imageUrl} alt="" style={{ height: '100%' }} />,
+      };
     },
   },
-}
+};

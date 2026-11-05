@@ -24,6 +24,7 @@ on:
 permissions:
   id-token: write
   contents: read
+  contents: read
 jobs:
   update-radix-config:
     runs-on: ubuntu-latest
@@ -56,6 +57,7 @@ jobs:
           source venv/bin/activate
           python -m pip install ruamel.yaml
           python ci/promoteToProduction.py web ${{ github.event.inputs.site }}
+          git remote set-url origin https://github.com/equinor/energyvision-internal.git
           git remote set-url origin https://github.com/equinor/energyvision-internal.git
           if [[ `git status --porcelain` ]]
           then
