@@ -69,7 +69,7 @@ ${commonPromotionFields},
             "type": "internalUrl",
             "lang": reference->content-> lang
         },
-    reference->_type == 'route_' + $lang => {
+    string::startsWith(reference->_type, 'route_') && reference->_type != 'route_homepage' && reference->lang == $lang => {
     "label": reference->content->title,
     "image": select(reference->content->heroType == 'loopingVideo' => reference->content->heroLoopingVideo->thumbnail,
     reference->content->heroFigure.image),

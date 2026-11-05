@@ -1,5 +1,5 @@
 import { defaultLanguage } from '@/languageConfig';
-import { getLocaleFromName } from '@/sanity/helpers/localization';
+import { getLocaleFromIso } from '@/sanity/helpers/localization';
 import type { LinkData } from '../../types/index';
 
 export const getUrlFromAction = ({
@@ -13,8 +13,8 @@ export const getUrlFromAction = ({
 
   const anchor = anchorReference ? `#${anchorReference}` : '';
   const locale =
-    link?.lang && link.lang !== defaultLanguage.name
-      ? `/${getLocaleFromName(link?.lang)}`
+    link?.lang !== defaultLanguage.iso
+      ? `/${getLocaleFromIso(link?.lang)}`
       : '';
 
   if (type === 'internalUrl') {

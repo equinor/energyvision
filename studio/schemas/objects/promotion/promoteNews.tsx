@@ -8,7 +8,10 @@ import {
   useDocumentValues,
 } from 'sanity';
 import blocksToText from '../../../helpers/blocksToText';
-import { defaultLanguage } from '../../../languages';
+import {
+  getTranslation,
+  type TranslationValue,
+} from '../../../helpers/translation';
 import { Flags } from '../../../src/lib/datasetHelpers';
 import {
   ingress,
@@ -20,13 +23,10 @@ import {
 
 const NewsTagLabel = ({ documentId }: { documentId: string }) => {
   const { value, isLoading, error } = useDocumentValues<{
-    title?: string | Record<string, string>;
+    translation?: TranslationValue[];
     key?: { current?: string };
-  }>(documentId, ['title', 'key']);
-  const title =
-    typeof value?.title === 'string'
-      ? value.title
-      : value?.title?.[defaultLanguage.name];
+  }>(documentId, ['translation', 'key']);
+  const title = getTranslation(value?.translation);
 
   return (
     <>

@@ -20,8 +20,8 @@ export const query = /* groq */ `*[_type == "news" && lang == $lang &&  excludeF
   "ingress": pt::text(ingress),
   "type": _type,
   "publishDateTime": ${publishDateTimeQuery},
-  "topicTags": tags[]->.title[$lang],
-  "countryTags": countryTags[]->.title[$lang],
+  "topicTags": tags[]->translation[language == $lang][0].value,
+  "countryTags": countryTags[]->translation[language == $lang][0].value,
   "blocks": content[_type == "block"] {
     "blockKey": _key,
     "children": children[text match "*"] {
@@ -40,7 +40,7 @@ export const query = /* groq */ `*[_type == "news" && lang == $lang &&  excludeF
 `
 
 const getQueryParams = (language: Language, id: string) => ({
-  lang: language.internalCode,
+  lang: language.isoCode,
   id: id,
 })
 

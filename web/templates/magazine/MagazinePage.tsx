@@ -8,10 +8,7 @@ import Link from '@/core/Link/Link';
 import TransformableIcon from '@/icons/TransformableIcon';
 import { defaultLanguage } from '@/languageConfig';
 import { twMerge } from '@/lib/twMerge/twMerge';
-import {
-  getLocaleFromIso,
-  getNameFromIso,
-} from '@/sanity/helpers/localization';
+import { getLocaleFromIso } from '@/sanity/helpers/localization';
 import {
   HeroBlock,
   type HeroBlockProps,
@@ -49,8 +46,7 @@ const MagazinePage = ({
   const type = hero?.type || HeroTypes.DEFAULT;
   const locale = useLocale();
   const intl = useTranslations();
-  const localeName = getNameFromIso(locale);
-  const magazineIndexSlug = magazineSlug[localeName];
+  const magazineIndexSlug = magazineSlug[locale];
   const localePrefix =
     locale === defaultLanguage.iso ? '' : `/${getLocaleFromIso(locale)}`;
   const magazineIndexHref = magazineIndexSlug

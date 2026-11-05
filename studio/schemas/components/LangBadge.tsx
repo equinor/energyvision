@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/disable-next-line */
 import { languages } from '../../languages'
 import countries from '../../icons/countries'
 
@@ -10,7 +10,7 @@ function Flag({ lang }: any) {
 
 export function LangBadge(props: any) {
   const lang = props.published?.lang || props.draft?.lang
-  const language = languages.filter((it) => it.name === lang).at(0)
+  const language = languages.filter((it) => it.iso === lang).at(0)
 
   return language
     ? {

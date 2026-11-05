@@ -12,10 +12,7 @@ import { Suspense } from 'react';
 import { PageProvider } from '@/contexts/pageContext';
 import { getValidLanguagesLocales } from '@/languageConfig';
 import { crawlableDomains } from '@/lib/helpers/domainHelpers';
-import {
-  getLocaleFromIso,
-  getNameFromIso,
-} from '@/sanity/helpers/localization';
+import { getLocaleFromIso } from '@/sanity/helpers/localization';
 import { dataset } from '@/sanity/lib/api';
 import { IS_FETCH_OPTIMIZED, routeSanityFetch } from '@/sanity/lib/fetch';
 import { getDynamicFetchOptions, SanityLive } from '@/sanity/lib/live';
@@ -99,7 +96,7 @@ export default async function LocaleLayout({
         >
           {t('skipToContent') ?? 'Skip to main content'}
         </NextLink>
-        {!IS_FETCH_OPTIMIZED && <SanityLive />}
+        {/*!IS_FETCH_OPTIMIZED && <SanityLive />*/}
         {/* Preview link is sent to stakeholders dont show draft toolbar, only use if needed in local development
         Must first filter all conditional rendering props in the page content, otherwise the visual editing will not work correctly inside presentation tool. This is a big job and will be done later. For now, we will not render the visual editing inside the presentation tool. 
         */}
@@ -140,7 +137,7 @@ async function CachedContent({
   'use cache: remote';
   const locale = await getLocale();
   const queryParams = {
-    lang: getNameFromIso(locale) ?? 'en_GB',
+    lang: locale ?? 'en-GB',
   };
 
   const { data: footerAndErrorImageData }: { data: any } =

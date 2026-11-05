@@ -7,8 +7,8 @@ import {
   FaYoutube,
 } from 'react-icons/fa';
 import { SiX } from 'react-icons/si';
-import { getIsoFromName } from '@/sanity/helpers/localization';
 import type { LinkData } from '@/types';
+
 import { ArrowRight } from '../../icons';
 import { BaseLink } from './BaseLink';
 
@@ -44,7 +44,7 @@ export type FooterLinkProps = {
 
 const FooterLink = forwardRef<HTMLAnchorElement, FooterLinkProps>(
   async ({ type, someType, label, link, href }, ref) => {
-    const linkLocale = getIsoFromName(link?.lang);
+    const linkLocale = link?.lang;
     const isExternal =
       type === 'externalUrl' ||
       href?.startsWith('http') ||

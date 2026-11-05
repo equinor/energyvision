@@ -1,22 +1,21 @@
-'use client'
-import { useLocale } from 'next-intl'
-import { forwardRef } from 'react'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import Card from '@/sections/cards/Card'
+'use client';
+import { useLocale } from 'next-intl';
+import { forwardRef } from 'react';
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction';
+import Card from '@/sections/cards/Card';
 import {
   type ColorKeyTokens,
   colorKeyToUtilityMap,
-} from '@/styles/colorKeyToUtilityMap'
-import type { PromoTileData } from '@/types/index'
-import { getIsoFromName } from '../../sanity/helpers/localization'
-import type { Variants } from '../cards/Card/Card'
+} from '@/styles/colorKeyToUtilityMap';
+import type { PromoTileData } from '@/types/index';
+import type { Variants } from '../cards/Card/Card';
 
 type PromoTileProps = {
-  hasSectionTitle?: boolean
-  variant?: Variants
+  hasSectionTitle?: boolean;
+  variant?: Variants;
   /* grey card background as long as not on colored background */
-  onColorBg?: boolean
-} & PromoTileData
+  onColorBg?: boolean;
+} & PromoTileData;
 
 export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(
   function PromoTile(
@@ -33,27 +32,25 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(
     },
     ref,
   ) {
-    const url = getUrlFromAction(action)
-    const intlLocale = useLocale()
+    const url = getUrlFromAction(action);
+    const intlLocale = useLocale();
     if (!url) {
-      return null
+      return null;
     }
 
-    const locale = action.link?.lang
-      ? getIsoFromName(action.link?.lang)
-      : getIsoFromName(intlLocale)
-    const { background } = designOptions
+    const locale = action.link?.lang ? action.link?.lang : intlLocale;
+    const { background } = designOptions;
 
     const colorName =
       Object.keys(colorKeyToUtilityMap).find(
-        key =>
+        (key) =>
           colorKeyToUtilityMap[key as keyof ColorKeyTokens]?.backgroundName ===
           background?.backgroundColor,
-      ) ?? 'white-100'
+      ) ?? 'white-100';
 
     const theme = background?.backgroundUtility
       ? colorKeyToUtilityMap[background.backgroundUtility]
-      : colorKeyToUtilityMap[colorName as keyof ColorKeyTokens]
+      : colorKeyToUtilityMap[colorName as keyof ColorKeyTokens];
 
     return (
       <Card
@@ -74,10 +71,10 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(
             titleLevel={hasSectionTitle ? 'h3' : 'h2'}
             {...(!linkLabelAsTitle && { titleBlock: title })}
             {...(linkLabelAsTitle && { title: action.label })}
-            titleClassName='text-md'
+            titleClassName="text-md"
           />
         </Card.Content>
       </Card>
-    )
+    );
   },
-)
+);

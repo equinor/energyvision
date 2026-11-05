@@ -7,12 +7,7 @@ import {
   languages,
   metaTitleSuffix,
 } from '@/languageConfig';
-import {
-  getIsoFromName,
-  getLocaleFromIso,
-  getLocaleFromName,
-  getNameFromIso,
-} from '@/sanity/helpers/localization';
+import { getLocaleFromIso } from '@/sanity/helpers/localization';
 import { getQueryFromSlug } from '@/sanity/helpers/queryFromSlug';
 import { resolveOpenGraphImage } from '@/sanity/lib/utils';
 import type { SeoData } from '@/types';
@@ -32,7 +27,7 @@ const formatToValidPrefixedIsoSlugs = (
   slug: string | string[],
   slugs: LocaleSlug[] = [],
 ) => {
-  const validLanguages = languages.map((lang) => lang.name);
+  const validLanguages = languages.map((lang) => lang.iso);
 
   return (
     slugs
@@ -40,11 +35,11 @@ const formatToValidPrefixedIsoSlugs = (
       .reduce(function (result: LocaleSlug[], metaSlug: LocaleSlug) {
         if (validLanguages.includes(metaSlug.lang)) {
           result.push({
-            lang: getIsoFromName(metaSlug.lang),
+            lang: metaSlug.lang,
             slug:
-              metaSlug.lang !== defaultLanguage.name
+              metaSlug.lang !== defaultLanguage.iso
                 ? // metaSlug.slug !== '/' <- To skip the homepage slugs which are only /
-                  `/${getLocaleFromName(metaSlug.lang)}${metaSlug.slug && metaSlug.slug !== '/' ? metaSlug.slug : ''}`
+                  `/${getLocaleFromIso(metaSlug.lang)}${metaSlug.slug && metaSlug.slug !== '/' ? metaSlug.slug : ''}`
                 : metaSlug.slug
                   ? metaSlug.slug
                   : '/',
@@ -208,10 +203,10 @@ function languagePrefixedSlug(
   }
   return {
     slug:
-      slug.lang !== defaultLanguage.name
-        ? `/${getLocaleFromName(slug.lang)}/${slug.slug}`
+      slug.lang !== defaultLanguage.iso
+        ? `/${getLocaleFromIso(slug.lang)}/${slug.slug}`
         : slug.slug,
-    lang: getIsoFromName(slug.lang),
+    lang: slug.lang,
   };
 }
 
@@ -286,7 +281,7 @@ export async function getPage(params: Params) {
           ? getMagazineArticlesByTag(false, false)
           : allMagazineDocuments,
       params: {
-        lang: getNameFromIso(locale),
+        lang: locale,
         ...(tag && tag !== 'all' && { tag }),
       } as QueryParams,
       tags: [`magazineIndex:${locale}`],

@@ -122,10 +122,10 @@ export default {
             .then((localNewsTag: SanityDocument) => {
               const translatedNews = document.lang
                 ? `/${newsSlug[document.lang]}`
-                : `/${newsSlug[defaultLanguage.name]}`
+                : `/${newsSlug[defaultLanguage.iso]}`
               const localNewsPath = document.lang
                 ? (localNewsTag[document.lang] as string)
-                : (localNewsTag[defaultLanguage.name] as string)
+                : (localNewsTag[defaultLanguage.iso] as string)
               return `${translatedNews}/${slugify(localNewsPath)}/${slug}`
             })
         },
