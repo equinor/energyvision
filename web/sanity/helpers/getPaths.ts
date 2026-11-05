@@ -36,20 +36,6 @@ const getTopicRoutesForLocale = async (locale: string) => {
   );
   return data;
 };
-const getTopicRoutesForLocaleToStaticallyBuild = async (locale: string) => {
-  const lang = getNameFromLocale(locale);
-  const data: { slug: string; _updatedAt: string }[] = await client.fetch(
-    groq`*[_type match "route_" + $lang && defined(slug.current)][] {
-      _updatedAt,
-      "slug": slug.current,
-    }`,
-    {
-      lang,
-    },
-  );
-  return data;
-};
-
 const getDocumentsForLocale = async (
   type: 'news' | 'localNews' | 'magazine',
   locale: string,
@@ -87,21 +73,6 @@ export type PathType = {
   locale: string;
 };
 
-export const getStaticBuildRoutePaths = async (
-  locales: string[],
-): Promise<PathType[]> => {
-  const fetchPaths = locales.map(async (locale) => {
-    const pages = await getTopicRoutesForLocaleToStaticallyBuild(locale);
-    return pages.map((page) => ({
-      slug: page.slug.split('/').filter((p) => p),
-      updatedAt: page._updatedAt,
-      locale,
-    }));
-  });
-
-  return (await Promise.all(fetchPaths)).flat();
-};
-
 export const getHomePagePaths = async (): Promise<PathType[]> => {
   const pages = await getHomePages();
 
@@ -114,6 +85,8 @@ export const getHomePagePaths = async (): Promise<PathType[]> => {
       slug: '/',
     }));
 };
+
+// Used by sitemap to generate paths for different locales
 export const getRoutePaths = async (locales: string[]): Promise<PathType[]> => {
   const fetchPaths = locales.map(async (locale) => {
     const pages = await getTopicRoutesForLocale(locale);

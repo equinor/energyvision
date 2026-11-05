@@ -9,7 +9,6 @@ import { EdsIcon } from '../../icons';
 import { defaultLanguage } from '../../languages';
 import { Flags } from '../../src/lib/datasetHelpers';
 import { MagazinePublicationDateInfo } from '../components/MagazinePublicationDateInfo';
-import { RequiredField } from '../components/RequiredField';
 import { SlugInfo } from '../components/SlugInfo';
 import SlugInput from '../components/SlugInput';
 import { defaultColors } from '../defaultColors';
@@ -165,7 +164,6 @@ export default {
       type: 'slug',
       fieldset: 'slug',
       components: {
-        field: RequiredField(true),
         input: SlugInput,
       },
       options: withSlugValidation({
