@@ -1,8 +1,8 @@
-import { PiStorefrontLight } from 'react-icons/pi'
-import { defaultLanguage } from '../../../../languages'
-import { apiVersion } from '../../../../sanity.client'
+import { PiStorefrontLight } from 'react-icons/pi';
+import { defaultLanguage } from '../../../../languages';
+import { apiVersion } from '../../../../sanity.client';
 
-export const HomePage = S =>
+export const HomePage = (S) =>
   S.listItem()
     .title('Homepage')
     .icon(PiStorefrontLight)
@@ -12,10 +12,12 @@ export const HomePage = S =>
         .id('pages')
         .title('Homepage')
         .apiVersion(apiVersion)
-        .filter('_type == "homePage" && (!defined(lang) || lang == $baseLang)')
-        .params({ baseLang: defaultLanguage.iso })
+        .filter(
+          '_type == "homePage" && (!defined(lang) || lang in $baseLanguages)',
+        )
+        .params({ baseLanguages: [defaultLanguage.name, defaultLanguage.iso] })
         .canHandleIntent((_name, params) => {
           // Assume we can handle all intents (actions) regarding post documents
-          return params.type === 'homePage'
+          return params.type === 'homePage';
         }),
-    )
+    );

@@ -12,12 +12,9 @@ export const TopicContent = (S) =>
         .id('pages')
         .title('Topic pages')
         .apiVersion(apiVersion)
-        .filter(
-          '_type == "page" && (!defined(lang) || lang == $baseLang || lang == $baseIso)',
-        )
+        .filter('_type == "page" && (!defined(lang) || lang in $baseLanguages)')
         .params({
-          baseLang: defaultLanguage.name,
-          baseIso: defaultLanguage.iso,
+          baseLanguages: [defaultLanguage.name, defaultLanguage.iso],
         })
         .canHandleIntent((_name, params) => {
           // Assume we can handle all intents (actions) regarding post documents
