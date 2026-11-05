@@ -1,4 +1,4 @@
-import { generateIndexName } from '.'
+import { generateIndexName } from './algolia'
 
 describe('generateIndexName', () => {
   const sut = generateIndexName

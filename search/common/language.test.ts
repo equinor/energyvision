@@ -1,5 +1,5 @@
 import * as E from 'fp-ts/lib/Either'
-import { languageFromIso, languageOrDefault } from "."
+import { languageFromIso, languageOrDefault } from './language'
 
 describe('Language function tests', () => {
   describe('languageFromIso tests', () => {
