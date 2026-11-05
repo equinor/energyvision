@@ -65,7 +65,6 @@ jobs:
           set -o pipefail
           set -x
           TOKEN=$(curl -u "x-access-token:${REGISTRY_TOKEN}" https://ghcr.io/token\?scope\="repository:equinor/energyvision>:pull" | jq -r .token)
-          TOKEN=$(curl -u "x-access-token:${REGISTRY_TOKEN}" https://ghcr.io/token\?scope\="repository:equinor/energyvision>:pull" | jq -r .token)
           statusCode=$(curl --head --write-out '%{http_code}' --silent --output /dev/null -H "Authorization: Bearer $TOKEN" https://ghcr.io/v2/equinor/energyvision/web-global/manifests/${{ github.event.inputs.image-sha }})
           if [[ $statusCode -eq 200 ]]
           then

@@ -57,7 +57,6 @@ jobs:
           python -m pip install ruamel.yaml
           python ci/promoteToProduction.py web ${{ github.event.inputs.site }}
           git remote set-url origin https://github.com/equinor/energyvision-internal.git
-          git remote set-url origin https://github.com/equinor/energyvision-internal.git
           if [[ `git status --porcelain` ]]
           then
             git commit -am "🚀 Deploy web for ${{ github.event.inputs.site }} to production"

@@ -134,7 +134,6 @@ jobs:
       - name: Commit and push changes
         run: |
           git remote set-url origin https://github.com/equinor/energyvision-internal.git
-          git remote set-url origin https://github.com/equinor/energyvision-internal.git
           git add latest-prod-tags.json
           git commit -m "Update latest-prod-tags.json with new tags" || echo "No changes to commit"
           git push
