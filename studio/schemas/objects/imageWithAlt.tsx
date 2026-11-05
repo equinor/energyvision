@@ -23,7 +23,12 @@ export default {
   },
   validation: (Rule: Rule) =>
     Rule.custom<ImageWithAlt>((image) => {
-      if (!image?.asset || image.isDecorative || image.alt) return true;
+      if (
+        !image?.asset ||
+        image.isDecorative ||
+        (typeof image.alt === 'string' && image.alt.trim())
+      )
+        return true;
 
       return 'Alt attribute is required. Add alternative text or mark the image as decorative.';
     }),
