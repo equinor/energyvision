@@ -29,6 +29,7 @@ import cookieDeclaration from './objects/cookieDeclaration';
 import downloadableImage from './objects/downloadableImage';
 import embeddedVideoList from './objects/embeddedVideoList';
 import eventDate from './objects/eventDate';
+import excludeFromSearch from './objects/excludeFromSearch';
 import factbox from './objects/factbox';
 import figure from './objects/figure';
 import downloadableFile from './objects/files';
@@ -197,6 +198,7 @@ const RemainingSchemas = [
   assetFile,
   assetTag,
   cookieDeclaration,
+  excludeFromSearch,
   anchorReferenceField,
   textSnippet,
   largeTable,

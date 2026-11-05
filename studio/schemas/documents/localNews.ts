@@ -19,6 +19,7 @@ import { withSlugValidation } from '../validations/validateSlug';
 import { lang } from './langField';
 import {
   content,
+  excludeFromSearch,
   heroImage,
   iframe,
   ingress,
@@ -135,6 +136,7 @@ export default {
     heroImage,
     ingress,
     content,
+    excludeFromSearch,
     iframe,
     relatedLinks,
   ].filter((e) => e),

@@ -39,7 +39,7 @@ const getTopicRoutesForLocale = async (locale: string) => {
 const getTopicRoutesForLocaleToStaticallyBuild = async (locale: string) => {
   const lang = getNameFromLocale(locale);
   const data: { slug: string; _updatedAt: string }[] = await client.fetch(
-    groq`*[_type match "route_" + $lang  && includeInBuild && defined(slug.current)][] {
+    groq`*[_type match "route_" + $lang && defined(slug.current)][] {
       _updatedAt,
       "slug": slug.current,
     }`,

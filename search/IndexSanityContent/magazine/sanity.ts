@@ -25,7 +25,7 @@ const publishDateTimeQuery = /* groq */ `
   )
 `;
 
-export const query = /* groq */ `*[_type == "magazine" && lang == $lang] {
+export const query = /* groq */ `*[_type == "magazine" && lang == $lang && excludeFromSearch != true] {
   "slug": slug.current,
   _id,
   "title": ${plainTextExcludingStrikeThrough('title')},

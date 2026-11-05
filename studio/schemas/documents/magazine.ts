@@ -17,6 +17,7 @@ import { configureBlockContent } from '../editors/blockContentType';
 import { withSlugValidation } from '../validations/validateSlug';
 import sharedHeaderFields from './header/sharedHeaderFields';
 import { lang } from './langField';
+import { excludeFromSearch } from './news/sharedNewsFields';
 
 const ingressBlockContentType = configureBlockContent({
   h2: false,
@@ -186,6 +187,7 @@ export default {
       type: 'titleAndMeta',
       fieldset: 'other',
     },
+    ...(excludeFromSearch ? [{ ...excludeFromSearch, fieldset: 'other' }] : []),
     {
       title: 'Open Graph Image',
       name: 'openGraphImage',

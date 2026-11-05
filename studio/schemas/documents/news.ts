@@ -15,6 +15,7 @@ import { lang } from './langField';
 import {
   content,
   countryTags,
+  excludeFromSearch,
   heroImage,
   iframe,
   ingress,
@@ -167,6 +168,7 @@ export default {
       ],
     },
     relatedLinks,
+    excludeFromSearch,
     {
       ...seo,
       fieldset: 'metadata',
