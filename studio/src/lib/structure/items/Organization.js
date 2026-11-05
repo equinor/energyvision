@@ -72,13 +72,10 @@ export const Organization = (S) =>
                       .title(title)
                       .apiVersion(apiVersion)
                       .filter(
-                        `_type == "person" && (!defined(lang) || lang in $baseLanguages) && (${filter})`,
+                        `_type == "person" && (!defined(lang) || lang == $baseLanguage) && (${filter})`,
                       )
                       .params({
-                        baseLanguages: [
-                          defaultLanguage.name,
-                          defaultLanguage.iso,
-                        ],
+                        baseLanguage: defaultLanguage.iso,
                       }),
                   ),
               ),
