@@ -134,7 +134,7 @@ const variants = {
   plain: {
     div: '',
   },
-}
+};
 /*   ingress: {
     //mt-10 mb-16 in news
     default: 'text-md mt-10 mb-16',
@@ -142,35 +142,35 @@ const variants = {
   }, */
 export type TypographyTokens = {
   [P1 in keyof typeof variants]: {
-    [P2 in keyof (typeof variants)[P1]]: string
-  }
-}
+    [P2 in keyof (typeof variants)[P1]]: string;
+  };
+};
 
-const { heading, paragraph, marks, plain } = variants
+const { heading, paragraph, marks, plain } = variants;
 
 export type QuickTypographyVariants =
   | TypographyTokens['heading']
   | TypographyTokens['paragraph']
   | TypographyTokens['marks']
-  | TypographyTokens['plain']
+  | TypographyTokens['plain'];
 
-export type DisplayTypographyVariants = TypographyTokens['display']
+export type DisplayTypographyVariants = TypographyTokens['display'];
 
 const quickVariants: QuickTypographyVariants = {
   ...heading,
   ...paragraph,
   ...marks,
   ...plain,
-}
+};
 type TypographyVariants =
   | keyof TypographyTokens['heading']
   | keyof TypographyTokens['paragraph']
   | keyof TypographyTokens['marks']
   | keyof TypographyTokens['plain']
   | keyof TypographyTokens['card']
-  | keyof TypographyTokens['display']
+  | keyof TypographyTokens['display'];
 
-type TypographyGroups = keyof typeof variants
+type TypographyGroups = keyof typeof variants;
 
-export { variants, quickVariants }
-export type { TypographyVariants, TypographyGroups }
+export type { TypographyGroups, TypographyVariants };
+export { quickVariants, variants };

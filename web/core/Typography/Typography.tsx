@@ -1,24 +1,24 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
-import type { OverridableComponent } from '@equinor/eds-utils'
+import type { OverridableComponent } from '@equinor/eds-utils';
 //import { clsx } from 'clsx'
 import {
   type AnchorHTMLAttributes,
   type ElementType,
   forwardRef,
   type HTMLAttributes,
-} from 'react'
-import { twMerge } from '@/lib/twMerge/twMerge'
+} from 'react';
+import { twMerge } from '@/lib/twMerge/twMerge';
 import {
   quickVariants,
   type TypographyGroups,
   type TypographyVariants,
   variants,
-} from './variants'
+} from './variants';
 
 const getElementType = (variant: string, link: boolean): ElementType => {
   if (link) {
-    return 'a'
+    return 'a';
   }
   switch (variant) {
     case 'h1':
@@ -27,9 +27,9 @@ const getElementType = (variant: string, link: boolean): ElementType => {
     case 'h4':
     case 'h5':
     case 'h6':
-      return variant
+      return variant;
     case 'highlight':
-      return 'span'
+      return 'span';
     case 'div':
     case 'h1_base':
     case 'h1_lg':
@@ -37,11 +37,11 @@ const getElementType = (variant: string, link: boolean): ElementType => {
     case 'h2_base':
     case 'h2_lg':
     case 'h2_xl':
-      return 'div'
+      return 'div';
     default:
-      return 'p'
+      return 'p';
   }
-}
+};
 
 //For the displayTextVariant field in studio
 export const getDisplayTextVariant = (
@@ -49,27 +49,35 @@ export const getDisplayTextVariant = (
 ): TypographyVariants => {
   switch (displayTextVariant) {
     case 'lg':
-      return 'h2_lg'
+      return 'h2_lg';
     case 'xl':
-      return 'h2_xl'
+      return 'h2_xl';
     default:
-      return 'h2_base'
+      return 'h2_base';
   }
-}
+};
 
-const findTypography = (
-  variantName: TypographyVariants,
-  group?: TypographyGroups,
+export const findTypography = (
+  variantName = 'body',
+  group?: string,
 ): string => {
-  // For quick use when using paragraphs and headings we can skip group
-  //@ts-ignore
-  if (!group && quickVariants[variantName]) {
-    //@ts-ignore
-    return quickVariants[variantName] as string
+  const collection =
+    group === undefined
+      ? quickVariants
+      : Object.entries(variants).find(([name]) => name === group)?.[1];
+  const typography =
+    collection &&
+    Object.entries(collection).find(([name]) => name === variantName)?.[1];
+
+  if (typeof typography === 'string') {
+    return typography;
   }
-  //@ts-ignores
-  return (variants[group] as unknown)[variantName] as string
-}
+
+  console.error(
+    `Typography variant not found for variant "${variantName}" & group "${group ?? ''}". Falling back to paragraph.simple.`,
+  );
+  return variants.paragraph.simple;
+};
 
 export type TypographyProps = {
   /** Typography variants, specifies which variant to use.
@@ -82,28 +90,28 @@ export type TypographyProps = {
    * should be paired with the matching `group` prop so the class lookup resolves correctly.
    * @default body
    */
-  variant?: TypographyVariants
+  variant?: TypographyVariants;
   /** Typography groups, specifies which group to use.
    *
    * Optional when `variant` is a quick variant.
    * Required in practice for grouped-only variants such as `h1_base`, `h2_lg`, or card-specific styles.
    */
-  group?: TypographyGroups
+  group?: TypographyGroups;
   /** Override the element type */
-  as?: ElementType
+  as?: ElementType;
   /** Override variant styling */
-  className?: string
+  className?: string;
   /** Link. */
-  link?: boolean
+  link?: boolean;
   /**
    * Typography text
    */
-  children?: React.ReactNode
+  children?: React.ReactNode;
 } & (
   | HTMLAttributes<HTMLParagraphElement>
   | AnchorHTMLAttributes<HTMLAnchorElement>
   | HTMLAttributes<HTMLParagraphElement>
-)
+);
 
 /**
  * Typography used for common text styles
@@ -114,6 +122,7 @@ export type TypographyProps = {
  *
  * Use `group` when selecting a variant that belongs to a specific collection such as
  * `display`, `card`, or `article`.
+ * Invalid combinations log an error and fall back to simple paragraph styling.
  *
  * @example
  * ```jsx
@@ -136,7 +145,7 @@ export type TypographyProps = {
 export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
   forwardRef(function Typography(
     {
-      variant,
+      variant = 'body',
       group,
       children,
       as: providedAs,
@@ -148,15 +157,10 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
   ) {
     const as: ElementType = providedAs
       ? providedAs
-      : getElementType(variant, link)
-    const typography = findTypography(variant, group)
+      : getElementType(variant, link);
+    const typography = findTypography(variant, group);
 
-    if (typeof typography === 'undefined') {
-      console.warn(
-        `Typography variant not found for variant "${variant}" & group "${group ?? ''}"`,
-      )
-    }
-    const TypographyTag = as ?? (`p` as React.ElementType)
+    const TypographyTag = as ?? (`p` as React.ElementType);
 
     return (
       <TypographyTag
@@ -170,5 +174,5 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
       >
         {children}
       </TypographyTag>
-    )
-  })
+    );
+  });

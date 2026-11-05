@@ -39,10 +39,11 @@ const commonPromotionFields = /* groq */ `
 `;
 export const eventPromotion = /* groq */ `
     ${commonPromotionFields},
+    hideTitle,
     promotionType,
     promotePastEvents,
     promotionType == "manual" => {
-        "promotions": promotedEvents[]->[${notDraft}]{${eventPromotionFields}},
+        "promotions": (promotedEvents[]->)[${notDraft} && content->_type == "event"]{${eventPromotionFields}},
     },
     promotionType == "automatic" => {
     "tags": tags[]->{

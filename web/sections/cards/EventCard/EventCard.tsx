@@ -33,7 +33,7 @@ export type EventCardData = {
   EventCardEventFields;
 
 export type EventCardProps = {
-  data: EventCardData;
+  data: EventCardData | null;
   background?: ColorKeys;
   hasSectionTitle: boolean;
   variant?: Variants;
@@ -53,10 +53,12 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
   },
   ref,
 ) {
-  const { title, location, eventDate, slug, ingress } = data;
-
   const iso = useLocale();
   const t = useTranslations();
+
+  if (!data) return null;
+
+  const { title, location, eventDate, slug, ingress } = data;
   const href = getLocalizedHref(slug, iso);
 
   const { start, end } = getEventDates(eventDate);
@@ -68,7 +70,8 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       className={twMerge(
         `has-focus-visible:envis-outline dark:has-focus-visible:envis-outline-invert flex h-full flex-col rounded-card px-6 py-8 text-slate-80 focus:outline-hidden dark:text-white-100`,
         colorKeyToUtilityMap[background ?? 'gray-20'].background,
-        variant === 'carousel' && 'w-event-carousel-card-w',
+        variant === 'carousel' &&
+          'h-auto min-h-[23.75rem] w-event-carousel-card-w',
         variant === 'single' && 'max-w-prose',
         className,
       )}

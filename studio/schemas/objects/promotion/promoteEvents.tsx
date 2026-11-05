@@ -20,6 +20,7 @@ import routes from '../../routes';
 import { createColorSelectField } from '../colorList';
 import {
   backgroundPosition,
+  hideTitle,
   ingress,
   theme,
   title,
@@ -30,6 +31,7 @@ import {
 export type EventPromotion = {
   _key: string;
   _type: 'promoteEvents';
+  hideTitle?: boolean;
   tags?: Reference[];
   promotionType?: 'automatic' | 'manual';
   promotedEvents?: Reference[];
@@ -87,6 +89,7 @@ export default {
   ],
   fields: [
     title,
+    hideTitle,
     ingress,
     {
       title: 'Set how events should be picked',

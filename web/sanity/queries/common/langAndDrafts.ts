@@ -1,7 +1,7 @@
 import { defaultLanguage } from '@/languageConfig';
 
 export const sameLang = /* groq */ `
-  lang == $lang
+  (lang == $lang || array::join(string::split(lang, "-"), "_") == array::join(string::split($lang, "-"), "_"))
 `;
 
 // The drafts perspective normalizes _id, so also check _originalId (the draft id it resolved).

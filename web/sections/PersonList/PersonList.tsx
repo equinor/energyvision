@@ -24,7 +24,6 @@ export type PersonListItem = {
   id: string;
   highlighted?: boolean;
   person: {
-    id: string;
     name: string;
     title?: string;
     linkedinProfileUrl?: string;
@@ -116,10 +115,7 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
     const foreground = data.designOptions?.foreground;
 
     const searchParams = useSearchParams();
-    // URL hashtag param is set by ModalPromotion as encodeURIComponent(name)
-    const activePersonName = searchParams.get('person')
-      ? decodeURIComponent(searchParams.get('person') ?? '')
-      : null;
+    const activePersonId = searchParams.get('person');
 
     return (
       <>
@@ -165,6 +161,7 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
               const renderCard = (item: PersonListItem) => (
                 <ModalPromotion
                   className="h-full"
+                  id={item.id}
                   title={item.person?.name}
                   image={item.person?.image}
                   ingress={item.person?.title}
@@ -172,24 +169,23 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
                   imageClassName=""
                   ingressClassName="lg:line-clamp-none"
                   modalTitle={item.person?.name}
-                  initialOpen={
-                    !!activePersonName && item.person?.name === activePersonName
-                  }
+                  initialOpen={!!activePersonId && item.id === activePersonId}
                   modalContent={
-                    <div className="flex flex-col gap-6">
-                      <div className="flex items-center gap-6">
+                    <div className="flex flex-col">
+                      <div className="flex flex-col items-start gap-x-12 md:flex-row md:items-center">
                         {item.person?.image && (
-                          <div className="w-[30%] shrink-0">
+                          <div className="w-3/5 shrink-0 md:w-[30%]">
                             <Image
                               image={item.person.image}
                               aspectRatio="1:1"
+                              keepRatioOnMobile
                               imageClassName="rounded-full"
                               className="w-full"
                             />
                           </div>
                         )}
                         <div className="flex flex-col justify-center">
-                          <Typography as="h2" variant="h3">
+                          <Typography as="h2" variant="h3" className="md:mt-0">
                             {item.person?.name}
                           </Typography>
                           {item.person?.title && (
@@ -205,7 +201,11 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
                           <PersonSocialLinks person={item.person} />
                         </div>
                       </div>
-                      {item.person?.bio && <Blocks value={item.person.bio} />}
+                      {item.person?.bio && (
+                        <div className="pt-8">
+                          <Blocks value={item.person.bio} />
+                        </div>
+                      )}
                       {item.person?.callToActions && (
                         <CallToActions
                           callToActions={item.person.callToActions}
