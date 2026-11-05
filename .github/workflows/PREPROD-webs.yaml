@@ -62,7 +62,6 @@ jobs:
           python -m pip install ruamel.yaml
           python ci/upgradeEnvironment.py web ${{ env.IMAGE_TAG_SHA }} ${{ secrets.ENV }}
           git remote set-url origin https://github.com/equinor/energyvision-internal.git
-          git remote set-url origin https://github.com/equinor/energyvision-internal.git
           if [[ `git status --porcelain` ]]
           then
             git commit -am "🚀 Deploy webs to preprod with tag ${{ env.IMAGE_TAG_SHA }}" --allow-empty
