@@ -13,12 +13,12 @@ import type {
 import { formatDate } from '../../helpers/formatDate';
 import { EdsIcon } from '../../icons';
 import { defaultLanguage } from '../../languages';
+import { SlugInfo } from '../components/SlugInfo';
 import SlugInput from '../components/SlugInput';
 import { withSlugValidation } from '../validations/validateSlug';
 import { lang } from './langField';
 import {
   content,
-  excludeFromSearch,
   heroImage,
   iframe,
   ingress,
@@ -40,15 +40,10 @@ export default {
   name: 'localNews',
   type: 'document',
   icon: () => EdsIcon(file_description),
-  // @todo: restrict to correct role(s)
-  // readOnly: ({ currentUser }: { currentUser: CurrentUser }) =>
-  //   !currentUser.roles.find((role) => ['administrator'].includes(role.name)),
   fieldsets: [
     {
       title: 'SEO & metadata',
       name: 'metadata',
-      description:
-        'This part is used for meta information when this content is used on the web',
       options: {
         collapsible: true,
         collapsed: true,
@@ -57,8 +52,6 @@ export default {
     {
       title: 'Slug',
       name: 'slug',
-      description:
-        '⚠️ Changing the slug after publishing it has negative impacts in the SEO ⚠️',
       options: {
         collapsible: true,
         collapsed: false,
@@ -88,6 +81,16 @@ export default {
     },
     title,
     ...publishDateTime,
+    {
+      name: 'slugInfo',
+      title: 'About slugs',
+      type: 'string',
+      fieldset: 'slug',
+      readOnly: true,
+      components: {
+        field: SlugInfo,
+      },
+    },
     {
       ...newsSlugField,
       fieldset: 'slug',
@@ -127,8 +130,6 @@ export default {
             });
         },
       }),
-      description:
-        '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule: Rule) => Rule.required(),
     },
     heroImage,

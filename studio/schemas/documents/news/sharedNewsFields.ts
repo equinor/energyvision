@@ -249,8 +249,3 @@ export const relatedLinks = {
     },
   ],
 };
-
-export const excludeFromSearch = {
-  type: 'excludeFromSearch',
-  name: 'excludeFromSearch',
-};

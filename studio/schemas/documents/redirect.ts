@@ -1,12 +1,12 @@
-import type { Rule, ValidationContext } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { filterByPages } from '../../helpers/referenceFilters'
-import { Flags } from '../../src/lib/datasetHelpers'
-import routes from '../routes'
-import { EdsIcon } from '../../icons'
-import { directions } from '@equinor/eds-icons'
-import { apiVersion } from '../../sanity.client'
-import { lang } from './langField'
+import { directions } from '@equinor/eds-icons';
+import type { Image, Rule, ValidationContext } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { filterByPages } from '../../helpers/referenceFilters';
+import { EdsIcon } from '../../icons';
+import { apiVersion } from '../../sanity.client';
+import { Flags } from '../../src/lib/datasetHelpers';
+import routes from '../routes';
+import { lang } from './langField';
 
 export default {
   title: 'Redirect',
@@ -22,22 +22,26 @@ export default {
       type: 'string',
       validation: (Rule: Rule) =>
         Rule.custom(async (value: string, context: ValidationContext) => {
-          const { document } = context
-          const documentId = document?._id.replace('drafts.', '')
-          const query = /* groq */ `*[_type == 'redirect' && from == $value && _id != $documentId && !(_id in path('drafts.**'))]`
+          const { document } = context;
+          const documentId = document?._id.replace('drafts.', '');
+          const query = /* groq */ `*[_type == 'redirect' && from == $value && _id != $documentId && !(_id in path('drafts.**'))]`;
 
-          const params = { value, documentId }
-          const redirects = await context.getClient({ apiVersion: apiVersion }).fetch(query, params)
+          const params = { value, documentId };
+          const redirects = await context
+            .getClient({ apiVersion: apiVersion })
+            .fetch(query, params);
 
           if (!value) {
-            return 'Slug is required'
-          } else if (value.charAt(0) !== '/') {
-            return "Slug must begin with '/'. Do not add https://www.equinor.etc"
-          } else if (redirects.length > 0) {
-            return 'Another redirect from this path already exists'
+            return 'Slug is required';
+          }
+          if (value.charAt(0) !== '/') {
+            return "Slug must begin with '/'. Do not add https://www.equinor.etc";
+          }
+          if (redirects.length > 0) {
+            return 'Another redirect from this path already exists';
           }
 
-          return true
+          return true;
         }),
     },
     {
@@ -76,24 +80,34 @@ export default {
       oldSlug: 'from',
     },
     prepare(selection: Record<string, any>) {
-      const { type, newsTitle, newsMedia, magazineTitle, magazineMedia, routeMedia, routeTitle, newSlug, oldSlug } =
-        selection
-      let title, media
+      const {
+        type,
+        newsTitle,
+        newsMedia,
+        magazineTitle,
+        magazineMedia,
+        routeMedia,
+        routeTitle,
+        newSlug,
+        oldSlug,
+      } = selection;
+      let title: ReturnType<typeof blocksToText>;
+      let media: Image | undefined;
       if (type === 'news' || type === 'localNews') {
-        title = newsTitle
-        media = newsMedia
+        title = newsTitle;
+        media = newsMedia;
       } else if (type === 'magazine') {
-        title = blocksToText(magazineTitle)
-        media = magazineMedia
+        title = blocksToText(magazineTitle);
+        media = magazineMedia;
       } else {
-        title = blocksToText(routeTitle)
-        media = routeMedia
+        title = blocksToText(routeTitle);
+        media = routeMedia;
       }
       return {
         media: media,
         title: 'From: ' + oldSlug,
         subtitle: 'To: ' + title + ' (' + newSlug + ')',
-      }
+      };
     },
   },
-}
+};
