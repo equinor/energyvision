@@ -62,7 +62,7 @@ export const query = /* groq */ `*[_type == "magazine" && lang == $lang && exclu
 `;
 
 const getQueryParams = (language: Language, id: string) => ({
-  lang: language.isoCode,
+  lang: language,
   id: id,
 });
 

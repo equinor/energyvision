@@ -39,7 +39,7 @@ export const query = /* groq */ `*[_type == "localNews" && lang == $lang && excl
 `
 
 const getQueryParams = (language: Language, id: string) => ({
-  lang: language.isoCode,
+  lang: language,
   id: id,
 })
 

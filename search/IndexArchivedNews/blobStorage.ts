@@ -58,7 +58,7 @@ export const getDocuments: GetDocumentsType = (containerClient) =>
 
 type GetFileListType = (language: Language) => (ContainerClient: ContainerClient) => TE.TaskEither<Error, string[]>
 export const getFileList: GetFileListType = (language) => (containerClient) =>
-  TE.tryCatch(() => getSearchMetadataFiles(containerClient)(language.isoCode), E.toError)
+  TE.tryCatch(() => getSearchMetadataFiles(containerClient)(language), E.toError)
 
 type CopyFileType = (
   containerClient: ContainerClient,
