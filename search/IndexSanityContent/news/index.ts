@@ -13,7 +13,7 @@ import { Logger } from '@azure/functions'
 const indexIdentifier = 'NEWS'
 
 export const indexNews = (language: Language, logger: Logger) => (docId: string) => {
-  const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
+  const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language)))
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
   const removeIndexFromAlgolia = flow(indexName, E.map(remove))
 

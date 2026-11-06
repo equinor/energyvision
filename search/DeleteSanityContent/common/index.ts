@@ -5,7 +5,7 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { remove, generateIndexName, Language, getEnvironment } from '../../common'
 
 export const deleteIndex = (language: Language) => (indexIdentifier: string) => (slug: string) => {
-  const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
+  const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language)))
   const removeIndexFromAlgolia = flow(indexName, E.map(remove))
 
   return pipe(

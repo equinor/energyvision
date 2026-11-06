@@ -20,7 +20,7 @@ const query = /* groq */ `*[string::startsWith(_type, "route_") && _type != "rou
 `
 
 const getQueryParams = (language: Language, id: string) => ({
-  lang: language.isoCode,
+  lang: language,
   id: id,
 })
 
