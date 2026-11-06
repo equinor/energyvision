@@ -13,7 +13,7 @@ import type {
 import { formatDate } from '../../helpers/formatDate';
 import { EdsIcon } from '../../icons';
 import { defaultLanguage } from '../../languages';
-import { SlugInfo } from '../components/SlugInfo';
+import { SlugInfo } from '../components/Details/SlugInfo';
 import SlugInput from '../components/SlugInput';
 import { withSlugValidation } from '../validations/validateSlug';
 import { lang } from './langField';

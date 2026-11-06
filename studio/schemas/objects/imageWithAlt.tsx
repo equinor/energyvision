@@ -4,7 +4,7 @@ import type {
   Rule,
   ValidationContext,
 } from 'sanity';
-import { DecorativeImageInfo } from '../components/DecorativeImageInfo';
+import { DecorativeImageInfo } from '../components/Details/DecorativeImageInfo';
 
 export type ImageWithAlt = {
   _type: string;

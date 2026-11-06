@@ -1,6 +1,6 @@
 import type { Rule, ValidationContext } from 'sanity';
 import { Flags } from '../../../src/lib/datasetHelpers';
-import { PublicationDateInfo } from '../../components/PublicationDateInfo';
+import { PublicationDateInfo } from '../../components/Details/PublicationDateInfo';
 import { SubscriptionTypeInput } from '../../components/SubscriptionTypeInput';
 import { configureBlockContent } from '../../editors/blockContentType';
 import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor';

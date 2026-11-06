@@ -6,7 +6,7 @@ import { formatDate } from '../../helpers/formatDate';
 import { EdsIcon } from '../../icons';
 import { defaultLanguage } from '../../languages';
 import { Flags } from '../../src/lib/datasetHelpers';
-import { SlugInfo } from '../components/SlugInfo';
+import { SlugInfo } from '../components/Details/SlugInfo';
 import SlugInput from '../components/SlugInput';
 import { withSlugValidation } from '../validations/validateSlug';
 
