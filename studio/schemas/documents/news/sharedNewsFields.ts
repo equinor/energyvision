@@ -1,5 +1,6 @@
 import type { Rule, ValidationContext } from 'sanity';
-import { PublicationDateInfo } from '../../components/PublicationDateInfo';
+import { Flags } from '../../../src/lib/datasetHelpers';
+import { PublicationDateInfo } from '../../components/Details/PublicationDateInfo';
 import { SubscriptionTypeInput } from '../../components/SubscriptionTypeInput';
 import { configureBlockContent } from '../../editors/blockContentType';
 import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor';
@@ -249,3 +250,12 @@ export const relatedLinks = {
     },
   ],
 };
+
+export const excludeFromSearch =
+  Flags.HAS_SEARCH && Flags.HAS_NEWSROOM
+    ? {
+        type: 'excludeFromSearch',
+        name: 'excludeFromSearch',
+        title: 'Hide from Algolia global search and newsroom',
+      }
+    : null;

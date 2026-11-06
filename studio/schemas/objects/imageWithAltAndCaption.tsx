@@ -14,16 +14,6 @@ export default {
   options: {
     collapsed: false,
   },
-  fieldsets: [
-    {
-      name: 'captionAndCredit',
-      title: 'Caption and credit',
-      options: {
-        collapsible: true,
-        collapsed: true,
-      },
-    },
-  ],
   fields: [
     {
       name: 'image',
@@ -32,13 +22,11 @@ export default {
     },
     {
       name: 'caption',
-      fieldset: 'captionAndCredit',
       title: 'Caption',
       type: 'string',
     },
     {
       name: 'attribution',
-      fieldset: 'captionAndCredit',
       title: 'Credit',
       type: 'string',
     },

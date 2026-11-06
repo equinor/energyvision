@@ -5,7 +5,6 @@ import {
   getRedirectUrl,
 } from './common/helpers/redirects';
 import { routing } from './i18n/routing';
-/* import { getDocumentBySlug } from './sanity/queries/paths/getPaths' */
 import archivedNews from './lib/archive/archivedNewsPaths.json';
 import { Flags } from './sanity/helpers/datasetHelpers';
 import { getLocaleFromIso } from './sanity/helpers/localization';

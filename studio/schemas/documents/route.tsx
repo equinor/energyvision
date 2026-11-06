@@ -133,14 +133,15 @@ export default (iso: string, title: string) => {
         name: 'breadcrumbs',
         type: 'breadcrumbs',
       },
-      {
-        type: 'boolean',
-        name: 'includeInBuild',
-        title: 'Include in static build',
-        description:
-          'Enable this if this route should be generated at build time',
-        initialValue: false,
-      },
+      ...(Flags.HAS_SEARCH && Flags.HAS_NEWSROOM
+        ? [
+            {
+              type: 'excludeFromSearch',
+              name: 'excludeFromSearch',
+              title: 'Hide from Algolia global search and newsroom',
+            },
+          ]
+        : []),
     ],
     orderings: [
       {

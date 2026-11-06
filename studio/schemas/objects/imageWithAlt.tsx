@@ -4,6 +4,7 @@ import type {
   Rule,
   ValidationContext,
 } from 'sanity';
+import { DecorativeImageInfo } from '../components/Details/DecorativeImageInfo';
 
 export type ImageWithAlt = {
   _type: string;
@@ -22,24 +23,27 @@ export default {
   },
   validation: (Rule: Rule) =>
     Rule.custom<ImageWithAlt>((image) => {
-      if (!image?.asset || image.isDecorative || image.alt) return true;
+      if (
+        !image?.asset ||
+        image.isDecorative ||
+        (typeof image.alt === 'string' && image.alt.trim())
+      )
+        return true;
 
-      return 'Alt attribute is required. Expand Accessibility to add alternative text or mark the image as decorative.';
+      return 'Alt attribute is required. Add alternative text or mark the image as decorative.';
     }),
-  fieldsets: [
-    {
-      name: 'accessibility',
-      title: 'Accessibility',
-      options: {
-        collapsible: true,
-        collapsed: true,
-      },
-    },
-  ],
   fields: [
     {
+      name: 'decorativeImageInfo',
+      type: 'string',
+      title: 'When should I set image as decorative?',
+      readOnly: true,
+      components: {
+        field: DecorativeImageInfo,
+      },
+    },
+    {
       name: 'isDecorative',
-      fieldset: 'accessibility',
       type: 'boolean',
       title: 'Image is only decorative',
       description:
@@ -47,7 +51,6 @@ export default {
     },
     {
       name: 'alt',
-      fieldset: 'accessibility',
       type: 'string',
       title: 'Alternative text for screen readers',
       description: 'Recommended. Describe whats seen in the image.',

@@ -14,10 +14,10 @@
 :root {
   /* Copied from packages/energyvision/src/brand/tailwind/theme.css */
   --text-2xs: clamp(
-    calc(8.888 / 16 * 1rem),
-    0.152vw +
-    0.52rem,
-    calc(11.264 / 16 * 1rem)
+    calc(10.666 / 16 * 1rem),
+    0.18vw +
+    0.62rem,
+    calc(13.33 / 16 * 1rem)
   );
   --text-2xs--line-height: calc(1 / 0.75);
   --text-xs: clamp(
@@ -146,6 +146,14 @@
 } */
 [data-group="display"] {
   margin: 0;
+}
+.text-2xs {
+  font-size: var(--text-2xs);
+  line-height: var(--text-2xs--line-height);
+}
+.text-xs {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
 }
 .text-sm {
   font-size: var(--text-sm);

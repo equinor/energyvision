@@ -8,15 +8,15 @@ import blocksToText from '../../helpers/blocksToText';
 import { EdsIcon } from '../../icons';
 import { defaultLanguage } from '../../languages';
 import { Flags } from '../../src/lib/datasetHelpers';
-import { MagazinePublicationDateInfo } from '../components/MagazinePublicationDateInfo';
-import { RequiredField } from '../components/RequiredField';
-import { SlugInfo } from '../components/SlugInfo';
+import { MagazinePublicationDateInfo } from '../components/Details/MagazinePublicationDateInfo';
+import { SlugInfo } from '../components/Details/SlugInfo';
 import SlugInput from '../components/SlugInput';
 import { defaultColors } from '../defaultColors';
 import { configureBlockContent } from '../editors/blockContentType';
 import { withSlugValidation } from '../validations/validateSlug';
 import sharedHeaderFields from './header/sharedHeaderFields';
 import { lang } from './langField';
+import { excludeFromSearch } from './news/sharedNewsFields';
 
 const ingressBlockContentType = configureBlockContent({
   h2: false,
@@ -164,7 +164,6 @@ export default {
       type: 'slug',
       fieldset: 'slug',
       components: {
-        field: RequiredField(true),
         input: SlugInput,
       },
       options: withSlugValidation({
@@ -186,6 +185,7 @@ export default {
       type: 'titleAndMeta',
       fieldset: 'other',
     },
+    ...(excludeFromSearch ? [{ ...excludeFromSearch, fieldset: 'other' }] : []),
     {
       title: 'Open Graph Image',
       name: 'openGraphImage',
