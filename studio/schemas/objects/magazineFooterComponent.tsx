@@ -5,7 +5,6 @@ import blocksToText from '../../helpers/blocksToText';
 import { LeftAlignedImage, RightAlignedImage } from '../../icons';
 import { RadioIconSelector } from '../components';
 import type { ColorSelectorValue } from '../components/ColorSelector';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors';
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
 import type { DownloadableImage } from './downloadableImage';
@@ -51,9 +50,6 @@ export default {
     {
       name: 'title',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
     },
     {
@@ -61,6 +57,7 @@ export default {
       title: 'Text content',
       type: 'array',
       of: [configureBlockContent({ variant: 'simpleBlock' })],
+      options: { maxLength: 600 },
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) =>
           validateCharCounterEditor(value, 600),

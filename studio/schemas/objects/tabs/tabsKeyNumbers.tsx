@@ -1,6 +1,5 @@
 import { NumberIcon } from '@sanity/icons/Number';
 import type { Rule } from 'sanity';
-import { CompactBlockEditor } from '../../components/CompactBlockEditor';
 import { configureBlockContent } from '../../editors';
 
 const disclaimerContentType = configureBlockContent({
@@ -28,9 +27,6 @@ export default {
       name: 'disclaimer',
       title: 'Disclaimer',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [disclaimerContentType],
     },
   ],

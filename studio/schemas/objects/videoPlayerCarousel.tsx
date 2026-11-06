@@ -1,12 +1,11 @@
-import { play_circle } from '@equinor/eds-icons'
-import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { defaultColors } from '../defaultColors'
-import { configureBlockContent } from '../editors'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import { title } from './iframe/sharedIframeFields'
+import { play_circle } from '@equinor/eds-icons';
+import type { PortableTextBlock, Reference, Rule } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import { defaultColors } from '../defaultColors';
+import { configureBlockContent } from '../editors';
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
+import { title } from './iframe/sharedIframeFields';
 
 export default {
   name: 'videoPlayerCarousel',
@@ -37,6 +36,7 @@ export default {
       description: 'Optional short description. Max 400 characters',
       type: 'array',
       of: [configureBlockContent({ variant: 'ingress' })],
+      options: { maxLength: 400 },
       validation: (Rule: Rule) =>
         Rule.custom((value: any) =>
           validateCharCounterEditor(value, 400, true),
@@ -57,7 +57,6 @@ export default {
               type: 'array',
               title: 'Title',
               description: 'Optional title/heading shown beneath the video.',
-              components: { input: CompactBlockEditor },
               of: [configureBlockContent({ variant: 'title' })],
             },
             {
@@ -79,15 +78,15 @@ export default {
               subtitle,
               image,
             }: {
-              title: PortableTextBlock[]
-              subtitle: string
-              image: Reference
+              title: PortableTextBlock[];
+              subtitle: string;
+              image: Reference;
             }) {
               return {
                 title: blocksToText(title),
                 subtitle: subtitle,
                 media: image,
-              }
+              };
             },
           },
         },
@@ -126,14 +125,14 @@ export default {
       items: 'items',
     },
     prepare(selection: any) {
-      const { title, items } = selection
-      const length = items ? items.length : 0
+      const { title, items } = selection;
+      const length = items ? items.length : 0;
 
       return {
         title: title ? blocksToText(title) : 'Untitled video carousel',
         subtitle: `Video carousel with ${length} items`,
         media: EdsIcon(play_circle),
-      }
+      };
     },
   },
-}
+};

@@ -3,7 +3,6 @@ import type { PortableTextBlock, PreviewProps, Rule } from 'sanity';
 import { capitalizeFirstLetter } from '@/helpers/formatters';
 import blocksToText from '../../../helpers/blocksToText';
 import type { ColorSelectorValue } from '../../components/ColorSelector';
-import { CompactBlockEditor } from '../../components/CompactBlockEditor';
 import { configureBlockContent } from '../../editors';
 import { layoutGrid } from '../commonFields/commonFields';
 
@@ -105,9 +104,6 @@ export default {
       title: 'Title',
       name: 'title',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
       fieldset: 'textContent',
     },

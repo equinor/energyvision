@@ -9,7 +9,6 @@ import { advancedHighlight } from '@/schemas/editors/annotations/advancedHighlig
 import { Flags } from '@/src/lib/datasetHelpers';
 import blocksToText from '../../helpers/blocksToText';
 import type { ColorSelectorValue } from '../components/ColorSelector';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors';
 import { validateComponentAnchor } from '../validations/validateAnchorReference';
 
@@ -30,16 +29,15 @@ export default {
   type: 'object',
   fieldsets: [
     {
-      title: 'Addons above title',
+      title: 'Thumbnail/Eyebrow',
       name: 'addonsAboveTitle',
-      description: 'Thumbnail, eyebrow title and anchor reference',
       options: {
         collapsible: true,
         collapsed: true,
       },
     },
     {
-      title: 'Call to action(s)',
+      title: 'Call to actions',
       name: 'actions',
       options: {
         collapsible: true,
@@ -71,25 +69,9 @@ export default {
       fieldset: 'addonsAboveTitle',
     },
     {
-      name: 'anchorReference',
-      type: 'string',
-      title: 'Anchor reference',
-      fieldset: 'addonsAboveTitle',
-      description:
-        '# is not needed. Title will be used when compiling list of anchors on page together.',
-      validation: (Rule: Rule) =>
-        // @ts-ignore
-        Rule.custom((value: string, context: any) =>
-          validateComponentAnchor(value, context),
-        ),
-    },
-    {
       name: 'title',
       type: 'array',
       fieldset: 'titleOptions',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [
         configureBlockContent({
           variant: 'titleWithDisplay',
@@ -111,7 +93,18 @@ export default {
       type: 'boolean',
       fieldset: 'titleOptions',
     },
-
+    {
+      name: 'anchorReference',
+      type: 'string',
+      title: 'Anchor reference',
+      description:
+        '# is not needed. Title will be used when compiling list of anchors on page together.',
+      validation: (Rule: Rule) =>
+        // @ts-ignore
+        Rule.custom((value: string, context: any) =>
+          validateComponentAnchor(value, context),
+        ),
+    },
     {
       name: 'ingress',
       title: 'Ingress',

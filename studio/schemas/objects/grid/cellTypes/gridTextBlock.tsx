@@ -13,7 +13,6 @@ import {
 } from '../../../../icons';
 import { RadioIconSelector } from '../../../components';
 import type { ColorSelectorValue } from '../../../components/ColorSelector';
-import { CompactBlockEditor } from '../../../components/CompactBlockEditor';
 import { configureBlockContent } from '../../../editors';
 import singleItemArray from '../../singleItemArray';
 import {
@@ -78,9 +77,6 @@ export default {
     {
       name: 'title',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       fieldset: 'title',
       of: [titleContentType],
       hidden: ({ parent }: GridTextBlockDocument) => parent.useThemedTitle,
@@ -92,9 +88,6 @@ export default {
     {
       name: 'themedTitle',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       fieldset: 'title',
       of: [themedTitleContentType],
       hidden: ({ parent }: GridTextBlockDocument) => !parent.useThemedTitle,

@@ -18,7 +18,6 @@ import {
 } from '../../icons';
 import { RadioIconSelector } from '../components';
 import type { ColorSelectorValue } from '../components/ColorSelector';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors';
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
 import { backgroundPosition } from './commonFields/commonFields';
@@ -86,9 +85,6 @@ export default {
     {
       name: 'title',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [
         configureBlockContent({
           variant: 'titleWithDisplay',
@@ -110,6 +106,7 @@ export default {
             : [],
         }),
       ],
+      options: { maxLength: 600 },
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 600, true);

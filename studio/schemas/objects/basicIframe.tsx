@@ -5,7 +5,6 @@ import type { PortableTextBlock, Rule, ValidationContext } from 'sanity';
 import blocksToText from '../../helpers/blocksToText';
 import { EdsIcon } from '../../icons';
 import type { ColorSelectorValue } from '../components/ColorSelector';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors';
 import { cookiePolicy } from './iframe/sharedIframeFields';
 
@@ -40,9 +39,6 @@ export default {
       type: 'array',
       title: 'Title',
       description: 'The (optional) title/heading',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
     },
 
