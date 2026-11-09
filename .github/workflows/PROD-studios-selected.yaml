@@ -18,6 +18,7 @@ on:
           - equinorfunds
           - celticsea
           - sponsorship
+          - stemgapet
 permissions:
   id-token: write
   contents: read
