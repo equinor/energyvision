@@ -104,9 +104,8 @@ export default {
           const { parent: document } = context;
           const translatedNews = document.lang
             ? `/${newsSlug[document.lang]}`
-            : `/${newsSlug[defaultLanguage.iso]}`
-          return `${translatedNews}/${slug}`
-in
+            : `/${newsSlug[defaultLanguage.iso]}`;
+          return `${translatedNews}/${slug}`;
         },
       }),
       description:
