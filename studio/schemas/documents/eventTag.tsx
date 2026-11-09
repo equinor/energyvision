@@ -1,17 +1,20 @@
-import { defaultLanguage, languages } from '../../languages'
-import { EdsIcon, TagIcon } from '../../icons'
-import type { Rule } from 'sanity'
-import { tag_special_equipment } from '@equinor/eds-icons'
+import { tag_special_equipment } from '@equinor/eds-icons';
+import type { Rule } from 'sanity';
+import {
+  getTranslation,
+  type TranslationValue,
+  translationField,
+} from '../../helpers/translation';
+import { EdsIcon, TagIcon } from '../../icons';
+import { languages } from '../../languages';
 
-//takes every allowed language and makes a string field for each
+// Legacy locale fields kept hidden so existing data is preserved; use translation.
 const localeStrings = languages.map((lang) => ({
-  name: lang.name,
+  name: lang.iso.replace('-', '_'),
   type: 'string',
   title: lang.title,
-  validation: (Rule: Rule) => Rule.required(),
-}))
-
-const title = `title.${defaultLanguage.name}`
+  readOnly: true,
+}));
 
 export default {
   type: 'document',
@@ -24,16 +27,20 @@ export default {
       name: 'title',
       title: 'Title',
       fields: localeStrings,
+      hidden: true,
     },
+    translationField({ required: true }),
     {
       title: 'Key',
       name: 'key',
       type: 'slug',
-      description: "This is a data point, no need to alter it beyond 'generate'",
+      description:
+        "This is a data point, no need to alter it beyond 'generate'",
       validation: (Rule: Rule) => Rule.required(),
 
       options: {
-        source: title,
+        source: (doc: { translation?: TranslationValue[] }) =>
+          getTranslation(doc.translation),
         slugify: (input: string) => input.toLowerCase().replace(/\s+/g, '-'),
       },
     },
@@ -42,26 +49,24 @@ export default {
     {
       title: 'Title descending',
       name: 'titleDesc',
-      by: [{ field: title, direction: 'desc' }],
+      by: [{ field: 'key.current', direction: 'desc' }],
     },
     {
       title: 'Title ascending',
       name: 'titleDesc',
-      by: [{ field: title, direction: 'asc' }],
+      by: [{ field: 'key.current', direction: 'asc' }],
     },
   ],
 
   preview: {
     select: {
-      title: title,
+      translation: 'translation',
     },
-    prepare(selection: { title: string }) {
-      const { title } = selection
-      // For debugging purposes
+    prepare({ translation }: { translation?: TranslationValue[] }) {
       return {
-        title: title,
+        title: getTranslation(translation),
         media: TagIcon,
-      }
+      };
     },
   },
-}
+};

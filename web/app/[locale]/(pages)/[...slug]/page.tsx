@@ -5,9 +5,9 @@ import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
 import { stegaClean } from 'next-sanity';
 import { Fragment, Suspense } from 'react';
+import { getValidLanguagesLocales } from '@/languageConfig';
 import { decodeSlugs } from '@/lib/helpers/getFullUrl';
 import { Flags } from '@/sanity/helpers/datasetHelpers';
-import { getNameFromIso } from '@/sanity/helpers/localization';
 import { routeSanityFetch, sanityFetchMetadata } from '@/sanity/lib/fetch';
 import { getDynamicFetchOptions } from '@/sanity/lib/live';
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils';
@@ -37,9 +37,12 @@ export async function generateMetadata({
 }: PageProps<'/[locale]/[...slug]'>): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
   const { slug: encodedSlug, locale } = await params;
+
+  if (!getValidLanguagesLocales().includes(locale)) notFound();
+
   const slug = decodeSlugs(encodedSlug) as string[];
 
-  const sanityLang = getNameFromIso(locale);
+  const sanityLang = locale;
   //news, magazinepage has slug in document
   const isNewsPage = slug[0] === newsSlug[sanityLang] && slug?.length > 1;
   const isMagazineRoom =
@@ -120,7 +123,7 @@ async function CachedContent({
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: {
-        lang: getNameFromIso(locale) ?? 'en_GB',
+        lang: locale ?? 'en-GB',
       },
       tags: [`siteMenu:${locale}`],
       requestTag: 'site-menu',
@@ -162,7 +165,9 @@ async function CachedContent({
     }
   };
   return (
-    <Fragment key={`${locale}:/${Array.isArray(slug) ? slug.join('/') : slug}:${JSON.stringify(searchParams)}`}>
+    <Fragment
+      key={`${locale}:/${Array.isArray(slug) ? slug.join('/') : slug}:${JSON.stringify(searchParams)}`}
+    >
       <Header siteMenuData={siteMenuData} headerData={headerData} />
       <article>{getTemplate()}</article>
     </Fragment>

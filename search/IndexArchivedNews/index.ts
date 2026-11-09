@@ -8,7 +8,7 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import * as T from 'fp-ts/lib/Task'
 import { init, getClient, getFileList, copyFile } from './blobStorage'
 import { ContainerClient } from '@azure/storage-blob'
-import { update, generateIndexName, getEnvironment, languageFromIso, languageOrDefault, NewsIndex } from '../common'
+import { update, generateIndexName, getEnvironment, languageOrDefault, NewsIndex } from '../common'
 import { indexSettings } from '../IndexSanityContent/common/news/algolia'
 import { mapData } from './mapper'
 import { loadJson } from './fileStorage'
@@ -25,9 +25,9 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
   context.log('Language: ', req.body.language)
   const logger = context.log
   await loadEnv(logger)
-  const language = pipe(languageFromIso(req.body.language), languageOrDefault)
+  const language = languageOrDefault(req.body.language)
 
-  const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
+  const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language)))
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
 
   // Consider moving out of this file

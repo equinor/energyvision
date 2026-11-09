@@ -2,7 +2,6 @@ import { revalidateTag } from 'next/cache';
 import { type NextRequest, NextResponse } from 'next/server';
 import { groq } from 'next-sanity';
 import { parseBody } from 'next-sanity/webhook';
-import { getIsoFromName } from '@/sanity/helpers/localization';
 import { client } from '@/sanity/lib/client';
 
 type WebhookPayload = {
@@ -86,7 +85,7 @@ export async function POST(req: NextRequest) {
       const tag =
         docType === 'textSnippet'
           ? docType
-          : `${prefix}:${prefix === 'page' ? docSlug : getIsoFromName(docLang)}`;
+          : `${prefix}:${prefix === 'page' ? docSlug : docLang}`;
       revalidateTag(tag, { expire: 0 });
       console.log(`revalidated tag: ${tag}`);
     }

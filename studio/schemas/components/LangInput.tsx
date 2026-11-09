@@ -11,7 +11,7 @@ function Flag({ lang }: any) {
 }
 
 export default function LangInput({ value }: any) {
-  const language = languages.filter(it => it.name === value).at(0)
+  const language = languages.filter(it => it.iso === value).at(0)
   return language ? (
     <Inline space={2}>
       <Flag lang={language.id} />

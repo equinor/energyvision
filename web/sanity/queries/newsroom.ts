@@ -1,11 +1,11 @@
-import linkSelectorFields from './common/actions/linkSelectorFields'
-import markDefs from './common/blockEditorMarks'
-import { functions } from './common/functions'
-import { sameLang } from './common/langAndDrafts'
-import { ingressForNewsQuery } from './common/newsSubqueries'
-import { publishDateTimeQuery } from './common/publishDateTime'
-import { seoAndSomeFields } from './common/seoAndSomeFields'
-import { inlineSlugsQuery, singletonsSlugsQuery } from './metaData'
+import linkSelectorFields from './common/actions/linkSelectorFields';
+import markDefs from './common/blockEditorMarks';
+import { functions } from './common/functions';
+import { sameLang } from './common/langAndDrafts';
+import { ingressForNewsQuery } from './common/newsSubqueries';
+import { publishDateTimeQuery } from './common/publishDateTime';
+import { seoAndSomeFields } from './common/seoAndSomeFields';
+import { inlineSlugsQuery, singletonsSlugsQuery } from './metaData';
 
 export const newsroomQuery = /* groq */ `
   ${functions}
@@ -27,15 +27,15 @@ export const newsroomQuery = /* groq */ `
     },
     backgroundImage,
     "fallbackImages": imageThumbnailFallbacks[]{...}
-}[0]`
+}[0]`;
 
 const prevDirectionFilter = /* groq */ `
 && (${publishDateTimeQuery} > $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id > $lastId))
-`
+`;
 
 const nextDirectionFilter = /* groq */ `
 && (${publishDateTimeQuery} < $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id < $lastId))
-`
+`;
 
 export const allNewsDocuments = /* groq */ `
 *[_type == "news" && ${sameLang} ] | order(${publishDateTimeQuery} desc)[0...30] {
@@ -46,16 +46,16 @@ heroImage,
 "slug": slug.current,
 "tags":tags[]->{
   "key": key.current,
-  "label":title[$lang],
+  "label":translation[language == $lang][0].value,
 },
 "countryTags":countryTags[]->{
   "key": key.current,
-  "label":title[$lang],
+  "label":translation[language == $lang][0].value,
 },
 "publishDateTime": ${publishDateTimeQuery},
 "slugs":{${inlineSlugsQuery}},
 ${ingressForNewsQuery},
-}`
+}`;
 
 export const getNewsArticlesByPage = (
   hasFirstId = false,
@@ -72,14 +72,14 @@ title,
 heroImage,
 "tags":tags[]->{
   "key": key.current,
-  "label":title[$lang],
+  "label":translation[language == $lang][0].value,
 },
 "countryTags":countryTags[]->{
   "key": key.current,
-  "label":title[$lang],
+  "label":translation[language == $lang][0].value,
 },
 "publishDateTime": ${publishDateTimeQuery},
 "slugs":{${inlineSlugsQuery}},
 ${ingressForNewsQuery},
   }
-`
+`;

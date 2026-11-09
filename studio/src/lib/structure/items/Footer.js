@@ -9,7 +9,7 @@ const footers = S =>
       id: `footer-${lang.id}`,
       icon: flags[lang.id],
       child: S.documentWithInitialValueTemplate('footer-with-locale', {
-        isoCode: `${lang.name}`,
+        isoCode: `${lang.iso}`,
       })
         .id(`${lang.id}-footer`)
         .title(`${lang.title} footer`)

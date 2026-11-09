@@ -1,14 +1,14 @@
 /* eslint-disable no-console */
 
-import { customAlphabet } from 'nanoid'
-import { sanityClients } from './getSanityClients.mjs'
+import { customAlphabet } from 'nanoid';
+import { sanityClients } from './getSanityClients.mjs';
 
-const nanoid = customAlphabet('1234567890abcdef', 12)
+const nanoid = customAlphabet('1234567890abcdef', 32);
 
 const fetchDocuments = (client) =>
   client.fetch(
     /* groq */ `*[_type in ['page','magazine'] && length(content[_type == "promoTileArray"].group[count(title)==null])>0][0..100] {_id, _rev, "promotileArray":content[_type == "promoTileArray"].group[count(title)==null] }`,
-  )
+  );
 
 const buildPatches = (docs) =>
   docs
@@ -40,34 +40,39 @@ const buildPatches = (docs) =>
         },
       })),
     )
-    .flat()
+    .flat();
 
 const createTransaction = (patches, client) =>
-  patches.reduce((tx, patch) => tx.patch(patch.id, patch.patch), client.transaction())
+  patches.reduce(
+    (tx, patch) => tx.patch(patch.id, patch.patch),
+    client.transaction(),
+  );
 
-const commitTransaction = (tx) => tx.commit()
+const commitTransaction = (tx) => tx.commit();
 
 const migrateNextBatch = async (client) => {
-  const documents = await fetchDocuments(client)
-  const patches = buildPatches(documents, client)
+  const documents = await fetchDocuments(client);
+  const patches = buildPatches(documents, client);
   if (patches.length === 0) {
-    console.log('No more documents to migrate!')
-    return null
+    console.log('No more documents to migrate!');
+    return null;
   }
   console.log(
     `Migrating batch:\n %s`,
-    patches.map((patch) => `${patch.id} => ${JSON.stringify(patch.patch)}`).join('\n'),
-  )
-  const transaction = createTransaction(patches, client)
-  await commitTransaction(transaction)
-  return migrateNextBatch(client)
-}
+    patches
+      .map((patch) => `${patch.id} => ${JSON.stringify(patch.patch)}`)
+      .join('\n'),
+  );
+  const transaction = createTransaction(patches, client);
+  await commitTransaction(transaction);
+  return migrateNextBatch(client);
+};
 
 export default function script() {
   sanityClients.map((client) =>
     migrateNextBatch(client).catch((err) => {
-      console.error(err)
-      process.exit(1)
+      console.error(err);
+      process.exit(1);
     }),
-  )
+  );
 }

@@ -4,10 +4,9 @@ import { defaultLanguage, languages, metaTitleSuffix } from '@/languageConfig';
 import archivedNews from '@/lib/archive/archivedNewsPaths.json';
 import { host } from '@/lib/config';
 import { Flags } from '@/sanity/helpers/datasetHelpers';
-import { getNameFromIso } from '@/sanity/helpers/localization';
+import type { PathType } from '@/sanity/helpers/getPaths';
 import { routeSanityFetch } from '@/sanity/lib/fetch';
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu';
-import type { PathType } from '@/sanity/queries/paths/getPaths';
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu';
 import Header from '@/sections/Header/Header';
 import ArchivedNews from '@/templates/archivedNews/ArchivedNews';
@@ -55,10 +54,10 @@ export async function generateMetadata({
   const slugs =
     archivedItems?.map((data: PathType) => ({
       slug: `${data.locale === 'no' ? '/no' : ''}${data.slug as string}`,
-      lang: data.locale === 'en' ? 'en_GB' : 'nb_NO',
+      lang: data.locale === 'en' ? 'en-GB' : 'nb-NO',
     })) ?? [];
 
-  const fullUrl = `${host.url}${slugs.find((it) => it.lang === (locale === 'en' ? 'en_GB' : 'nb_NO'))?.slug}`;
+  const fullUrl = `${host.url}${slugs.find((it) => it.lang === (locale === 'en' ? 'en-GB' : 'nb-NO'))?.slug}`;
 
   const pageData = await getArchivedPageData({ locale, slug: pagePathArray });
   if ('redirect' in pageData || 'notFound' in pageData) {
@@ -94,7 +93,7 @@ export async function generateMetadata({
       canonical: fullUrl,
       languages: {
         en: fullUrl,
-        no: `${host.url}${slugs.find((it) => it.lang === (locale === 'en' ? 'nb_NO' : 'en_GB'))?.slug}`,
+        no: `${host.url}${slugs.find((it) => it.lang === (locale === 'en' ? 'nb-NO' : 'en-GB'))?.slug}`,
         'x-default': fullUrl,
       },
     },
@@ -226,7 +225,7 @@ async function getSiteMenuData(locale: string) {
   return routeSanityFetch({
     query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
     params: {
-      lang: getNameFromIso(locale) ?? 'en_GB',
+      lang: locale ?? 'en-GB',
     },
     tags: [`siteMenu:${locale}`],
     requestTag: 'site-menu',

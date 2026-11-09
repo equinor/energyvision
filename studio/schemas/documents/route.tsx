@@ -15,14 +15,16 @@ import {
 import blocksToText from '@/helpers/blocksToText';
 import { EdsIcon } from '../../icons';
 import { Flags } from '../../src/lib/datasetHelpers';
+import { getRouteType } from '../../src/lib/localization';
 import SlugInput from '../components/SlugInput';
 import { withSlugValidation } from '../validations/validateSlug';
 
-export default (isoCode: string, title: string) => {
+export default (iso: string, title: string) => {
+  const routeType = getRouteType(iso);
   return {
     type: 'document',
     title: `Page Routes ${title}`,
-    name: `route_${isoCode}`,
+    name: routeType,
     icon: () => EdsIcon(library_books),
     fieldsets: [
       {
@@ -36,6 +38,14 @@ export default (isoCode: string, title: string) => {
     ],
     // @TODO: Temp. solution aka 1. iteration.
     fields: [
+      defineField({
+        name: 'lang',
+        title: 'Language',
+        type: 'string',
+        initialValue: iso,
+        readOnly: true,
+        hidden: true,
+      }),
       {
         title: 'Content',
         name: 'content',
@@ -53,7 +63,7 @@ export default (isoCode: string, title: string) => {
         ].filter((e) => e),
         options: {
           filter: 'lang == $lang',
-          filterParams: { lang: `${isoCode}` },
+          filterParams: { lang: iso },
           disableNew: true,
           sort: [{ direction: 'desc', field: '_createdAt' }],
         },
@@ -65,7 +75,7 @@ export default (isoCode: string, title: string) => {
           'Unless this route is a top level route, it should have a parent.',
         type: 'reference',
         // Only allow a reference to the same language
-        to: [{ type: `route_${isoCode}` }],
+        to: [{ type: routeType }],
         // Only allow to select a route that does not have a parent
         // Two level url structure only for the time being?
         options: {

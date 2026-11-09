@@ -121,7 +121,7 @@ const validation =
         if (
           document.lang
             ? document.lang !== referenceLang
-            : defaultLanguage.name !== referenceLang
+            : defaultLanguage.iso !== referenceLang
         )
           return 'Reference must have the same language as the document';
         return true;
@@ -206,9 +206,9 @@ export const homepageLink = {
       type: 'string',
       validation: (Rule: Rule) => Rule.required(),
       options: {
-        list: languages.map((it) => ({ title: it.title, value: it.name })),
+        list: languages.map((it) => ({ title: it.title, value: it.iso })),
       },
-      initialValue: defaultLanguage.name,
+      initialValue: defaultLanguage.iso,
     },
   ],
   preview: {
@@ -218,7 +218,7 @@ export const homepageLink = {
     prepare({ title }: { title: string }) {
       return {
         title: title
-          ? `Linking to ${languages.find((it) => it.name === title)?.title} home page`
+          ? `Linking to ${languages.find((it) => it.iso === title)?.title} home page`
           : 'Select language of the home page',
       };
     },
