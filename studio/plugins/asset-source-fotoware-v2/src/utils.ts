@@ -1,109 +1,75 @@
-import type { TokenType } from '../types'
+import type { TokenType } from '../types';
 
 export const HAS_ENV_VARS =
-  process.env.SANITY_STUDIO_FOTOWARE_CLIENT_ID && // OLD
   process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL &&
   process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN &&
   process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL &&
-  process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY &&
-  process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_URI
+  process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY;
 
 export const FotowareEvents = [
   'selectionWidgetCancel',
   'assetSelected',
   'assetExported',
-]
+];
 
-export const createCodeVerifier = async () => {
-  // Create byte array, fill with 1 random number and get cryptographically strong random values
-  const code_verifier = window.crypto.getRandomValues(new Uint8Array(1))
-  const hashBuffer = await window.crypto.subtle.digest('SHA-256', code_verifier) // hash to SHA-256
-  return hashBuffer
-}
-const createCodeChallenge = async () => {
-  const code_verifier = window.crypto.getRandomValues(new Uint8Array(1))
-  const hash = await window.crypto.subtle.digest('SHA-256', code_verifier) // hash to SHA-256
-  const toByte = window
-    .btoa(String.fromCharCode(...new Uint8Array(hash)))
+const encodeBase64Url = (value: Uint8Array): string =>
+  window
+    .btoa(String.fromCharCode(...value))
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
-    .replace(/=+$/, '')
-  return toByte
-}
-export const getAuthURL = async (requestState: string) => {
-  if (!HAS_ENV_VARS) {
-    console.warn(
-      'Required Fotoware .env variables are not defined. Make sure they are set in the .env file(s)',
-    )
-    return false
+    .replace(/=+$/, '');
+
+export const createOAuthState = (): string =>
+  encodeBase64Url(window.crypto.getRandomValues(new Uint8Array(32)));
+
+export const getAuthURL = (requestState: string): string | false => {
+  const redirectOrigin = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN;
+  if (!redirectOrigin) {
+    console.warn('SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN is not defined.');
+    return false;
   }
 
-  const CLIENT_ID = process.env.SANITY_STUDIO_FOTOWARE_CLIENT_ID
-  const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
-  const REDIRECT_URI = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_URI
-  const CODE_CHALLENGE = await createCodeChallenge()
-
-  if (!CODE_CHALLENGE) {
-    console.error('Failed to generate code challenge')
-    return false
-  }
-  return `${TENANT_URL}/fotoweb/oauth2/authorize?response_type=token&client_id=${CLIENT_ID}&state=${requestState}&redirect_uri=${REDIRECT_URI}&code_challenge=${CODE_CHALLENGE}&code_challenge_method=S256`
-}
-
-export const getTokenURL = async (
-  authorization_code: string,
-  code_verifier: BufferSource,
-) => {
-  if (!HAS_ENV_VARS) {
-    console.warn(
-      'Required Fotoware .env variables are not defined. Make sure they are set in the .env file(s)',
-    )
-    return false
-  }
-
-  const CLIENT_ID = process.env.SANITY_STUDIO_FOTOWARE_CLIENT_ID
-  const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
-  const REDIRECT_URI = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
-
-  return `${TENANT_URL}/fotoweb/oauth2/token?grant_type=authorization_code&client_id=${CLIENT_ID}&code=${authorization_code}&redirect_uri=${REDIRECT_URI}&code_verifier=${code_verifier}`
-}
+  const startUrl = new URL('/api/fotoware/oauth/start', redirectOrigin);
+  startUrl.searchParams.set('state', requestState);
+  return startUrl.toString();
+};
 
 export const getAccessToken = (tokenType: TokenType): string | false => {
-  const accessToken = localStorage.getItem(tokenType)
+  const accessToken = localStorage.getItem(tokenType);
 
-  if (!accessToken) return false
+  if (!accessToken) return false;
 
-  const tokenData = JSON.parse(accessToken)
+  const tokenData = JSON.parse(accessToken);
 
-  const now = Math.floor(Date.now() / 1000.0)
+  const now = Math.floor(Date.now() / 1000.0);
 
   if (parseInt(tokenData.expires, 10) <= now) {
-    localStorage.removeItem(tokenType)
-    return false
+    localStorage.removeItem(tokenType);
+    return false;
   }
 
-  return tokenData.access_token
-}
+  return tokenData.access_token;
+};
 
 type FotowareAuthData = {
-  access_token: string
-  expires_in: string
-  state: string
-}
+  access_token: string;
+  expires_in: string;
+  state: string;
+};
 
 export const storeAccessToken = (
   tokenType: TokenType,
   data: FotowareAuthData,
 ): void => {
-  const now = Math.floor(Date.now() / 1000.0)
+  const now = Math.floor(Date.now() / 1000.0);
 
   const tokenData = {
     access_token: data.access_token,
     expires: now + parseInt(data.expires_in, 10),
-  }
+  };
 
-  localStorage.setItem(tokenType, JSON.stringify(tokenData))
-}
+  localStorage.setItem(tokenType, JSON.stringify(tokenData));
+};
 
 export const checkAuthData = (data: any): boolean => {
   return (
@@ -111,18 +77,18 @@ export const checkAuthData = (data: any): boolean => {
     ['access_token', 'expires_in', 'state'].every(
       (key: string) => data[key] && typeof data[key] === 'string',
     )
-  )
-}
+  );
+};
 
 export const getSelectionWidgetURL = (accessToken: string) => {
-  return `${process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL}/fotoweb/widgets/selection?access_token=${accessToken}`
-}
+  return `${process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL}/fotoweb/widgets/selection?access_token=${accessToken}`;
+};
 
 export const getRenditionURL = () => {
-  return `${process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL}/fotoweb/me`
-}
+  return `${process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL}/fotoweb/me`;
+};
 
-type ErrorTypes = 'generic' | 'auth' | 'export'
+type ErrorTypes = 'generic' | 'auth' | 'export';
 
 export const handleRequestError = (
   message: string,
@@ -130,41 +96,41 @@ export const handleRequestError = (
   type: ErrorTypes = 'generic',
   window: React.MutableRefObject<Window | null> | null = null,
 ): false => {
-  const prefix = (type => {
+  const prefix = ((type) => {
     switch (type) {
       case 'auth':
-        return `An error occured while authenticating with Fotoware.`
+        return `An error occured while authenticating with Fotoware.`;
       case 'export':
-        return `An error occured while attempting to retrieve the image.`
+        return `An error occured while attempting to retrieve the image.`;
       default:
-        return `An error occured with the Fotoware integration.`
+        return `An error occured with the Fotoware integration.`;
     }
-  })(type)
+  })(type);
 
-  console.error(`A Fotoware error occured`, message)
+  console.error(`A Fotoware error occured`, message);
   setError(
     `<p>${prefix}</p><p>The following message was received:</p> <pre><code>${message}</code></pre>`,
-  )
+  );
 
   if (window?.current) {
-    window.current.close()
+    window.current.close();
   }
 
-  return false
-}
+  return false;
+};
 
 export const validateToken = (tokenType: TokenType, token: string) => {
-  const tokenData = JSON.parse(token)
-  const now = Math.floor(Date.now() / 1000.0)
+  const tokenData = JSON.parse(token);
+  const now = Math.floor(Date.now() / 1000.0);
 
   if (parseInt(tokenData.expires, 10) <= now) {
-    localStorage.removeItem(tokenType)
-    return false
+    localStorage.removeItem(tokenType);
+    return false;
   }
-  return true
-}
+  return true;
+};
 
 export const parseToken = (token: string) => {
-  const tokenData = JSON.parse(token)
-  return tokenData.access_token
-}
+  const tokenData = JSON.parse(token);
+  return tokenData.access_token;
+};

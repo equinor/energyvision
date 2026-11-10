@@ -1,7 +1,6 @@
-import { Dialog, Flex, Spinner, Text } from '@sanity/ui'
-import { uuid } from '@sanity/uuid'
-import { arrayBufferToBlob } from 'blob-util'
-import mime from 'mime'
+import { Dialog, Flex, Spinner, Text } from '@sanity/ui';
+import { arrayBufferToBlob } from 'blob-util';
+import mime from 'mime';
 import {
   forwardRef,
   useCallback,
@@ -9,55 +8,54 @@ import {
   useMemo,
   useRef,
   useState,
-} from 'react'
-import { createPortal } from 'react-dom'
-import type { FWAsset, FWAttributeField } from '../../types'
+} from 'react';
+import type { FWAsset, FWAttributeField } from '../../types';
 import {
   checkAuthData,
+  createOAuthState,
   FotowareEvents,
   getAccessToken,
   getAuthURL,
   getSelectionWidgetURL,
   HAS_ENV_VARS,
   storeAccessToken,
-} from '../utils'
-import { Button } from './Button'
-import { Iframe } from './Iframe'
+} from '../utils';
+import { Button } from './Button';
+import { Iframe } from './Iframe';
 
-const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
+const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL;
 
 const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
-  const { onSelect, onClose } = props
+  const { onSelect, onClose } = props;
   const [selectionToken, setSelectionToken] = useState<string | false>(
     getAccessToken('SelectionFotowareToken'),
-  )
-  const [container, setContainer] = useState<HTMLDivElement | null>(null)
-  const requestState = useMemo(() => uuid(), [])
-  const [asset, setAsset] = useState<FWAsset | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [isLogin, setIsLogin] = useState(false)
-  const [showSelectionIframe, setShowSelectionIframe] = useState(false)
+  );
+  const requestState = useRef('');
+  const [asset, setAsset] = useState<FWAsset | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const [showSelectionIframe, setShowSelectionIframe] = useState(false);
   if (!HAS_ENV_VARS) {
     console.warn(
       'One or more required enviroment variables are not defined. Please contact support.',
-    )
+    );
   }
 
-  const newWindow = useRef<Window | null>(null)
+  const newWindow = useRef<Window | null>(null);
 
   const selectionIframeUrl = useMemo(() => {
     if (selectionToken) {
-      const url = getSelectionWidgetURL(selectionToken)
-      return url
+      const url = getSelectionWidgetURL(selectionToken);
+      return url;
     }
-    return null
-  }, [selectionToken])
+    return null;
+  }, [selectionToken]);
 
-  const selectionContainerRef = useRef<HTMLDivElement>(null)
+  const selectionContainerRef = useRef<HTMLDivElement>(null);
 
   const getAsset = useCallback(
     async (renditionHref: string, mimeType: string) => {
-      const serviceUrl = `${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL}?code=${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY}`
+      const serviceUrl = `${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL}?code=${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY}`;
       if (serviceUrl) {
         const options = {
           method: 'POST',
@@ -65,13 +63,13 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
             href: renditionHref,
             mimeType: mimeType,
           }),
-        }
+        };
         try {
-          const response = await fetch(serviceUrl, options)
-          const contentLength = response.headers.get('content-length')
+          const response = await fetch(serviceUrl, options);
+          const contentLength = response.headers.get('content-length');
           const clonedBodySize = contentLength
             ? Number(contentLength)
-            : (await response.clone().arrayBuffer()).byteLength
+            : (await response.clone().arrayBuffer()).byteLength;
 
           console.log('response from fw api', {
             ok: response.ok,
@@ -80,121 +78,132 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
             contentType: response.headers.get('content-type'),
             contentLength,
             clonedBodySize,
-          })
-          const arrayBuffer = await response.arrayBuffer()
-          setIsLoading(false)
+          });
+          const arrayBuffer = await response.arrayBuffer();
+          setIsLoading(false);
           console.log('returning arrayBuffer from FW', {
             byteLength: arrayBuffer.byteLength,
             firstBytes: Array.from(new Uint8Array(arrayBuffer).slice(0, 10)),
-          })
-          return arrayBuffer
+          });
+          return arrayBuffer;
         } catch (error) {
-          console.error('Error fetching rendition:', error)
-          setIsLoading(false)
-          return null
+          console.error('Error fetching rendition:', error);
+          setIsLoading(false);
+          return null;
         }
       }
     },
     [],
-  )
+  );
 
   // Login & store access token
-  const handleAuthEvent = useCallback(
-    (event: any) => {
-      const validateAuthEvent = () => {
-        if (event?.data?.error) {
-          const { error, error_description } = event.data
-          console.warn(`Error: ${error} - description: ${error_description}`)
-          return false
-        }
+  const handleAuthEvent = useCallback((event: any) => {
+    if (!newWindow.current || !event?.data) return false;
 
-        if (event?.data?.access_token && !checkAuthData(event.data)) {
-          console.warn('Invalid event data')
-          return false
-        }
+    let expectedOrigin: string;
+    try {
+      expectedOrigin = new URL(
+        process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN || '',
+      ).origin;
+    } catch {
+      return false;
+    }
 
-        if (String(event?.data?.state) !== String(requestState)) {
-          console.warn("Redirect state did not match request state'")
-          return false
-        }
-        return true
-      }
+    if (event.origin !== expectedOrigin || event.source !== newWindow.current) {
+      console.warn(
+        'FotoWare: rejected authentication message origin or source',
+      );
+      return false;
+    }
 
-      if (!newWindow.current || !event || !event.data) return false
+    if (String(event.data.state) !== requestState.current) {
+      console.warn(
+        'FotoWare: rejected authentication message with invalid state',
+      );
+      return false;
+    }
 
-      if (event?.data) {
-        const validateEvent = validateAuthEvent()
-        if (validateEvent) {
-          storeAccessToken('SelectionFotowareToken', event.data)
-          setSelectionToken(event.data.access_token)
-          setIsLogin(false)
-          setShowSelectionIframe(true)
-          //close selection widget auth window
-          newWindow.current.close()
-        } else {
-          return false
-        }
-      } else {
-        return false
-      }
-    },
-    [requestState],
-  )
+    if (event.data.error) {
+      console.warn(
+        `FotoWare authentication failed: ${event.data.error_description || event.data.error}`,
+      );
+      setIsLogin(false);
+      newWindow.current.close();
+      newWindow.current = null;
+      return false;
+    }
+
+    if (!checkAuthData(event.data)) {
+      console.warn('FotoWare: invalid authentication message data');
+      setIsLogin(false);
+      newWindow.current.close();
+      newWindow.current = null;
+      return false;
+    }
+
+    storeAccessToken('SelectionFotowareToken', event.data);
+    setSelectionToken(event.data.access_token);
+    setIsLogin(false);
+    setShowSelectionIframe(true);
+    newWindow.current.close();
+    newWindow.current = null;
+    return true;
+  }, []);
 
   const handleWidgetEvent = useCallback(
     async (event: any) => {
-      if (isLogin) return false
-      if (!event || !event.data) return false
+      if (isLogin) return false;
+      if (!event || !event.data) return false;
       if (event.origin !== TENANT_URL) {
-        console.warn('Fotoware: invalid event origin', event.origin)
-        return false
+        console.warn('Fotoware: invalid event origin', event.origin);
+        return false;
       }
-      const { data } = event
-      if (!FotowareEvents.includes(data.event)) return false
+      const { data } = event;
+      if (!FotowareEvents.includes(data.event)) return false;
       if (data.event === 'selectionWidgetCancel') {
-        onClose()
+        onClose();
       }
 
       if (data.event === 'assetSelected' && data.asset) {
-        const selectedAsset = data.asset
-        setAsset(selectedAsset)
+        const selectedAsset = data.asset;
+        setAsset(selectedAsset);
         const assetTitle = selectedAsset?.builtinFields.find(
           (item: FWAttributeField) => item.field === 'title',
-        ).value
-        const assetFilename = selectedAsset?.filename
+        ).value;
+        const assetFilename = selectedAsset?.filename;
         const assetDescription = selectedAsset?.builtinFields.find(
           (item: FWAttributeField) => item.field === 'description',
-        ).value
-        const assetId = selectedAsset?.metadata?.[187]?.value
+        ).value;
+        const assetId = selectedAsset?.metadata?.[187]?.value;
         const personShownInTheImage =
-          selectedAsset?.metadata?.[368]?.value?.join(', ')
+          selectedAsset?.metadata?.[368]?.value?.join(', ');
 
         const description = assetDescription
           ? [assetDescription, personShownInTheImage].join('\n')
-          : personShownInTheImage
+          : personShownInTheImage;
 
         const assetExpirationDate =
-          selectedAsset?.metadata?.[428]?.value ?? undefined //valid to date
+          selectedAsset?.metadata?.[428]?.value ?? undefined; //valid to date
         const renditionUrl =
           event.data.asset.renditions?.length > 1
             ? event.data.asset.renditions?.find(
                 (rendition: any, i: number) =>
                   String(rendition?.display_name).includes('Large') || i === 3,
               ).href
-            : event.data.asset.renditions[0]?.href
+            : event.data.asset.renditions[0]?.href;
 
-        setShowSelectionIframe(false)
-        setIsLoading(true)
+        setShowSelectionIframe(false);
+        setIsLoading(true);
         const assetMimeType =
-          mime.getType(assetFilename) || 'application/octet-stream'
-        const arrayBuffer = await getAsset(renditionUrl, assetMimeType)
+          mime.getType(assetFilename) || 'application/octet-stream';
+        const arrayBuffer = await getAsset(renditionUrl, assetMimeType);
         //@ts-ignore: TODO
-        const blob = arrayBufferToBlob(arrayBuffer)
+        const blob = arrayBufferToBlob(arrayBuffer);
 
         if (blob) {
           const file = new File([blob], assetFilename || 'image.jpg', {
             type: assetMimeType,
-          })
+          });
           onSelect([
             {
               kind: 'file',
@@ -215,73 +224,64 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
                 description: description,
               },
             },
-          ])
+          ]);
         }
       }
     },
     [onClose, isLogin, onSelect, getAsset],
-  )
+  );
 
   //For selection widget
-  const getAuthLink = async () => {
-    const authURL = await getAuthURL(requestState)
+  const getAuthLink = () => {
+    const authURL = getAuthURL(requestState.current);
     if (!authURL) {
-      console.warn('Failed to retrieve auth URL')
+      console.warn('Failed to retrieve auth URL');
+      setIsLogin(false);
+      return;
     }
-    if (authURL && container) {
-      newWindow.current = window.open(
-        authURL,
-        'Fotoware',
-        'width=1200,height=800,left=200,top=200',
-      )
-      if (newWindow.current) {
-        newWindow.current.document.body.appendChild(container)
-      }
-    }
-  }
+
+    newWindow.current = window.open(
+      authURL,
+      'Fotoware',
+      'width=1200,height=800,left=200,top=200',
+    );
+    if (!newWindow.current) setIsLogin(false);
+  };
 
   const login = () => {
-    setContainer(document.createElement('div'))
-    setIsLogin(true)
-    getAuthLink()
-  }
+    requestState.current = createOAuthState();
+    setIsLogin(true);
+    getAuthLink();
+  };
 
   useEffect(() => {
-    window.addEventListener('message', handleAuthEvent)
+    window.addEventListener('message', handleAuthEvent);
     return () => {
-      window.removeEventListener('message', handleAuthEvent)
-    }
-  }, [handleAuthEvent])
+      window.removeEventListener('message', handleAuthEvent);
+    };
+  }, [handleAuthEvent]);
 
   useEffect(() => {
     if (selectionToken) {
-      window.removeEventListener('message', handleAuthEvent)
-      setShowSelectionIframe(true)
+      window.removeEventListener('message', handleAuthEvent);
+      setShowSelectionIframe(true);
     }
-  }, [selectionToken, handleAuthEvent])
+  }, [selectionToken, handleAuthEvent]);
 
   useEffect(() => {
-    if (selectionToken && newWindow.current) {
-      setIsLogin(false)
-      newWindow.current.close()
-    }
-  }, [selectionToken])
-
-  useEffect(() => {
-    window.addEventListener('message', handleWidgetEvent)
-    setContainer(document.createElement('div'))
+    window.addEventListener('message', handleWidgetEvent);
     return () => {
-      window.removeEventListener('message', handleWidgetEvent)
-    }
-  }, [handleWidgetEvent])
+      window.removeEventListener('message', handleWidgetEvent);
+    };
+  }, [handleWidgetEvent]);
 
   return (
     <Dialog
-      id='fotoware_import_dialog'
-      header='Import image from Fotoware'
+      id="fotoware_import_dialog"
+      header="Import image from Fotoware"
       onClose={onClose}
       open
-      width='auto'
+      width="auto"
       ref={ref}
       zOffset={9999}
       style={{
@@ -297,54 +297,52 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           </Card>
         )} */}
       {!selectionToken && (
-        <Flex direction='column' align={'center'} gap={4}>
+        <Flex direction="column" align={'center'} gap={4}>
           {!isLogin && (
             <>
-              <Text align='center' size={[2, 2, 3, 3]}>
+              <Text align="center" size={[2, 2, 3, 3]}>
                 Your session with Fotoware has expired or you are not logged in.
               </Text>
               <Button
                 onClick={() => {
-                  login()
+                  login();
                 }}
               >
                 Log in
               </Button>
             </>
           )}
-
-          {container && createPortal(props.children, container)}
         </Flex>
       )}
       {isLoading && (
-        <div className=''>
+        <div className="">
           {asset?.previews && (
-            <div className='aspect-video'>
+            <div className="aspect-video">
               <img
-                alt=''
-                className='h-full w-full object-cover'
+                alt=""
+                className="h-full w-full object-cover"
                 src={`${TENANT_URL}${asset.previews[0]?.href}`}
               />
             </div>
           )}
-          <div className='mt-3 flex justify-center gap-4'>
+          <div className="mt-3 flex justify-center gap-4">
             <Spinner muted style={{ transform: 'translateY(0.7rem)' }} />
-            <div className='text-md'>{`Downloading ${asset?.filename ?? 'media'}...`}</div>
+            <div className="text-md">{`Downloading ${asset?.filename ?? 'media'}...`}</div>
           </div>
         </div>
       )}
       {selectionToken && selectionIframeUrl && showSelectionIframe && (
         <div ref={selectionContainerRef} id={`selectionIframe-${requestState}`}>
           <Iframe
-            title='Select assets from Fotoware'
+            title="Select assets from Fotoware"
             src={selectionIframeUrl}
           />
         </div>
       )}
     </Dialog>
-  )
-})
+  );
+});
 
-FotowareAssetSource.displayName = 'FotowareAssetSource'
+FotowareAssetSource.displayName = 'FotowareAssetSource';
 
-export default FotowareAssetSource
+export default FotowareAssetSource;
