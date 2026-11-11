@@ -36,6 +36,7 @@
     "@azure/app-configuration-provider": "2.6.0",
     "@azure/identity": "4.13.3",
     "fp-ts": "^2.16.11",
-    "dotenv": "17.4.2"
+    "dotenv": "17.4.2",
+    "@azure/core-process": "1.0.0"
   }
 }
