@@ -96,7 +96,7 @@ export default async function LocaleLayout({
         >
           {t('skipToContent') ?? 'Skip to main content'}
         </NextLink>
-        {/*!IS_FETCH_OPTIMIZED && <SanityLive />*/}
+        {!IS_FETCH_OPTIMIZED && <SanityLive />}
         {/* Preview link is sent to stakeholders dont show draft toolbar, only use if needed in local development
         Must first filter all conditional rendering props in the page content, otherwise the visual editing will not work correctly inside presentation tool. This is a big job and will be done later. For now, we will not render the visual editing inside the presentation tool. 
         */}
@@ -153,7 +153,7 @@ async function CachedContent({
   return (
     <>
       <PageProvider initialErrorImage={errorImage}>{children}</PageProvider>
-      {
+      {/*
         <div className="mx-auto max-w-content px-layout-sm lg:px-layout-lg pb-page-content">
           <h1 className="wrap-break-word max-w-text text-slate-80 dark:text-white-100 text-3xl leading-earthy lg:leading-misty pt-4 mb-6 lg:mb-12 text-balance">
             We’ll be right back
@@ -163,7 +163,7 @@ async function CachedContent({
             minutes.
           </p>
         </div>
-      }
+      */}
       <Footer {...footerData} />
       <GoToTopButton />
     </>
