@@ -8,7 +8,6 @@ import { getLocale } from 'next-intl/server';
 import { Suspense } from 'react';
 import { algolia } from '@/lib/config';
 import { Flags } from '@/sanity/helpers/datasetHelpers';
-import { getNameFromIso } from '@/sanity/helpers/localization';
 import { routeSanityFetch, sanityFetchMetadata } from '@/sanity/lib/fetch';
 import { getDynamicFetchOptions } from '@/sanity/lib/live';
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils';
@@ -28,17 +27,20 @@ export async function generateStaticParams() {
     : [{ locale: '__placeholder__' }];
 }
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
   const locale = await getLocale();
-
   if (locale === '__placeholder__') return notFound();
+  const pageSlug = newsSlug[locale];
 
-  const pageSlug = newsSlug[getNameFromIso(locale)];
   if (Flags.HAS_NEWSROOM) {
     const { data: metaData }: { data: any } = await sanityFetchMetadata({
       query: newsroomMetaQuery,
       params: {
-        lang: getNameFromIso(locale),
+        lang: locale,
       },
       stega: false,
       requestTag: 'meta-news',
@@ -114,14 +116,14 @@ async function CachedNewsroomPage({
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: {
-        lang: getNameFromIso(locale) ?? 'en_GB',
+        lang: locale ?? 'en-GB',
       },
       requestTag: 'site-menu',
       tags: [`siteMenu:${locale}`],
       ...dynamic,
     }),
     getPage({
-      slug: newsSlug[getNameFromIso(locale)],
+      slug: newsSlug[locale],
       locale,
       tags: [`newsroom:${locale}`],
       ...dynamic,

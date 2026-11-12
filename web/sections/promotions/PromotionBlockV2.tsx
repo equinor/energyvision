@@ -16,7 +16,6 @@ import {
 import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref';
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction';
 import Blocks from '@/portableText/Blocks';
-import { getIsoFromName } from '@/sanity/helpers/localization';
 import {
   type ColorKeys,
   colorKeyToUtilityMap,
@@ -122,9 +121,7 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
                   variant="fit"
                   href={getLocalizedHref(
                     viewAllLink.link.slug,
-                    viewAllLink.link.lang
-                      ? getIsoFromName(viewAllLink.link.lang)
-                      : iso,
+                    viewAllLink.link.lang ? viewAllLink.link.lang : iso,
                   )}
                 >
                   {viewAllLink.label}
@@ -135,7 +132,7 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
               {promoteList.map((promotion: any) => {
                 const variant = getVariantOnType(promotion?.type);
                 const promotionIso = promotion?.link?.lang
-                  ? getIsoFromName(promotion.link.lang)
+                  ? promotion.link.lang
                   : iso;
                 const href =
                   promotion?.type === 'anchorLink'

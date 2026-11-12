@@ -14,12 +14,8 @@ export const Event = (S) =>
             .apiVersion(apiVersion)
             .id('events')
             .title('Events')
-            .filter(
-              '_type == "event" && (!defined(lang) || lang in $baseLanguages)',
-            )
-            .params({
-              baseLanguages: [defaultLanguage.name, defaultLanguage.iso],
-            })
+            .filter('_type == "event" && (!defined(lang) || lang == $baseLang)')
+            .params({ baseLang: defaultLanguage.iso })
             .canHandleIntent((_name, params) => {
               // Assume we can handle all intents (actions) regarding post documents
               return params.type === 'event';

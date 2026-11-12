@@ -44,6 +44,7 @@ import CustomDocumentInternationalizationMenu from './schemas/components/CustomD
 import { partialStudioTheme } from './studioTheme';
 import './styles/fonts.css';
 import '@sanity/ui/styles.css';
+import { internationalizedArray } from 'sanity-plugin-internationalized-array';
 //import EquinorLogo from './styles/icons/logo.svg?react'
 import { fotowareWidget } from './widgets/ImportedFotowareAssetsWidget';
 
@@ -156,6 +157,11 @@ const getConfig = (
       },
     }),
     table(),
+    internationalizedArray({
+      languages: i18n.supportedLanguages,
+      defaultLanguages: i18n.supportedLanguages.map((it) => it.id),
+      fieldTypes: ['string'],
+    }),
   ].filter((e) => e) as PluginOptions[],
   schema: {
     types: schemaTypes as SchemaTypeDefinition[],

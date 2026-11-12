@@ -1,5 +1,6 @@
 import { tag_more } from '@equinor/eds-icons';
 import type { CurrentUser } from 'sanity';
+import { translationField } from '../../helpers/translation';
 import { EdsIcon } from '../../icons';
 import { languages } from '../../languages';
 
@@ -19,12 +20,14 @@ const LocalNewsTagDescription = () => (
   </>
 );
 
+// Legacy locale fields kept hidden so existing data is preserved; use translation.
 const fields = languages.map((lang) => ({
   title: `${lang.title} value`,
-  name: lang.name,
+  name: lang.iso.replace('-', '_'),
   description: `The ${lang.id} translation`,
   type: 'string',
-  fieldset: 'tagName',
+  readOnly: true,
+  hidden: true,
 }));
 
 export default {
@@ -53,5 +56,6 @@ export default {
       description: 'Identifying title for use within the studio',
     },
     ...fields,
+    translationField({ fieldset: 'tagName' }),
   ],
 };
