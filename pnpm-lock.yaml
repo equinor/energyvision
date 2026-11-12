@@ -101,9 +101,6 @@ importers:
       '@equinor/eds-icons':
         specifier: ^0.17.0
         version: 0.17.0
-      '@portabletext/editor':
-        specifier: ^8.2.9
-        version: 8.2.9(@types/react@19.3.0)(react@19.3.1)
       '@portabletext/react':
         specifier: ^8.0.1
         version: 8.0.1(react@19.3.1)

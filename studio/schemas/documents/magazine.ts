@@ -109,15 +109,6 @@ export default {
       type: 'array',
       of: [ingressBlockContentType],
       options: { maxLength: 400 },
-      /*       components: {
-        portableText: {
-          plugins: (props: PortableTextPluginsProps) =>
-            createElement(PortableTextEditorPlugins, {
-              ...props,
-              maxChar: 400,
-            }),
-        },
-      }, */
       validation: (Rule: Rule) =>
         Rule.required().custom<PortableTextBlock[]>((value, context) => {
           const { maxLength } = (context.type?.options ?? {}) as {
