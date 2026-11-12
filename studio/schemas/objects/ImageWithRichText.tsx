@@ -1,8 +1,8 @@
-import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import { configureBlockContent } from '../editors'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import type { ImageWithAlt } from './imageWithAlt'
-import singleItemArray from './singleItemArray'
+import type { PortableTextBlock, Reference, Rule } from 'sanity';
+import { configureBlockContent } from '../editors';
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
+import type { ImageWithAlt } from './imageWithAlt';
+import singleItemArray from './singleItemArray';
 
 const blockConfig = {
   h2: false,
@@ -12,16 +12,16 @@ const blockConfig = {
   externalLink: false,
   attachment: false,
   lists: true,
-}
+};
 
-const blockContentType = configureBlockContent({ ...blockConfig })
+const blockContentType = configureBlockContent({ ...blockConfig });
 
 export type CarouselImageWithRichText = {
-  _type: 'imageWithRichText'
-  image: ImageWithAlt
-  content: PortableTextBlock[]
-  action?: Reference[]
-}
+  _type: 'imageWithRichText';
+  image: ImageWithAlt;
+  content: PortableTextBlock[];
+  action?: Reference[];
+};
 
 export default {
   name: 'imageWithRichTextBelow',
@@ -45,11 +45,12 @@ export default {
       description: 'Displays below',
       type: 'array',
       of: [blockContentType],
+      options: { maxLength: 600 },
       validation: (Rule: Rule) =>
         Rule.required()
           .min(1)
           .custom((value: PortableTextBlock[]) => {
-            return validateCharCounterEditor(value, 600, true)
+            return validateCharCounterEditor(value, 600, true);
           })
           .error(),
     },
@@ -68,8 +69,8 @@ export default {
     prepare({ imageUrl }: { imageUrl: string }) {
       return {
         title: 'Image with rich text below',
-        media: <img src={imageUrl} alt='' style={{ height: '100%' }} />,
-      }
+        media: <img src={imageUrl} alt="" style={{ height: '100%' }} />,
+      };
     },
   },
-}
+};

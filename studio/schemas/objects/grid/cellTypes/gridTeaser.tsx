@@ -86,6 +86,7 @@ export default {
       title: 'Content',
       type: 'array',
       of: [blockContentType],
+      options: { maxLength: 600 },
       hidden: ({ parent }: GridTeaserDocument) => parent.useExtendedThemes,
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
@@ -97,6 +98,7 @@ export default {
       title: 'Themed Content',
       type: 'array',
       of: [themedTitleContentType],
+      options: { maxLength: 600 },
       hidden: ({ parent }: GridTeaserDocument) => !parent.useExtendedThemes,
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
