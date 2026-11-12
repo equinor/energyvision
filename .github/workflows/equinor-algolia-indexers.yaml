@@ -21,7 +21,7 @@ on:
 
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  BUILD_OUTPUT_PATH: ${{ github.workspace }}/search
+  DEPLOY_OUTPUT_PATH: ${{ github.workspace }}/deploy/search
   BUILD_PACKAGE_NAME: indexers.zip
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
@@ -83,13 +83,24 @@ jobs:
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
-          pnpm search-indexers install --node-linker=hoisted
+          pnpm install --frozen-lockfile --filter ./search
       - name: Build ⚙
         id: build-functions
         run: |
           pnpm search-indexers build
+      # pnpm deploy creates a self-contained copy of the search package with a flat,
+      # symlink-free node_modules resolved from the shared lockfile. A plain hoisted
+      # install puts dependencies in the workspace root, which never reaches the zip.
+      - name: Package 📦
+        id: package-functions
+        run: |
+          pnpm --filter ./search --prod deploy --frozen-lockfile \
+            --config.inject-workspace-packages=true \
+            --config.node-linker=hoisted \
+            ${{ env.DEPLOY_OUTPUT_PATH }}
+          test -f ${{ env.DEPLOY_OUTPUT_PATH }}/node_modules/@sanity/client/package.json
           mkdir ${{ env.BUILD_ARTIFACT_PATH }}
-          pushd ${{ env.BUILD_OUTPUT_PATH }}
+          pushd ${{ env.DEPLOY_OUTPUT_PATH }}
           zip -r ${{ env.BUILD_ARTIFACT_PATH }}/${{ env.BUILD_PACKAGE_NAME }} .
           popd
       - name: Package Azure Function release build

@@ -6,6 +6,11 @@
     "name": "Heap Purple",
     "email": "fg_envis@equinor.com"
   },
+  "files": [
+    "dist",
+    "host.json",
+    "*/function.json"
+  ],
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
