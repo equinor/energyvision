@@ -1,4 +1,4 @@
-import background from './common/background'
+import background from './common/background';
 
 export const videoPlayerCarouselFields = /* groq */ `
   "id": _key,
@@ -9,8 +9,14 @@ export const videoPlayerCarouselFields = /* groq */ `
     "id": _key,
     title,
     "video": {
-      "title": videoFile->video.title,
-      "src": videoFile->video.url,
+      "title": select(
+        videoFile->_type == "assetFile" => videoFile->title,
+        videoFile->video.title
+      ),
+      "src": select(
+        videoFile->_type == "assetFile" => videoFile->asset.asset->url,
+        videoFile->video.url
+      ),
       "poster": videoFile->thumbnail,
     },
   },
@@ -18,4 +24,4 @@ export const videoPlayerCarouselFields = /* groq */ `
     "aspectRatio": coalesce(aspectRatio, '16:9'),
     ${background}
   },
-`
+`;
