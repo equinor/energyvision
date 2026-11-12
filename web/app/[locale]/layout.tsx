@@ -153,17 +153,7 @@ async function CachedContent({
   return (
     <>
       <PageProvider initialErrorImage={errorImage}>{children}</PageProvider>
-      {
-        <div className="mx-auto max-w-content px-layout-sm lg:px-layout-lg pb-page-content">
-          <h1 className="wrap-break-word max-w-text text-slate-80 dark:text-white-100 text-3xl leading-earthy lg:leading-misty pt-4 mb-6 lg:mb-12 text-balance">
-            We’ll be right back
-          </h1>
-          <p className="wrap-break-word max-w-text text-slate-80 dark:text-white-100 text-md mt-5 mb-5 first:mt-0 last:mb-6 text-pretty">
-            We’re making a technical upgrade. Please check back in a few
-            minutes.
-          </p>
-        </div>
-      }
+
       <Footer {...footerData} />
       <GoToTopButton />
     </>
