@@ -1,12 +1,12 @@
-import { play_circle } from '@equinor/eds-icons'
-import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { defaultColors } from '../defaultColors'
-import { configureBlockContent } from '../editors'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import { title } from './iframe/sharedIframeFields'
+import { play_circle } from '@equinor/eds-icons';
+import type { PortableTextBlock, Reference, Rule } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { defaultColors } from '../defaultColors';
+import { configureBlockContent } from '../editors';
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
+import { title } from './iframe/sharedIframeFields';
 
 export default {
   name: 'videoPlayerCarousel',
@@ -64,7 +64,11 @@ export default {
               name: 'videoFile',
               type: 'reference',
               title: 'Video',
-              to: [{ type: 'videoFile' }],
+              to: [{ type: 'videoFile' }, { type: 'assetFile' }],
+              options: {
+                filter:
+                  '_type == "videoFile" || (_type == "assetFile" && asset.asset->extension == "mp4")',
+              },
               validation: (Rule: Rule) => Rule.required(),
             },
           ],
@@ -72,22 +76,25 @@ export default {
             select: {
               title: 'title',
               subtitle: 'videoFile.video.title',
+              assetFileSubtitle: 'videoFile.title',
               image: 'videoFile.thumbnail',
             },
             prepare({
               title = [],
               subtitle,
+              assetFileSubtitle,
               image,
             }: {
-              title: PortableTextBlock[]
-              subtitle: string
-              image: Reference
+              title: PortableTextBlock[];
+              subtitle: string;
+              assetFileSubtitle: string;
+              image: Reference;
             }) {
               return {
                 title: blocksToText(title),
-                subtitle: subtitle,
+                subtitle: subtitle || assetFileSubtitle,
                 media: image,
-              }
+              };
             },
           },
         },
@@ -126,14 +133,14 @@ export default {
       items: 'items',
     },
     prepare(selection: any) {
-      const { title, items } = selection
-      const length = items ? items.length : 0
+      const { title, items } = selection;
+      const length = items ? items.length : 0;
 
       return {
         title: title ? blocksToText(title) : 'Untitled video carousel',
         subtitle: `Video carousel with ${length} items`,
         media: EdsIcon(play_circle),
-      }
+      };
     },
   },
-}
+};
