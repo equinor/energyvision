@@ -1,6 +1,6 @@
-import linkSelectorFields from './common/actions/linkSelectorFields'
-import background from './common/background'
-import markDefs from './common/blockEditorMarks'
+import linkSelectorFields from './common/actions/linkSelectorFields';
+import background from './common/background';
+import markDefs from './common/blockEditorMarks';
 
 export const videoPlayerFields = /* groq */ `
   "id": _key,
@@ -15,8 +15,14 @@ export const videoPlayerFields = /* groq */ `
     ${linkSelectorFields},
   },
   "video": {
-    "title": videoFile->video.title,
-    "src": videoFile->video.url,
+    "title": select(
+      videoFile->_type == "assetFile" => videoFile->title,
+      videoFile->video.title
+    ),
+    "src": select(
+      videoFile->_type == "assetFile" => videoFile->asset.asset->url,
+      videoFile->video.url
+    ),
     "poster": videoFile->thumbnail,
   },
   videoControls {
@@ -24,7 +30,7 @@ export const videoPlayerFields = /* groq */ `
     autoPlay,
     muted,
   },
-  defined(showTranscript) && showTranscript =>  { "transcript": videoFile->transcript.text},
+  defined(showTranscript) && showTranscript && videoFile->_type == "videoFile" =>  { "transcript": videoFile->transcript.text},
   "designOptions": {
     "aspectRatio": coalesce(aspectRatio, '16:9'),
     containVideo,
@@ -32,4 +38,4 @@ export const videoPlayerFields = /* groq */ `
     useBrandTheme,
     ${background}
   },
-`
+`;

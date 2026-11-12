@@ -63,7 +63,11 @@ export default {
               name: 'videoFile',
               type: 'reference',
               title: 'Video',
-              to: [{ type: 'videoFile' }],
+              to: [{ type: 'videoFile' }, { type: 'assetFile' }],
+              options: {
+                filter:
+                  '_type == "videoFile" || (_type == "assetFile" && asset.asset->extension == "mp4")',
+              },
               validation: (Rule: Rule) => Rule.required(),
             },
           ],
@@ -71,20 +75,23 @@ export default {
             select: {
               title: 'title',
               subtitle: 'videoFile.video.title',
+              assetFileSubtitle: 'videoFile.title',
               image: 'videoFile.thumbnail',
             },
             prepare({
               title = [],
               subtitle,
+              assetFileSubtitle,
               image,
             }: {
               title: PortableTextBlock[];
               subtitle: string;
+              assetFileSubtitle: string;
               image: Reference;
             }) {
               return {
                 title: blocksToText(title),
-                subtitle: subtitle,
+                subtitle: subtitle || assetFileSubtitle,
                 media: image,
               };
             },
