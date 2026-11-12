@@ -38,10 +38,5 @@
     "fp-ts": "^2.16.11",
     "dotenv": "17.4.2",
     "@azure/core-process": "1.0.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "get-it": "^9.6.1"
-    }
   }
 }
