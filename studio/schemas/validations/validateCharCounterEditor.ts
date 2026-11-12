@@ -1,3 +1,4 @@
+import { toPlainText } from '@portabletext/react';
 import type { PortableTextBlock } from 'sanity';
 
 export const validateCharCounterEditor = (
@@ -9,29 +10,13 @@ export const validateCharCounterEditor = (
     return allowZeroLength ? true : 'Required';
   }
 
-  const hasText = value.some(
-    (block) =>
-      Array.isArray(block.children) &&
-      block.children.some(
-        (child) =>
-          'text' in child &&
-          typeof child.text === 'string' &&
-          child.text.trim().length > 0,
-      ),
-  );
+  const plainText = toPlainText(value);
+  const hasText = plainText.trim().length > 0;
 
   if (!hasText && !allowZeroLength) return 'Required';
 
-  const count = value[0]?.children
-    ? (value[0].children as { text: string }[]).reduce(
-        (total: number, current: { text: string }) =>
-          total + current.text.length,
-        0,
-      )
-    : null;
-
-  if (count !== null && count > charLimit) {
-    return `The introduction should be no longer than ${charLimit} characters. Currently ${count} characters long.`;
+  if (plainText.length > charLimit) {
+    return `The introduction should be no longer than ${charLimit} characters. Currently ${plainText.length} characters long.`;
   }
 
   return true;
