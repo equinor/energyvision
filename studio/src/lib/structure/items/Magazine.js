@@ -17,7 +17,7 @@ export const Magazine = (S) =>
             .title('Magazines')
             .apiVersion(apiVersion)
             .filter(
-              '_type == "magazine" && (!defined(lang) || lang in $baseLanguages)',
+              '_type == "magazine" && (!defined(lang) || lang == $baseLang)',
             )
             .params({ baseLang: defaultLanguage.iso })
             .canHandleIntent((_name, params) => {
