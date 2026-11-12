@@ -49,7 +49,11 @@ export default {
       name: 'videoFile',
       type: 'reference',
       title: 'Video',
-      to: [{ type: 'videoFile' }],
+      to: [{ type: 'videoFile' }, { type: 'assetFile' }],
+      options: {
+        filter:
+          '_type == "videoFile" || (_type == "assetFile" && asset.asset->extension == "mp4")',
+      },
       validation: (Rule: Rule) => Rule.required(),
     },
     {
@@ -117,21 +121,24 @@ export default {
     select: {
       title: 'title',
       videoTitle: 'videoFile.video.title',
+      assetFileTitle: 'videoFile.title',
       media: 'videoFile.thumbnail',
     },
     prepare({
       title,
       videoTitle,
+      assetFileTitle,
       media,
     }: {
       title: PortableTextBlock[];
       videoTitle: string;
+      assetFileTitle: string;
       media: ImageWithAlt;
     }) {
       const plainTitle = title ? blocksToText(title) : undefined;
 
       return {
-        title: plainTitle || videoTitle,
+        title: plainTitle || videoTitle || assetFileTitle,
         subtitle: `Video`,
         media: media || EdsIcon(play_circle),
       };
