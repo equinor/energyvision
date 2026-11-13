@@ -2,7 +2,6 @@ import { play_circle } from '@equinor/eds-icons';
 import type { PortableTextBlock, Reference, Rule } from 'sanity';
 import blocksToText from '../../helpers/blocksToText';
 import { EdsIcon } from '../../icons';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { defaultColors } from '../defaultColors';
 import { configureBlockContent } from '../editors';
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
@@ -37,6 +36,7 @@ export default {
       description: 'Optional short description. Max 400 characters',
       type: 'array',
       of: [configureBlockContent({ variant: 'ingress' })],
+      options: { maxLength: 400 },
       validation: (Rule: Rule) =>
         Rule.custom((value: any) =>
           validateCharCounterEditor(value, 400, true),
@@ -57,7 +57,6 @@ export default {
               type: 'array',
               title: 'Title',
               description: 'Optional title/heading shown beneath the video.',
-              components: { input: CompactBlockEditor },
               of: [configureBlockContent({ variant: 'title' })],
             },
             {

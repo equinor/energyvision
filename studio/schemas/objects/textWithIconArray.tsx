@@ -2,7 +2,6 @@ import { view_module } from '@equinor/eds-icons';
 import blocksToText from '../../helpers/blocksToText';
 import { EdsIcon } from '../../icons';
 import type { SchemaType } from '../../types';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors';
 
 export default {
@@ -19,7 +18,6 @@ export default {
     {
       name: 'title',
       type: 'array',
-      inputComponent: CompactBlockEditor,
       of: [configureBlockContent({ variant: 'title' })],
       title: 'Title',
       description:

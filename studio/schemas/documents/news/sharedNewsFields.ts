@@ -1,4 +1,7 @@
 import type { Rule, ValidationContext } from 'sanity';
+import { Flags } from '../../../src/lib/datasetHelpers';
+import { PublicationDateInfo } from '../../components/Details/PublicationDateInfo';
+import { SubscriptionTypeInput } from '../../components/SubscriptionTypeInput';
 import { configureBlockContent } from '../../editors/blockContentType';
 import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor';
 
@@ -12,16 +15,6 @@ const validateRelatedLinksTitle = (value: any, context: any) => {
   }
 
   return true;
-};
-
-export const isLive = {
-  name: 'live',
-  title: 'Live',
-  type: 'boolean',
-  initialValue: false,
-  readOnly: true,
-  description: `This can only be changed by clicking "Make Public" on a Published article`,
-  hidden: true,
 };
 
 export const seo = {
@@ -80,6 +73,15 @@ export const validatePublishDateTime = (
 };
 
 export const publishDateTime = [
+  {
+    name: 'publicationDateInfo',
+    title: 'Publication date information',
+    type: 'string',
+    readOnly: true,
+    components: {
+      field: PublicationDateInfo,
+    },
+  },
   {
     title: 'Custom publication date and time',
     name: 'customPublicationDate',
@@ -152,11 +154,13 @@ export const countryTags = {
 };
 
 export const subscriptionType = {
-  title: 'News Subscription Type',
+  title: 'Subscription category',
   name: 'subscriptionType',
   type: 'string',
-  description:
-    'This news article will be sent to all the users who subscribed to below selected type.',
+  components: {
+    input: SubscriptionTypeInput,
+  },
+  description: 'Article will be sent to subscribers of selected category',
   options: {
     list: [
       { title: 'General News', value: 'Company' },
@@ -172,8 +176,7 @@ export const newsSlugField = {
   title: 'News slug',
   type: 'string',
   placeholder: 'For example "Experienced professionals"',
-  description:
-    'The unique part of the URL for this topic page. Should probably be something like the page title.',
+  description: 'The unique part of the URL. For example, use the page title.',
   // validation: (Rule) => Rule.max(200),
 };
 
@@ -187,10 +190,9 @@ export const heroImage = {
 export const ingress = {
   name: 'ingress',
   title: 'Ingress',
-  description:
-    'Lead paragraph. Shown in article and on cards. Max 400 characters',
   type: 'array',
   of: [configureBlockContent({ variant: 'ingress' })],
+  options: { maxLength: 400 },
   validation: (Rule: Rule) =>
     Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
 };
@@ -218,7 +220,7 @@ export const iframe = {
   title: 'IFrame',
   name: 'iframe',
   description:
-    'Use this to add an iframe to this article. This could for example be a livestream, video, or map.',
+    'Add an iframe to this article for example, a livestream, video, or map.',
   type: 'basicIframe',
   options: {
     collapsible: true,
@@ -249,7 +251,11 @@ export const relatedLinks = {
   ],
 };
 
-export const excludeFromSearch = {
-  type: 'excludeFromSearch',
-  name: 'excludeFromSearch',
-};
+export const excludeFromSearch =
+  Flags.HAS_SEARCH && Flags.HAS_NEWSROOM
+    ? {
+        type: 'excludeFromSearch',
+        name: 'excludeFromSearch',
+        title: 'Hide from Algolia global search and newsroom',
+      }
+    : null;

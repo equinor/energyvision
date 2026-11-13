@@ -1,26 +1,25 @@
 /* eslint-disable react/display-name */
-import { CiGrid41 } from 'react-icons/ci'
-import type { PortableTextBlock, Rule } from 'sanity'
-import { shortenWithEllipsis } from '@/helpers/formatters'
-import blocksToText from '../../helpers/blocksToText'
-import type { ColorSelectorValue } from '../components/ColorSelector'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import { CiGrid41 } from 'react-icons/ci';
+import type { PortableTextBlock, Rule } from 'sanity';
+import { shortenWithEllipsis } from '@/helpers/formatters';
+import blocksToText from '../../helpers/blocksToText';
+import type { ColorSelectorValue } from '../components/ColorSelector';
 import {
   defaultBackgroundColors,
   defaultColors,
   getDefaultColorByKey,
-} from '../defaultColors'
-import { configureBlockContent } from '../editors'
-import type { Card } from './card'
-import { createColorSelectField } from './colorList'
-import { layoutGrid } from './commonFields/commonFields'
+} from '../defaultColors';
+import { configureBlockContent } from '../editors';
+import type { Card } from './card';
+import { createColorSelectField } from './colorList';
+import { layoutGrid } from './commonFields/commonFields';
 
 export type CardsList = {
-  _type: 'cardsList'
-  title?: PortableTextBlock[]
-  cards?: Card[]
-  background?: ColorSelectorValue
-}
+  _type: 'cardsList';
+  title?: PortableTextBlock[];
+  cards?: Card[];
+  background?: ColorSelectorValue;
+};
 
 export default {
   name: 'cardsList',
@@ -33,9 +32,6 @@ export default {
       type: 'array',
       title: 'Title for the list of cards',
       description: 'Should have title for context, you may hide it',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
     },
     {
@@ -60,7 +56,7 @@ export default {
       name: 'cardBackground',
       title: 'Card background color',
       colors: [
-        ...defaultBackgroundColors.filter(color => color.key !== 'white-100'),
+        ...defaultBackgroundColors.filter((color) => color.key !== 'white-100'),
         defaultColors[22],
       ],
       valueField: 'key',
@@ -81,12 +77,12 @@ export default {
         ],
       },
       hidden: (props: any) => {
-        const { currentUser } = props || {}
-        const allowedRoles = ['designer', 'administrator', 'developer']
+        const { currentUser } = props || {};
+        const allowedRoles = ['designer', 'administrator', 'developer'];
         const isAllowed = currentUser?.roles?.some((role: any) =>
           allowedRoles?.includes(role?.name),
-        )
-        return !isAllowed
+        );
+        return !isAllowed;
       },
     },
     {
@@ -97,7 +93,7 @@ export default {
       type: 'colorlist',
       initialValue: defaultColors[6],
       hidden: ({ value }: any) => {
-        return !value
+        return !value;
       },
     },
   ],
@@ -118,30 +114,30 @@ export default {
       card3,
       cardBackground,
     }: {
-      title: PortableTextBlock[]
-      cards: any
-      card1: string
-      card2: string
-      card3: string
-      cardBackground?: string
+      title: PortableTextBlock[];
+      cards: any;
+      card1: string;
+      card2: string;
+      card3: string;
+      cardBackground?: string;
     }) {
-      const plainTitle = blocksToText(title)
-      const plainCard1 = card1 ? card1 : undefined
-      const plainCard2 = card2 ? card2 : undefined
-      const plainCard3 = card3 ? card3 : undefined
+      const plainTitle = blocksToText(title);
+      const plainCard1 = card1 ? card1 : undefined;
+      const plainCard2 = card2 ? card2 : undefined;
+      const plainCard3 = card3 ? card3 : undefined;
 
       const previewBackgroundColor = getDefaultColorByKey(
         cardBackground ?? defaultColors[6].key,
-      )
+      );
       const previewIconColor = previewBackgroundColor?.dark
         ? '#FFFFFF'
-        : '#111827'
+        : '#111827';
 
       const subtitleParts = [
         shortenWithEllipsis(plainCard1 ?? '', 15),
         shortenWithEllipsis(plainCard2 ?? '', 15),
         shortenWithEllipsis(plainCard3 ?? '', 15),
-      ].filter(Boolean)
+      ].filter(Boolean);
 
       return {
         title: plainTitle ?? subtitleParts.join(', ') ?? 'List of cards',
@@ -162,7 +158,7 @@ export default {
             <CiGrid41 size={24} style={{ fill: previewIconColor }} />
           </div>
         ),
-      }
+      };
     },
   },
-}
+};

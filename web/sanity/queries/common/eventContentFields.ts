@@ -1,8 +1,8 @@
-import downloadableFileFields from './actions/downloadableFileFields'
-import downloadableImageFields from './actions/downloadableImageFields'
-import linkSelectorFields from './actions/linkSelectorFields'
-import background from './background'
-import markDefs from './blockEditorMarks'
+import downloadableFileFields from './actions/downloadableFileFields';
+import downloadableImageFields from './actions/downloadableImageFields';
+import linkSelectorFields from './actions/linkSelectorFields';
+import background from './background';
+import markDefs from './blockEditorMarks';
 
 export const eventContentFields = /* groq */ `
   location,
@@ -30,7 +30,7 @@ export const eventContentFields = /* groq */ `
     },
   },
   "promotedPeople": {
-    "title": promotedPeopleTitle[]{
+    "title": coalesce(promotedPeople.title, promotedPeopleTitle)[]{
       ...,
       ${markDefs},
     },
@@ -83,4 +83,4 @@ export const eventContentFields = /* groq */ `
         location
         }
     }
-  `
+  `;

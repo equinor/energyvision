@@ -1,13 +1,12 @@
-import { newsSlug } from '@energyvision/shared/satelliteConfig'
-import { file } from '@equinor/eds-icons'
-import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { filterByRoute } from '../../helpers/referenceFilters'
-import { EdsIcon } from '../../icons'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors/blockContentType'
-import routes from '../routes'
-import { lang } from './langField'
+import { newsSlug } from '@energyvision/shared/satelliteConfig';
+import { file } from '@equinor/eds-icons';
+import type { PortableTextBlock, Rule, ValidationContext } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { filterByRoute } from '../../helpers/referenceFilters';
+import { EdsIcon } from '../../icons';
+import { configureBlockContent } from '../editors/blockContentType';
+import routes from '../routes';
+import { lang } from './langField';
 
 export default {
   type: 'document',
@@ -18,8 +17,6 @@ export default {
     {
       title: 'SEO & metadata',
       name: 'metadata',
-      description:
-        'This part is used for meta information when this content is used on the web',
       options: {
         collapsible: true,
         collapsed: true,
@@ -33,9 +30,6 @@ export default {
       type: 'array',
       title: 'Title',
 
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'titleWithDisplay' })],
       validation: (Rule: Rule) => Rule.required(),
     },
@@ -44,14 +38,14 @@ export default {
       title: 'Slug',
       type: 'slug',
       readOnly: (props: any) => {
-        const { value, document } = props
+        const { value, document } = props;
         if (typeof value === 'undefined' || !value) {
-          return false
+          return false;
         }
         if (value?.current === `/${newsSlug[document?.lang as string]}`) {
-          return true
+          return true;
         }
-        return false
+        return false;
       },
       validation: (Rule: Rule) =>
         Rule.custom((value: { current: string }, ctx: ValidationContext) => {
@@ -59,11 +53,11 @@ export default {
             if (
               value?.current === `/${newsSlug[ctx?.document?.lang as string]}`
             ) {
-              return true
+              return true;
             }
-            return `Must be /${newsSlug[ctx?.document?.lang as string]}`
+            return `Must be /${newsSlug[ctx?.document?.lang as string]}`;
           }
-          return 'Required'
+          return 'Required';
         }),
     },
     {
@@ -132,15 +126,15 @@ export default {
       title,
       ingress,
     }: {
-      title: PortableTextBlock[]
-      ingress: PortableTextBlock[]
+      title: PortableTextBlock[];
+      ingress: PortableTextBlock[];
     }) {
-      const plainTitle = title ? blocksToText(title) : ''
+      const plainTitle = title ? blocksToText(title) : '';
 
       return {
         title: plainTitle,
         subtitle: blocksToText(ingress) || '',
-      }
+      };
     },
   },
-}
+};

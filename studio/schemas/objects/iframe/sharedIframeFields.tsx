@@ -1,17 +1,15 @@
-import type { Rule, ValidationContext } from 'sanity'
-import { CompactBlockEditor } from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors'
-import type { IFrame } from '../iframe'
-import singleItemArray from '../singleItemArray'
+import type { Rule, ValidationContext } from 'sanity';
+import { configureBlockContent } from '../../editors';
+import type { IFrame } from '../iframe';
+import singleItemArray from '../singleItemArray';
 
 export const title = {
   name: 'title',
   type: 'array',
   title: 'Title',
   description: 'Optional heading',
-  components: { input: CompactBlockEditor },
   of: [configureBlockContent({ variant: 'title' })],
-}
+};
 
 export const frameTitle = {
   name: 'frameTitle',
@@ -23,10 +21,10 @@ export const frameTitle = {
     'The title of the iframe. This value is not visible on the page but is required for accessibility.',
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as { parent: IFrame }
-      return parent?.url && value === undefined ? 'Required' : true
+      const { parent } = context as { parent: IFrame };
+      return parent?.url && value === undefined ? 'Required' : true;
     }),
-}
+};
 
 export const url = {
   name: 'url',
@@ -37,12 +35,12 @@ export const url = {
   fieldset: 'iframe',
   validation: (Rule: Rule) =>
     Rule.custom((value: any, context: ValidationContext) => {
-      const { parent } = context as { parent: IFrame }
+      const { parent } = context as { parent: IFrame };
       return (parent?.title || parent?.frameTitle) && value === undefined
         ? 'Required'
-        : true
+        : true;
     }),
-}
+};
 
 export const cookiePolicy = (fieldset?: string) => {
   return {
@@ -62,13 +60,13 @@ export const cookiePolicy = (fieldset?: string) => {
     initialValue: ['none'],
     validation: (Rule: Rule) =>
       Rule.custom((value: any) => {
-        if (value === undefined || value?.length === 0) return 'Required'
+        if (value === undefined || value?.length === 0) return 'Required';
         if (value.length > 1 && value.includes('none'))
-          return `Cannot select ${value.toString()} together`
-        return true
+          return `Cannot select ${value.toString()} together`;
+        return true;
       }),
-  }
-}
+  };
+};
 
 export const aspectRatio = {
   name: 'aspectRatio',
@@ -85,7 +83,7 @@ export const aspectRatio = {
   fieldset: 'iframe',
   initialValue: '16:9',
   validation: (Rule: Rule) => Rule.required(),
-}
+};
 export const height = {
   name: 'height',
   type: 'number',
@@ -94,7 +92,7 @@ export const height = {
     'Set a fixed height in pixels for the iframe. Note: this will override the aspect ratio setting.',
   fieldset: 'iframe',
   validation: (Rule: Rule) => Rule.positive().greaterThan(0).precision(0),
-}
+};
 
 export const description = {
   name: 'description',
@@ -102,13 +100,13 @@ export const description = {
   description: `Here you can write a short description of the iframes content.`,
   type: 'array',
   of: [configureBlockContent({ variant: 'simpleBlock' })],
-}
+};
 
 export const transcript = {
   name: 'transcript',
   title: 'Enter transcript if this iframe is a youtube video.',
   type: 'transcript',
-}
+};
 export const action = singleItemArray({
   name: 'action',
   title: 'Link/action',
@@ -116,4 +114,4 @@ export const action = singleItemArray({
     'You can add one separate link if you need. The link will show up at the bottom of the component.',
   type: 'array',
   of: [{ type: 'linkSelector', title: 'Link' }],
-})
+});

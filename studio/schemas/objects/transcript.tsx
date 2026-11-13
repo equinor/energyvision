@@ -1,5 +1,4 @@
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors/blockContentType'
+import { configureBlockContent } from '../editors/blockContentType';
 
 const blockConfig = {
   h2: false,
@@ -10,9 +9,9 @@ const blockConfig = {
   externalLink: false,
   attachment: false,
   lists: true,
-}
+};
 
-const blockContentType = configureBlockContent({ ...blockConfig })
+const blockContentType = configureBlockContent({ ...blockConfig });
 
 export default {
   name: 'transcript',
@@ -22,10 +21,7 @@ export default {
     {
       name: 'text',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [blockContentType],
     },
   ],
-}
+};

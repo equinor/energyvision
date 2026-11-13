@@ -1,11 +1,14 @@
-import * as E from 'fp-ts/lib/Either'
-import * as TE from 'fp-ts/lib/TaskEither'
-import { pipe } from 'fp-ts/lib/function'
-import { SanityClient } from '@sanity/client'
-import { Language } from '../../common'
-import { MappableAccordionType, MappableTextBlockType } from '../common/mappers'
-import { plainTextExcludingStrikeThrough } from '../../common/queryHelpers'
-import { ImageWithAlt, ImageWithAltAndCaption } from '../common/types'
+import type { SanityClient } from '@sanity/client';
+import * as E from 'fp-ts/lib/Either';
+import { pipe } from 'fp-ts/lib/function';
+import * as TE from 'fp-ts/lib/TaskEither';
+import type { Language } from '../../common';
+import { plainTextExcludingStrikeThrough } from '../../common/queryHelpers';
+import type {
+  MappableAccordionType,
+  MappableTextBlockType,
+} from '../common/mappers';
+import type { ImageWithAlt, ImageWithAltAndCaption } from '../common/types';
 
 export enum HeroTypes {
   DEFAULT = 'default',
@@ -20,9 +23,9 @@ const publishDateTimeQuery = /* groq */ `
       publishDateTime,
       coalesce(firstPublishedAt, _createdAt)
   )
-`
+`;
 
-export const query = /* groq */ `*[_type == "magazine" && lang == $lang  && excludeFromSearch != true] {
+export const query = /* groq */ `*[_type == "magazine" && lang == $lang && excludeFromSearch != true] {
   "slug": slug.current,
   _id,
   "title": ${plainTextExcludingStrikeThrough('title')},
@@ -56,35 +59,47 @@ export const query = /* groq */ `*[_type == "magazine" && lang == $lang  && excl
   "publishDateTime": ${publishDateTimeQuery},
   "docToClear": _id match $id
 }
-`
+`;
 
 const getQueryParams = (language: Language, id: string) => ({
   lang: language,
   id: id,
-})
+});
 
 export type MagazineArticle = {
-  slug: string
-  title: string
-  ingress: string
-  type: string
-  textBlocks: MappableTextBlockType[]
-  accordions: MappableAccordionType[]
-  _id: string
-  magazineTags?: string[]
-  heroFigure?: { image: ImageWithAlt } | ImageWithAltAndCaption
-  openGraphImage?: ImageWithAlt
-  docToClear?: boolean
-  publishDateTime?: string
-}
+  slug: string;
+  title: string;
+  ingress: string;
+  type: string;
+  textBlocks: MappableTextBlockType[];
+  accordions: MappableAccordionType[];
+  _id: string;
+  magazineTags?: string[];
+  heroFigure?: { image: ImageWithAlt } | ImageWithAltAndCaption;
+  openGraphImage?: ImageWithAlt;
+  docToClear?: boolean;
+  publishDateTime?: string;
+};
 
 type FetchDataType = (
   query: string,
 ) => (
-  getQueryparams: (language: Language, id: string) => Readonly<Record<string, string>>,
-) => (language: Language, id: string) => (sanityClient: SanityClient) => TE.TaskEither<Error, MagazineArticle[]>
+  getQueryparams: (
+    language: Language,
+    id: string,
+  ) => Readonly<Record<string, string>>,
+) => (
+  language: Language,
+  id: string,
+) => (sanityClient: SanityClient) => TE.TaskEither<Error, MagazineArticle[]>;
 
-const fetch: FetchDataType = (query) => (getQueryParams) => (language, id) => (sanityClient) =>
-  pipe(TE.tryCatch(() => sanityClient.fetch(query, getQueryParams(language, id)), E.toError))
+const fetch: FetchDataType =
+  (query) => (getQueryParams) => (language, id) => (sanityClient) =>
+    pipe(
+      TE.tryCatch(
+        () => sanityClient.fetch(query, getQueryParams(language, id)),
+        E.toError,
+      ),
+    );
 
-export const fetchData = fetch(query)(getQueryParams)
+export const fetchData = fetch(query)(getQueryParams);

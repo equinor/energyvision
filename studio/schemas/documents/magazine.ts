@@ -1,19 +1,22 @@
-import { magazineSlug } from '@energyvision/shared/satelliteConfig'
-import { bookmarks } from '@equinor/eds-icons'
-import slugify from '@sindresorhus/slugify'
-import type { Rule, SanityDocument } from 'sanity'
-import { formatDate } from '@/helpers/formatDate'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import { defaultLanguage } from '../../languages'
-import { Flags } from '../../src/lib/datasetHelpers'
-import SlugInput from '../components/SlugInput'
-import { defaultColors } from '../defaultColors'
-import { configureBlockContent } from '../editors/blockContentType'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import { withSlugValidation } from '../validations/validateSlug'
-import sharedHeaderFields from './header/sharedHeaderFields'
-import { lang } from './langField'
+import { magazineSlug } from '@energyvision/shared/satelliteConfig';
+import { bookmarks } from '@equinor/eds-icons';
+import { toPlainText } from '@portabletext/react';
+import slugify from '@sindresorhus/slugify';
+import type { PortableTextBlock, Rule, SanityDocument } from 'sanity';
+import { formatDate } from '@/helpers/formatDate';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import { defaultLanguage } from '../../languages';
+import { Flags } from '../../src/lib/datasetHelpers';
+import { MagazinePublicationDateInfo } from '../components/Details/MagazinePublicationDateInfo';
+import { SlugInfo } from '../components/Details/SlugInfo';
+import SlugInput from '../components/SlugInput';
+import { defaultColors } from '../defaultColors';
+import { configureBlockContent } from '../editors/blockContentType';
+import { withSlugValidation } from '../validations/validateSlug';
+import sharedHeaderFields from './header/sharedHeaderFields';
+import { lang } from './langField';
+import { excludeFromSearch } from './news/sharedNewsFields';
 
 const ingressBlockContentType = configureBlockContent({
   h2: false,
@@ -23,7 +26,7 @@ const ingressBlockContentType = configureBlockContent({
   externalLink: false,
   attachment: false,
   lists: false,
-})
+});
 
 export default {
   type: 'document',
@@ -32,8 +35,7 @@ export default {
   icon: () => EdsIcon(bookmarks),
   fieldsets: [
     {
-      title: 'More page options',
-      description: 'SEO, meta and sticky menu',
+      title: 'SEO & meta',
       options: {
         collapsible: true,
         collapsed: true,
@@ -51,8 +53,6 @@ export default {
     {
       title: 'Slug',
       name: 'slug',
-      description:
-        '⚠️ Changing the slug after publishing it has negative impacts in the SEO ⚠️',
       options: {
         collapsible: true,
         collapsed: false,
@@ -70,6 +70,15 @@ export default {
   fields: [
     lang,
     ...sharedHeaderFields,
+    {
+      name: 'publicationDateInfo',
+      title: 'Publication date information',
+      type: 'string',
+      readOnly: true,
+      components: {
+        field: MagazinePublicationDateInfo,
+      },
+    },
     {
       // Set automatically in the custom action "ConfirmPublishWithi18n"
       title: 'Date and time of when the document was first published at',
@@ -94,27 +103,24 @@ export default {
       fieldset: 'tagFieldset',
     },
     {
-      title: 'Meta information',
-      name: 'seo',
-      type: 'titleAndMeta',
-      fieldset: 'other',
-    },
-    {
-      title: 'Open Graph Image',
-      name: 'openGraphImage',
-      type: 'imageWithAlt',
-      description:
-        'You can override the hero image as the SoMe image by uploading another image here.',
-      fieldset: 'other',
-    },
-    {
       name: 'ingress',
       title: 'Description',
-      description: 'Shown in newsletters and promotions. Max 400 characters',
+      description: 'Shown in newsletters and promotions',
       type: 'array',
       of: [ingressBlockContentType],
+      options: { maxLength: 400 },
       validation: (Rule: Rule) =>
-        Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
+        Rule.required().custom<PortableTextBlock[]>((value, context) => {
+          const { maxLength } = (context.type?.options ?? {}) as {
+            maxLength?: number;
+          };
+          if (!value || !maxLength) return true;
+          const length = toPlainText(value).length;
+          return (
+            length <= maxLength ||
+            `Must be at most ${maxLength} characters (currently ${length})`
+          );
+        }),
     },
     Flags.HAS_MAGAZINE_SUBSCRIPTION && {
       title: 'Send to subscribers',
@@ -125,13 +131,23 @@ export default {
       initialValue: false,
     },
     {
+      name: 'slugInfo',
+      title: 'About slugs',
+      type: 'string',
+      fieldset: 'slug',
+      readOnly: true,
+      components: {
+        field: SlugInfo,
+      },
+    },
+    {
       name: 'magazineSlug',
       title: 'Magazine slug',
       type: 'string',
       fieldset: 'slug',
       placeholder: 'For example "Experienced professionals"',
       description:
-        'The unique part of the URL for this magazine. Should probably be something like the page title.',
+        'The unique part of the URL. For example, use the page title.',
     },
     {
       name: 'slug',
@@ -145,16 +161,29 @@ export default {
         source: (doc: SanityDocument) => {
           const translatedMagazine = doc.lang
             ? magazineSlug[doc.lang as string]
-            : magazineSlug[defaultLanguage.iso]
+            : magazineSlug[defaultLanguage.iso];
           return doc.magazineSlug
             ? `/${translatedMagazine}/${slugify(doc.magazineSlug as string)}`
-            : ''
+            : '';
         },
         slugify: (value: string) => value,
       }),
-      description:
-        '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      title: 'Meta information',
+      name: 'seo',
+      type: 'titleAndMeta',
+      fieldset: 'other',
+    },
+    ...(excludeFromSearch ? [{ ...excludeFromSearch, fieldset: 'other' }] : []),
+    {
+      title: 'Open Graph Image',
+      name: 'openGraphImage',
+      type: 'imageWithAlt',
+      description:
+        'You can override the hero image as the SoMe image by uploading another image here.',
+      fieldset: 'other',
     },
     {
       name: 'content',
@@ -182,10 +211,6 @@ export default {
       ],
     },
     {
-      type: 'excludeFromSearch',
-      name: 'excludeFromSearch',
-    },
-    {
       title: 'Hide footer component',
       description:
         'Toggle this to hide the shared magazine footer component on this article',
@@ -193,7 +218,7 @@ export default {
       name: 'hideFooterComponent',
       initialValue: false,
     },
-  ].filter(e => e),
+  ].filter((e) => e),
   orderings: [
     {
       title: 'Title ',
@@ -208,14 +233,14 @@ export default {
       updated: '_updatedAt',
     },
     prepare(selection: Record<string, any>) {
-      const { title, media, updated } = selection
-      const plainTitle = title ? blocksToText(title) : ''
+      const { title, media, updated } = selection;
+      const plainTitle = title ? blocksToText(title) : '';
 
       return {
         title: plainTitle,
         subtitle: `Updated ${formatDate(updated)}`,
         media,
-      }
+      };
     },
   },
-}
+};

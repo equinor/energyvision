@@ -6,9 +6,12 @@ import { formatDate } from '../../helpers/formatDate';
 import { EdsIcon } from '../../icons';
 import { defaultLanguage } from '../../languages';
 import { Flags } from '../../src/lib/datasetHelpers';
+import { SlugInfo } from '../components/Details/SlugInfo';
 import SlugInput from '../components/SlugInput';
 import { withSlugValidation } from '../validations/validateSlug';
+
 import { lang } from './langField';
+
 import {
   content,
   countryTags,
@@ -16,7 +19,6 @@ import {
   heroImage,
   iframe,
   ingress,
-  isLive,
   newsSlugField,
   openGraphImage,
   publishDateTime,
@@ -34,10 +36,12 @@ export default {
   icon: () => EdsIcon(file_add),
   fieldsets: [
     {
+      title: 'Newsletter',
+      name: 'newsletter',
+    },
+    {
       title: 'SEO & metadata',
       name: 'metadata',
-      description:
-        'This part is used for meta information when this content is used on the web',
       options: {
         collapsible: true,
         collapsed: true,
@@ -46,8 +50,6 @@ export default {
     {
       title: 'Slug',
       name: 'slug',
-      description:
-        '⚠️ Changing the slug after publishing it has negative impacts in the SEO ⚠️',
       options: {
         collapsible: true,
         collapsed: false,
@@ -64,7 +66,6 @@ export default {
   ],
   fields: [
     lang,
-    isLive,
     {
       ...seo,
       fieldset: 'metadata',
@@ -77,7 +78,20 @@ export default {
     ...publishDateTime,
     Flags.HAS_NEWS && { ...tags, fieldset: 'tagFieldset' },
     Flags.HAS_NEWS && { ...countryTags, fieldset: 'tagFieldset' },
-    Flags.HAS_NEWS_SUBSCRIPTION && subscriptionType,
+    Flags.HAS_NEWS_SUBSCRIPTION && {
+      ...subscriptionType,
+      fieldset: 'newsletter',
+    },
+    {
+      name: 'slugInfo',
+      title: 'About slugs',
+      type: 'string',
+      fieldset: 'slug',
+      readOnly: true,
+      components: {
+        field: SlugInfo,
+      },
+    },
     {
       ...newsSlugField,
       fieldset: 'slug',
@@ -108,8 +122,6 @@ export default {
           return `${translatedNews}/${slug}`;
         },
       }),
-      description:
-        '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule: { required: () => any }) => Rule.required(),
     },
     heroImage,

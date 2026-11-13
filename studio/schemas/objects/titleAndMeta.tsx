@@ -1,51 +1,44 @@
-import type { Rule } from 'sanity'
-import type { SchemaType } from '../../types'
-import { CharCounterEditor } from '../components/CharCounterEditor'
+import type { Rule } from 'sanity';
+import type { SchemaType } from '../../types';
+import { CharacterCountInputText } from '../components/CharacterCountInputText';
 //import { SyncDocumentTitleInput } from '../components/SyncDocumentTitleInput'
 
 export default {
   title: 'Fields for title and description meta',
   name: 'titleAndMeta',
   type: 'object',
-  validation: (Rule: Rule) => [
+  validation: (Rule: Rule) =>
     Rule.required().warning(
-      'It is recommended to complete the SEO fields for better search visibility',
+      'Add a page title and meta description to help users understand this page in search results.',
     ),
-  ],
   fields: [
     {
       name: 'documentTitle',
-      title: 'Document title',
-      description: `The HTML title element (<title>) defines the document's title. A <title> tells both users and search
-      engines what the topic of a particular page is. You should create a unique title for each page on your site. Choose a
-      title that reads naturally and effectively communicates the topic of the page’s content. The frontend will use h1 as a fallback for missing document title.`,
+      title: 'Page title',
+      description: `The page title shown in browser tabs and often used as the headline in search results. Write a clear, unique title that accurately describes the page, placing the main topic first. Aim for 50–60 characters; search engines may shorten or rewrite it.`,
       type: 'string',
-
-      /*
-      post launch consideration:
-      https://github.com/equinor/energyvision/issues/3690  
-      components: {
-        input: SyncDocumentTitleInput,
-      }, */
-
       validation: (Rule: SchemaType.ValidationRule) =>
         Rule.required().warning(
-          'Ensure the document title is optimized for SEO',
+          'Add a clear, unique document title to help users and search engines understand this page.',
         ),
     },
     {
       name: 'metaDescription',
       title: 'Meta description',
       validation: (Rule: Rule) => [
-        Rule.required().warning('Provide an SEO-friendly meta description'),
-        Rule.max(160).warning('Google recommends max. 160 chars'),
+        Rule.required().warning(
+          'Add a clear, unique meta description to summarize this page and help users decide whether to visit from search results.',
+        ),
+        Rule.max(160).warning(
+          'Aim for 150–160 characters; search engines may shorten or replace it.',
+        ),
       ],
-      description: `Meta descriptions are HTML attributes that provide concise summaries of webpages.
-      It shows up in search results and in social media. Should be max. 160 chars`,
+      description: `A short summary of the page that search engines may show below its title in search results. Write a clear, unique description that reflects the content and gives readers a reason to visit.`,
       type: 'text',
+      options: { maxLength: 160 },
       components: {
-        input: CharCounterEditor,
+        input: CharacterCountInputText,
       },
     },
   ],
-}
+};
