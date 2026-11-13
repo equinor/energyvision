@@ -1,3 +1,8 @@
+[data-ui="ListPane"][data-scheme="light"] {
+  --color-gray-20: #f8f8f8;
+  background-color: var(--color-gray-20);
+}
+
 /*
 * To change toggle color of sanity ui
 */
@@ -9,8 +14,8 @@
   height: 100px;
 }
 
-[data-testid='pt-editor']
-  [data-testid='text-block__text'][data-list-item='bullet']
+[data-testid="pt-editor"]
+  [data-testid="text-block__text"][data-list-item="bullet"]
   [data-list-prefix]
   > span {
   top: 0.1875em;

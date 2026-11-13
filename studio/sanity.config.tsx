@@ -1,6 +1,7 @@
 import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator';
 import { dashboardTool } from '@sanity/dashboard';
 import { documentInternationalization } from '@sanity/document-internationalization';
+import { buildTheme } from '@sanity/themer';
 import { visionTool } from '@sanity/vision';
 import type {
   ArrayOfObjectsInputProps,
@@ -11,7 +12,6 @@ import type {
   SchemaType,
 } from 'sanity';
 import {
-  buildLegacyTheme,
   type ConfigContext,
   type DocumentActionComponent,
   defineConfig,
@@ -41,14 +41,23 @@ import { copyAction } from './actions/fieldActions/CustomCopyFieldAction';
 import { table } from './plugins/importTable';
 import { locations } from './presentation/locations';
 import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu';
-import { partialStudioTheme } from './studioTheme';
+import { studioThemeOptions } from './studioTheme';
 import './styles/fonts.css';
 import '@sanity/ui/styles.css';
 import { internationalizedArray } from 'sanity-plugin-internationalized-array';
-//import EquinorLogo from './styles/icons/logo.svg?react'
 import { fotowareWidget } from './widgets/ImportedFotowareAssetsWidget';
 
-export const customTheme = buildLegacyTheme(partialStudioTheme);
+export const customTheme = buildTheme(studioThemeOptions);
+
+const EquinorLogo = () => (
+  <img
+    src="/static/favicon.svg"
+    alt="Equinor"
+    width={32}
+    height={32}
+    style={{ display: 'block', width: '1em', height: '1em' }}
+  />
+);
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -99,7 +108,7 @@ const getConfig = (
 ) => ({
   name: 'equinor-' + datasetParam,
   title: `${getStudioTitle(datasetParam)} studio`,
-  //icon: EquinorLogo, // hot fix
+  icon: EquinorLogo,
   basePath: '/' + datasetParam,
   projectId: projectIdParam,
   dataset: datasetParam,
@@ -255,6 +264,9 @@ const getConfig = (
     ],
   },
   releases: {
+    enabled: false,
+  },
+  scheduledDrafts: {
     enabled: false,
   },
   scheduledPublishing: {
