@@ -67,7 +67,7 @@
     "uuid": "^14.0.0",
     "video.js": "^8.24.1",
     "xml2js": "^0.6.2",
-    "zod": "^4.6.5"
+    "zod": "^4.6.6"
   },
   "devDependencies": {
     "@algolia/client-search": "^4.16.0",
