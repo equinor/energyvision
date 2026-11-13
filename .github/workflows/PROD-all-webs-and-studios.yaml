@@ -311,25 +311,13 @@ jobs:
     needs: [store-image-tags]
     runs-on: ubuntu-latest
     steps:
-      - name: Generate release project token
-        id: release-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.GH_APP_ID }}
-          owner: Equinor
-          repositories: energyvision
-          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
-          permission-contents: read
-          permission-issues: read
-          permission-discussions: write
-          permission-organization-projects: write
       - name: Checkout 🛎️
         uses: actions/checkout@v7
 
       - name: 'Move cards and create discussion and post it to channel'
         id: 'get-list'
         with:
-          token: ${{ steps.release-token.outputs.token }}
+          token: ${{ secrets.PADMS_PAT }}
           commitSHA: 'Web : ${{ needs.store-image-tags.outputs.WEB_SHA }} Studio: ${{ needs.store-image-tags.outputs.STUDIO_SHA }}'
           slackWebhook: ${{ secrets.SLACK_WEBHOOK_RELEASE_ANNOUNCEMENT}}
         uses: ./.github/workflows/project/
