@@ -66,6 +66,14 @@ export default {
   ],
   fields: [
     lang,
+    {
+      ...seo,
+      fieldset: 'metadata',
+    },
+    {
+      ...openGraphImage,
+      fieldset: 'metadata',
+    },
     title,
     ...publishDateTime,
     Flags.HAS_NEWS && { ...tags, fieldset: 'tagFieldset' },
@@ -169,14 +177,6 @@ export default {
     },
     relatedLinks,
     excludeFromSearch,
-    {
-      ...seo,
-      fieldset: 'metadata',
-    },
-    {
-      ...openGraphImage,
-      fieldset: 'metadata',
-    },
   ].filter((e) => e),
   preview: {
     select: {

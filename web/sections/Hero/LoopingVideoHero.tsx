@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import type { PortableTextBlock } from 'next-sanity';
 import type { ReactNode } from 'react';
+import { preload } from 'react-dom';
 import { getFullScreenSizes, type Image } from '@/core/Image/imageUtilities';
 import { twMerge } from '@/lib/twMerge/twMerge';
 import Blocks from '@/portableText/Blocks';
@@ -37,9 +38,22 @@ export const LoopingVideoHero = ({
   breadcrumbsComponent,
 }: LoopingVideoHeroProps) => {
   const { ratio } = video;
+  const isMp4 = new URL(video.src, 'https://localhost').pathname
+    .toLowerCase()
+    .endsWith('.mp4');
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
   );
+
+  if (isMp4) {
+    preload(video.src, { as: 'video', fetchPriority: 'high' });
+  } else {
+    preload(video.src, {
+      as: 'fetch',
+      crossOrigin: 'anonymous',
+      fetchPriority: 'high',
+    });
+  }
 
   const aspect: Record<string, any> = {
     narrow: '10:3',
@@ -53,8 +67,13 @@ export const LoopingVideoHero = ({
         variant="fullwidth"
         aspectRatio={aspect[ratio ?? 'narrow']}
         {...video}
+        figureClassName="h-dvh w-full !max-w-none"
+        className="h-full w-full"
+        useFillMode
+        containVideo={false}
         posterLoading="eager"
         posterSizes={getFullScreenSizes()}
+        posterFetchPriority="high"
         autoPlay
         muted
         loop
