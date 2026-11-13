@@ -239,14 +239,34 @@ data-ui="checked active" class="data-checked:underline">
   }
   &::-webkit-scrollbar-thumb {
     @apply rounded-2xs border border-black-100/9 bg-gray-20;
+    --carousel-thumb-stripe-opacity: 9%;
     background-image: repeating-linear-gradient(
       315deg,
-      color-mix(in srgb, var(--color-black-100) 9%, transparent) 0,
-      color-mix(in srgb, var(--color-black-100) 9%, transparent) 1px,
+      color-mix(
+          in srgb,
+          var(--color-black-100) var(--carousel-thumb-stripe-opacity),
+          transparent
+        )
+        0,
+      color-mix(
+          in srgb,
+          var(--color-black-100) var(--carousel-thumb-stripe-opacity),
+          transparent
+        )
+        1px,
       transparent 0,
       transparent 50%
     );
     background-size: 4px 4px;
+  }
+  &::-webkit-scrollbar-thumb:hover,
+  &[data-scrolling="true"]::-webkit-scrollbar-thumb {
+    --carousel-thumb-stripe-opacity: 14%;
+    border-color: color-mix(in srgb, var(--color-black-100) 18%, transparent);
+  }
+  &::-webkit-scrollbar-thumb:active {
+    --carousel-thumb-stripe-opacity: 20%;
+    border-color: color-mix(in srgb, var(--color-black-100) 28%, transparent);
   }
   @supports not selector(::-webkit-scrollbar) {
     @apply scrollbar-thin scrollbar-thumb-grey-40 scrollbar-track-(--carousel-track-color);

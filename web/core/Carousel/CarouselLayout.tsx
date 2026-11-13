@@ -2,7 +2,16 @@
 
 import { toPlainText } from '@portabletext/react';
 import { useTranslations } from 'next-intl';
-import { type HTMLAttributes, type Ref, useCallback, useId } from 'react';
+import {
+  type HTMLAttributes,
+  type Ref,
+  type UIEvent,
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from 'react';
 import { twMerge } from 'tailwind-merge';
 import { MediaButton } from '@/core/MediaButton/MediaButton';
 import { CarouselContext } from './CarouselContext';
@@ -57,6 +66,9 @@ export function CarouselLayout({
     rotation?.stopped ? 'carouselPlay' : 'carouselPause',
     { title: rotationTitle },
   );
+  const [isScrolling, setIsScrolling] = useState(false);
+  const lastScrollLeft = useRef(0);
+  const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const setRef = useCallback(
     (element: HTMLElement | null) => {
       if (typeof ref === 'function') return ref(element);
@@ -65,9 +77,33 @@ export function CarouselLayout({
     [ref],
   );
 
+  useEffect(
+    () => () => {
+      if (scrollTimeout.current !== null) clearTimeout(scrollTimeout.current);
+    },
+    [],
+  );
+
+  const handleListScroll = (event: UIEvent<HTMLUListElement>) => {
+    listProps?.onScroll?.(event);
+
+    const listElement = event.currentTarget;
+    if (single || listElement.scrollLeft === lastScrollLeft.current) return;
+
+    lastScrollLeft.current = listElement.scrollLeft;
+    setIsScrolling(true);
+    if (scrollTimeout.current !== null) clearTimeout(scrollTimeout.current);
+    scrollTimeout.current = setTimeout(() => {
+      setIsScrolling(false);
+      scrollTimeout.current = null;
+    }, 180);
+  };
+
   const list = (
     <ul
       {...listProps}
+      onScroll={handleListScroll}
+      data-scrolling={isScrolling ? 'true' : undefined}
       ref={sliderRef}
       id={itemsId}
       tabIndex={0}

@@ -45,6 +45,7 @@ export type VideoPlayerProps = Omit<
   poster?: Image;
   posterLoading?: 'lazy' | 'eager';
   posterSizes?: string;
+  posterFetchPriority?: 'high' | 'low' | 'auto';
   /** For the aspect ratios that apply object cover, override to contain */
   containVideo?: boolean;
 };
@@ -66,6 +67,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   poster,
   posterLoading = 'lazy',
   posterSizes,
+  posterFetchPriority,
   className,
   containVideo,
 }) => {
@@ -272,6 +274,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
                 fill
                 sizes={resolvedPosterSizes}
                 loading={posterLoading}
+                fetchPriority={posterFetchPriority}
                 className={twMerge(
                   'pointer-events-none object-cover',
                   containVideo && 'object-contain',
