@@ -5,42 +5,35 @@ import {
   type Rule,
   type StringInputProps,
   type StringSchemaType,
-} from 'sanity'
-import { Select } from '@/schemas/components/Select/Select'
-import { Toggle } from '@/schemas/components/Toggle/Toggle'
-import { filterByRoute } from '../../../helpers/referenceFilters'
-import { CompactBlockEditor } from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors'
-import routes from '../../routes'
-import { createColorListInitialValue } from '../colorList'
+} from 'sanity';
+import { Select } from '@/schemas/components/Select/Select';
+import { Toggle } from '@/schemas/components/Toggle/Toggle';
+import { filterByRoute } from '../../../helpers/referenceFilters';
+import { configureBlockContent } from '../../editors';
+import routes from '../../routes';
+import { createColorListInitialValue } from '../colorList';
 
 export const title = {
   title: 'Title',
   name: 'title',
   type: 'array',
-  components: {
-    input: CompactBlockEditor,
-  },
   of: [configureBlockContent({ variant: 'title' })],
   validation: (Rule: Rule) =>
     Rule.required().warning('In most cases you should add a title'),
-}
+};
 export const hideTitle = {
   type: 'boolean',
   name: 'hideTitle',
   title: 'Hide title',
   description: 'Hides the title, but screen readers will read title',
-}
+};
 
 export const ingress = {
   name: 'ingress',
   title: 'Ingress',
   type: 'array',
-  components: {
-    input: CompactBlockEditor,
-  },
   of: [configureBlockContent({ variant: 'ingress' })],
-}
+};
 
 export const viewAllLink = {
   name: 'viewAllLink',
@@ -51,13 +44,13 @@ export const viewAllLink = {
   options: {
     filter: filterByRoute,
   },
-}
+};
 
 export const viewAllLinkLabel = {
   name: 'viewAllLinkLabel',
   title: 'Label for the View all link',
   type: 'string',
-}
+};
 
 export const background = {
   title: 'Background',
@@ -66,7 +59,7 @@ export const background = {
   type: 'colorlist',
   initialValue: createColorListInitialValue(),
   fieldset: 'design',
-}
+};
 
 export const backgroundPosition = (hiddenCallBack?: any, fieldset?: string) => {
   return defineField({
@@ -93,8 +86,8 @@ export const backgroundPosition = (hiddenCallBack?: any, fieldset?: string) => {
     initialValue: 'none',
     ...(fieldset && { fieldset }),
     ...(hiddenCallBack && { hidden: hiddenCallBack }),
-  })
-}
+  });
+};
 
 export const theme = {
   title: 'Theme',
@@ -103,7 +96,7 @@ export const theme = {
   name: 'theme',
   type: 'themeSelector',
   fieldset: 'design',
-}
+};
 export const layoutGrid = (
   hiddenCallBack?: any,
   fieldset?: string | undefined,
@@ -126,8 +119,8 @@ export const layoutGrid = (
     initialValue: initialValue || 'lg',
     ...(fieldset && { fieldset }), //fieldset: 'design',
     ...(hiddenCallBack && { hidden: hiddenCallBack }),
-  }
-}
+  };
+};
 export const gridColumns = ({
   hiddenCallBack,
   fieldset,
@@ -135,11 +128,11 @@ export const gridColumns = ({
   description,
   validation,
 }: {
-  hiddenCallBack?: any
-  fieldset?: string | undefined
-  initialValue?: string | undefined
-  description?: string | undefined
-  validation?: any
+  hiddenCallBack?: any;
+  fieldset?: string | undefined;
+  initialValue?: string | undefined;
+  description?: string | undefined;
+  validation?: any;
 } = {}) => {
   return {
     title: 'Number of grid columns',
@@ -159,8 +152,8 @@ export const gridColumns = ({
     ...(fieldset && { fieldset }), //fieldset: 'design',
     ...(hiddenCallBack && { hidden: hiddenCallBack }),
     ...(validation && { validation }),
-  }
-}
+  };
+};
 /*  initialValue: '3',
   hidden: ({ parent }: any) => {
     return parent?.layoutGrid === 'lg'
@@ -181,10 +174,10 @@ export const layoutDirection = {
   },
   fieldset: 'design',
   initialValue: 'col',
-}
+};
 
 export const glassEffect = (hiddenCallBack?: any, fieldset?: string) => {
-  void hiddenCallBack
+  void hiddenCallBack;
 
   return {
     title: 'Apply glass effect behind text',
@@ -195,18 +188,18 @@ export const glassEffect = (hiddenCallBack?: any, fieldset?: string) => {
     initialValue: false,
     ...(fieldset && { fieldset }),
     hidden: (props: any) => {
-      const { currentUser } = props || {}
-      const allowedRoles = ['designer', 'administrator', 'developer']
+      const { currentUser } = props || {};
+      const allowedRoles = ['designer', 'administrator', 'developer'];
       const isAllowed = currentUser?.roles?.some((role: any) =>
         allowedRoles?.includes(role?.name),
-      )
-      return !isAllowed
+      );
+      return !isAllowed;
     },
     components: {
       input: (props: BooleanInputProps<BooleanSchemaType>) => Toggle(props),
     },
-  }
-}
+  };
+};
 
 export const backgroundGradient = (hiddenCallBack?: any, fieldset?: string) => {
   return {
@@ -227,5 +220,5 @@ export const backgroundGradient = (hiddenCallBack?: any, fieldset?: string) => {
     },
     ...(fieldset && { fieldset }),
     ...(hiddenCallBack && { hidden: hiddenCallBack }),
-  }
-}
+  };
+};

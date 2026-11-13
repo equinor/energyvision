@@ -1,6 +1,10 @@
 import type { PortableTextBlock } from '@portabletext/react';
 import { ImProfile } from 'react-icons/im';
-import type { Reference, Rule } from 'sanity';
+import type {
+  ConditionalPropertyCallbackContext,
+  Reference,
+  Rule,
+} from 'sanity';
 import blocksToText from '../../../helpers/blocksToText';
 import {
   ingress,
@@ -31,6 +35,9 @@ function emailIsValid(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+const hideInEvent = ({ document }: ConditionalPropertyCallbackContext) =>
+  document?._type === 'event';
+
 export default {
   title: 'People promotion',
   name: 'promotePeople',
@@ -39,11 +46,12 @@ export default {
     {
       name: 'design',
       title: 'Design options',
+      hidden: hideInEvent,
     },
   ],
   fields: [
     title,
-    ingress,
+    { ...ingress, hidden: hideInEvent },
     {
       type: 'array',
       name: 'peopleList',
@@ -154,9 +162,9 @@ export default {
         },
       ],
     },
-    viewAllLink,
-    viewAllLinkLabel,
-    theme,
+    { ...viewAllLink, hidden: hideInEvent },
+    { ...viewAllLinkLabel, hidden: hideInEvent },
+    { ...theme, hidden: hideInEvent },
     {
       title: 'Background (Deprecated)',
       description: 'Please select a theme instead',
@@ -164,9 +172,12 @@ export default {
       type: 'colorlist',
       fieldset: 'design',
       readonly: true,
-      hidden: ({ value }: any) => {
-        return !value || value.title === 'White';
-      },
+      hidden: (context: ConditionalPropertyCallbackContext) =>
+        hideInEvent(context) ||
+        !context.value ||
+        (typeof context.value === 'object' &&
+          'title' in context.value &&
+          context.value.title === 'White'),
     },
   ],
   preview: {

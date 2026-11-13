@@ -5,7 +5,6 @@ import { defineField, defineType, type PreviewProps, type Rule } from 'sanity';
 import blocksToText from '../../../helpers/blocksToText';
 import { capitalizeFirstLetter } from '../../../helpers/formatters';
 import type { ColorSelectorValue } from '../../components/ColorSelector';
-import { CompactBlockEditor } from '../../components/CompactBlockEditor';
 import {
   CardTheme,
   type ThemeSelectorValue,
@@ -74,9 +73,6 @@ export default defineType({
       name: 'title',
       type: 'array',
       title: 'Title',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) =>
         Rule.required().warning('Should we warn for missing title'),

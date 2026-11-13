@@ -1,11 +1,11 @@
-import type { ImageWithAlt } from './imageWithAlt'
+import type { ImageWithAlt } from './imageWithAlt';
 
 export type ImageWithAltAndCaption = {
-  _type: 'imageWithAltAndCaption'
-  image: ImageWithAlt
-  caption?: string
-  attribution?: string
-}
+  _type: 'imageWithAltAndCaption';
+  image: ImageWithAlt;
+  caption?: string;
+  attribution?: string;
+};
 
 export default {
   name: 'imageWithAltAndCaption',
@@ -17,12 +17,12 @@ export default {
   fields: [
     {
       name: 'image',
-      title: 'Image with alt',
+      title: 'Image',
       type: 'imageWithAlt',
     },
     {
       name: 'caption',
-      title: 'Image caption',
+      title: 'Caption',
       type: 'string',
     },
     {
@@ -37,12 +37,20 @@ export default {
       alt: 'image.alt',
       caption: 'caption',
     },
-    prepare({ imageUrl, caption, alt }: { imageUrl: string; alt: string; caption: string }) {
+    prepare({
+      imageUrl,
+      caption,
+      alt,
+    }: {
+      imageUrl: string;
+      alt: string;
+      caption: string;
+    }) {
       return {
         title: alt,
         subtitle: caption,
         media: <img src={imageUrl} alt={alt} style={{ height: '100%' }} />,
-      }
+      };
     },
   },
-}
+};

@@ -3,7 +3,6 @@ import type { PortableTextBlock, Rule, ValidationContext } from 'sanity';
 import blocksToText from '../../helpers/blocksToText';
 import { EdsIcon } from '../../icons';
 import type { ColorSelectorValue } from '../components/ColorSelector';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureBlockContent } from '../editors';
 import type { ImageWithAlt } from './imageWithAlt';
@@ -48,7 +47,6 @@ export default {
     {
       name: 'title',
       type: 'array',
-      inputComponent: CompactBlockEditor,
       of: [configureBlockContent({ variant: 'title' })],
       title: 'Title',
       hidden: ({ parent }: { parent: PromoTile }) => parent?.linkLabelAsTitle,

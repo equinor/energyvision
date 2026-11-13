@@ -1,7 +1,6 @@
 import { createElement } from 'react';
 import { MdOutlinePerson } from 'react-icons/md';
 import type { PreviewProps, Rule } from 'sanity';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors';
 import singleItemArray from '../objects/singleItemArray';
 import { lang } from './langField';
@@ -107,9 +106,6 @@ export default {
       title: 'Bio',
       name: 'bio',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'ingress' })],
     },
     singleItemArray({

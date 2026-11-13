@@ -1,7 +1,6 @@
 import { table_chart } from '@equinor/eds-icons';
 import { Box, Heading, Text } from '@sanity/ui';
 import { EdsIcon } from '../../icons';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors';
 
 // eslint-disable-next-line react/display-name
@@ -35,9 +34,6 @@ export default {
       type: 'array',
       title: 'Title',
       description: 'The (optional) title/heading shown above the iframe.',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
     },
     {

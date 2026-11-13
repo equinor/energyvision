@@ -1,6 +1,6 @@
-import { Card, Flex, Radio, Text } from '@sanity/ui'
-import { useCallback } from 'react'
-import { HiOutlineInformationCircle } from 'react-icons/hi2'
+import { Card, Flex, Radio, Text } from '@sanity/ui';
+import { useCallback } from 'react';
+import { HiOutlineInformationCircle } from 'react-icons/hi2';
 import {
   defineField,
   type PortableTextBlock,
@@ -9,22 +9,21 @@ import {
   type StringInputProps,
   set,
   useCurrentUser,
-} from 'sanity'
-import { RoleFilteredSelect } from '@/schemas/components/RoleFilteredSelect/RoleFilteredSelect'
-import { CompactBlockEditor } from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors'
-import { backgroundPosition } from '../commonFields/commonFields'
+} from 'sanity';
+import { RoleFilteredSelect } from '@/schemas/components/RoleFilteredSelect/RoleFilteredSelect';
+import { configureBlockContent } from '../../editors';
+import { backgroundPosition } from '../commonFields/commonFields';
 
 type ImageVariantInputProps = {
-  options: any[]
-} & StringInputProps
+  options: any[];
+} & StringInputProps;
 
 export const ImageVariantInput = (props: ImageVariantInputProps) => {
-  const { onChange, schemaType, value = '' } = props
+  const { onChange, schemaType, value = '' } = props;
 
   //get the role of the current user
   //@ts-ignore CurrentUser has roles in types...
-  const { roles } = useCurrentUser()
+  const { roles } = useCurrentUser();
 
   const options = schemaType?.options?.list?.filter((option: any) => {
     return option.value === 'backgroundImage'
@@ -32,22 +31,22 @@ export const ImageVariantInput = (props: ImageVariantInputProps) => {
           (userRole: Role) =>
             userRole.name === 'designer' || userRole.name === 'developer',
         )
-      : true
-  })
+      : true;
+  });
 
   const handleChange = useCallback(
     (event: any) => {
-      onChange(set(event.currentTarget.value))
+      onChange(set(event.currentTarget.value));
     },
     [onChange],
-  )
+  );
 
   return (
     <Flex gap={2}>
       {options?.map((option: any) => {
         return (
           <Card key={option.value} paddingY={2} paddingX={3} radius={2}>
-            <Flex direction='row' align='center' gap={2}>
+            <Flex direction="row" align="center" gap={2}>
               <Radio
                 checked={value === option.value}
                 name={option.value}
@@ -55,16 +54,16 @@ export const ImageVariantInput = (props: ImageVariantInputProps) => {
                 onChange={handleChange}
                 value={option.value}
               />
-              <Text as='label' htmlFor={option.value}>
+              <Text as="label" htmlFor={option.value}>
                 {option.title}
               </Text>
             </Flex>
           </Card>
-        )
+        );
       })}
     </Flex>
-  )
-}
+  );
+};
 
 export default {
   title: 'Information Panel',
@@ -89,7 +88,7 @@ export default {
       },
       initialValue: 'sideImage',
       components: {
-        input: props => RoleFilteredSelect(props, ['backgroundImage']),
+        input: (props) => RoleFilteredSelect(props, ['backgroundImage']),
       },
     }),
     defineField({
@@ -109,9 +108,6 @@ export default {
     defineField({
       name: 'title',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) =>
@@ -176,17 +172,17 @@ export default {
               explanation: 'explanation',
             },
             prepare(selection: Record<string, string | number>) {
-              const { title, keyFigure, explanation } = selection
+              const { title, keyFigure, explanation } = selection;
               return {
                 title: `${title ?? ''} ${keyFigure ?? ''}`,
                 subtitle: `${explanation ?? ''}`,
                 media: HiOutlineInformationCircle,
-              }
+              };
             },
           },
         },
-      ].filter(e => e),
+      ].filter((e) => e),
       validation: (Rule: Rule) => Rule.max(4),
     }),
   ],
-}
+};

@@ -1,10 +1,9 @@
-import { library_image } from '@equinor/eds-icons'
-import type { Rule } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import { library_image } from '@equinor/eds-icons';
+import type { Rule } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import { configureBlockContent } from '../editors';
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
 
 export default {
   name: 'imageCarousel',
@@ -34,9 +33,6 @@ export default {
     {
       name: 'title',
       type: 'array',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
       title: 'Title',
       validation: (Rule: Rule) => Rule.required(),
@@ -54,6 +50,7 @@ export default {
       description: 'Optional short description. Max 400 characters',
       type: 'array',
       of: [configureBlockContent({ variant: 'ingress' })],
+      options: { maxLength: 400 },
       validation: (Rule: Rule) =>
         Rule.custom((value: any) =>
           validateCharCounterEditor(value, 400, true),
@@ -103,14 +100,14 @@ export default {
       items: 'items',
     },
     prepare(selection: any) {
-      const { title, items } = selection
-      const length = items ? items.length : 0
+      const { title, items } = selection;
+      const length = items ? items.length : 0;
 
       return {
         title: title ? blocksToText(title) : 'Untitled image carousel',
         subtitle: `Image carousel with ${length} items`,
         media: EdsIcon(library_image),
-      }
+      };
     },
   },
-}
+};

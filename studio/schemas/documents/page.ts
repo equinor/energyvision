@@ -1,16 +1,16 @@
-import { paste } from '@equinor/eds-icons'
-import { RiPagesLine } from 'react-icons/ri'
-import { formatDate } from '@/helpers/formatDate'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import sharedHeroFields, { HeroTypes } from './header/sharedHeaderFields'
-import { lang } from './langField'
+import { paste } from '@equinor/eds-icons';
+import { RiPagesLine } from 'react-icons/ri';
+import { formatDate } from '@/helpers/formatDate';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import sharedHeroFields, { HeroTypes } from './header/sharedHeaderFields';
+import { lang } from './langField';
 import {
   content,
   openGraphImage,
   seo,
   stickyMenu,
-} from './topic/sharedTopicPageFields'
+} from './topic/sharedTopicPageFields';
 
 export default {
   type: 'document',
@@ -20,7 +20,7 @@ export default {
   fieldsets: [
     {
       title: 'Hero configuration',
-      description: 'Such as image,ingress,ratio and background',
+      description: 'Image, ingress, ratio and background',
       options: {
         collapsible: true,
         collapsed: true,
@@ -44,7 +44,7 @@ export default {
     openGraphImage,
     stickyMenu,
     content,
-  ].filter(e => e),
+  ].filter((e) => e),
   orderings: [
     {
       title: 'Title ',
@@ -61,14 +61,14 @@ export default {
       updated: '_updatedAt',
     },
     prepare(selection: any) {
-      const { title, image, video, type, updated } = selection
-      const plainTitle = title ? blocksToText(title) : ''
-      const media = type === HeroTypes.LOOPING_VIDEO ? video : image
+      const { title, image, video, type, updated } = selection;
+      const plainTitle = title ? blocksToText(title) : '';
+      const media = type === HeroTypes.LOOPING_VIDEO ? video : image;
       return {
         title: plainTitle,
         subtitle: `Updated ${formatDate(updated)}`,
         media: media ?? RiPagesLine,
-      }
+      };
     },
   },
-}
+};

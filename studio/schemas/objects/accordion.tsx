@@ -3,7 +3,6 @@ import { TfiLayoutAccordionList } from 'react-icons/tfi';
 import type { Rule } from 'sanity';
 import blocksToText from '../../helpers/blocksToText';
 import type { ColorSelectorValue } from '../components/ColorSelector';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors/blockContentType';
 
 export type Accordion = {
@@ -52,9 +51,6 @@ export default {
       name: 'title',
       type: 'array',
       title: 'Title',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) =>
         Rule.required().warning('Should we warn for missing title'),

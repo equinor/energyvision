@@ -30,7 +30,7 @@ import { defaultLanguage } from './languages';
 import { FotowareAssetSource } from './plugins/asset-source-fotoware-v2';
 import { dataset, projectId } from './sanity.client';
 import { schemaTypes } from './schemas';
-import { CharCounterEditor } from './schemas/components/CharCounterEditor';
+import { CharacterCountInputPTE } from './schemas/components/CharacterCountInputPTE';
 import { LangBadge } from './schemas/components/LangBadge';
 import { i18n } from './schemas/documentTranslation';
 import './styles/customStyles.css';
@@ -73,7 +73,9 @@ export const singletonTemplates = [
 
 const handleInputComponents = (inputProps: InputProps) => {
   if (isPortableTextEditor(inputProps.schemaType))
-    return <CharCounterEditor {...(inputProps as ArrayOfObjectsInputProps)} />;
+    return (
+      <CharacterCountInputPTE {...(inputProps as ArrayOfObjectsInputProps)} />
+    );
 
   return inputProps.renderDefault(inputProps);
 };
@@ -107,19 +109,6 @@ const getConfig = (
   form: {
     components: {
       input: handleInputComponents,
-      portableText: {
-        plugins: (props: any) => {
-          return props.renderDefault({
-            ...props,
-            plugins: {
-              ...props.plugins,
-              typography: {
-                preset: 'all',
-              },
-            },
-          });
-        },
-      },
     },
   },
   plugins: [

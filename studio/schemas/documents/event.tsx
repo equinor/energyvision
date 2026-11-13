@@ -2,7 +2,6 @@ import { calendar_event, image } from '@equinor/eds-icons';
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity';
 import blocksToText from '../../helpers/blocksToText';
 import { EdsIcon } from '../../icons';
-import { CompactBlockEditor } from '../components/CompactBlockEditor';
 import { configureBlockContent } from '../editors';
 import basicIframe from '../objects/basicIframe';
 import type { EventDate } from '../objects/eventDate';
@@ -36,8 +35,6 @@ export default {
     {
       title: 'SEO & metadata',
       name: 'metadata',
-      description:
-        'This part is used for meta information when this content is used on the web',
       options: {
         collapsible: true,
         collapsed: true,
@@ -58,9 +55,6 @@ export default {
       name: 'title',
       type: 'array',
       title: 'Title',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) => Rule.required(),
     },
@@ -70,7 +64,7 @@ export default {
       title: 'Location',
     },
     {
-      title: 'Date information',
+      title: 'Date and time of event',
       name: 'eventDate',
       type: 'eventDate',
     },
@@ -120,10 +114,10 @@ export default {
       title: 'Title',
       name: 'promotedPeopleTitle',
       type: 'array',
+      description: 'Use title below',
+      deprecated: { reason: 'Use title below' },
+      hidden: ({ value }: { value?: PortableTextBlock[] }) => !value?.length,
       fieldset: 'people',
-      components: {
-        input: CompactBlockEditor,
-      },
       of: [configureBlockContent({ variant: 'title' })],
     },
     {

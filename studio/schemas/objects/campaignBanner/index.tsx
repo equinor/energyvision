@@ -54,6 +54,7 @@ export default {
       title: 'Title content',
       type: 'array',
       of: [blockTitleType],
+      options: { maxLength: 600 },
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 600);
