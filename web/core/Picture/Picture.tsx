@@ -31,6 +31,7 @@ type PictureProps = {
    */
   withLayoutPx?: boolean;
   className?: string;
+  imageClassName?: string;
   ref?: Ref<HTMLElement>;
 };
 
@@ -43,6 +44,7 @@ export const Picture = ({
   fetchPriority = 'low',
   loading = 'lazy',
   className = '',
+  imageClassName = '',
   figureClassName = '',
   figCaptionClassName = '',
   withLayoutPx = true,
@@ -62,6 +64,7 @@ export const Picture = ({
       <Image
         wrapperVariant="none"
         image={image}
+        imageClassName={imageClassName}
         loading={loading}
         fetchPriority={fetchPriority}
         grid="lg"
