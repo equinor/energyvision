@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server'
-import { defaultLanguage, languages } from '@/languageConfig'
-import archivedNews from '@/lib/archive/archivedNewsPaths.json'
-import { crawlableDomains } from '@/lib/helpers/domainHelpers'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { NextResponse } from 'next/server';
+import { defaultLanguage, languages } from '@/languageConfig';
+import archivedNews from '@/lib/archive/archivedNewsPaths.json';
+import { crawlableDomains } from '@/lib/helpers/domainHelpers';
+import { Flags } from '@/sanity/helpers/datasetHelpers';
 import {
   getHomePagePaths,
   getLocalNewsPaths,
@@ -12,14 +12,16 @@ import {
   getNewsroomPaths,
   getRoutePaths,
   type PathType,
-} from '../../sanity/helpers/getPaths'
+} from '../../sanity/helpers/getPaths';
+
+const CACHE_CONTROL = 'public, s-maxage=1200, stale-while-revalidate=600';
 
 const formatPath = ({ slug, locale: urlLocale }: PathType) => {
-  const locale = urlLocale === defaultLanguage.locale ? '' : urlLocale
-  const path = Array.isArray(slug) ? '/' + slug.join('/') : slug
-  if (path === '/') return locale ? `/${locale}` : ''
-  return locale ? `/${locale}${path}` : path
-}
+  const locale = urlLocale === defaultLanguage.locale ? '' : urlLocale;
+  const path = Array.isArray(slug) ? '/' + slug.join('/') : slug;
+  if (path === '/') return locale ? `/${locale}` : '';
+  return locale ? `/${locale}${path}` : path;
+};
 
 const getSitemapUrls = (
   domain: string,
@@ -28,14 +30,18 @@ const getSitemapUrls = (
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${paths
   .map(
-    path => `
+    (path) => `
   <url>
-    <loc>${domain + formatPath(path)}</loc>
-    <lastmod>${path.updatedAt}</lastmod>
+    <loc>${domain + formatPath(path)}</loc>${
+      path.updatedAt
+        ? `
+    <lastmod>${path.updatedAt}</lastmod>`
+        : ''
+    }
   </url>`,
   )
   .join('')}
-</urlset>`
+</urlset>`;
 
 const getSitemapIndex = (
   domain: string,
@@ -44,48 +50,37 @@ const getSitemapIndex = (
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${locales
   .map(
-    locale => `
+    (locale) => `
   <sitemap>
     <loc>${domain}/sitemap.xml?lang=${locale}</loc>
   </sitemap>`,
   )
   .join('')}
-</sitemapindex>`
+</sitemapindex>`;
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url)
-  let locale = ''
-  let domain = String(request.headers.get('host'))
+const getSitemapPaths = async (locale: string): Promise<PathType[]> => {
+  // Satellites can have magazine articles (e.g. stemgapet) but no magazine index page.
+  const hasMagazineIndex = Flags.HAS_MAGAZINE && !Flags.IS_SATELLITE;
 
-  if (!crawlableDomains.includes(domain) && !Flags.IS_DEV) {
-    return new NextResponse('Not found', { status: 404 })
-  }
+  const [
+    homePageSlugs,
+    routeSlugs,
+    newsSlugs,
+    newsroomSlugs,
+    magazineSlugs,
+    magazineIndexSlugs,
+    localNewsSlugs,
+  ] = await Promise.all([
+    getHomePagePaths(),
+    getRoutePaths([locale]),
+    Flags.HAS_NEWS ? getNewsPaths([locale]) : [],
+    Flags.HAS_NEWSROOM ? getNewsroomPaths() : [],
+    Flags.HAS_MAGAZINE ? getMagazinePaths([locale]) : [],
+    hasMagazineIndex ? getMagazineIndexPaths() : [],
+    Flags.HAS_LOCAL_NEWS ? getLocalNewsPaths([locale]) : [],
+  ]);
 
-  domain = domain.startsWith('www') ? `https://${domain}` : domain
-
-  const locales = languages.map(lang => lang.locale)
-  const isMultilanguage = locales.length > 1
-
-  //remember to fetch the slug for newsroom and maazinIndex page from the templates itself now, on slug and translations slug
-
-  const homePageSlugs = await getHomePagePaths()
-  const routeSlugs = await getRoutePaths(locales)
-  const newsSlugs = Flags.HAS_NEWS ? await getNewsPaths(locales) : []
-  const newsroomSlugs = Flags.HAS_NEWSROOM ? await getNewsroomPaths() : []
-  const magazineSlugs = Flags.HAS_MAGAZINE
-    ? await getMagazinePaths(locales)
-    : []
-  const magazineIndexSlugs = Flags.HAS_MAGAZINE
-    ? await getMagazineIndexPaths()
-    : []
-  const localNewsSlugs = Flags.HAS_LOCAL_NEWS
-    ? await getLocalNewsPaths(locales)
-    : []
-  const archivedNewsSlugs = Flags.HAS_ARCHIVED_NEWS
-    ? (archivedNews as PathType[])
-    : []
-
-  const allSlugs = [
+  return [
     ...homePageSlugs,
     ...routeSlugs,
     ...newsSlugs,
@@ -93,20 +88,44 @@ export async function GET(request: Request) {
     ...magazineSlugs,
     ...magazineIndexSlugs,
     ...localNewsSlugs,
-    ...archivedNewsSlugs,
-  ]
+  ].filter((route) => route.locale === locale);
+};
 
-  locale =
-    searchParams.get('lang') ?? (!isMultilanguage ? defaultLanguage.locale : '')
-  const shouldFetchUrls = !isMultilanguage || locales.includes(locale)
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  let domain = String(request.headers.get('host'));
 
-  const headers = { 'Content-Type': 'text/xml' }
+  if (!crawlableDomains.includes(domain) && !Flags.IS_DEV) {
+    return new NextResponse('Not found', { status: 404 });
+  }
+
+  domain = domain.startsWith('www') ? `https://${domain}` : domain;
+
+  const locales = languages.map((lang) => lang.locale);
+  const isMultilanguage = locales.length > 1;
+
+  const locale =
+    searchParams.get('lang') ??
+    (!isMultilanguage ? defaultLanguage.locale : '');
+  const shouldFetchUrls = !isMultilanguage || locales.includes(locale);
+
+  const headers = {
+    'Content-Type': 'text/xml',
+    'Cache-Control': CACHE_CONTROL,
+  };
 
   if (!shouldFetchUrls) {
-    const indexXml = getSitemapIndex(domain, locales)
-    return new NextResponse(indexXml, { headers })
+    return new NextResponse(getSitemapIndex(domain, locales), { headers });
   }
-  const paths = allSlugs.filter(route => route.locale === locale)
-  const sitemapXml = getSitemapUrls(domain, paths)
-  return new NextResponse(sitemapXml, { headers })
+
+  const sanityPaths = await getSitemapPaths(locale);
+  const archivedNewsPaths = Flags.HAS_ARCHIVED_NEWS
+    ? (archivedNews as PathType[]).filter((route) => route.locale === locale)
+    : [];
+
+  const sitemapXml = getSitemapUrls(domain, [
+    ...sanityPaths,
+    ...archivedNewsPaths,
+  ]);
+  return new NextResponse(sitemapXml, { headers });
 }

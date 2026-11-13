@@ -69,7 +69,7 @@ export const getDocumentBySlug = async (slug: string) => {
 
 export type PathType = {
   slug: string[] | string;
-  updatedAt: string;
+  updatedAt?: string;
   locale: string;
 };
 
@@ -143,64 +143,46 @@ export const getLocalNewsPaths = async (
   return (await Promise.all(fetchPaths)).flat();
 };
 
-export const getNewsroomPaths = async (): Promise<PathType[]> => {
-  // Use last published news as updatedAt field for newsroom
-  const getUpdatedAt = async (
-    lang: 'en-GB' | 'nb-NO',
-  ): Promise<{ _updatedAt: string }> =>
-    await client.fetch(
-      groq`*[_type == 'news' && ${sameLang}] | order(${publishDateTimeQuery} desc)[0] {
-      _updatedAt,
-    }`,
-      {
-        lang,
-      },
-    );
-
-  const { _updatedAt: englishUpdatedAt } = await getUpdatedAt('en-GB');
-  const { _updatedAt: norwegianUpdatedAt } = await getUpdatedAt('nb-NO');
-
-  return [
-    {
-      slug: ['news'],
-      updatedAt: englishUpdatedAt,
-      locale: 'en',
-    },
-    {
-      slug: ['nyheter'],
-      updatedAt: norwegianUpdatedAt,
-      locale: 'no',
-    },
-  ];
+const NEWSROOM_SLUGS: Record<string, string> = { en: 'news', no: 'nyheter' };
+const MAGAZINE_INDEX_SLUGS: Record<string, string> = {
+  en: 'magazine',
+  no: 'magasin',
 };
 
-export const getMagazineIndexPaths = async (): Promise<PathType[]> => {
-  // Use last published news as updatedAt field for newsroom
-  const getUpdatedAt = async (
-    lang: 'en-GB' | 'nb-NO',
-  ): Promise<{ _updatedAt: string }> =>
-    await client.fetch(
-      groq`*[_type == 'magazine' && ${sameLang}] | order(_createdAt desc)[0] {
+// Index pages have no document of their own; use the latest article's
+// _updatedAt as lastmod. The result is null when a language has no articles.
+const getLatestUpdatedAt = async (
+  type: 'news' | 'magazine',
+  orderBy: string,
+  iso: string,
+): Promise<string | undefined> => {
+  const data: { _updatedAt: string } | null = await client.fetch(
+    groq`*[_type == $type && ${sameLang}] | order(${orderBy} desc)[0] {
       _updatedAt,
     }`,
-      {
-        lang,
-      },
-    );
-
-  const { _updatedAt: englishUpdatedAt } = await getUpdatedAt('en-GB');
-  const { _updatedAt: norwegianUpdatedAt } = await getUpdatedAt('nb-NO');
-
-  return [
-    {
-      slug: ['magazine'],
-      updatedAt: englishUpdatedAt,
-      locale: 'en',
-    },
-    {
-      slug: ['magasin'],
-      updatedAt: norwegianUpdatedAt,
-      locale: 'no',
-    },
-  ];
+    { type, lang: iso },
+  );
+  return data?._updatedAt;
 };
+
+const getIndexPagePaths = async (
+  type: 'news' | 'magazine',
+  orderBy: string,
+  slugsByLocale: Record<string, string>,
+): Promise<PathType[]> => {
+  const paths = languages
+    .filter((lang) => slugsByLocale[lang.locale])
+    .map(async (lang) => ({
+      slug: [slugsByLocale[lang.locale]],
+      updatedAt: await getLatestUpdatedAt(type, orderBy, lang.iso),
+      locale: lang.locale,
+    }));
+
+  return Promise.all(paths);
+};
+
+export const getNewsroomPaths = (): Promise<PathType[]> =>
+  getIndexPagePaths('news', publishDateTimeQuery, NEWSROOM_SLUGS);
+
+export const getMagazineIndexPaths = (): Promise<PathType[]> =>
+  getIndexPagePaths('magazine', '_createdAt', MAGAZINE_INDEX_SLUGS);
