@@ -80,6 +80,9 @@ export const singletonTemplates = [
   'settings',
 ];
 
+// Document types that still exist for legacy content but must not be created anymore
+const deprecatedTemplates = ['videoFile'];
+
 const handleInputComponents = (inputProps: InputProps) => {
   if (isPortableTextEditor(inputProps.schemaType))
     return (
@@ -283,7 +286,8 @@ const filterTemplates = (prev: Template<any, any>[]) => {
       !(
         i18n.schemaTypes.includes(template.id) ||
         excludedTemplates.includes(template.id) ||
-        singletonTemplates.includes(template.id)
+        singletonTemplates.includes(template.id) ||
+        deprecatedTemplates.includes(template.id)
       ),
   );
 };

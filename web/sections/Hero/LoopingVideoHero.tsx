@@ -27,7 +27,7 @@ export type LoopingVideoHeroProps = {
   breadcrumbsComponent?: ReactNode;
 };
 
-const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'));
+const VideoPlayer = dynamic(() => import('@/core/VideoPlayer/VideoPlayer'));
 
 export const LoopingVideoHero = ({
   title,

@@ -1,8 +1,6 @@
-import { customAlphabet } from 'nanoid'
+import { uuid } from '@sanity/uuid';
 
 export default function script(client) {
-  const nanoid = customAlphabet('1234567890abcdef', 12)
-
   const fetchDocuments = async () =>
     client.fetch(/* groq */ `
       *[_type == 'page' &&
@@ -16,78 +14,83 @@ export default function script(client) {
           }
         }
       }
-    `)
+    `);
 
   const buildPatches = (docs) =>
-    docs
-      .map((doc) =>
-        doc.fields.map((el) => ({
-          id: doc.id,
-          patch: {
-            set: {
-              [`content..[_key == "${el._key}"]`]: {
-                _key: el._key,
-                _type: 'richText',
-                text: [
-                  {
-                    _key: nanoid(),
-                    style: 'normal',
-                    _type: 'block',
-                    children: [
-                      {
-                        _key: nanoid(),
-                        _type: 'span',
-                        marks: [],
-                        text: el.text,
-                      },
-                    ],
-                    markDefs: [],
-                  },
-                ],
-              },
+    docs.flatMap((doc) =>
+      doc.fields.map((el) => ({
+        id: doc.id,
+        patch: {
+          set: {
+            [`content..[_key == "${el._key}"]`]: {
+              _key: el._key,
+              _type: 'richText',
+              text: [
+                {
+                  _key: uuid(),
+                  style: 'normal',
+                  _type: 'block',
+                  children: [
+                    {
+                      _key: uuid(),
+                      _type: 'span',
+                      marks: [],
+                      text: el.text,
+                    },
+                  ],
+                  markDefs: [],
+                },
+              ],
             },
-            // this will cause the migration to fail if any of the documents has been
-            // modified since it was fetched.
-            ifRevisionID: doc._rev,
           },
-        })),
-      )
-      .flat()
+          // this will cause the migration to fail if any of the documents has been
+          // modified since it was fetched.
+          ifRevisionID: doc._rev,
+        },
+      })),
+    );
 
   const createTransaction = (patches) =>
-    patches.reduce((tx, patch) => tx.patch(patch.id, patch.patch), client.transaction())
+    patches.reduce(
+      (tx, patch) => tx.patch(patch.id, patch.patch),
+      client.transaction(),
+    );
 
-  const commitTransaction = (tx) => tx.commit()
+  const commitTransaction = (tx) => tx.commit();
 
   const migrateNextBatch = async () => {
-    console.log('fetching...')
-    const rawDocuments = await fetchDocuments()
+    console.log('fetching...');
+    const rawDocuments = await fetchDocuments();
     const documents = rawDocuments.map((document) => {
       return {
         id: document._id,
         fields: document.table?.flatMap((content) =>
-          content.tableRows?.flatMap((table) => table.row?.flatMap((text) => text)),
+          content.tableRows?.flatMap((table) =>
+            table.row?.flatMap((text) => text),
+          ),
         ),
-      }
-    })
+      };
+    });
 
-    const patches = buildPatches(documents)
+    const patches = buildPatches(documents);
 
     if (patches.length === 0) {
-      console.log('No more documents to migrate!')
-      return null
+      console.log('No more documents to migrate!');
+      return null;
     }
     console.log(
       `Migrating batch:\n %s`,
-      patches.map((patch) => `${patch.id} => ${JSON.stringify(patch.patch)}`).join('\n'),
-    )
-    const transaction = createTransaction(patches)
-    await commitTransaction(transaction)
-    return migrateNextBatch()
-  }
+      patches
+        .map((patch) => `${patch.id} => ${JSON.stringify(patch.patch)}`)
+        .join('\n'),
+    );
+    const transaction = createTransaction(patches);
+    await commitTransaction(transaction);
+    return migrateNextBatch();
+  };
 
   migrateNextBatch().catch((err) => {
-    console.error(err)
-    process.exit(1)
-  })
+    console.error(err);
+    process.exit(1);
+  });
 }

@@ -1,11 +1,9 @@
 import { AddCircleIcon } from '@sanity/icons/AddCircle';
 import { Button, Flex, Radio, Text } from '@sanity/ui';
 import { Tooltip } from '@sanity/ui/tooltip';
-import { customAlphabet } from 'nanoid';
+import { uuid } from '@sanity/uuid';
 import { useCallback } from 'react';
 import { type ArrayOfObjectsInputProps, set } from 'sanity';
-
-const nanoid = customAlphabet('1234567890abcdef', 12);
 
 type SingleItemSelectorProps = {
   value?: [{ _key: string; _type: string }];
@@ -16,7 +14,7 @@ export const SingleItemSelectorInput = (props: SingleItemSelectorProps) => {
   const objectTypes = schemaType.of;
   const handleClick = useCallback(
     (it: any) => {
-      onChange(set([{ _type: it.name, _key: nanoid() }], []));
+      onChange(set([{ _type: it.name, _key: uuid() }], []));
     },
     [onChange],
   );

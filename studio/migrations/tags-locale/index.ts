@@ -3,7 +3,7 @@ import {
   type DatasetsKeys,
   getLanguages,
 } from '@energyvision/shared/satelliteConfig';
-import { customAlphabet } from 'nanoid';
+import { uuid } from '@sanity/uuid';
 import { at, defineMigration, set } from 'sanity/migrate';
 
 /**
@@ -24,8 +24,6 @@ import { at, defineMigration, set } from 'sanity/migrate';
  * Run once per dataset using --dataset. Eligibility and supported languages
  * follow the shared feature flags and satellite configuration.
  */
-
-const nanoid = customAlphabet('1234567890abcdef', 32);
 
 const TRANSLATION_DOCUMENT_TYPES = [
   'magazineTag',
@@ -126,7 +124,7 @@ export default defineMigration({
 
         return [
           {
-            _key: nanoid(),
+            _key: uuid(),
             language: iso,
             _type: 'internationalizedArrayStringValue',
             value,

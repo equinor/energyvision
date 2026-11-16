@@ -34,12 +34,6 @@ inputs:
   environment:
     description: 'dev, preprod or prod'
     required: true
-  screen9accountId:
-    description: 'Screen 9 Account Id'
-    required: true
-  screen9token:
-    description: 'Screen9 API token'
-    required: true
 
 
 runs:
@@ -105,7 +99,6 @@ runs:
         cache-to: type=inline
         secrets: |
           fotoware_af_export_key=${{ inputs.fotowareAfExportKey }}
-          screen9_token=${{ inputs.screen9token }}
           
         build-args: |
           ARG_SANITY_DATASET=${{ inputs.datasetName }}
@@ -114,7 +107,6 @@ runs:
           ARG_FOTOWARE_REDIRECT_ORIGIN=${{ inputs.fotowareRedirectOrigin }}
           ARG_FOTOWARE_REDIRECT_URI=${{ inputs.fotowareRedirectUri }}
           ARG_FOTOWARE_AF_EXPORT_URL=${{ inputs.fotowareAfExportUrl }}
-          ARG_SCREEN9_ACCOUNT_ID=${{ inputs.screen9accountId }}
           
     - name: Log runner and Studio image Node.js versions
       shell: bash

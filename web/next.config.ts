@@ -131,11 +131,7 @@ const nextConfig: NextConfig = withNextIntl({
   },
   outputFileTracingRoot: path.join(__dirname, '../'),
   experimental: {
-    optimizePackageImports: [
-      '@equinor/eds-core-react',
-      '@equinor/eds-icons',
-      'video.js',
-    ],
+    optimizePackageImports: ['@equinor/eds-core-react', '@equinor/eds-icons'],
     //externalDir: true,
   },
 });

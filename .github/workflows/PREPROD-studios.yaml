@@ -108,8 +108,6 @@ jobs:
           fotowareAfExportUrl: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL }}
           fotowareAfExportKey: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY }}
           fotowareRedirectUri: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_URI}}
-          screen9accountId: ${{ secrets.SANITY_STUDIO_SCREEN9_ACCOUNT_ID }}
-          screen9token: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
           environment: ${{ vars.ENV }}
       - uses: act10ns/slack@v2
         with:
