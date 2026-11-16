@@ -894,6 +894,16 @@ const snippets: textSnippet = {
     defaultValue: 'Pause {title} gallery',
     group: groups.common,
   },
+  videoPlay: {
+    title: 'Play video',
+    defaultValue: 'Play video',
+    group: groups.common,
+  },
+  videoPause: {
+    title: 'Pause video',
+    defaultValue: 'Pause video',
+    group: groups.common,
+  },
   readMore: {
     title: 'Read more',
     defaultValue: 'Read more',

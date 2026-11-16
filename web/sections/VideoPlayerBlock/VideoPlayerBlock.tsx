@@ -1,41 +1,41 @@
-import type { PortableTextBlock } from '@portabletext/types'
-import dynamic from 'next/dynamic'
-import ResourceLink from '@/core/Link/ResourceLink'
-import type { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
+import type { PortableTextBlock } from '@portabletext/types';
+import dynamic from 'next/dynamic';
+import ResourceLink from '@/core/Link/ResourceLink';
 import type {
+  AspectRatioVariants,
   VideoControlsType,
   VideoType,
-} from '@/core/VideoJsPlayer/VideoPlayer'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import { twMerge } from '@/lib/twMerge/twMerge'
-import Blocks from '@/portableText/Blocks'
-import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import type { DesignOptions, LinkData } from '@/types'
-import Transcript from '../Transcript/Transcript'
+} from '@/core/VideoPlayer/VideoPlayer';
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction';
+import { twMerge } from '@/lib/twMerge/twMerge';
+import Blocks from '@/portableText/Blocks';
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap';
+import type { DesignOptions, LinkData } from '@/types';
+import Transcript from '../Transcript/Transcript';
 
 export type VideoDesignOptionsType = {
-  aspectRatio: AspectRatioVariants
-  height?: number
-  width?: 'normal' | 'extraWide' | 'narrow'
-  useBrandTheme?: boolean
-  clipRoundedCornersPortrait?: boolean
-}
+  aspectRatio: AspectRatioVariants;
+  height?: number;
+  width?: 'normal' | 'extraWide' | 'narrow';
+  useBrandTheme?: boolean;
+  clipRoundedCornersPortrait?: boolean;
+};
 
 export type VideoPlayerBlockProps = {
-  id: string
-  type: string
-  video: VideoType
-  videoControls: VideoControlsType
-  designOptions: DesignOptions & VideoDesignOptionsType
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  action?: LinkData
-  transcript?: PortableTextBlock[]
-  anchor?: string
-  className?: string
-}
+  id: string;
+  type: string;
+  video: VideoType;
+  videoControls: VideoControlsType;
+  designOptions: DesignOptions & VideoDesignOptionsType;
+  title?: PortableTextBlock[];
+  ingress?: PortableTextBlock[];
+  action?: LinkData;
+  transcript?: PortableTextBlock[];
+  anchor?: string;
+  className?: string;
+};
 
-const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
+const VideoPlayer = dynamic(() => import('@/core/VideoPlayer/VideoPlayer'));
 
 const VideoPlayerBlock = ({
   title,
@@ -48,12 +48,12 @@ const VideoPlayerBlock = ({
   anchor,
   className,
 }: VideoPlayerBlockProps) => {
-  const { width = 'normal', ...videoPlayerDesignOptions } = designOptions
-  const actionUrl = action ? getUrlFromAction(action) : ''
-  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+  const { width = 'normal', ...videoPlayerDesignOptions } = designOptions;
+  const actionUrl = action ? getUrlFromAction(action) : '';
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions);
 
   const isNarrowFeature =
-    width === 'narrow' || videoPlayerDesignOptions?.aspectRatio === '9:16'
+    width === 'narrow' || videoPlayerDesignOptions?.aspectRatio === '9:16';
 
   return (
     <section
@@ -64,11 +64,11 @@ const VideoPlayerBlock = ({
       id={anchor}
     >
       {(title || ingress || action?.label) && (
-        <div className='pb-6'>
-          {title && <Blocks value={title} variant='h2' />}
+        <div className="pb-6">
+          {title && <Blocks value={title} variant="h2" />}
           {ingress && (
             <Blocks
-              variant='ingress'
+              variant="ingress"
               value={ingress}
               blockClassName={`${action?.label && actionUrl ? 'mb-4' : 'mb-8'}`}
             />
@@ -80,13 +80,11 @@ const VideoPlayerBlock = ({
                 ...action?.file,
                 label: action?.label,
               }}
-              variant='fit'
+              variant="fit"
               hrefLang={
-                action?.type === 'internalUrl'
-                  ? action?.link?.lang
-                  : undefined
+                action?.type === 'internalUrl' ? action?.link?.lang : undefined
               }
-              className='mt-4 mb-8'
+              className="mt-4 mb-8"
             >
               {action.label}
             </ResourceLink>
@@ -118,7 +116,7 @@ const VideoPlayerBlock = ({
       </div>
       <Transcript transcript={transcript} ariaTitle={video.title} />
     </section>
-  )
-}
+  );
+};
 
-export default VideoPlayerBlock
+export default VideoPlayerBlock;

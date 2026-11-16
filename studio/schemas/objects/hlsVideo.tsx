@@ -1,9 +1,10 @@
-import VideoSelector from '../components/VideoSelector'
+import { HlsVideoInput } from '../components/HlsVideoInput';
 
 export default {
   title: 'Video',
   name: 'hlsVideo',
   type: 'object',
+  readOnly: true,
   fields: [
     {
       name: 'id',
@@ -22,6 +23,6 @@ export default {
     },
   ],
   components: {
-    input: VideoSelector,
+    input: HlsVideoInput,
   },
-}
+};

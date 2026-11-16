@@ -1,7 +1,6 @@
-import { at, defineMigration, setIfMissing, set, unset, JsonObject, JsonArray } from 'sanity/migrate'
-import { customAlphabet } from 'nanoid'
+import { uuid } from '@sanity/uuid';
+import { at, defineMigration, unset } from 'sanity/migrate';
 
-const nanoid = customAlphabet('1234567890abcdef', 12)
 export default defineMigration({
   title: 'Issue 3091',
   //  documentTypes: ['footer'],
@@ -21,26 +20,39 @@ export default defineMigration({
           at('referenceToOtherLanguage', unset()),
           at('reference', unset()),
           at('linkToOtherLanguage', unset()),
-        ]
+        ];
         if (node.url) {
-          return [at('link', set([{ _type: 'link', _key: nanoid(), href: node.url }])), ...unsets]
+          return [
+            at('link', set([{ _type: 'link', _key: uuid(), href: node.url }])),
+            ...unsets,
+          ];
         }
 
         // Internal link
-        if (node.linkToOtherLanguage == true) {
+        if (node.linkToOtherLanguage === true) {
           // another language
-          const value = node.referenceToOtherLanguage as JsonObject
-          return [at('link', set([{ _key: nanoid(), ...value, _type: 'referenceToOtherLanguage' }])), ...unsets]
-        } else {
-          const value = node.reference as JsonObject
-          return [at('link', set([{ _type: 'reference', _key: nanoid(), ...value }])), ...unsets]
+          const value = node.referenceToOtherLanguage as JsonObject;
+          return [
+            at(
+              'link',
+              set([
+                { _key: uuid(), ...value, _type: 'referenceToOtherLanguage' },
+              ]),
+            ),
+            ...unsets,
+          ];
         }
+        const value = node.reference as JsonObject;
+        return [
+          at('link', set([{ _type: 'reference', _key: uuid(), ...value }])),
+          ...unsets,
+        ];
       }
 
       //////////////////////////////////////////////////////////////////
       /// people promotion link
-      if (node._type == 'people' && node.isLink && node.linkSelector == null) {
-        let linkSelector: JsonObject = { label: node.label }
+      if (node._type === 'people' && node.isLink && node.linkSelector == null) {
+        let linkSelector: JsonObject = { label: node.label };
         const unsets = [
           at('reference', unset()),
           at('referenceToOtherLanguage', unset()),
@@ -48,39 +60,40 @@ export default defineMigration({
           at('label', unset()),
           at('url', unset()),
           at('anchorReference', unset()),
-        ]
+        ];
         // External link
         if (node.url) {
           linkSelector = {
             ...linkSelector,
-            link: [{ _type: 'link', _key: nanoid(), href: node.url }],
-          }
-          return [at('linkSelector', set(linkSelector)), ...unsets]
+            link: [{ _type: 'link', _key: uuid(), href: node.url }],
+          };
+          return [at('linkSelector', set(linkSelector)), ...unsets];
         }
 
         // Internal link
-        if (node.linkToOtherLanguage == true) {
+        if (node.linkToOtherLanguage === true) {
           // another language
-          const value = node.referenceToOtherLanguage as JsonObject
+          const value = node.referenceToOtherLanguage as JsonObject;
 
           linkSelector = {
             ...linkSelector,
-            link: [{ _key: nanoid(), ...value, _type: 'referenceToOtherLanguage' }],
-          }
-          return [at('linkSelector', set(linkSelector)), ...unsets]
-        } else {
-          const value = node.reference as JsonObject
-          linkSelector = {
-            ...linkSelector,
-            link: [{ _type: 'reference', _key: nanoid(), ...value }],
-          }
-          return [at('linkSelector', set(linkSelector)), ...unsets]
+            link: [
+              { _key: uuid(), ...value, _type: 'referenceToOtherLanguage' },
+            ],
+          };
+          return [at('linkSelector', set(linkSelector)), ...unsets];
         }
+        const value = node.reference as JsonObject;
+        linkSelector = {
+          ...linkSelector,
+          link: [{ _type: 'reference', _key: uuid(), ...value }],
+        };
+        return [at('linkSelector', set(linkSelector)), ...unsets];
       }
 
       ////////////////////////////////////////////////////
       /// Footer.....
-      if (node._type == 'footerColumnGroup') {
+      if (node._type === 'footerColumnGroup') {
         const links = node?.columnLinks
           ?.filter((it) => it._type !== 'linkSelector')
           ?.map((it) => {
@@ -90,29 +103,36 @@ export default defineMigration({
               _type: 'linkSelector',
               link: [
                 {
-                  _key: nanoid(),
-                  _type: it._type == 'someLink' ? 'socialMediaLink' : it.url ? 'link' : 'reference',
+                  _key: uuid(),
+                  _type:
+                    it._type === 'someLink'
+                      ? 'socialMediaLink'
+                      : it.url
+                        ? 'link'
+                        : 'reference',
                   href: it.url,
                   someType: it.someType,
                   ...it.reference,
                 },
               ],
-            }
-          })
-        if (links.length > 0) return at(['columnLinks'], set(links))
-        else console.log('No footer links to migrate')
+            };
+          });
+        if (links.length > 0) return at(['columnLinks'], set(links));
+        console.log('No footer links to migrate');
       }
 
       ///////////////////////////////
       // Content blocks....
-      if (node._type == 'internalLink') {
+      if (node._type === 'internalLink') {
         const value = node.linkToOtherLanguage
           ? (node.referenceToOtherLanguange as JsonObject) // fix for typo
-          : (node.reference as JsonObject)
-        const type = node.linkToOtherLanguage ? 'referenceToOtherLanguage' : 'reference'
+          : (node.reference as JsonObject);
+        const type = node.linkToOtherLanguage
+          ? 'referenceToOtherLanguage'
+          : 'reference';
         return [
           set({
-            link: [{ _key: nanoid(), ...value, _type: type }],
+            link: [{ _key: uuid(), ...value, _type: type }],
             _type: type + '_block',
             _key: node._key,
             anchorReference: node.anchorReference,
@@ -120,8 +140,8 @@ export default defineMigration({
           at('referenceToOtherLanguange', unset()),
           at('reference', unset()),
           at('linkToOtherLanguage', unset()),
-        ]
+        ];
       }
     },
   },
-})
+});

@@ -1,9 +1,7 @@
 /* eslint-disable no-console */
 
-import { customAlphabet } from 'nanoid';
+import { uuid } from '@sanity/uuid';
 import { sanityClients } from './getSanityClients.mjs';
-
-const nanoid = customAlphabet('1234567890abcdef', 32);
 
 const fetchDocuments = (client) =>
   client.fetch(
@@ -11,36 +9,34 @@ const fetchDocuments = (client) =>
   );
 
 const buildPatches = (docs) =>
-  docs
-    .map((doc) =>
-      doc.promotileArray.map((promoTile) => ({
-        id: doc._id,
-        patch: {
-          set: {
-            [`content..[_key =="${promoTile._key}"].title`]: [
-              {
-                style: 'normal',
-                _type: 'block',
-                _key: nanoid(),
-                children: [
-                  {
-                    _type: 'span',
-                    marks: [],
-                    _key: nanoid(),
-                    text: `${promoTile.title}`,
-                  },
-                ],
-                markDefs: [],
-              },
-            ],
-          },
-          // this will cause the migration to fail if any of the documents has been
-          // modified since it was fetched.
-          ifRevisionID: doc._rev,
+  docs.flatMap((doc) =>
+    doc.promotileArray.map((promoTile) => ({
+      id: doc._id,
+      patch: {
+        set: {
+          [`content..[_key =="${promoTile._key}"].title`]: [
+            {
+              style: 'normal',
+              _type: 'block',
+              _key: uuid(),
+              children: [
+                {
+                  _type: 'span',
+                  marks: [],
+                  _key: uuid(),
+                  text: `${promoTile.title}`,
+                },
+              ],
+              markDefs: [],
+            },
+          ],
         },
-      })),
-    )
-    .flat();
+        // this will cause the migration to fail if any of the documents has been
+        // modified since it was fetched.
+        ifRevisionID: doc._rev,
+      },
+    })),
+  );
 
 const createTransaction = (patches, client) =>
   patches.reduce(

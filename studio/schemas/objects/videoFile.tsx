@@ -8,13 +8,17 @@ export default {
   title: 'Video file',
   name: 'videoFile',
   icon: () => EdsIcon(play_circle),
+  deprecated: {
+    reason:
+      'Media Bank videos are no longer supported. Upload the video as an Asset file (mp4) instead.',
+  },
   fields: [
     {
       name: 'video',
       title: 'Video',
-      description: 'Pick from Equinor Media Bank',
+      description:
+        'Legacy Media Bank video (read only). Replace this document with an Asset file.',
       type: 'hlsVideo',
-      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'transcript',

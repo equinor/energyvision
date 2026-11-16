@@ -5,8 +5,10 @@ import { forwardRef, useId } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Carousel } from '@/core/Carousel/Carousel';
 import { CarouselItem } from '@/core/Carousel/CarouselItem';
-import type { AspectRatioVariants } from '@/core/VideoJsPlayer/Video';
-import type { VideoType } from '@/core/VideoJsPlayer/VideoPlayer';
+import type {
+  AspectRatioVariants,
+  VideoType,
+} from '@/core/VideoPlayer/VideoPlayer';
 import Blocks from '@/portableText/Blocks';
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap';
 import type { DesignOptions } from '../../types/index';
@@ -37,7 +39,7 @@ type VideoPlayerCarouselProps = {
   className?: string;
 };
 
-const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'));
+const VideoPlayer = dynamic(() => import('@/core/VideoPlayer/VideoPlayer'));
 
 const VideoPlayerCarousel = forwardRef<
   HTMLUListElement,
