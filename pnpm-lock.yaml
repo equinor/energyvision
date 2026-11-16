@@ -4,10 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  tar: 7.5.22
-  adm-zip: 0.6.1
-
 importers:
 
   .:
