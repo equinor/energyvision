@@ -1,26 +1,32 @@
-import { useCurrentUser } from 'sanity'
-import { dataset } from '@/sanity.client'
-import { Flags } from '../datasetHelpers'
-import { AssetLibrary } from './items/AssetLibrary'
-import { DeveloperContent } from './items/DeveloperPages'
-import { Event as EventStructure } from './items/Event'
-import { Footer } from './items/Footer'
-import { HomePage } from './items/Homepage'
-import { LocalNews as LocalNewsStructure } from './items/LocalNews'
-import { MagazineRoom, Magazine as MagazineStructure } from './items/Magazine'
-import { Menu } from './items/Menu'
-import { Misc } from './items/Misc'
-import { NewsRoom, News as NewsStructure } from './items/News'
-import { Organization } from './items/Organization'
-import { HomePageRoute, Routes } from './items/Routes'
-import { Settings } from './items/Settings'
-import { TopicContent } from './items/TopicContent'
+import { useCurrentUser } from 'sanity';
+import { Flags } from '../datasetHelpers';
+import { AssetLibrary } from './items/AssetLibrary';
+import { DeveloperContent } from './items/DeveloperPages';
+import { Event as EventStructure } from './items/Event';
+import { Footer } from './items/Footer';
+import { HomePage } from './items/Homepage';
+import { LocalNews as LocalNewsStructure } from './items/LocalNews';
+import { MagazineRoom, Magazine as MagazineStructure } from './items/Magazine';
+import { Menu } from './items/Menu';
+import { Misc } from './items/Misc';
+import { NewsRoom, News as NewsStructure } from './items/News';
+import { Organization } from './items/Organization';
+import { HomePageRoute, Routes } from './items/Routes';
+import { Settings } from './items/Settings';
+import { TopicContent } from './items/TopicContent';
 
-const News = S => Flags.HAS_NEWS && NewsStructure(S)
-const Magazine = S => Flags.HAS_MAGAZINE && MagazineStructure(S)
+const News = (S) => Flags.HAS_NEWS && NewsStructure(S);
+const Magazine = (S) => Flags.HAS_MAGAZINE && MagazineStructure(S);
 const LocalNews = (S, context) =>
-  Flags.HAS_LOCAL_NEWS && LocalNewsStructure(S, context)
-const Event = S => Flags.HAS_EVENT && EventStructure(S)
+  Flags.HAS_LOCAL_NEWS && LocalNewsStructure(S, context);
+const Event = (S) => Flags.HAS_EVENT && EventStructure(S);
+
+const DEVELOPER_SHORTCUT_ROLES = [
+  'administrator',
+  'admin',
+  'developer',
+  'designer',
+];
 
 const ADMIN_ITEMS = (S, context) =>
   [
@@ -44,12 +50,13 @@ const ADMIN_ITEMS = (S, context) =>
     S.divider().title('Other'),
     AssetLibrary(S, context),
     Settings(S),
-  ].filter(e => e)
+  ].filter((e) => e);
 
-const DEVELOPER_ITEMS = S => [DeveloperContent(S), S.divider()].filter(e => e)
+const DEVELOPER_ITEMS = (S) =>
+  [DeveloperContent(S), S.divider()].filter((e) => e);
 
 const LOCAL_NEWS_EDITOR_ITEMS = (S, context) =>
-  [LocalNews(S, context)].filter(e => e)
+  [LocalNews(S, context)].filter((e) => e);
 
 /**
  * Datasets are not taken into consideration in order to simplify logic.
@@ -62,29 +69,29 @@ const LOCAL_NEWS_EDITOR_ITEMS = (S, context) =>
  */
 
 const getItems = (S, context) => {
-  const { roles } = useCurrentUser()
+  const { roles } = useCurrentUser();
 
   const isAdmin = roles.some(
-    role => role?.name.startsWith('editor') || role?.name === 'administrator',
-  )
-  const isDeveloper = roles.some(role => role?.name === 'developer')
-  const isLocalNewsEditor = roles.some(role =>
+    (role) => role?.name.startsWith('editor') || role?.name === 'administrator',
+  );
+  const isDeveloper = roles.some((role) => role?.name === 'developer');
+  const isLocalNewsEditor = roles.some((role) =>
     role?.name.startsWith('local-news-editor'),
-  )
+  );
+  const developerItems =
+    context.dataset === 'global-development' &&
+    roles.some((role) => DEVELOPER_SHORTCUT_ROLES.includes(role?.name))
+      ? DEVELOPER_ITEMS(S)
+      : [];
 
-  if (isDeveloper) {
-    return dataset === 'global-development'
-      ? [...DEVELOPER_ITEMS(S), ...ADMIN_ITEMS(S, context)]
-      : ADMIN_ITEMS(S, context)
-  }
-  if (isAdmin) {
-    return ADMIN_ITEMS(S, context)
+  if (isDeveloper || isAdmin) {
+    return [...developerItems, ...ADMIN_ITEMS(S, context)];
   }
 
   if (isLocalNewsEditor) {
-    return LOCAL_NEWS_EDITOR_ITEMS(S, context)
+    return [...developerItems, ...LOCAL_NEWS_EDITOR_ITEMS(S, context)];
   }
-  return []
-}
+  return developerItems;
+};
 
-export default (S, context) => getItems(S, context)
+export default (S, context) => getItems(S, context);

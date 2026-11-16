@@ -29,7 +29,7 @@ import { initialValueTemplates } from './initialValueTemplates';
 import { defaultLanguage } from './languages';
 import { FotowareAssetSource } from './plugins/asset-source-fotoware-v2';
 import { dataset, projectId } from './sanity.client';
-import { schemaTypes } from './schemas';
+import { getSchemaTypes } from './schemas';
 import { CharacterCountInputPTE } from './schemas/components/CharacterCountInputPTE';
 import { LangBadge } from './schemas/components/LangBadge';
 import { i18n } from './schemas/documentTranslation';
@@ -173,7 +173,7 @@ const getConfig = (
     }),
   ].filter((e) => e) as PluginOptions[],
   schema: {
-    types: schemaTypes as SchemaTypeDefinition[],
+    types: getSchemaTypes(datasetParam) as SchemaTypeDefinition[],
     templates: (prev: Template<any, any>[]) => [
       ...filterTemplates(prev),
       ...initialValueTemplates,

@@ -7,6 +7,8 @@ import documentSchemaTypes from './documents';
 import homePage from './documents/homePage';
 import person from './documents/person';
 import textSnippet from './documents/textSnippet';
+import { content } from './documents/topic/sharedTopicPageFields';
+import { useCase } from './documents/useCase';
 import anchorSearch from './objects/AnchorSearch';
 import accordion from './objects/accordion';
 import accordionItem from './objects/accordionItem';
@@ -105,6 +107,7 @@ import themeSelector from './objects/themeSelector/themeSelector';
 import thumbnail from './objects/thumbnail';
 import titleAndMeta from './objects/titleAndMeta';
 import transcript from './objects/transcript';
+import { useCaseList } from './objects/useCaseList';
 import videoControls from './objects/videoControls';
 import videoFile from './objects/videoFile';
 import videoPlayer from './objects/videoPlayer';
@@ -274,3 +277,27 @@ export const schemaTypes = [
   ...PersonSchemas,
   ...RemainingSchemas,
 ];
+
+export const getSchemaTypes = (datasetName: string) => {
+  if (datasetName !== 'global-development') return schemaTypes;
+
+  return [
+    ...schemaTypes.map((schema) =>
+      schema === page
+        ? {
+            ...page,
+            fields: page.fields.map((field) =>
+              field === content
+                ? {
+                    ...content,
+                    of: [...content.of, { type: useCaseList.name }],
+                  }
+                : field,
+            ),
+          }
+        : schema,
+    ),
+    useCase,
+    useCaseList,
+  ];
+};
