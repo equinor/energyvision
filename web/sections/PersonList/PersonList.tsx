@@ -114,12 +114,17 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
     const foreground = data.designOptions?.foreground;
 
     // Read the deep-link after hydration instead of useSearchParams, which would postpone
-    // this subtree during prerender and force a resume/replay on every request
+    // this subtree during prerender and force a resume/replay on every request.
+    // ModalPromotion updates the URL with pushState, so also follow Back/Forward navigation.
     const [activePersonId, setActivePersonId] = useState<string | null>(null);
     useEffect(() => {
-      setActivePersonId(
-        new URLSearchParams(window.location.search).get('person'),
-      );
+      const syncActivePerson = () =>
+        setActivePersonId(
+          new URLSearchParams(window.location.search).get('person'),
+        );
+      syncActivePerson();
+      window.addEventListener('popstate', syncActivePerson);
+      return () => window.removeEventListener('popstate', syncActivePerson);
     }, []);
 
     return (
