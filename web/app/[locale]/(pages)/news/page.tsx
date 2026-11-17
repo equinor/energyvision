@@ -97,18 +97,22 @@ export default function NewsroomPage({
 async function DynamicNewsroomPage({
   searchParams,
 }: Pick<PageProps<'/[locale]/news'>, 'searchParams'>) {
-  const dynamic = await getDynamicFetchOptions(await searchParams);
-  return <CachedNewsroomPage dynamic={dynamic} />;
+  const [dynamic, locale] = await Promise.all([
+    searchParams.then(getDynamicFetchOptions),
+    getLocale(),
+  ]);
+  return <CachedNewsroomPage locale={locale} dynamic={dynamic} />;
 }
 
+// Request-bound APIs such as getLocale must not be called inside the cached scope.
 async function CachedNewsroomPage({
+  locale,
   dynamic,
 }: {
+  locale: string;
   dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
 }) {
   'use cache: remote';
-
-  const locale = await getLocale();
 
   if (locale === '__placeholder__') return notFound();
 

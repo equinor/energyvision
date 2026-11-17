@@ -1,53 +1,52 @@
-'use client'
+'use client';
 import {
   FloatingFocusManager,
   FloatingOverlay,
   type OpenChangeReason,
-  size,
   useDismiss,
   useFloating,
   useInteractions,
-} from '@floating-ui/react'
-import { usePathname } from 'next/navigation'
-import { useLocale, useTranslations } from 'next-intl'
-import { useCallback, useMemo, useState } from 'react'
-import BaseLink from '@/core/Link/BaseLink'
-import Link from '@/core/Link/Link'
-import { LogoLink } from '@/core/Link/LogoLink'
-import { Menu, MenuButton } from '@/core/MenuAccordion'
-import { MenuPanes } from '@/core/MenuPanes/MenuPanes'
-import { getAllSitesLink } from '@/lib/helpers/getAllSitesLink'
-import { twMerge } from '@/lib/twMerge/twMerge'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { ArrowRight } from '../../icons'
-import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+} from '@floating-ui/react';
+import { usePathname } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
+import { useCallback, useMemo, useState } from 'react';
+import BaseLink from '@/core/Link/BaseLink';
+import Link from '@/core/Link/Link';
+import { LogoLink } from '@/core/Link/LogoLink';
+import { Menu, MenuButton } from '@/core/MenuAccordion';
+import { MenuPanes } from '@/core/MenuPanes/MenuPanes';
+import { getAllSitesLink } from '@/lib/helpers/getAllSitesLink';
+import { twMerge } from '@/lib/twMerge/twMerge';
+import { Flags } from '@/sanity/helpers/datasetHelpers';
+import { ArrowRight } from '../../icons';
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery';
 import type {
   MenuData,
   SimpleGroupData,
   SimpleMenuData,
   SubMenuData,
-} from '../../types/index'
-import { MenuItem } from './MenuItem'
-import { NavTopbar } from './NavTopbar'
-import { SimpleMenuItem } from './SimpleMenuItem'
-import { TopbarDropdown } from './TopbarDropdown'
+} from '../../types/index';
+import { MenuItem } from './MenuItem';
+import { NavTopbar } from './NavTopbar';
+import { SimpleMenuItem } from './SimpleMenuItem';
+import { TopbarDropdown } from './TopbarDropdown';
 
-export type Variants = 'default' | 'simple'
+export type Variants = 'default' | 'simple';
 
 export type SiteMenuProps = {
-  variant?: Variants
-  siteMenuData?: MenuData | SimpleMenuData
-}
+  variant?: Variants;
+  siteMenuData?: MenuData | SimpleMenuData;
+};
 
 const SiteMenu = ({ variant = 'default', siteMenuData }: SiteMenuProps) => {
-  const pathname = usePathname()
-  const locale = useLocale()
-  const [isOpen, setIsOpen] = useState(false)
-  const intl = useTranslations()
+  const pathname = usePathname();
+  const locale = useLocale();
+  const [isOpen, setIsOpen] = useState(false);
+  const intl = useTranslations();
   const { refs, context } = useFloating({
     open: isOpen,
     onOpenChange: (open: boolean, event?: Event, reason?: OpenChangeReason) => {
-      setIsOpen(!isOpen)
+      setIsOpen(!isOpen);
     },
     /*     middleware: [
       size({
@@ -60,102 +59,84 @@ const SiteMenu = ({ variant = 'default', siteMenuData }: SiteMenuProps) => {
         },
       }),
     ], */
-  })
+  });
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useDismiss(context),
-  ])
-  const useComplex = useMediaQuery(`(min-width: 1300px)`)
+  ]);
+  const useComplex = useMediaQuery(`(min-width: 1300px)`);
 
   const menuItems = useMemo(() => {
     if (!siteMenuData) {
-      return []
+      return [];
     }
     return siteMenuData && variant === 'simple'
       ? (siteMenuData as SimpleMenuData).groups
-      : (siteMenuData as MenuData).subMenus
-  }, [siteMenuData, variant])
+      : (siteMenuData as MenuData).subMenus;
+  }, [siteMenuData, variant]);
 
   const handleLinkClick = () => {
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
 
-  const title = intl('menu')
+  const title = intl('menu');
   const allSitesURL = getAllSitesLink(
     Flags.IS_GLOBAL_PROD ? 'internal' : 'external',
     locale || 'en',
-  )
+  );
 
   const getCurrentMenuItemIndex = useCallback(() => {
-    return menuItems
-      ?.findIndex(menuItem => {
-        if (variant === 'simple') {
-          if (
-            'link' in menuItem &&
-            menuItem?.link &&
-            menuItem.link.slug === pathname
-          ) {
-            return menuItem.link.slug === pathname
-          }
-          if (
-            'links' in menuItem &&
-            menuItem?.links &&
-            menuItem.links.some(link => link.link?.slug === pathname)
-          ) {
-            return menuItem.links.some(link => link.link?.slug === pathname)
-          }
-          if (
-            'readMoreLink' in menuItem &&
-            menuItem?.readMoreLink?.link?.slug &&
-            menuItem.readMoreLink.link.slug === pathname
-          ) {
-            return menuItem.readMoreLink.link.slug === pathname
-          }
-        } else variant === 'default'
-        if (
-          'groups' in menuItem &&
-          menuItem.groups &&
-          menuItem.groups?.some(group =>
-            group.links.some(link => link.link?.slug === pathname),
-          )
-        ) {
-          return menuItem.groups?.some(group =>
-            group.links.some(link => link.link?.slug === pathname),
-          )
-        }
-        if (
-          'topLevelLink' in menuItem &&
-          menuItem?.topLevelLink?.link?.slug &&
-          menuItem?.topLevelLink?.link?.slug === pathname
-        ) {
-          return menuItem?.topLevelLink?.link?.slug === pathname
-        }
-        return false
-      })
-      .toString()
-  }, [menuItems, pathname, variant])
+    const matchesPath = (slug?: string | null) =>
+      Boolean(slug) && slug === pathname;
+
+    const isTopLevelMatch = (menuItem: SimpleGroupData | SubMenuData) =>
+      variant === 'simple'
+        ? matchesPath((menuItem as SimpleGroupData).link?.slug)
+        : matchesPath((menuItem as SubMenuData).topLevelLink?.link?.slug);
+
+    const isNestedMatch = (menuItem: SimpleGroupData | SubMenuData) => {
+      if (variant === 'simple') {
+        const { links, readMoreLink } = menuItem as SimpleGroupData;
+        return (
+          Boolean(links?.some((link) => matchesPath(link.link?.slug))) ||
+          matchesPath(readMoreLink?.link?.slug)
+        );
+      }
+      return Boolean(
+        (menuItem as SubMenuData).groups?.some((group) =>
+          group.links.some((link) => matchesPath(link.link?.slug)),
+        ),
+      );
+    };
+
+    // A page can be linked from several menus; prefer the menu whose top-level link is the page itself
+    const topLevelIndex = menuItems.findIndex(isTopLevelMatch);
+    const index =
+      topLevelIndex !== -1 ? topLevelIndex : menuItems.findIndex(isNestedMatch);
+    return index.toString();
+  }, [menuItems, pathname, variant]);
 
   const currentMenuItemIndex = useMemo(() => {
-    return getCurrentMenuItemIndex()
-  }, [getCurrentMenuItemIndex])
+    return getCurrentMenuItemIndex();
+  }, [getCurrentMenuItemIndex]);
 
   const variantClassName: Partial<Record<Variants, string>> = {
     default:
       'h-full mt-8 xl:bg-moss-green-50 xl:mx-8 xl:flex xl:justify-between items-center',
     simple: ` ${Flags.HAS_FANCY_MENU ? '' : 'bg-north-sea-80'} mt-6 xl:mt-8 xl:px-layout-sm flex flex-col mx-auto`,
-  }
+  };
 
   if (!menuItems || menuItems.length === 0) {
     // for sites with no menu
     return (
       <Link
-        className='text-base'
+        className="text-base"
         type={Flags.IS_GLOBAL_PROD ? 'internalUrl' : 'externalUrl'}
         href={allSitesURL}
         onClick={handleLinkClick}
       >
         {intl('all_sites')}
       </Link>
-    )
+    );
   }
   return (
     <>
@@ -175,7 +156,7 @@ const SiteMenu = ({ variant = 'default', siteMenuData }: SiteMenuProps) => {
             lockScroll
             {...getFloatingProps()}
           >
-            <TopbarDropdown className='z-9999'>
+            <TopbarDropdown className="z-9999">
               <nav
                 className={twMerge(
                   Flags.HAS_FANCY_MENU && 'w-[calc(100%-15px)] max-w-fullwidth',
@@ -202,13 +183,13 @@ const SiteMenu = ({ variant = 'default', siteMenuData }: SiteMenuProps) => {
                       />
                     ) : (
                       <Menu
-                        variant='simple'
+                        variant="simple"
                         defaultValue={[currentMenuItemIndex]}
                       >
                         {menuItems.map((item, idx: number) => {
                           const nextIsSimpleLink =
                             (menuItems[idx + 1] as SimpleGroupData)?.type ===
-                            'simpleMenuLink'
+                            'simpleMenuLink';
                           return (
                             <SimpleMenuItem
                               key={item.id}
@@ -217,13 +198,13 @@ const SiteMenu = ({ variant = 'default', siteMenuData }: SiteMenuProps) => {
                               nextIsSimpleLink={nextIsSimpleLink}
                               linkCallback={handleLinkClick}
                             />
-                          )
+                          );
                         })}
                       </Menu>
                     )
                   ) : (
                     <Menu
-                      variant='default'
+                      variant="default"
                       defaultValue={
                         useComplex
                           ? currentMenuItemIndex
@@ -238,7 +219,7 @@ const SiteMenu = ({ variant = 'default', siteMenuData }: SiteMenuProps) => {
                             item={item as SubMenuData}
                             linkCallback={handleLinkClick}
                           />
-                        )
+                        );
                       })}
                     </Menu>
                   )}
@@ -261,7 +242,7 @@ const SiteMenu = ({ variant = 'default', siteMenuData }: SiteMenuProps) => {
                   >
                     {intl('all_sites') ?? 'All sites'}
                     {!Flags.IS_GLOBAL_PROD && (
-                      <ArrowRight className='-translate-y-0.5 ml-0.5 rotate-[-50deg] transform text-gray-500 group-hover:text-moss-green-90' />
+                      <ArrowRight className="ml-0.5 -translate-y-0.5 rotate-[-50deg] transform text-gray-500 group-hover:text-moss-green-90" />
                     )}
                   </BaseLink>
                 </div>
@@ -271,7 +252,7 @@ const SiteMenu = ({ variant = 'default', siteMenuData }: SiteMenuProps) => {
         </FloatingFocusManager>
       )}
     </>
-  )
-}
+  );
+};
 
-export default SiteMenu
+export default SiteMenu;
