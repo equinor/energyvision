@@ -69,9 +69,12 @@ const SiteMenu = ({ variant = 'default', siteMenuData }: SiteMenuProps) => {
     if (!siteMenuData) {
       return [];
     }
-    return siteMenuData && variant === 'simple'
-      ? (siteMenuData as SimpleMenuData).groups
-      : (siteMenuData as MenuData).subMenus;
+    // Sites without menu groups (e.g. Japan) return null here
+    return (
+      (variant === 'simple'
+        ? (siteMenuData as SimpleMenuData).groups
+        : (siteMenuData as MenuData).subMenus) ?? []
+    );
   }, [siteMenuData, variant]);
 
   const handleLinkClick = () => {
