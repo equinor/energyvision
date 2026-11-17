@@ -24,6 +24,7 @@ import { media } from 'sanity-plugin-media';
 import { createCustomDuplicateAction } from './actions/CustomDuplicateAction';
 import { SetAndPublishAction } from './actions/CustomPublishAction';
 import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslationAction';
+import { withPrimaryTone } from './actions/withPrimaryTone';
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure';
 import { initialValueTemplates } from './initialValueTemplates';
 import { defaultLanguage } from './languages';
@@ -122,6 +123,10 @@ const getConfig = (
     components: {
       input: handleInputComponents,
     },
+    // Always render every array item instead of hiding long arrays behind "Show all"
+    arrays: {
+      collapseItems: { enabled: false },
+    },
   },
   plugins: [
     documentInternationalization(i18n),
@@ -216,11 +221,11 @@ const getConfig = (
         .map((originalAction) => {
           switch (originalAction.action) {
             case 'publish':
-              return ['news', 'localNews', 'magazine'].includes(
-                context.schemaType,
-              )
-                ? SetAndPublishAction
-                : originalAction;
+              return withPrimaryTone(
+                ['news', 'localNews', 'magazine'].includes(context.schemaType)
+                  ? SetAndPublishAction
+                  : originalAction,
+              );
             case 'duplicate':
               return createCustomDuplicateAction(originalAction);
             default:

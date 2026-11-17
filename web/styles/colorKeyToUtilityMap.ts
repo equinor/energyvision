@@ -1,18 +1,18 @@
-import type { DesignOptions } from '@/types'
+import type { DesignOptions } from '@/types';
 
 export type SanityColor = {
-  title: string
-  key: string
-  dark?: boolean
-  value: string
-  onlyTextColor?: boolean
-}
+  title: string;
+  key: string;
+  dark?: boolean;
+  value: string;
+  onlyTextColor?: boolean;
+};
 export type TWColor = {
-  backgroundName: string
-  background: string
-  dark?: boolean
-  text: string
-}
+  backgroundName: string;
+  background: string;
+  dark?: boolean;
+  text: string;
+};
 
 export const colorKeyToUtilityMap = {
   'blue-50': {
@@ -111,34 +111,38 @@ export const colorKeyToUtilityMap = {
     text: 'text-gray-20',
     dark: false,
   },
-}
-export type ColorKeys = keyof typeof colorKeyToUtilityMap
+};
+export type ColorKeys = keyof typeof colorKeyToUtilityMap;
 
 export type ColorKeyTokens = {
-  [P1 in keyof typeof colorKeyToUtilityMap]: string
-}
+  [P1 in keyof typeof colorKeyToUtilityMap]: string;
+};
 
 export const getBgAndDarkFromBackground = (designOptions?: DesignOptions) => {
   if (!designOptions) {
-    return { bg: '', dark: false }
+    return { bg: '', dark: false };
   }
-  const { background } = designOptions || {}
+  const { background } = designOptions || {};
   const backwardCompabilityColorName = Object.keys(colorKeyToUtilityMap).find(
-    key =>
+    (key) =>
       colorKeyToUtilityMap[key as keyof ColorKeyTokens]?.backgroundName ===
       background?.backgroundColor,
-  )
+  );
 
-  let bgKey = 'white-100'
+  let bgKey = 'white-100';
   if (backwardCompabilityColorName && backwardCompabilityColorName !== '') {
-    bgKey = backwardCompabilityColorName
+    bgKey = backwardCompabilityColorName;
   }
   if (background?.backgroundUtility) {
-    bgKey = background?.backgroundUtility
+    bgKey = background?.backgroundUtility;
   }
 
+  // White is the page default; omit the class so sections only carry a bg when it differs
   return {
-    bg: colorKeyToUtilityMap[bgKey as ColorKeys].background,
+    bg:
+      bgKey === 'white-100'
+        ? ''
+        : colorKeyToUtilityMap[bgKey as ColorKeys].background,
     dark: colorKeyToUtilityMap[bgKey as ColorKeys]?.dark,
-  }
-}
+  };
+};
