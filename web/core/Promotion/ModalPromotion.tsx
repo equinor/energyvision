@@ -120,7 +120,6 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
             ref={triggerRef}
             type="button"
             onClick={handleOpenModal}
-            aria-label={intl('read_more_about', { title: plainText ?? '' })}
             aria-haspopup="dialog"
             aria-expanded={isModalOpen}
             className="group/btn relative flex w-full cursor-pointer flex-col items-start text-start focus-visible:outline-none"
@@ -160,6 +159,9 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
                 iconData={add_circle_filled}
                 className="hidden h-6 w-6 group-hover/btn:block"
               />
+            </span>
+            <span className="sr-only">
+              {intl('read_more_about', { title: plainText ?? '' })}
             </span>
           </button>
         </div>
