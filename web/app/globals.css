@@ -259,6 +259,11 @@ data-ui="checked active" class="data-checked:underline">
     );
     background-size: 4px 4px;
   }
+  /* The light thumb needs transparency when the section has a coloured background */
+  :where([class*="bg-"]:not([class*="bg-white-100"]))
+    &::-webkit-scrollbar-thumb {
+    @apply bg-gray-20/20;
+  }
   &::-webkit-scrollbar-thumb:hover,
   &[data-scrolling="true"]::-webkit-scrollbar-thumb {
     --carousel-thumb-stripe-opacity: 14%;
