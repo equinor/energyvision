@@ -1,9 +1,8 @@
 'use client';
 
 import type { PortableTextBlock } from '@portabletext/types';
-import { useSearchParams } from 'next/navigation';
 import { JsonLdScript } from 'next-seo';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { FaLinkedin } from 'react-icons/fa';
 import { twMerge } from 'tailwind-merge';
 import { Image } from '@/core/Image/Image';
@@ -114,8 +113,14 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
     const backgroundUtility = data.designOptions?.background?.backgroundUtility;
     const foreground = data.designOptions?.foreground;
 
-    const searchParams = useSearchParams();
-    const activePersonId = searchParams.get('person');
+    // Read the deep-link after hydration instead of useSearchParams, which would postpone
+    // this subtree during prerender and force a resume/replay on every request
+    const [activePersonId, setActivePersonId] = useState<string | null>(null);
+    useEffect(() => {
+      setActivePersonId(
+        new URLSearchParams(window.location.search).get('person'),
+      );
+    }, []);
 
     return (
       <>
