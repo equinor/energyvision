@@ -107,7 +107,9 @@ export default async function LocaleLayout({
           </>
         )} */}
         <NextIntlClientProvider>
-          <CachedContent dynamic={dynamic}>{children}</CachedContent>
+          <CachedContent locale={locale} dynamic={dynamic}>
+            {children}
+          </CachedContent>
           {/* } <PageProvider initialErrorImage={errorImage}>{children}</PageProvider>
           <Footer {...footerData} />
           <GoToTopButton /> */}
@@ -127,15 +129,17 @@ export default async function LocaleLayout({
   );
 }
 
+// Request-bound APIs such as getLocale must not be called inside the cached scope.
 async function CachedContent({
+  locale,
   dynamic,
   children,
 }: {
+  locale: string;
   dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
   children: React.ReactNode;
 }) {
   'use cache: remote';
-  const locale = await getLocale();
   const queryParams = {
     lang: locale ?? 'en-GB',
   };

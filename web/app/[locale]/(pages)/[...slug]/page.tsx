@@ -91,33 +91,36 @@ export default function Page({ params, searchParams }: Props) {
 }
 
 async function DynamicContent({ params, searchParams }: Props) {
-  const [{ slug }, resolvedSearchParams] = await Promise.all([
+  const [{ slug }, resolvedSearchParams, locale] = await Promise.all([
     params,
     searchParams,
+    getLocale(),
   ]);
   const dynamic = await getDynamicFetchOptions(resolvedSearchParams);
 
   return (
     <CachedContent
       slug={slug}
+      locale={locale}
       searchParams={resolvedSearchParams}
       dynamic={dynamic}
     />
   );
 }
 
-// Cached (performs sanityFetch)
+// Cached (performs sanityFetch). Request-bound APIs such as getLocale must not be called inside.
 async function CachedContent({
   slug,
+  locale,
   searchParams,
   dynamic,
 }: {
   slug: string | string[];
+  locale: string;
   dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
   searchParams: { [key: string]: string[] | string | undefined };
 }) {
   'use cache: remote';
-  const locale = await getLocale();
   const decodedSlug = decodeSlugs(slug);
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({

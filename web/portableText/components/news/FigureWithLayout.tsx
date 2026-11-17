@@ -1,34 +1,34 @@
-import type { PortableTextBlock } from '@portabletext/types'
-import { twMerge } from 'tailwind-merge'
-import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
-import { Image } from '@/core/Image/Image'
+import type { PortableTextBlock } from '@portabletext/types';
+import { twMerge } from 'tailwind-merge';
+import { FigureCaption } from '@/core/FigureCaption/FigureCaption';
+import { Image } from '@/core/Image/Image';
 import type {
   GridType,
   ImageRatioKeys,
   Image as ImageType,
-} from '@/core/Image/imageUtilities'
+} from '@/core/Image/imageUtilities';
 
-type LayoutAlignment = 'full' | 'left' | 'right' | 'center'
+type LayoutAlignment = 'full' | 'left' | 'right' | 'center';
 
 type FigureNode = {
-  _key: string
-  _type: 'imageWithAltAndCaption'
-  attribution?: string
-  caption?: string
-  image: ImageType
-  layout: LayoutAlignment
-  imageOrientation?: 'portrait' | 'landscape' | 'square'
-  centerImageLayout?: 'left' | 'right'
-  centerCaptionAlignment?: 'top' | 'center' | 'bottom'
-  landscapeRatio?: Extract<ImageRatioKeys, '21:9' | 'original' | '16:9'>
-}
+  _key: string;
+  _type: 'imageWithAltAndCaption';
+  attribution?: string;
+  caption?: string;
+  image: ImageType;
+  layout: LayoutAlignment;
+  imageOrientation?: 'portrait' | 'landscape' | 'square';
+  centerImageLayout?: 'left' | 'right';
+  centerCaptionAlignment?: 'top' | 'center' | 'bottom';
+  landscapeRatio?: Extract<ImageRatioKeys, '21:9' | 'original' | '16:9'>;
+};
 
 type BlockProps = {
-  value: FigureNode
-} & PortableTextBlock
+  value: FigureNode;
+} & PortableTextBlock;
 
 export const FigureWithLayout = (block: BlockProps) => {
-  const { value } = block
+  const { value } = block;
   const {
     image,
     caption,
@@ -38,25 +38,25 @@ export const FigureWithLayout = (block: BlockProps) => {
     centerImageLayout = 'left',
     centerCaptionAlignment = 'bottom',
     landscapeRatio = '16:9',
-  } = value
+  } = value;
 
-  if (!image) return null
+  if (!image) return null;
 
-  let imageRatio = '16:9' as ImageRatioKeys
+  let imageRatio = '16:9' as ImageRatioKeys;
   if (imageOrientation === 'square') {
-    imageRatio = '1:1'
+    imageRatio = '1:1';
   }
   if (imageOrientation === 'landscape') {
     if (layout === 'center') {
-      imageRatio = landscapeRatio
+      imageRatio = landscapeRatio;
     } else if (layout === 'full') {
-      imageRatio = '16:9'
+      imageRatio = '16:9';
     } else {
-      imageRatio = '4:3'
+      imageRatio = '4:3';
     }
   }
   if (imageOrientation === 'portrait') {
-    imageRatio = 'original'
+    imageRatio = 'original';
   }
 
   const layoutAlignmentClassName = {
@@ -65,13 +65,13 @@ export const FigureWithLayout = (block: BlockProps) => {
     left: `lg:ps-layout-md md:float-start md:pe-8`,
     //aligned with text
     center: `w-full lg:px-layout-lg items-start md:gap-4`,
-  }
-  let imageGrid = 'xs' as GridType
+  };
+  let imageGrid = 'xs' as GridType;
   if (layout === 'full') {
-    imageGrid = 'md'
+    imageGrid = 'md';
   }
   if (layout === 'center') {
-    imageGrid = 'lg'
+    imageGrid = 'lg';
   }
 
   const figureClassName = twMerge(
@@ -84,24 +84,25 @@ export const FigureWithLayout = (block: BlockProps) => {
     imageOrientation === 'portrait' &&
       centerImageLayout === 'right' &&
       'gap-6 md:grid md:grid-cols-[35%_48%] lg:px-layout-lg',
-  )
+  );
   const centerImageCaptionClassName = {
     top: 'flex flex-col h-full items-start',
     center: 'flex flex-col h-full items-center',
     bottom: 'flex flex-col h-full items-end',
-  }
+  };
 
   const imageElement = (
     <Image
       image={image}
       grid={imageGrid}
       aspectRatio={imageRatio}
+      imageClassName="rounded-xs"
       {...(imageOrientation === 'portrait' && {
         keepRatioOnMobile: true,
         useFitMax: true,
       })}
     />
-  )
+  );
 
   const captionElement = (caption || attribution) && (
     <FigureCaption
@@ -113,7 +114,7 @@ export const FigureWithLayout = (block: BlockProps) => {
       attribution={attribution}
       withLayoutPx={false}
     />
-  )
+  );
 
   return (
     <figure className={figureClassName}>
@@ -125,5 +126,5 @@ export const FigureWithLayout = (block: BlockProps) => {
         (imageOrientation === 'portrait' && centerImageLayout !== 'right')) &&
         captionElement}
     </figure>
-  )
-}
+  );
+};

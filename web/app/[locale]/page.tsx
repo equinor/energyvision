@@ -53,12 +53,18 @@ async function MetadataConnection() {
 // Layer 1: branches on draft mode without awaiting any other dynamic API,
 // so the published route still prerenders into the static shell.
 export default async function Home({ searchParams }: PageProps<'/[locale]'>) {
-  const { isEnabled: isDraftMode } = await draftMode();
+  const [{ isEnabled: isDraftMode }, locale] = await Promise.all([
+    draftMode(),
+    getLocale(),
+  ]);
   if (!isDraftMode) {
     return (
       <>
         <DynamicMetadataMarker />
-        <CachedHome dynamic={{ perspective: 'published', stega: false }} />
+        <CachedHome
+          locale={locale}
+          dynamic={{ perspective: 'published', stega: false }}
+        />
       </>
     );
   }
@@ -67,29 +73,32 @@ export default async function Home({ searchParams }: PageProps<'/[locale]'>) {
     <>
       <DynamicMetadataMarker />
       <Suspense fallback={<LoadingPage homepage />}>
-        <DynamicHome searchParams={searchParams} />
+        <DynamicHome locale={locale} searchParams={searchParams} />
       </Suspense>
     </>
   );
 }
 
 async function DynamicHome({
+  locale,
   searchParams,
-}: Pick<PageProps<'/[locale]'>, 'searchParams'>) {
+}: Pick<PageProps<'/[locale]'>, 'searchParams'> & { locale: string }) {
   const resolvedSearchParams = await searchParams;
   const dynamic = await getDynamicFetchOptions(resolvedSearchParams);
 
-  return <CachedHome dynamic={dynamic} />;
+  return <CachedHome locale={locale} dynamic={dynamic} />;
 }
 
 // Layer 3: fetches through the existing draft-aware/cached `routeSanityFetch`/`getPage`.
+// Request-bound APIs such as getLocale must not be called inside the cached scope.
 async function CachedHome({
+  locale,
   dynamic,
 }: {
+  locale: string;
   dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
 }) {
   'use cache: remote';
-  const locale = await getLocale();
 
   const [siteMenuResult, homePageData] = await Promise.all([
     routeSanityFetch({
