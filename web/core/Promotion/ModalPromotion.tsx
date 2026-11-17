@@ -160,9 +160,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
                 className="hidden h-6 w-6 group-hover/btn:block"
               />
             </span>
-            <span className="sr-only">
-              {intl('read_more_about', { title: plainText ?? '' })}
-            </span>
+            <span className="sr-only">{intl('read_more_about')}</span>
           </button>
         </div>
         {isModalOpen && (
