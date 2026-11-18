@@ -1,4 +1,9 @@
-import type { Rule, ValidationContext } from 'sanity';
+import type {
+  ConditionalPropertyCallbackContext,
+  Rule,
+  ValidationContext,
+} from 'sanity';
+import { isAllowed } from '../../../helpers/isAllowed';
 import { Flags } from '../../../src/lib/datasetHelpers';
 import { PublicationDateInfo } from '../../components/Details/PublicationDateInfo';
 import { SubscriptionTypeInput } from '../../components/SubscriptionTypeInput';
@@ -123,6 +128,20 @@ export const publishDateTime = [
     hidden: true,
   },
 ];
+
+export const NEWSLETTER_RESENT_AT_FIELD_NAME = 'newsletterResentAt';
+
+export const newsletterResentAt = {
+  // Set automatically in the custom action "ResendNewsletterAction"
+  title: 'Newsletter last resent at',
+  description:
+    'Set when an administrator re-triggers the newsletter for this article. Changes the RSS guid so the newsletter service treats it as a new item.',
+  name: NEWSLETTER_RESENT_AT_FIELD_NAME,
+  type: 'datetime',
+  readOnly: true,
+  hidden: ({ currentUser }: ConditionalPropertyCallbackContext) =>
+    !isAllowed(currentUser?.roles, ['administrator']),
+};
 
 export const tags = {
   title: 'Topic tags',

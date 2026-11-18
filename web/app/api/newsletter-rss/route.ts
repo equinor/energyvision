@@ -90,15 +90,17 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
             toPlainText(article.title)
           : article.title;
 
+      const articleUrl = `https://www.equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email`;
+      // A changed guid makes the newsletter service treat the article as a new item
+      const guid = article.newsletterResentAt
+        ? `${articleUrl}&resent=${encodeURIComponent(article.newsletterResentAt)}`
+        : articleUrl;
+
       rss += `
         <item>
           <title>${title}</title>
-          <link><![CDATA[https://www.equinor.com${langPath}${
-            article.slug
-          }?utm_source=newssubscription&utm_medium=email]]></link>
-          <guid><![CDATA[https://www.equinor.com${langPath}${
-            article.slug
-          }?utm_source=newssubscription&utm_medium=email]]></guid>
+          <link><![CDATA[${articleUrl}]]></link>
+          <guid><![CDATA[${guid}]]></guid>
           <pubDate>${publishDate}</pubDate>
           <description><![CDATA[${toPlainText(article.ingress)}]]></description>
           ${
