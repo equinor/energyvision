@@ -10,7 +10,11 @@ import type {
  */
 export function withPrimaryTone(originalAction: DocumentActionComponent) {
   const PrimaryToneAction = (props: DocumentActionProps) => {
-    const originalResult = originalAction(props) as DocumentActionDescription;
+    const originalResult = originalAction(
+      props,
+    ) as DocumentActionDescription | null;
+    // Keep null so an inapplicable action stays hidden instead of rendering an empty button
+    if (!originalResult) return originalResult;
     return { ...originalResult, tone: 'primary' as const };
   };
   PrimaryToneAction.action = originalAction.action;
