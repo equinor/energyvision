@@ -42,7 +42,6 @@ export async function generateMetadata({
       params: {
         lang: locale,
       },
-      stega: false,
       requestTag: 'meta-news',
       tags: [`newsroom:${locale}`],
     });
