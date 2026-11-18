@@ -49,7 +49,6 @@ const MAGAZINE = [...GLOBAL_PROD, ...GLOBAL_DEV, 'stemgapet'];
 const SAME_SLUG = [...GLOBAL_DEV, 'japan'];
 const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV];
 
-const FETCH_OPTIMIZED = [...GLOBAL_PROD, ...SATELLITES, ...GLOBAL_DEV];
 const PEOPLE = [...GLOBAL_PROD, ...GLOBAL_DEV];
 const ADVANCED_HIGHLIGHTER = ['stemgapet', 'global-development'];
 
@@ -88,7 +87,6 @@ export const FeatureFlags = (dataset: DatasetsKeys) => ({
   IS_DEV: GLOBAL_DEV.includes(dataset),
   IS_SATELLITE: SATELLITES.includes(dataset),
   HAS_CAMPAIGN_BLOCKS: CAMPAIGN.includes(dataset),
-  IS_FETCH_OPTIMIZED: FETCH_OPTIMIZED.includes(dataset),
   HAS_PEOPLE: PEOPLE.includes(dataset),
   HAS_ADVANCED_HIGHLIGHTER: ADVANCED_HIGHLIGHTER.includes(dataset),
 });
