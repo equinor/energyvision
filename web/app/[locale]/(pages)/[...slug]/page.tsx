@@ -6,6 +6,7 @@ import { stegaClean } from 'next-sanity';
 import { Fragment, Suspense } from 'react';
 import { getValidLanguagesLocales } from '@/languageConfig';
 import { decodeSlugs } from '@/lib/helpers/getFullUrl';
+import { isValidSlug } from '@/lib/helpers/isValidSlug';
 import { Flags } from '@/sanity/helpers/datasetHelpers';
 import { routeSanityFetch, sanityFetchMetadata } from '@/sanity/lib/fetch';
 import { getDynamicFetchOptions } from '@/sanity/lib/live';
@@ -40,6 +41,7 @@ export async function generateMetadata({
   if (!getValidLanguagesLocales().includes(locale)) notFound();
 
   const slug = decodeSlugs(encodedSlug) as string[];
+  if (!isValidSlug(slug)) notFound();
 
   const sanityLang = locale;
   //news, magazinepage has slug in document
@@ -73,7 +75,6 @@ export async function generateMetadata({
       ...((isNewsPage || isMagazineRoom || isMagazinePage) && { type }),
     },
     perspective: 'published',
-    stega: false,
     tags: [`page:/${slug.join('/')}`],
     requestTag: 'page-meta',
   });
@@ -95,10 +96,13 @@ async function DynamicContent({ params, searchParams }: Props) {
     searchParams,
   ]);
   const dynamic = await getDynamicFetchOptions(resolvedSearchParams);
+  // Reject garbage paths before entering the cached boundary so they never create cache tags.
+  const decodedSlug = decodeSlugs(slug);
+  if (!isValidSlug(decodedSlug)) notFound();
 
   return (
     <CachedContent
-      slug={slug}
+      slug={decodedSlug}
       locale={locale}
       searchParams={resolvedSearchParams}
       dynamic={dynamic}
@@ -107,6 +111,7 @@ async function DynamicContent({ params, searchParams }: Props) {
 }
 
 // Cached (performs sanityFetch). Request-bound APIs such as getLocale must not be called inside.
+// `slug` must already be decoded and validated by the caller.
 async function CachedContent({
   slug,
   locale,
@@ -119,7 +124,7 @@ async function CachedContent({
   searchParams: { [key: string]: string[] | string | undefined };
 }) {
   'use cache: remote';
-  const decodedSlug = decodeSlugs(slug);
+  const slugPath = `/${Array.isArray(slug) ? slug.join('/') : slug}`;
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
@@ -131,13 +136,13 @@ async function CachedContent({
       ...dynamic,
     }),
     getPage({
-      slug: decodedSlug,
+      slug,
       locale,
       searchParams: searchParams,
       fetch: routeSanityFetch,
       ...dynamic,
       stega: false,
-      tags: [`page:/${Array.isArray(slug) ? slug.join('/') : slug}`],
+      tags: [`page:${slugPath}`],
     }),
   ]);
 
@@ -166,9 +171,7 @@ async function CachedContent({
     }
   };
   return (
-    <Fragment
-      key={`${locale}:/${Array.isArray(slug) ? slug.join('/') : slug}:${JSON.stringify(searchParams)}`}
-    >
+    <Fragment key={`${locale}:${slugPath}:${JSON.stringify(searchParams)}`}>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
       <article>{getTemplate()}</article>
     </Fragment>
