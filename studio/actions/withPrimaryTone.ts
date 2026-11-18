@@ -5,7 +5,7 @@ import type {
 } from 'sanity';
 
 /**
- * Sanity's publish action reports `tone: 'default'`, which the themer renders in the
+ * Sanity's publish action reports `tone: 'default'`, which the theme renders in the
  * text colour. Override it so the publish button uses the accent (primary) colour.
  */
 export function withPrimaryTone(originalAction: DocumentActionComponent) {

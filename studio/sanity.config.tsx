@@ -205,10 +205,11 @@ const getConfig = (
     actions: (prev: DocumentActionComponent[], context: any) => {
       // do not allow delete or duplicate action on singletons
       if (singletonTemplates.includes(context.schemaType))
-        //@ts-ignore
-        return prev.filter(
-          (it) => !it.action || !['delete', 'duplicate'].includes(it.action),
-        );
+        return prev
+          .filter(
+            (it) => !it.action || !['delete', 'duplicate'].includes(it.action),
+          )
+          .map((it) => (it.action === 'publish' ? withPrimaryTone(it) : it));
 
       if (i18n.schemaTypes.includes(context.schemaType))
         prev.push(DeleteTranslationAction);
