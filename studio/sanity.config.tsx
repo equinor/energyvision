@@ -24,6 +24,7 @@ import { media } from 'sanity-plugin-media';
 import { createCustomDuplicateAction } from './actions/CustomDuplicateAction';
 import { SetAndPublishAction } from './actions/CustomPublishAction';
 import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslationAction';
+import { withPrimaryTone } from './actions/withPrimaryTone';
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure';
 import { initialValueTemplates } from './initialValueTemplates';
 import { defaultLanguage } from './languages';
@@ -122,6 +123,10 @@ const getConfig = (
     components: {
       input: handleInputComponents,
     },
+    // Always render every array item instead of hiding long arrays behind "Show all"
+    arrays: {
+      collapseItems: { enabled: false },
+    },
   },
   plugins: [
     documentInternationalization(i18n),
@@ -200,10 +205,11 @@ const getConfig = (
     actions: (prev: DocumentActionComponent[], context: any) => {
       // do not allow delete or duplicate action on singletons
       if (singletonTemplates.includes(context.schemaType))
-        //@ts-ignore
-        return prev.filter(
-          (it) => !it.action || !['delete', 'duplicate'].includes(it.action),
-        );
+        return prev
+          .filter(
+            (it) => !it.action || !['delete', 'duplicate'].includes(it.action),
+          )
+          .map((it) => (it.action === 'publish' ? withPrimaryTone(it) : it));
 
       if (i18n.schemaTypes.includes(context.schemaType))
         prev.push(DeleteTranslationAction);
@@ -216,11 +222,11 @@ const getConfig = (
         .map((originalAction) => {
           switch (originalAction.action) {
             case 'publish':
-              return ['news', 'localNews', 'magazine'].includes(
-                context.schemaType,
-              )
-                ? SetAndPublishAction
-                : originalAction;
+              return withPrimaryTone(
+                ['news', 'localNews', 'magazine'].includes(context.schemaType)
+                  ? SetAndPublishAction
+                  : originalAction,
+              );
             case 'duplicate':
               return createCustomDuplicateAction(originalAction);
             default:

@@ -2,7 +2,6 @@ import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig';
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
-import { getLocale } from 'next-intl/server';
 import { stegaClean } from 'next-sanity';
 import { Fragment, Suspense } from 'react';
 import { getValidLanguagesLocales } from '@/languageConfig';
@@ -92,10 +91,9 @@ export default function Page({ params, searchParams }: Props) {
 }
 
 async function DynamicContent({ params, searchParams }: Props) {
-  const [{ slug }, resolvedSearchParams, locale] = await Promise.all([
+  const [{ slug, locale }, resolvedSearchParams] = await Promise.all([
     params,
     searchParams,
-    getLocale(),
   ]);
   const dynamic = await getDynamicFetchOptions(resolvedSearchParams);
   // Reject garbage paths before entering the cached boundary so they never create cache tags.
