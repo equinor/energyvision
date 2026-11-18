@@ -218,6 +218,7 @@ export async function getPage(params: Params) {
     fetch = routeSanityFetch,
     perspective,
     stega,
+    tags,
   } = params;
   const tagParam = searchParams?.tag;
   const tag =
@@ -260,11 +261,14 @@ export async function getPage(params: Params) {
 
     const { data }: { data: any } = await fetch({
       query: pageQuery,
-      tags: [
-        slug
-          ? `page:/${Array.isArray(slug) ? slug?.join('/') : slug}`
-          : `homePage:${locale}`,
-      ],
+      // Callers own the cache tag; fall back to the slug-derived tag when none is given.
+      tags: tags?.length
+        ? tags
+        : [
+            slug
+              ? `page:/${Array.isArray(slug) ? slug?.join('/') : slug}`
+              : `homePage:${locale}`,
+          ],
       params: { ...pageQueryParams },
       requestTag: 'page-by-slug',
       perspective,
