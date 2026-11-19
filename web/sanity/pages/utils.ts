@@ -31,7 +31,7 @@ const formatToValidPrefixedIsoSlugs = (
 
   return (
     slugs
-      ?.filter((e) => e)
+      ?.filter((metaSlug) => metaSlug?.slug)
       .reduce(function (result: LocaleSlug[], metaSlug: LocaleSlug) {
         if (validLanguages.includes(metaSlug.lang)) {
           result.push({
