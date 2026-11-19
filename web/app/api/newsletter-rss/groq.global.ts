@@ -18,7 +18,7 @@ export type LatestNewsType = {
   subscriptionType: string;
   lang: string;
   /** Set by the Studio "Resend newsletter" action; appended to the RSS guid so the item is sent again */
-  newsletterResentAt?: string;
+  newsletterResentAt?: number | null;
 };
 const publishedSinceYesterday = /* groq */ `
 dateTime(${publishDateTimeQuery}) > dateTime(now()) - 86400
