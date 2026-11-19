@@ -104,7 +104,6 @@ const validation =
   (linkToAnotherLanguage = false) =>
   (Rule: Rule) =>
     Rule.custom(async (value: any, context: ValidationContext) => {
-      if (value?._ref && linkToAnotherLanguage) return true;
       const { document } = context as {
         parent: LinkSelector;
         document: { lang?: string };
@@ -118,11 +117,10 @@ const validation =
               id: value._ref,
             },
           );
-        if (
-          document.lang
-            ? document.lang !== referenceLang
-            : defaultLanguage.iso !== referenceLang
-        )
+        const documentLang = document.lang ?? defaultLanguage.iso;
+        if (linkToAnotherLanguage && documentLang === referenceLang)
+          return 'Reference must have a different language from the document';
+        if (!linkToAnotherLanguage && documentLang !== referenceLang)
           return 'Reference must have the same language as the document';
         return true;
       }
