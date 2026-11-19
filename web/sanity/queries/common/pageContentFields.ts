@@ -384,6 +384,8 @@ _type == "keyNumbers" =>{
             "updatedAt":  ${lastUpdatedTimeQuery},
             title,
             heroImage,
+            showUpdatedTag,
+            customUpdatedTimestamp,
             "publishDateTime": ${publishDateTimeQuery},
             "link": {
               "slug": slug.current,
@@ -410,6 +412,8 @@ _type == "keyNumbers" =>{
           "updatedAt":  ${lastUpdatedTimeQuery},
           title,
           heroImage,
+          showUpdatedTag,
+          customUpdatedTimestamp,
           "publishDateTime": ${publishDateTimeQuery},
           
           "link":{

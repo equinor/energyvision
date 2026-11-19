@@ -7,7 +7,9 @@ import type { PortableTextBlock } from 'next-sanity';
 import { ArticleJsonLd } from 'next-seo';
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime';
 import type { Figure, Image } from '@/core/Image/imageUtilities';
+import { Typography } from '@/core/Typography/Typography';
 import TransformableIcon from '@/icons/TransformableIcon';
+import { formatDateTimeInNorwegianTime } from '@/lib/helpers/dateUtilities';
 import { getFullUrl } from '@/lib/helpers/getFullUrl';
 import { resolveOpenGraphImage } from '@/sanity/lib/utils';
 import { DefaultHero } from '@/sections/Hero/DefaultHero';
@@ -26,6 +28,8 @@ export type NewsPageProps = {
   id: string;
   updatedAt: string;
   publishDateTime: string;
+  showUpdatedTag?: boolean;
+  customUpdatedTimestamp?: string;
   heroImage: Figure;
   ingress: PortableTextBlock[];
   content: PortableTextBlock[];
@@ -58,6 +62,8 @@ export type NewsPageProps = {
 const NewsPage = async ({
   publishDateTime,
   updatedAt,
+  showUpdatedTag = false,
+  customUpdatedTimestamp,
   title,
   openGraphImage,
   heroImage,
@@ -73,6 +79,17 @@ const NewsPage = async ({
   const intl = await getTranslations();
 
   const fullUrl = getFullUrl(slug ?? '', locale);
+  const updatedLabel = intl.has('updated') ? intl('updated') : 'Updated';
+  const updatedTimestamp = customUpdatedTimestamp || updatedAt;
+  const updatedDateTime =
+    showUpdatedTag && updatedTimestamp
+      ? formatDateTimeInNorwegianTime(updatedTimestamp, locale)
+      : undefined;
+  const updatedEyebrow = showUpdatedTag ? (
+    <span className="whitespace-nowrap rounded-full bg-moss-green-50/55 px-3 py-2 font-medium text-slate-80 text-sm uppercase lg:text-xs">
+      {updatedLabel}
+    </span>
+  ) : null;
 
   //Is publishDateTime after updatedAt, then set modifiedDate to publishDateTime, else set to updatedAt
   const modifiedDate = isAfter(new Date(publishDateTime), new Date(updatedAt))
@@ -127,10 +144,16 @@ const NewsPage = async ({
             ratio="16:9"
             subTitle={publishedInformation}
             figCaptionClassName="light"
+            eyebrow={updatedEyebrow}
           />
           <div className="mx-auto max-w-content">
             {ingress && ingress.length > 0 && (
               <Blocks group="article" variant="ingress" value={ingress} />
+            )}
+            {updatedDateTime && (
+              <Typography className="mx-layout-sm mb-6 font-medium text-sm lg:mx-layout-lg">
+                {`${updatedLabel}: ${updatedDateTime}`}
+              </Typography>
             )}
             {content && content.length > 0 && (
               <Blocks group="article" variant="body" value={formattedContent} />

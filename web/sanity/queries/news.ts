@@ -36,6 +36,8 @@ export const newsQuery = /* groq */ `
     _id, //used for data filtering
     "id": _id,
     "updatedAt": ${lastUpdatedTimeQuery},
+    showUpdatedTag,
+    customUpdatedTimestamp,
     title,
     heroImage,
     "publishDateTime": ${publishDateTimeQuery},

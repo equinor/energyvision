@@ -76,6 +76,26 @@ export default {
     },
     title,
     ...publishDateTime,
+    {
+      title: 'Show updated  pill and datetime',
+      description: 'Shows an promotion card with the updated pill and datetime',
+      name: 'showUpdatedTag',
+      type: 'boolean',
+      initialValue: false,
+    },
+    {
+      title: 'Updated date and time',
+      name: 'customUpdatedTimestamp',
+      description:
+        'The date and time which will be highlighted when the updated tag is shown',
+      type: 'datetime',
+      options: {
+        timeStep: 1,
+        calendarTodayLabel: 'Today',
+      },
+      hidden: ({ parent }: { parent?: { showUpdatedTag?: boolean } }) =>
+        !parent?.showUpdatedTag,
+    },
     Flags.HAS_NEWS && { ...tags, fieldset: 'tagFieldset' },
     Flags.HAS_NEWS && { ...countryTags, fieldset: 'tagFieldset' },
     Flags.HAS_NEWS_SUBSCRIPTION && {
