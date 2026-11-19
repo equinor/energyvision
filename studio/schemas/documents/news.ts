@@ -19,7 +19,6 @@ import {
   heroImage,
   iframe,
   ingress,
-  newsletterResentAt,
   newsSlugField,
   newsletterResentAt,
   openGraphImage,
