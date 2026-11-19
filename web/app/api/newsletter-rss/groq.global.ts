@@ -47,7 +47,7 @@ ${functions}
     "hero": heroImage,
     subscriptionType,
     "publishDateTime": ${publishDateTimeQuery},
-    "newsletterResentAt": dateTime::timestamp(newsletterResentAt),
+    "newsletterResentAt": (dateTime(newsletterResentAt) - dateTime("1970-01-01T00:00:00Z")) * 1000,
     ingress[]{
     ...,
     ${markDefs},
