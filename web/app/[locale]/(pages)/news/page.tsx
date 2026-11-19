@@ -84,21 +84,23 @@ const getInitialResponse =
   };
 
 export default function NewsroomPage({
+  params,
   searchParams,
 }: PageProps<'/[locale]/news'>) {
   return (
     <Suspense fallback={<NewsroomLoadingPage />}>
-      <DynamicNewsroomPage searchParams={searchParams} />
+      <DynamicNewsroomPage params={params} searchParams={searchParams} />
     </Suspense>
   );
 }
 
 async function DynamicNewsroomPage({
+  params,
   searchParams,
-}: Pick<PageProps<'/[locale]/news'>, 'searchParams'>) {
-  const [dynamic, locale] = await Promise.all([
+}: Pick<PageProps<'/[locale]/news'>, 'params' | 'searchParams'>) {
+  const [dynamic, { locale }] = await Promise.all([
     searchParams.then(getDynamicFetchOptions),
-    getLocale(),
+    params,
   ]);
   return <CachedNewsroomPage locale={locale} dynamic={dynamic} />;
 }

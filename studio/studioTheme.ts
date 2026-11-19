@@ -1,6 +1,6 @@
 import type { BuildThemeOptions } from '@sanity/themer';
 
-// Accent is left at the Sanity default (blue/500); only text and backgrounds are customised
+// Sanity's default accent, text, and background colors are used; only contrast is customised
 export const studioThemeOptions = {
   light: {
     contrast: 85,
