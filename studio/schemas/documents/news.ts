@@ -21,6 +21,7 @@ import {
   ingress,
   newsletterResentAt,
   newsSlugField,
+  newsletterResentAt,
   openGraphImage,
   publishDateTime,
   relatedLinks,
