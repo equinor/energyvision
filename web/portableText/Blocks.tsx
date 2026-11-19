@@ -250,6 +250,15 @@ const markSerializers: MarkType = {
   strong: ({ children }: any) => (
     <strong className="font-semibold">{children}</strong>
   ),
+  redDot: ({ children }) => (
+    <strong className="font-semibold">
+      <span
+        aria-hidden="true"
+        className="-ms-4 me-2 inline-block size-2 rounded-full bg-energy-red-100 align-middle"
+      />
+      {children}
+    </strong>
+  ),
   attachment: ({ children, value }: any) => {
     const { attachment } = value;
     return (

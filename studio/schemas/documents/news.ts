@@ -78,7 +78,7 @@ export default {
     title,
     ...publishDateTime,
     {
-      title: 'Show updated  pill and datetime',
+      title: 'Show updated pill and datetime',
       description: 'Shows an promotion card with the updated pill and datetime',
       name: 'showUpdatedTag',
       type: 'boolean',
@@ -88,7 +88,7 @@ export default {
       title: 'Updated date and time',
       name: 'customUpdatedTimestamp',
       description:
-        'The date and time which will be highlighted when the updated tag is shown',
+        'The date and time which will be highlighted when the updated tag is shown. If left empty, when the above option is enabled, web will use the modified date of the document.',
       type: 'datetime',
       options: {
         timeStep: 1,

@@ -3,6 +3,7 @@ import {
   format_color_text,
   star_filled,
 } from '@equinor/eds-icons';
+import { LuSquareDot } from 'react-icons/lu';
 import { MdOutlineAnchor } from 'react-icons/md';
 import type { BlockDefinition, BlockStyleDefinition } from 'sanity';
 import type { Level2Keys } from '@/helpers/Level2KeyTypes';
@@ -35,6 +36,27 @@ export const textColorConfig = {
   component: ({ children }: { children: React.ReactNode }) => {
     return <span style={{ color: defaultColors[8].value }}>{children}</span>;
   },
+};
+const redDotConfig = {
+  title: 'Red dot (bold)',
+  value: 'redDot',
+  icon: LuSquareDot,
+  component: ({ children }: { children: React.ReactNode }) => (
+    <strong>
+      <span
+        aria-hidden="true"
+        style={{
+          display: 'inline-block',
+          width: '0.5em',
+          height: '0.5em',
+          marginRight: '0.5em',
+          borderRadius: '50%',
+          backgroundColor: defaultColors[8].value,
+        }}
+      />
+      {children}
+    </strong>
+  ),
 };
 
 /**
@@ -97,6 +119,7 @@ export type BlockContentProps = {
   largeText?: boolean;
   extraLargeText?: boolean;
   highlight?: boolean;
+  redDot?: boolean;
   extendedStyles?: BlockStyleDefinition[];
   onlySubSupScriptDecorators?: boolean;
   strikeThrough?: boolean;
@@ -218,6 +241,7 @@ const baseStylesOptions: BlockContentProps = {
   largeText: false,
   extraLargeText: false,
   highlight: false,
+  redDot: false,
   footnote: false,
   onlySubSupScriptDecorators: false,
   strikeThrough: false,
@@ -315,6 +339,7 @@ export const configureBlockContent = (
     extraLargeText,
     smallText,
     highlight,
+    redDot,
     footnote,
     onlySubSupScriptDecorators,
     strikeThrough,
@@ -586,6 +611,9 @@ export const configureBlockContent = (
   }
   if (highlight) {
     config.marks?.decorators?.push(textColorConfig);
+  }
+  if (redDot) {
+    config.marks?.decorators?.push(redDotConfig);
   }
 
   return config;
