@@ -86,7 +86,7 @@ const NewsPage = async ({
       ? formatDateTimeInNorwegianTime(updatedTimestamp, locale)
       : undefined;
   const updatedEyebrow = showUpdatedTag ? (
-    <span className="whitespace-nowrap rounded-full bg-moss-green-50/55 px-3 py-2 font-medium text-slate-80 text-sm uppercase lg:text-xs">
+    <span className="whitespace-nowrap rounded-full bg-white-100/75 px-3 py-2 font-medium text-slate-80 text-sm uppercase lg:text-xs">
       {updatedLabel}
     </span>
   ) : null;
@@ -151,8 +151,14 @@ const NewsPage = async ({
               <Blocks group="article" variant="ingress" value={ingress} />
             )}
             {updatedDateTime && (
-              <Typography className="mx-layout-sm mb-6 font-medium text-sm lg:mx-layout-lg">
-                {`${updatedLabel}: ${updatedDateTime}`}
+              <Typography className="mx-layout-sm mb-6 font-medium lg:mx-layout-lg">
+                <strong className="font-semibold">
+                  <span
+                    aria-hidden="true"
+                    className="-ms-4 me-2 inline-block size-2 rounded-full bg-energy-red-100 align-middle"
+                  />
+                  {`${updatedLabel}: ${updatedDateTime}`}
+                </strong>
               </Typography>
             )}
             {content && content.length > 0 && (
