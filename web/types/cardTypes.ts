@@ -17,6 +17,8 @@ export type CardData = {
   heroType?: HeroTypes;
   /** News only: show an "Updated" tag on the promotion image */
   showUpdatedTag?: boolean;
+  /** News only: fallback ISO timestamp for the updated tag */
+  updatedAt?: string;
   /** News only: ISO date and time shown together with the updated tag */
   customUpdatedTimestamp?: string;
 };
