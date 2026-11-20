@@ -21,6 +21,8 @@ export const excludeCrudeOilAssays =
 const latestNewsFields = /* groq */ `
   "id": _id,
   "updatedAt": ${lastUpdatedTimeQuery},
+  showUpdatedTag,
+  customUpdatedTimestamp,
   title,
   heroImage,
   "slugs":{${inlineSlugsQuery}},

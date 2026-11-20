@@ -39,6 +39,8 @@ const newsListArticleFields = /* groq */ `
   "type": _type,
   "id": _id,
   "updatedAt": ${lastUpdatedTimeQuery},
+  showUpdatedTag,
+  customUpdatedTimestamp,
   title,
   heroImage,
   "publishDateTime": ${publishDateTimeQuery},
