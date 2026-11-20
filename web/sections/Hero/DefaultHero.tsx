@@ -1,5 +1,6 @@
 import type { PortableTextBlock } from '@portabletext/types';
 import type { HTMLAttributes, ReactNode } from 'react';
+import { Suspense } from 'react';
 import type { Figure, ImageRatioKeys } from '@/core/Image/imageUtilities';
 import { Picture } from '@/core/Picture/Picture';
 import { Typography } from '@/core/Typography';
@@ -106,7 +107,16 @@ export const DefaultHero = ({
           </div>
         )}
         {magazineTags && magazineTags?.length > 0 && (
-          <MagazineTagBar tags={magazineTags} />
+          <Suspense
+            fallback={
+              <div
+                aria-hidden="true"
+                className="my-8 w-full border-grey-30 border-y-[0.5px] p-8"
+              />
+            }
+          >
+            <MagazineTagBar tags={magazineTags} />
+          </Suspense>
         )}
       </div>
     </div>
