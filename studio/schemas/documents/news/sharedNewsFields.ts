@@ -221,7 +221,11 @@ export const content = {
   title: 'Content',
   type: 'array',
   of: [
-    configureBlockContent({ group: 'article', footnote: true, redDot: true }),
+    configureBlockContent({
+      group: 'article',
+      footnote: true,
+      redDot: Flags.HAS_NEWSROOM,
+    }),
     { type: 'pullQuote' },
     { type: 'positionedInlineImage' },
     { type: 'factbox' },
