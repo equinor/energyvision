@@ -164,9 +164,8 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
               >
                 {tabList?.map((tab: TabItem, i: number) => {
                   return (
-                    // eslint-disable-next-line react/no-array-index-key
                     <Tab
-                      key={`${tab.id}_index_${i}`}
+                      key={tab.id}
                       value={tab.id}
                       className={twMerge(
                         hasFullWidthImage && i === 0 && 'lg:pl-20',
@@ -180,11 +179,10 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                   );
                 })}
               </TabList>
-              {tabList?.map((tabItem: TabItem, i: number) => {
+              {tabList?.map((tabItem: TabItem) => {
                 return (
                   <TabPanel
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={`${tabItem?.id}_index_${i}`}
+                    key={tabItem.id}
                     value={tabItem.id}
                     className={twMerge(
                       tabPanelVariant === 'tabsKeyNumbers' &&

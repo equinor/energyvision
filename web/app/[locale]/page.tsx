@@ -137,6 +137,7 @@ async function CachedHome({
     <FriendlyCaptchaSdkWrapper>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
       <OrganizationJsonLd
+        scriptKey="organization-jsonld-home"
         name="Equinor ASA"
         url="https://www.equinor.com"
         logo="https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red"

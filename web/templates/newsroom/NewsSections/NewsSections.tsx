@@ -12,6 +12,22 @@ type NewsSectionsProps = {
   fallbackImages?: SanityImageObject[];
 } & React.ComponentProps<'div'>;
 
+const getFallbackImage = (
+  objectId: string,
+  fallbackImages?: SanityImageObject[],
+) => {
+  if (!fallbackImages?.length) {
+    return undefined;
+  }
+
+  const hash = [...objectId].reduce(
+    (value, character) => (value * 31 + character.charCodeAt(0)) >>> 0,
+    0,
+  );
+
+  return fallbackImages[hash % fallbackImages.length];
+};
+
 const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(
   function NewsSections({ fallbackImages, className = '' }, ref) {
     const { items } = useHits();
@@ -39,6 +55,10 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(
           </p>
         )}
         {items.map((hit, index) => {
+          const fallbackImage = hit?.heroImage?.image?.asset
+            ? undefined
+            : getFallbackImage(hit.objectID, fallbackImages);
+
           return index === 0 ? (
             <NewsHeadliner
               key={hit.objectID}
@@ -47,13 +67,7 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(
                 ...hit,
                 title: hit.pageTitle,
               }}
-              {...(!hit?.heroImage?.image?.asset &&
-                fallbackImages && {
-                  fallbackImage:
-                    fallbackImages[
-                      Math.floor(Math.random() * fallbackImages?.length)
-                    ],
-                })}
+              {...(fallbackImage && { fallbackImage })}
             />
           ) : (
             <NewsItem
@@ -63,13 +77,7 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(
                 ...hit,
                 title: hit.pageTitle,
               }}
-              {...(!hit?.heroImage?.image?.asset &&
-                fallbackImages && {
-                  fallbackImage:
-                    fallbackImages[
-                      Math.floor(Math.random() * fallbackImages?.length)
-                    ],
-                })}
+              {...(fallbackImage && { fallbackImage })}
             />
           );
         })}
