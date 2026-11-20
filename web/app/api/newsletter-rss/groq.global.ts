@@ -18,8 +18,17 @@ export type LatestNewsType = {
   subscriptionType: string;
   lang: string;
 };
+
+export type NewsletterArticle = Omit<LatestNewsType, 'publishDateTime'> & {
+  articleDisplayDate: string;
+  rssPublicationDate: string;
+};
+
+const rssPublicationDateQuery = /* groq */ `
+coalesce(newsletterResentAt, firstPublishedAt, _createdAt)
+`;
 const publishedSinceYesterday = /* groq */ `
-dateTime(${publishDateTimeQuery}) > dateTime(now()) - 86400
+dateTime(${rssPublicationDateQuery}) > dateTime(now()) - 86400
 `;
 //add groq to collect only ones with category that has been published since yesterday
 
@@ -37,14 +46,15 @@ ${functions}
 
 export const latestNews = /* groq */ `
 ${functions}
-  *[_type == "news" &&  ${publishedSinceYesterday} &&  ((defined(subscriptionType) && ${sameLang}) || subscriptionType == "Crude")] | order(${publishDateTimeQuery} desc)[0...5] {
+  *[_type == "news" &&  ${publishedSinceYesterday} &&  ((defined(subscriptionType) && ${sameLang}) || subscriptionType == "Crude")] | order(dateTime(${rssPublicationDateQuery}) desc)[0...5] {
     _id,
     "type":_type,
     "slug": slug.current,
     title,
     "hero": heroImage,
     subscriptionType,
-    "publishDateTime": ${publishDateTimeQuery},
+    "articleDisplayDate": ${publishDateTimeQuery},
+    "rssPublicationDate": ${rssPublicationDateQuery},
     ingress[]{
     ...,
     ${markDefs},
@@ -54,7 +64,7 @@ ${functions}
 `;
 export const latestMagazine = /* groq */ `
 ${functions}
-  *[_type == "magazine" && shouldDistributeMagazine && ${sameLang} && ${publishedSinceYesterday}] | order(${publishDateTimeQuery} desc)[0...5] {
+  *[_type == "magazine" && shouldDistributeMagazine && ${sameLang} && ${publishedSinceYesterday}] | order(dateTime(${rssPublicationDateQuery}) desc)[0...5] {
     _id,
     "type":_type,
     "slug": slug.current,
@@ -63,7 +73,8 @@ ${functions}
       heroType == "loopingVideo" => { "image": heroLoopingVideo->thumbnail },
       heroFigure,
     ),
-    "publishDateTime": ${publishDateTimeQuery},
+    "articleDisplayDate": ${publishDateTimeQuery},
+    "rssPublicationDate": ${rssPublicationDateQuery},
     ingress[]{
     ...,
     ${markDefs},

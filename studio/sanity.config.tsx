@@ -14,6 +14,7 @@ import type {
 import {
   type ConfigContext,
   type DocumentActionComponent,
+  type DocumentActionsContext,
   defineConfig,
   type PluginOptions,
   type SchemaTypeDefinition,
@@ -24,8 +25,10 @@ import { media } from 'sanity-plugin-media';
 import { createCustomDuplicateAction } from './actions/CustomDuplicateAction';
 import { SetAndPublishAction } from './actions/CustomPublishAction';
 import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslationAction';
+import { ResendNewsletterAction } from './actions/ResendNewsletterAction';
 import { withPrimaryTone } from './actions/withPrimaryTone';
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure';
+import { isAllowed } from './helpers/isAllowed';
 import { initialValueTemplates } from './initialValueTemplates';
 import { defaultLanguage } from './languages';
 import { FotowareAssetSource } from './plugins/asset-source-fotoware-v2';
@@ -34,6 +37,7 @@ import { schemaTypes } from './schemas';
 import { CharacterCountInputPTE } from './schemas/components/CharacterCountInputPTE';
 import { LangBadge } from './schemas/components/LangBadge';
 import { i18n } from './schemas/documentTranslation';
+import { Flags } from './src/lib/datasetHelpers';
 import './styles/customStyles.css';
 //import { getMetaTitleSuffix } from '@energyvision/shared/satelliteConfig'
 import { presentationTool } from 'sanity/presentation';
@@ -202,7 +206,10 @@ const getConfig = (
           ]
         : prev;
     },
-    actions: (prev: DocumentActionComponent[], context: any) => {
+    actions: (
+      prev: DocumentActionComponent[],
+      context: DocumentActionsContext,
+    ) => {
       // do not allow delete or duplicate action on singletons
       if (singletonTemplates.includes(context.schemaType))
         return prev
@@ -213,6 +220,14 @@ const getConfig = (
 
       if (i18n.schemaTypes.includes(context.schemaType))
         prev.push(DeleteTranslationAction);
+      // Only admins/developers, and only on the published version (no pending draft)
+      if (
+        Flags.HAS_NEWSLETTER_RESEND &&
+        context.schemaType === 'news' &&
+        context.versionType === 'published' &&
+        isAllowed(context.currentUser?.roles, ['administrator', 'developer'])
+      )
+        prev.push(ResendNewsletterAction);
       return prev
         .filter(({ action }: DocumentActionComponent) => {
           return !(

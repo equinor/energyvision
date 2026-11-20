@@ -30,6 +30,8 @@ const NEWS = [
 ];
 const ARCHIVED_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV];
 const NEWS_SUBSCRIPTION = [...GLOBAL_PROD, ...GLOBAL_DEV];
+/* Studio action that re-triggers the newsletter for an already published news article */
+const NEWSLETTER_RESEND = ['global', 'global-development'];
 const MAGAZINE_SUBSCRIPTION = [...GLOBAL_DEV, ...GLOBAL_PROD];
 const NEWSROOM = [...GLOBAL_PROD, ...GLOBAL_DEV];
 const LOCAL_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV];
@@ -60,6 +62,7 @@ export const FeatureFlags = (dataset: DatasetsKeys) => ({
   HAS_NEWSROOM: NEWSROOM.includes(dataset),
   HAS_ARCHIVED_NEWS: ARCHIVED_NEWS.includes(dataset),
   HAS_NEWS_SUBSCRIPTION: NEWS_SUBSCRIPTION.includes(dataset),
+  HAS_NEWSLETTER_RESEND: NEWSLETTER_RESEND.includes(dataset),
   HAS_MAGAZINE_SUBSCRIPTION: MAGAZINE_SUBSCRIPTION.includes(dataset),
   HAS_LOCAL_NEWS: LOCAL_NEWS.includes(dataset),
   HAS_SEARCH: SEARCH.includes(dataset),
