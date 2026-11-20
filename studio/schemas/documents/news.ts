@@ -76,14 +76,14 @@ export default {
     },
     title,
     ...publishDateTime,
-    {
+    Flags.HAS_NEWSROOM && {
       title: 'Show updated pill and datetime',
       description: 'Shows an promotion card with the updated pill and datetime',
       name: 'showUpdatedTag',
       type: 'boolean',
       initialValue: false,
     },
-    {
+    Flags.HAS_NEWSROOM && {
       title: 'Updated date and time',
       name: 'customUpdatedTimestamp',
       description:
