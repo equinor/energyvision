@@ -235,7 +235,13 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
               {updatedDateTime && (
                 // Padding for the gap: the variant resets margin-top directly after a heading
                 <Typography className="my-0 pt-1.5 font-medium text-xs">
-                  {`${updatedLabel}: ${updatedDateTime}`}
+                  <strong className="font-semibold">
+                    <span
+                      aria-hidden="true"
+                      className="-ms-4 me-2 inline-block size-2 rounded-full bg-energy-red-100 align-middle"
+                    />
+                    {`${updatedLabel}: ${updatedDateTime}`}
+                  </strong>
                 </Typography>
               )}
             </div>

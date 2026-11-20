@@ -74,6 +74,9 @@ const NewsList = ({
                   //@ts-ignore:todo
                   title={newsItem?.title}
                   ingress={newsItem?.ingress}
+                  showUpdatedTag={newsItem?.showUpdatedTag}
+                  updatedTimestamp={newsItem?.customUpdatedTimestamp}
+                  updatedAt={newsItem?.updatedAt}
                   {...(newsItem?.publishDateTime && {
                     eyebrow: (
                       <FormattedDateTime
