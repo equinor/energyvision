@@ -1,52 +1,52 @@
-'use client'
-import { toPlainText } from '@portabletext/react'
-import type { PortableTextBlock } from '@portabletext/types'
+'use client';
+import { toPlainText } from '@portabletext/react';
+import type { PortableTextBlock } from '@portabletext/types';
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
-} from '@tanstack/react-table'
-import { isValid, parse } from 'date-fns'
-import { forwardRef, useMemo } from 'react'
-import { twMerge } from 'tailwind-merge'
-import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
-import { Table } from '@/core/Table'
-import type { ThemeVariants } from '@/core/Table/Table'
-import Blocks from '@/portableText/Blocks'
-import type { LayoutGrid } from '@/types/designOptionsTypes'
+} from '@tanstack/react-table';
+import { isValid, parse } from 'date-fns';
+import { forwardRef, useMemo } from 'react';
+import { twMerge } from 'tailwind-merge';
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime';
+import { Table } from '@/core/Table';
+import type { ThemeVariants } from '@/core/Table/Table';
+import Blocks from '@/portableText/Blocks';
+import type { LayoutGrid } from '@/types/designOptionsTypes';
 
 //uses xl breakpoint for larger displays
 export const getTableLayoutPx = (variant: LayoutGrid) => {
   switch (variant) {
     case 'sm':
-      return `px-layout-sm`
+      return `px-layout-sm`;
     case 'md':
-      return `px-layout-sm xl:px-layout-md`
+      return `px-layout-sm xl:px-layout-md`;
     default:
-      return `px-layout-sm xl:px-layout-lg`
+      return `px-layout-sm xl:px-layout-lg`;
   }
-}
+};
 
 export type TableBlockProps = {
-  variant?: 'default' | 'import'
-  title: PortableTextBlock[]
-  ingress: PortableTextBlock[]
-  tableCaption?: string
-  tableHeaders?: any[]
-  rows: any
-  theme?: ThemeVariants
-  useBorder?: boolean
-  reducePaddingBottom?: boolean
-  noPaddingTop?: boolean
-  anchor?: string
-  className?: string
-  layoutGrid?: LayoutGrid
-  widthAdjustment?: 'fit' | 'full'
+  variant?: 'default' | 'import';
+  title: PortableTextBlock[];
+  ingress: PortableTextBlock[];
+  tableCaption?: string;
+  tableHeaders?: any[];
+  rows: any;
+  theme?: ThemeVariants;
+  useBorder?: boolean;
+  reducePaddingBottom?: boolean;
+  noPaddingTop?: boolean;
+  anchor?: string;
+  className?: string;
+  layoutGrid?: LayoutGrid;
+  widthAdjustment?: 'fit' | 'full';
   //Deprecated props, to be removed in future, should not be used in new content
-  useFullContainerWidth?: boolean
-  useInnerContentWidth?: boolean
-}
+  useFullContainerWidth?: boolean;
+  useInnerContentWidth?: boolean;
+};
 
 const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
   function TableBlock(
@@ -74,18 +74,18 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
     //TODO: remove backwards compatibility for deprecated useFullContainerWidth prop
     // Studio will give error so will be adjusted to string going live with upgrade
     //@ts-ignore
-    const _theme = typeof theme === 'string' ? theme : theme?.title
+    const _theme = typeof theme === 'string' ? theme : theme?.title;
 
     const headerKeys = useMemo(() => {
       if (variant === 'import') {
         return rows?.[0]?.isHeader
           ? rows?.[0]?.cells.map((cell: any) => cell)
-          : []
+          : [];
       }
       return Array.isArray(tableHeaders)
-        ? tableHeaders.map(header => toPlainText(header.headerCell))
-        : []
-    }, [variant, tableHeaders, rows])
+        ? tableHeaders.map((header) => toPlainText(header.headerCell))
+        : [];
+    }, [variant, tableHeaders, rows]);
 
     const columnData = useMemo(() => {
       if (
@@ -95,8 +95,8 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
       ) {
         console.warn(
           'TableBlock: rows or headerKeys missing or empty, returning empty columnData',
-        )
-        return []
+        );
+        return [];
       }
       if (variant === 'import') {
         //First row of import table rows is header row
@@ -106,8 +106,8 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
               key,
               tableRow?.cells[index],
             ]),
-          )
-        })
+          );
+        });
       }
       return rows?.map((tableRow: any) => {
         return Object.fromEntries(
@@ -115,11 +115,11 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
             key,
             tableRow?.cells?.[index]?.content,
           ]),
-        )
-      })
-    }, [variant, rows, headerKeys])
+        );
+      });
+    }, [variant, rows, headerKeys]);
 
-    const columnHelper = createColumnHelper<any>()
+    const columnHelper = createColumnHelper<any>();
 
     const columns = useMemo(() => {
       return headerKeys?.map((headerKey: any, index: number) => {
@@ -129,65 +129,65 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
               headerKey
             ) : (
               <Blocks value={tableHeaders?.[index].headerCell} />
-            )
+            );
           },
           id: `headercell_${index}_${headerKey}`,
           cell: (info: any) => {
-            const value = info.getValue()
-            const isPortableText = Array.isArray(value)
+            const value = info.getValue();
+            const isPortableText = Array.isArray(value);
             if (variant === 'default' && tableHeaders?.[index]?.formatAsDate) {
-              const plainDateString = toPlainText(value)
-              const formatString = 'dd/MM/yyyy' // Define the format explicitly
-              const formatStringAlternative = 'yyyy-MM-dd'
-              const dateObj = parse(plainDateString, formatString, new Date()) // The third arg is a reference date
+              const plainDateString = toPlainText(value);
+              const formatString = 'dd/MM/yyyy'; // Define the format explicitly
+              const formatStringAlternative = 'yyyy-MM-dd';
+              const dateObj = parse(plainDateString, formatString, new Date(0)); // The third arg is a reference date
               const dateObjAlternative = parse(
                 plainDateString,
                 formatStringAlternative,
-                new Date(),
-              ) // The third arg is a reference date
+                new Date(0),
+              ); // The third arg is a reference date
               if (isValid(dateObj)) {
                 return (
                   <FormattedDateTime
                     datetime={dateObj.toDateString()}
-                    day='numeric'
-                    year='numeric'
-                    month='short'
+                    day="numeric"
+                    year="numeric"
+                    month="short"
                   />
-                )
+                );
               }
               if (isValid(dateObjAlternative)) {
                 return (
                   <FormattedDateTime
                     datetime={dateObjAlternative.toDateString()}
-                    day='numeric'
-                    year='numeric'
-                    month='short'
+                    day="numeric"
+                    year="numeric"
+                    month="short"
                   />
-                )
+                );
               }
-              return <Blocks value={value} variant='body' />
+              return <Blocks value={value} variant="body" />;
             }
             if (isPortableText) {
-              return <Blocks value={info.getValue()} variant='body' />
+              return <Blocks value={info.getValue()} variant="body" />;
             }
-            return info.getValue()
+            return info.getValue();
           },
-        })
-      })
-    }, [columnHelper, headerKeys, tableHeaders, variant])
+        });
+      });
+    }, [columnHelper, headerKeys, tableHeaders, variant]);
 
     const reactTable = useReactTable({
       data: columnData,
       columns,
       getCoreRowModel: getCoreRowModel(),
-    })
+    });
 
     //TODO: remove useInnerContentWidth when period of transition and set layoutGrid prop as = "md"
     const px = getTableLayoutPx(
       layoutGrid ?? (useInnerContentWidth ? 'lg' : 'md'),
-    )
+    );
     const tableStretch =
-      (widthAdjustment && widthAdjustment === 'full') ?? useFullContainerWidth
+      (widthAdjustment && widthAdjustment === 'full') ?? useFullContainerWidth;
 
     return (
       <div
@@ -202,14 +202,14 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
         )}
       >
         {title && (
-          <div className='px-layout-sm lg:px-layout-lg'>
-            {title && <Blocks value={title} variant='h2' />}
-            {ingress && <Blocks value={ingress} variant='ingress' />}
+          <div className="px-layout-sm lg:px-layout-lg">
+            {title && <Blocks value={title} variant="h2" />}
+            {ingress && <Blocks value={ingress} variant="ingress" />}
           </div>
         )}
         <div className={`w-full ${px} flex justify-center`}>
           <div
-            className='w-full overflow-x-auto'
+            className="w-full overflow-x-auto"
             // Scrollable, needs to be keyboard accessible
             // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
             tabIndex={0}
@@ -258,8 +258,8 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
           </div>
         </div>
       </div>
-    )
+    );
   },
-)
+);
 
-export default TableBlock
+export default TableBlock;
