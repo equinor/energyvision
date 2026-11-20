@@ -39,6 +39,8 @@ const newsListArticleFields = /* groq */ `
   "type": _type,
   "id": _id,
   "updatedAt": ${lastUpdatedTimeQuery},
+  showUpdatedTag,
+  customUpdatedTimestamp,
   title,
   heroImage,
   "publishDateTime": ${publishDateTimeQuery},
@@ -384,6 +386,8 @@ _type == "keyNumbers" =>{
             "updatedAt":  ${lastUpdatedTimeQuery},
             title,
             heroImage,
+            showUpdatedTag,
+            customUpdatedTimestamp,
             "publishDateTime": ${publishDateTimeQuery},
             "link": {
               "slug": slug.current,
@@ -410,6 +414,8 @@ _type == "keyNumbers" =>{
           "updatedAt":  ${lastUpdatedTimeQuery},
           title,
           heroImage,
+          showUpdatedTag,
+          customUpdatedTimestamp,
           "publishDateTime": ${publishDateTimeQuery},
           
           "link":{
