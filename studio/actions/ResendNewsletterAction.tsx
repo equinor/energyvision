@@ -11,8 +11,8 @@ import { NEWSLETTER_RESENT_AT_FIELD_NAME } from '../schemas/documents/news/share
 
 /**
  * Stamps `newsletterResentAt` on an already published news article. The web
- * newsletter RSS feed appends the timestamp to the item guid, so the newsletter
- * service treats the article as a new item and sends it again.
+ * newsletter RSS feed uses that timestamp as the item's pubDate so Make
+ * picks up the article again.
  *
  * Role, dataset and draft/published filtering happens in `sanity.config.tsx`.
  */

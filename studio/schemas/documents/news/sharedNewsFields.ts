@@ -135,7 +135,7 @@ export const newsletterResentAt = {
   // Set automatically in the custom action "ResendNewsletterAction"
   title: 'Newsletter last resent at',
   description:
-    'Set when an administrator re-triggers the newsletter for this article. Changes the RSS guid so the newsletter service treats it as a new item.',
+    'Set when an administrator re-triggers the newsletter for this article. Make uses this as the RSS publication date to pick up the article again.',
   name: NEWSLETTER_RESENT_AT_FIELD_NAME,
   type: 'datetime',
   readOnly: true,
