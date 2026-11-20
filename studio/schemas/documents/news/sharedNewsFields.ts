@@ -118,6 +118,7 @@ export const publishDateTime = [
     type: 'datetime',
     readOnly: true,
     hidden: true,
+    options: { documentInternationalization: { exclude: true } },
   },
   {
     // Set automatically in the custom action "ConfirmPublishWithi18n"
@@ -126,6 +127,7 @@ export const publishDateTime = [
     type: 'datetime',
     readOnly: true,
     hidden: true,
+    options: { documentInternationalization: { exclude: true } },
   },
 ];
 
@@ -139,6 +141,7 @@ export const newsletterResentAt = {
   name: NEWSLETTER_RESENT_AT_FIELD_NAME,
   type: 'datetime',
   readOnly: true,
+  options: { documentInternationalization: { exclude: true } },
   hidden: ({ currentUser }: ConditionalPropertyCallbackContext) =>
     !isAllowed(currentUser?.roles, ['administrator']),
 };
