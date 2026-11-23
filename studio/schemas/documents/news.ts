@@ -84,6 +84,7 @@ export default {
       type: 'boolean',
       initialValue: false,
     },
+    // Updated statement design for situations, where an statement might require its own updated datetime independent of the publish/modified date
     Flags.HAS_UPDATE_STATEMENT_NEWS_FEATURE && {
       title: 'Updated date and time',
       name: 'updateStatementDatetime',
