@@ -37,7 +37,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
                 title={newsItem?.title}
                 ingress={newsItem?.ingress}
                 showUpdatedTag={newsItem?.showUpdatedTag}
-                updatedTimestamp={newsItem?.updateStatementDatetime}
+                updateStatementDatetime={newsItem?.updateStatementDatetime}
                 updatedAt={newsItem?.updatedAt}
                 {...(newsItem?.publishDateTime && {
                   eyebrow: (

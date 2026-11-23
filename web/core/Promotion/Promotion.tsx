@@ -62,9 +62,8 @@ export type PromotionProps = {
    * @default false
    */
   showUpdatedTag?: boolean;
-  /** ISO date and time shown after the ingress when the updated tag is shown */
-  updatedTimestamp?: string;
-  /** Last-modified timestamp used when updatedTimestamp is empty */
+  updateStatementDatetime?: string;
+  /** Last-modified timestamp used when updateStatementDatetime is empty */
   updatedAt?: string;
 } & Omit<BaseLinkProps, 'type'>;
 
@@ -97,24 +96,28 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
       eyebrow,
       publishDateTime,
       showUpdatedTag = false,
-      updatedTimestamp,
+      updateStatementDatetime,
       updatedAt,
     },
     ref,
   ) {
     const intl = useTranslations();
     const locale = useLocale();
+    // Updated design for situations where an statement might require its own updated datetime independent of the publish/modified date
     const updatedLabel = intl.has('updated') ? intl('updated') : 'Updated';
-    const displayedUpdatedTimestamp = updatedTimestamp || updatedAt;
+    const displayedUpdateStatementDatetime =
+      updateStatementDatetime || updatedAt;
     const updatedDateTime =
-      showUpdatedTag && displayedUpdatedTimestamp
-        ? formatDateTimeInNorwegianTime(displayedUpdatedTimestamp, locale)
+      showUpdatedTag && displayedUpdateStatementDatetime
+        ? formatDateTimeInNorwegianTime(
+            displayedUpdateStatementDatetime,
+            locale,
+          )
         : undefined;
+
     const plainText = getPlainText(title);
-
     const plainIngress = getPlainText(ingress);
-
-    const showArrow = true; //type !== 'extended'
+    const showArrow = true;
     const _layoutDirection = type === 'extended' ? 'col' : layoutDirection;
 
     return href ? (
@@ -168,13 +171,8 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
           </div>
         )}
         {showUpdatedTag && (
-          // Absolutely positioned in the image's grid cell, so it follows the image in both layouts.
-          // Same glass layers as useGlass in ImageBackground: border, backdrop, then content on top.
           <span className="glass-border absolute inset-e-3 top-3 z-1 col-start-1 col-end-2 row-start-1 row-end-2 rounded-full before:rounded-full">
             <span className="backdrop-glass rounded-full" aria-hidden="true" />
-            {/* Equinor's capitals sit high in the line box in Chromium and level in Safari, so where
-                supported the text box is trimmed to the cap height and padded evenly. The uneven
-                padding is the fallback for browsers without text-box. */}
             <span className="relative z-1 block px-3 pt-1.5 pb-1 font-medium text-slate-80 text-sm uppercase supports-[text-box:trim-both_cap_alphabetic]:py-2.25 supports-[text-box:trim-both_cap_alphabetic]:[text-box:trim-both_cap_alphabetic]">
               {updatedLabel}
             </span>
@@ -233,7 +231,6 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
                 </Typography>
               )}
               {updatedDateTime && (
-                // Padding for the gap: the variant resets margin-top directly after a heading
                 <Typography className="my-0 pt-1.5 font-medium text-xs">
                   <strong className="font-semibold">
                     <span
@@ -248,18 +245,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
           </div>
 
           {showArrow && (
-            <div
-              className={twMerge(
-                `absolute inset-e-6.5 bottom-5 p-1`,
-                /*                 type === 'extended' && 'inset-e-6 bottom-6',
-                type === 'compact' &&
-                  _layoutDirection === 'col' &&
-                  'inset-e-6 bottom-8',
-                type === 'compact' &&
-                  _layoutDirection === 'row' &&
-                  'inset-e-3 bottom-4', */
-              )}
-            >
+            <div className={twMerge(`absolute inset-e-6.5 bottom-5 p-1`)}>
               {getArrowElement(
                 variant === 'externalLink' ? 'externalUrl' : 'internalUrl',
                 `${

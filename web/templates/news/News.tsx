@@ -79,11 +79,13 @@ const NewsPage = async ({
   const intl = await getTranslations();
 
   const fullUrl = getFullUrl(slug ?? '', locale);
+  //Updated design for situations where an statement might require its own updated datetime independent of the publish/modified date
   const updatedLabel = intl.has('updated') ? intl('updated') : 'Updated';
-  const updatedTimestamp = updateStatementDatetime || updatedAt;
+  const displayedUpdateStatementDatetime = updateStatementDatetime || updatedAt;
+
   const updatedDateTime =
-    showUpdatedTag && updatedTimestamp
-      ? formatDateTimeInNorwegianTime(updatedTimestamp, locale)
+    showUpdatedTag && displayedUpdateStatementDatetime
+      ? formatDateTimeInNorwegianTime(displayedUpdateStatementDatetime, locale)
       : undefined;
   const updatedEyebrow = showUpdatedTag ? (
     <span className="whitespace-nowrap rounded-full bg-white-100/75 px-3 py-2 font-medium text-slate-80 text-sm uppercase lg:text-xs">
