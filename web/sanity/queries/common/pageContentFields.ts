@@ -40,7 +40,7 @@ const newsListArticleFields = /* groq */ `
   "id": _id,
   "updatedAt": ${lastUpdatedTimeQuery},
   showUpdatedTag,
-  customUpdatedTimestamp,
+  updateStatementDatetime,
   title,
   heroImage,
   "publishDateTime": ${publishDateTimeQuery},
@@ -387,7 +387,7 @@ _type == "keyNumbers" =>{
             title,
             heroImage,
             showUpdatedTag,
-            customUpdatedTimestamp,
+            updateStatementDatetime,
             "publishDateTime": ${publishDateTimeQuery},
             "link": {
               "slug": slug.current,
@@ -415,7 +415,7 @@ _type == "keyNumbers" =>{
           title,
           heroImage,
           showUpdatedTag,
-          customUpdatedTimestamp,
+          updateStatementDatetime,
           "publishDateTime": ${publishDateTimeQuery},
           
           "link":{

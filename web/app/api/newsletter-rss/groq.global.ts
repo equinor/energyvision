@@ -13,6 +13,7 @@ export type LatestNewsType = {
   slug: string;
   title: string | PortableTextBlock[];
   publishDateTime: string;
+  updateStatementDatetime?: string;
   hero: Figure;
   ingress: PortableTextBlock;
   subscriptionType: string;
@@ -40,6 +41,7 @@ ${functions}
     title,
     "hero": heroImage,
     "publishDateTime": ${publishDateTimeQuery},
+      updateStatementDatetime,
     ${ingressForNewsQuery},
   }
 `;
@@ -55,6 +57,7 @@ ${functions}
     subscriptionType,
     "articleDisplayDate": ${publishDateTimeQuery},
     "rssPublicationDate": ${rssPublicationDateQuery},
+      updateStatementDatetime,
     ingress[]{
     ...,
     ${markDefs},
