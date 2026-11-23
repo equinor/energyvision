@@ -1,6 +1,8 @@
 import type { PortableTextBlock } from '@portabletext/types';
+import { useLocale, useTranslations } from 'next-intl';
 import { forwardRef, type ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime';
 import { Image } from '@/core/Image/Image';
 import type { Image as ImageType } from '@/core/Image/imageUtilities';
 import {
@@ -9,6 +11,7 @@ import {
   iconRotation,
 } from '@/core/Link/linkCommon';
 import { Typography } from '@/core/Typography';
+import { formatDateTimeInNorwegianTime } from '@/lib/helpers/dateUtilities';
 import type { GridColumnVariant } from '@/lib/helpers/getCommonUtilities';
 import {
   type ColorKeys,
@@ -45,6 +48,8 @@ export type PromotionProps = {
   ingress?: PortableTextBlock[];
   /** about title element */
   eyebrow?: ReactNode;
+  /** ISO publish date shown above the title */
+  publishDateTime?: string;
   /** Side by side or stacked layout
    * @default col
    */
@@ -53,6 +58,13 @@ export type PromotionProps = {
   gridColumns?: GridColumnVariant;
   /** h2 or h3 if section title in parent block component */
   hasSectionTitle?: boolean;
+  /** Shows an "Updated" tag in the top end corner of the image
+   * @default false
+   */
+  showUpdatedTag?: boolean;
+  updateStatementDatetime?: string;
+  /** Last-modified timestamp used when updateStatementDatetime is empty */
+  updatedAt?: string;
 } & Omit<BaseLinkProps, 'type'>;
 
 const getPlainText = (text: string | PortableTextBlock[] | undefined) => {
@@ -82,14 +94,30 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
       layoutDirection = 'col',
       hasSectionTitle = false,
       eyebrow,
+      publishDateTime,
+      showUpdatedTag = false,
+      updateStatementDatetime,
+      updatedAt,
     },
     ref,
   ) {
+    const intl = useTranslations();
+    const locale = useLocale();
+    // Updated design for situations where an statement might require its own updated datetime independent of the publish/modified date
+    const updatedLabel = intl.has('updated') ? intl('updated') : 'Updated';
+    const displayedUpdateStatementDatetime =
+      updateStatementDatetime || updatedAt;
+    const updatedDateTime =
+      showUpdatedTag && displayedUpdateStatementDatetime
+        ? formatDateTimeInNorwegianTime(
+            displayedUpdateStatementDatetime,
+            locale,
+          )
+        : undefined;
+
     const plainText = getPlainText(title);
-
     const plainIngress = getPlainText(ingress);
-
-    const showArrow = true; //type !== 'extended'
+    const showArrow = true;
     const _layoutDirection = type === 'extended' ? 'col' : layoutDirection;
 
     return href ? (
@@ -99,7 +127,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
         href={href}
         {...(hrefLang && { hrefLang })}
         className={twMerge(
-          `group/link grid h-full w-full max-w-full overflow-hidden rounded-card`,
+          `group/link relative grid h-full w-full max-w-full overflow-hidden rounded-card`,
           colorKeyToUtilityMap[background ?? 'gray-20'].background,
           type === 'compact' &&
             _layoutDirection === 'col' &&
@@ -142,6 +170,14 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
             <LogoPrimary className="h-auto w-[20%] text-white-100" />
           </div>
         )}
+        {showUpdatedTag && (
+          <span className="glass-border absolute inset-e-3 top-3 z-1 col-start-1 col-end-2 row-start-1 row-end-2 rounded-full before:rounded-full">
+            <span className="backdrop-glass rounded-full" aria-hidden="true" />
+            <span className="relative z-1 block px-3 pt-1.5 pb-1 font-medium text-slate-80 text-sm uppercase supports-[text-box:trim-both_cap_alphabetic]:py-2.25 supports-[text-box:trim-both_cap_alphabetic]:[text-box:trim-both_cap_alphabetic]">
+              {updatedLabel}
+            </span>
+          </span>
+        )}
         <div
           className={twMerge(
             `relative flex h-full w-full flex-col`,
@@ -157,16 +193,16 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
               type === 'compact' &&
                 _layoutDirection === 'row' &&
                 'ps-6 pe-13 pb-6',
-              /*               type === 'extended' && 'pt-6 pb-6 md:pt-8',
-              type === 'compact' &&
-                _layoutDirection === 'col' &&
-                'ps-10 pe-13 pt-6 pb-8',
-              type === 'compact' &&
-                _layoutDirection === 'row' &&
-                'py-4 ps-4 pe-3', */
             )}
           >
             {eyebrow && eyebrow}
+            {publishDateTime && (
+              <FormattedDateTime
+                datetime={publishDateTime}
+                uppercase
+                className="pb-2 font-medium text-xs"
+              />
+            )}
             <div className="flex h-fit flex-col justify-start">
               {plainText && (
                 <Typography
@@ -194,22 +230,22 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
                   {plainIngress}
                 </Typography>
               )}
+              {updatedDateTime && (
+                <Typography className="my-0 pt-1.5 font-medium text-xs">
+                  <strong className="font-semibold">
+                    <span
+                      aria-hidden="true"
+                      className="-ms-4 me-2 inline-block size-2 rounded-full bg-energy-red-100 align-middle"
+                    />
+                    {`${updatedLabel}: ${updatedDateTime}`}
+                  </strong>
+                </Typography>
+              )}
             </div>
           </div>
 
           {showArrow && (
-            <div
-              className={twMerge(
-                `absolute inset-e-6.5 bottom-5 p-1`,
-                /*                 type === 'extended' && 'inset-e-6 bottom-6',
-                type === 'compact' &&
-                  _layoutDirection === 'col' &&
-                  'inset-e-6 bottom-8',
-                type === 'compact' &&
-                  _layoutDirection === 'row' &&
-                  'inset-e-3 bottom-4', */
-              )}
-            >
+            <div className={twMerge(`absolute inset-e-6.5 bottom-5 p-1`)}>
               {getArrowElement(
                 variant === 'externalLink' ? 'externalUrl' : 'internalUrl',
                 `${

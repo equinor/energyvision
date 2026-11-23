@@ -197,12 +197,16 @@ export const ingress = {
     Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
 };
 
-export const content = {
+const createContentField = (redDot: boolean) => ({
   name: 'content',
   title: 'Content',
   type: 'array',
   of: [
-    configureBlockContent({ group: 'article', footnote: true }),
+    configureBlockContent({
+      group: 'article',
+      footnote: true,
+      redDot: redDot && Flags.HAS_UPDATE_STATEMENT_NEWS_FEATURE,
+    }),
     { type: 'pullQuote' },
     { type: 'positionedInlineImage' },
     { type: 'factbox' },
@@ -214,7 +218,10 @@ export const content = {
       }
       return true;
     }),
-};
+});
+
+export const content = createContentField(false);
+export const newsContent = createContentField(true);
 
 export const iframe = {
   title: 'IFrame',
