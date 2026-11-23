@@ -13,12 +13,12 @@ import { withSlugValidation } from '../validations/validateSlug';
 import { lang } from './langField';
 
 import {
-  content,
   countryTags,
   excludeFromSearch,
   heroImage,
   iframe,
   ingress,
+  newsContent,
   newsSlugField,
   openGraphImage,
   publishDateTime,
@@ -147,7 +147,7 @@ export default {
     },
     heroImage,
     ingress,
-    content,
+    newsContent,
     iframe,
     Flags.HAS_PEOPLE && {
       name: 'relations',
