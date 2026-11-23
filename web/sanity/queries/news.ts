@@ -21,6 +21,8 @@ export const excludeCrudeOilAssays =
 const latestNewsFields = /* groq */ `
   "id": _id,
   "updatedAt": ${lastUpdatedTimeQuery},
+  showUpdatedTag,
+  updateStatementDatetime,
   title,
   heroImage,
   "slugs":{${inlineSlugsQuery}},
@@ -36,6 +38,8 @@ export const newsQuery = /* groq */ `
     _id, //used for data filtering
     "id": _id,
     "updatedAt": ${lastUpdatedTimeQuery},
+    showUpdatedTag,
+    updateStatementDatetime,
     title,
     heroImage,
     "publishDateTime": ${publishDateTimeQuery},

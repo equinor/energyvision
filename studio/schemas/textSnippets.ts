@@ -944,6 +944,11 @@ const snippets: textSnippet = {
     defaultValue: 'Last modified',
     group: groups.common,
   },
+  updated: {
+    title: 'Updated',
+    defaultValue: 'Updated',
+    group: groups.common,
+  },
   not_valid_input: {
     title: 'Invalid characters found',
     defaultValue: 'Invalid characters found',

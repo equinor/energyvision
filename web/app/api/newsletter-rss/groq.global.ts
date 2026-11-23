@@ -1,11 +1,11 @@
-import type { PortableTextBlock } from '@portabletext/types';
-import type { Figure } from '@/core/Image/imageUtilities';
-import markDefs from '@/sanity/queries/common/blockEditorMarks';
-import { functions } from '@/sanity/queries/common/functions';
-import { sameLang } from '@/sanity/queries/common/langAndDrafts';
-import { ingressForNewsQuery } from '@/sanity/queries/common/newsSubqueries';
-import { publishDateTimeQuery } from '@/sanity/queries/common/publishDateTime';
-import { excludeCrudeOilAssays } from '@/sanity/queries/news';
+import type { PortableTextBlock } from "@portabletext/types";
+import type { Figure } from "@/core/Image/imageUtilities";
+import markDefs from "@/sanity/queries/common/blockEditorMarks";
+import { functions } from "@/sanity/queries/common/functions";
+import { sameLang } from "@/sanity/queries/common/langAndDrafts";
+import { ingressForNewsQuery } from "@/sanity/queries/common/newsSubqueries";
+import { publishDateTimeQuery } from "@/sanity/queries/common/publishDateTime";
+import { excludeCrudeOilAssays } from "@/sanity/queries/news";
 
 export type LatestNewsType = {
   _id: string;
@@ -13,13 +13,14 @@ export type LatestNewsType = {
   slug: string;
   title: string | PortableTextBlock[];
   publishDateTime: string;
+  updateStatementDatetime?: string;
   hero: Figure;
   ingress: PortableTextBlock;
   subscriptionType: string;
   lang: string;
 };
 
-export type NewsletterArticle = Omit<LatestNewsType, 'publishDateTime'> & {
+export type NewsletterArticle = Omit<LatestNewsType, "publishDateTime"> & {
   articleDisplayDate: string;
   rssPublicationDate: string;
 };
@@ -40,6 +41,7 @@ ${functions}
     title,
     "hero": heroImage,
     "publishDateTime": ${publishDateTimeQuery},
+      updateStatementDatetime,
     ${ingressForNewsQuery},
   }
 `;
