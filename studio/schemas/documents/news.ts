@@ -138,7 +138,7 @@ export default {
       title: 'Updated date and time',
       name: 'updateStatementDatetime',
       description:
-        'When the updated tag is enabled, this datetime is shown on the newspage (updated pill above title, datetime after ingress with red dot design) and its promotion cards (updated pill on image + datetime after ingress). This field will also follow in the newsletter. If left empty, the document’s last-modified date and time is used.',
+        'When the updated design is enabled, this datetime is shown on the newspage (updated pill above title, datetime after ingress with red dot design) and its promotion cards (updated pill on image + datetime after ingress). This field will also follow in the newsletter. If left empty, the document’s last-modified date and time is used.',
       type: 'datetime',
       options: {
         timeStep: 1,
