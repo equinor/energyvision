@@ -76,16 +76,16 @@ export default {
     },
     title,
     ...publishDateTime,
-    Flags.HAS_NEWSROOM && {
-      title: 'Show updated pill and datetime',
-      description: 'Shows an promotion card with the updated pill and datetime',
+    Flags.HAS_UPDATE_STATEMENT_NEWS_FEATURE && {
+      title: 'Show updated tag and datetime',
+      description: 'Shows an updated tag with the datetime',
       name: 'showUpdatedTag',
       type: 'boolean',
       initialValue: false,
     },
-    Flags.HAS_NEWSROOM && {
+    Flags.HAS_UPDATE_STATEMENT_NEWS_FEATURE && {
       title: 'Updated date and time',
-      name: 'customUpdatedTimestamp',
+      name: 'updateStatementDatetime',
       description:
         'The date and time which will be highlighted when the updated tag is shown. If left empty, when the above option is enabled, web will use the modified date of the document.',
       type: 'datetime',

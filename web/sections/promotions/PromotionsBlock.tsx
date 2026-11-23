@@ -302,7 +302,7 @@ const PromotionsBlock = ({
                       href={href ?? ''}
                       hasSectionTitle={!!title}
                       showUpdatedTag={Boolean(promotion?.showUpdatedTag)}
-                      updatedTimestamp={promotion?.customUpdatedTimestamp}
+                      updatedTimestamp={promotion?.updateStatementDatetime}
                       updatedAt={promotion?.updatedAt}
                     />
                   )}

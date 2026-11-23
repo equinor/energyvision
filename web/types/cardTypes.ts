@@ -20,7 +20,7 @@ export type CardData = {
   /** News only: fallback ISO timestamp for the updated tag */
   updatedAt?: string;
   /** News only: ISO date and time shown together with the updated tag */
-  customUpdatedTimestamp?: string;
+  updateStatementDatetime?: string;
 };
 
 export type MagazineCardData = {

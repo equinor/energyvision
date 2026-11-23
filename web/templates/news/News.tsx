@@ -29,7 +29,7 @@ export type NewsPageProps = {
   updatedAt: string;
   publishDateTime: string;
   showUpdatedTag?: boolean;
-  customUpdatedTimestamp?: string;
+  updateStatementDatetime?: string;
   heroImage: Figure;
   ingress: PortableTextBlock[];
   content: PortableTextBlock[];
@@ -63,7 +63,7 @@ const NewsPage = async ({
   publishDateTime,
   updatedAt,
   showUpdatedTag = false,
-  customUpdatedTimestamp,
+  updateStatementDatetime,
   title,
   openGraphImage,
   heroImage,
@@ -80,7 +80,7 @@ const NewsPage = async ({
 
   const fullUrl = getFullUrl(slug ?? '', locale);
   const updatedLabel = intl.has('updated') ? intl('updated') : 'Updated';
-  const updatedTimestamp = customUpdatedTimestamp || updatedAt;
+  const updatedTimestamp = updateStatementDatetime || updatedAt;
   const updatedDateTime =
     showUpdatedTag && updatedTimestamp
       ? formatDateTimeInNorwegianTime(updatedTimestamp, locale)
