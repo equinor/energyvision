@@ -4,7 +4,10 @@ import markDefs from '@/sanity/queries/common/blockEditorMarks';
 import { functions } from '@/sanity/queries/common/functions';
 import { sameLang } from '@/sanity/queries/common/langAndDrafts';
 import { ingressForNewsQuery } from '@/sanity/queries/common/newsSubqueries';
-import { publishDateTimeQuery } from '@/sanity/queries/common/publishDateTime';
+import {
+  lastUpdatedTimeQuery,
+  publishDateTimeQuery,
+} from '@/sanity/queries/common/publishDateTime';
 import { excludeCrudeOilAssays } from '@/sanity/queries/news';
 
 export type LatestNewsType = {
@@ -23,6 +26,8 @@ export type LatestNewsType = {
 export type NewsletterArticle = Omit<LatestNewsType, 'publishDateTime'> & {
   articleDisplayDate: string;
   rssPublicationDate: string;
+  showUpdatedTag?: boolean;
+  updatedAt?: string;
 };
 
 const rssPublicationDateQuery = /* groq */ `
@@ -57,7 +62,9 @@ ${functions}
     subscriptionType,
     "articleDisplayDate": ${publishDateTimeQuery},
     "rssPublicationDate": ${rssPublicationDateQuery},
-      updateStatementDatetime,
+    showUpdatedTag,
+    updateStatementDatetime,
+    "updatedAt": ${lastUpdatedTimeQuery},
     ingress[]{
     ...,
     ${markDefs},

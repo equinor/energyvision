@@ -66,22 +66,27 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
         : '';
       const encodedUrl = bannerImageUrl.replace(/&/g, '&amp;');
 
-      const articleDisplayDate = new Date(article.articleDisplayDate);
       const dateFormat =
         article.lang === 'nb-NO' ? 'd. MMMM yyyy HH:mm' : 'd MMMM yyyy HH:mm';
 
-      const tzName =
-        new Intl.DateTimeFormat('en-GB', {
-          timeZone: 'Europe/Oslo',
-          timeZoneName: 'short',
-        })
-          .formatToParts(articleDisplayDate)
-          .find((p) => p.type === 'timeZoneName')?.value ?? '';
+      const formatArticleDate = (dateTime: string) => {
+        const date = new Date(dateTime);
+        const tzName =
+          new Intl.DateTimeFormat('en-GB', {
+            timeZone: 'Europe/Oslo',
+            timeZoneName: 'short',
+          })
+            .formatToParts(date)
+            .find((p) => p.type === 'timeZoneName')?.value ?? '';
 
-      const formattedArticleDate = `${format(articleDisplayDate, dateFormat, {
-        in: tz('Europe/Oslo'),
-        locale: article.lang === 'nb-NO' ? nb : enGB,
-      })} (${tzName})`;
+        return `${format(date, dateFormat, {
+          in: tz('Europe/Oslo'),
+          locale: article.lang === 'nb-NO' ? nb : enGB,
+        })} (${tzName})`;
+      };
+
+      const formattedArticleDate = formatArticleDate(article.articleDisplayDate);
+      const updateDate = article.updateStatementDatetime || article.updatedAt;
 
       const categoryTag = (
         article.type === 'magazine'
@@ -109,6 +114,7 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
               : '<category />'
           }
           <nl:extra1>${formattedArticleDate}</nl:extra1>
+          ${article.showUpdatedTag && updateDate ? `<nl:extra2>${formatArticleDate(updateDate)}</nl:extra2>` : ''}
           ${
             hero?.image?.asset
               ? `<media:content medium="image" type="image/jpeg" url="${encodedUrl}">
