@@ -76,28 +76,6 @@ export default {
     },
     title,
     ...publishDateTime,
-    Flags.HAS_UPDATE_STATEMENT_NEWS_FEATURE && {
-      title: 'Show updated design with pill and datetime',
-      description:
-        'Enables the design for showing updated information with a pill and datetime on newspage and news promotions',
-      name: 'showUpdatedTag',
-      type: 'boolean',
-      initialValue: false,
-    },
-    // Updated statement design for situations, where an statement might require its own updated datetime independent of the publish/modified date
-    Flags.HAS_UPDATE_STATEMENT_NEWS_FEATURE && {
-      title: 'Updated date and time',
-      name: 'updateStatementDatetime',
-      description:
-        'When the updated tag is enabled, this datetime is shown on the newspage (updated pill above title, datetime after ingress with red dot design) and its promotion cards (updated pill on image + datetime after ingress). This field will also follow in the newsletter. If left empty, the document’s last-modified date and time is used.',
-      type: 'datetime',
-      options: {
-        timeStep: 1,
-        calendarTodayLabel: 'Today',
-      },
-      hidden: ({ parent }: { parent?: { showUpdatedTag?: boolean } }) =>
-        !parent?.showUpdatedTag,
-    },
     Flags.HAS_NEWS && { ...tags, fieldset: 'tagFieldset' },
     Flags.HAS_NEWS && { ...countryTags, fieldset: 'tagFieldset' },
     Flags.HAS_NEWS_SUBSCRIPTION && {
@@ -147,6 +125,28 @@ export default {
       validation: (Rule: { required: () => any }) => Rule.required(),
     },
     heroImage,
+    Flags.HAS_UPDATE_STATEMENT_NEWS_FEATURE && {
+      title: 'Show updated design with pill and datetime',
+      description:
+        'Enables the design for showing updated information with a pill and datetime on newspage and news promotions',
+      name: 'showUpdatedTag',
+      type: 'boolean',
+      initialValue: false,
+    },
+    // Updated statement design for situations, where an statement might require its own updated datetime independent of the publish/modified date
+    Flags.HAS_UPDATE_STATEMENT_NEWS_FEATURE && {
+      title: 'Updated date and time',
+      name: 'updateStatementDatetime',
+      description:
+        'When the updated tag is enabled, this datetime is shown on the newspage (updated pill above title, datetime after ingress with red dot design) and its promotion cards (updated pill on image + datetime after ingress). This field will also follow in the newsletter. If left empty, the document’s last-modified date and time is used.',
+      type: 'datetime',
+      options: {
+        timeStep: 1,
+        calendarTodayLabel: 'Today',
+      },
+      hidden: ({ parent }: { parent?: { showUpdatedTag?: boolean } }) =>
+        !parent?.showUpdatedTag,
+    },
     ingress,
     newsContent,
     iframe,
