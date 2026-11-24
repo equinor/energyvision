@@ -9,15 +9,13 @@ export default {
   name: 'videoFile',
   icon: () => EdsIcon(play_circle),
   deprecated: {
-    reason:
-      'Media Bank videos are no longer supported. Upload the video as an Asset file (mp4) instead.',
+    reason: `Legacy video (read only). Either upload as an asset file (mp4), if it's a short video intended for decorative use or upload to Youtube for longer videos.`,
   },
   fields: [
     {
       name: 'video',
       title: 'Video',
-      description:
-        'Legacy Media Bank video (read only). Replace this document with an Asset file.',
+      description: `Legacy video (read only). Either upload as an asset file (mp4), if it's a short video intended for decorative use or upload to Youtube for longer videos.`,
       type: 'hlsVideo',
     },
     {
