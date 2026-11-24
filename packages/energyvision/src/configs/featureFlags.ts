@@ -51,6 +51,7 @@ const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV];
 
 const PEOPLE = [...GLOBAL_PROD, ...GLOBAL_DEV];
 const ADVANCED_HIGHLIGHTER = ['stemgapet', 'global-development'];
+const UPDATE_STATEMENT_NEWS_FEATURE = [...GLOBAL_PROD, ...GLOBAL_DEV];
 
 /**
  * @param {string} dataset
@@ -89,4 +90,6 @@ export const FeatureFlags = (dataset: DatasetsKeys) => ({
   HAS_CAMPAIGN_BLOCKS: CAMPAIGN.includes(dataset),
   HAS_PEOPLE: PEOPLE.includes(dataset),
   HAS_ADVANCED_HIGHLIGHTER: ADVANCED_HIGHLIGHTER.includes(dataset),
+  HAS_UPDATE_STATEMENT_NEWS_FEATURE:
+    UPDATE_STATEMENT_NEWS_FEATURE.includes(dataset),
 });

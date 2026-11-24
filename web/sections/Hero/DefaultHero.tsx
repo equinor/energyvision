@@ -24,6 +24,7 @@ export type DefaultHeroProps = {
   imageClassName?: string;
   /* For news published information */
   subTitle?: ReactNode;
+  eyebrow?: ReactNode;
   figure?: Figure;
   isBigTitle?: boolean;
   /**bg-<colorkey> */
@@ -37,6 +38,7 @@ export type DefaultHeroProps = {
 export const DefaultHero = ({
   title,
   subTitle,
+  eyebrow,
   titleClassName = '',
   background,
   figure,
@@ -62,6 +64,7 @@ export const DefaultHero = ({
         )}
       >
         <div className={twMerge('mx-auto max-w-content', px)}>
+          {eyebrow && <div className="mb-3">{eyebrow}</div>}
           {title &&
             (isPlainTitle ? (
               <Typography
