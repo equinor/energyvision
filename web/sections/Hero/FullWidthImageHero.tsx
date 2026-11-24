@@ -1,5 +1,6 @@
 import type { PortableTextBlock } from 'next-sanity';
 import type { HTMLAttributes, ReactNode } from 'react';
+import { Suspense } from 'react';
 import { twMerge } from 'tailwind-merge';
 import type { Figure, ImageRatioKeys } from '@/core/Image/imageUtilities';
 import { Picture } from '@/core/Picture/Picture';
@@ -90,7 +91,16 @@ export const FullWidthImageHero = ({
       <div className="mx-auto max-w-content">
         {breadcrumbsComponent && breadcrumbsComponent}
         {magazineTags && magazineTags?.length > 0 && (
-          <MagazineTagBar tags={magazineTags} className="mt-0" />
+          <Suspense
+            fallback={
+              <div
+                aria-hidden="true"
+                className="mt-0 w-full border-grey-30 border-y-[0.5px] p-8"
+              />
+            }
+          >
+            <MagazineTagBar tags={magazineTags} className="mt-0" />
+          </Suspense>
         )}
         {title && (
           <Blocks
