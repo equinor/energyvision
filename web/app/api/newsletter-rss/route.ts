@@ -15,12 +15,18 @@ import {
   type NewsletterArticle,
 } from './groq.global';
 
+const updatedLabelQuery = /* groq */ `
+  *[_type == "textSnippet" && _id == "text_snippet_updated"][0]
+    .translation[language == $lang][0].value
+`;
+
 const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
   try {
     // Fetch both English and Norwegian articles from news and magazine
-    const [newsArticles, magazineArticles] = await Promise.all([
+    const [newsArticles, magazineArticles, updatedLabel] = await Promise.all([
       client.fetch(latestNews, { lang: locale }),
       client.fetch(latestMagazine, { lang: locale }),
+      client.fetch<string | null>(updatedLabelQuery, { lang: locale }),
     ]);
 
     // Merge the articles and sort by RSS pubDate (newest first)
@@ -114,7 +120,7 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
               : '<category />'
           }
           <nl:extra1>${formattedArticleDate}</nl:extra1>
-          ${article.showUpdatedTag && updateDate ? `<nl:extra2>${formatArticleDate(updateDate)}</nl:extra2>` : ''}
+          ${article.showUpdatedTag && updateDate ? `<nl:extra2>${updatedLabel || 'Updated'} ${formatArticleDate(updateDate)}</nl:extra2>` : ''}
           ${
             hero?.image?.asset
               ? `<media:content medium="image" type="image/jpeg" url="${encodedUrl}">
