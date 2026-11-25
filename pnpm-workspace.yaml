@@ -4,6 +4,7 @@ packages:
   - 'search'
   - 'packages/energyvision'
   - 'packages/typescript-config'
+minimumReleaseAgeStrict: false
 minimumReleaseAge: 10080
 # Ignore trust policy assuming they are safe due to their age
 trustPolicyIgnoreAfter: 10080
@@ -22,4 +23,3 @@ allowBuilds:
 publicHoistPattern:
   - '*import-in-the-middle*'
   - '*require-in-the-middle*'
-
