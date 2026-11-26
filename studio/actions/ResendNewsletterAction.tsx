@@ -36,7 +36,7 @@ export const ResendNewsletterAction: DocumentActionComponent = (props) => {
         toast.push({
           status: 'success',
           title: 'Newsletter resend triggered',
-          description: 'The article will be included in the next newsletter.',
+          description: 'A newsletter will be sent to subscribers.',
         });
       })
       .catch((err: Error) => {
