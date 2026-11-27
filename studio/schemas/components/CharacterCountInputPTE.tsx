@@ -1,5 +1,6 @@
 import { toPlainText } from '@portabletext/react';
 import { Stack, Text } from '@sanity/ui';
+import { useMemo } from 'react';
 import {
   type ArrayOfObjectsInputProps,
   type PortableTextInputProps,
@@ -13,33 +14,36 @@ export function CharacterCountInputPTE(props: ArrayOfObjectsInputProps) {
   const currentUser = useCurrentUser();
   const ptProps = props as unknown as PortableTextInputProps;
   const characters = ptProps.value ? toPlainText(ptProps.value).length : 0;
-  const blockTypes = ptProps.schemaType.of;
-  const hasRedDotDecorator = blockTypes.some(
-    (blockType) =>
-      blockType.name === 'block' &&
-      blockType.marks?.decorators?.some(
-        (decorator) => decorator.value === 'redDot',
+  const hasAccess = isAllowed(currentUser?.roles);
+  const schemaType = useMemo(() => {
+    const blockTypes = ptProps.schemaType.of;
+    const hasRedDotDecorator = blockTypes.some(
+      (blockType) =>
+        blockType.name === 'block' &&
+        blockType.marks?.decorators?.some(
+          (decorator) => decorator.value === 'redDot',
+        ),
+    );
+
+    if (!hasRedDotDecorator || hasAccess) return ptProps.schemaType;
+
+    return {
+      ...ptProps.schemaType,
+      of: blockTypes.map((blockType) =>
+        blockType.name === 'block'
+          ? {
+              ...blockType,
+              marks: {
+                ...blockType.marks,
+                decorators: blockType.marks?.decorators?.filter(
+                  (decorator) => decorator.value !== 'redDot',
+                ),
+              },
+            }
+          : blockType,
       ),
-  );
-  const schemaType =
-    hasRedDotDecorator && !isAllowed(currentUser?.roles)
-      ? {
-          ...ptProps.schemaType,
-          of: blockTypes.map((blockType) =>
-            blockType.name === 'block'
-              ? {
-                  ...blockType,
-                  marks: {
-                    ...blockType.marks,
-                    decorators: blockType.marks?.decorators?.filter(
-                      (decorator) => decorator.value !== 'redDot',
-                    ),
-                  },
-                }
-              : blockType,
-          ),
-        }
-      : ptProps.schemaType;
+    };
+  }, [ptProps.schemaType, hasAccess]);
   // the character limit set with `options.maxLength` on the type or the field
   const { maxLength: max, editorVariant } = props.schemaType.options ?? {};
   const fieldName = props.path[props.path.length - 1];
