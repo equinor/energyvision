@@ -194,6 +194,7 @@ const NewsPage = async ({
         </article>
       </main>
       <ArticleJsonLd
+        scriptKey={`news-article-jsonld-${slug}`}
         url={fullUrl}
         type="NewsArticle"
         headline={title}
