@@ -1,4 +1,9 @@
-import type { Rule, ValidationContext } from 'sanity';
+import type {
+  ConditionalPropertyCallbackContext,
+  Rule,
+  ValidationContext,
+} from 'sanity';
+import { isAllowed } from '../../../helpers/isAllowed';
 import { Flags } from '../../../src/lib/datasetHelpers';
 import { PublicationDateInfo } from '../../components/Details/PublicationDateInfo';
 import { SubscriptionTypeInput } from '../../components/SubscriptionTypeInput';
@@ -113,6 +118,7 @@ export const publishDateTime = [
     type: 'datetime',
     readOnly: true,
     hidden: true,
+    options: { documentInternationalization: { exclude: true } },
   },
   {
     // Set automatically in the custom action "ConfirmPublishWithi18n"
@@ -121,8 +127,24 @@ export const publishDateTime = [
     type: 'datetime',
     readOnly: true,
     hidden: true,
+    options: { documentInternationalization: { exclude: true } },
   },
 ];
+
+export const NEWSLETTER_RESENT_AT_FIELD_NAME = 'newsletterResentAt';
+
+export const newsletterResentAt = {
+  // Set automatically in the custom action "ResendNewsletterAction"
+  title: 'Newsletter last resent at',
+  description:
+    'Set when an administrator re-triggers the newsletter for this article. Make uses this as the RSS publication date to pick up the article again.',
+  name: NEWSLETTER_RESENT_AT_FIELD_NAME,
+  type: 'datetime',
+  readOnly: true,
+  options: { documentInternationalization: { exclude: true } },
+  hidden: ({ currentUser }: ConditionalPropertyCallbackContext) =>
+    !isAllowed(currentUser?.roles, ['administrator']),
+};
 
 export const tags = {
   title: 'Topic tags',
@@ -197,12 +219,16 @@ export const ingress = {
     Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
 };
 
-export const content = {
+const createContentField = (redDot: boolean) => ({
   name: 'content',
   title: 'Content',
   type: 'array',
   of: [
-    configureBlockContent({ group: 'article', footnote: true }),
+    configureBlockContent({
+      group: 'article',
+      footnote: true,
+      redDot: redDot && Flags.HAS_UPDATE_STATEMENT_NEWS_FEATURE,
+    }),
     { type: 'pullQuote' },
     { type: 'positionedInlineImage' },
     { type: 'factbox' },
@@ -214,7 +240,10 @@ export const content = {
       }
       return true;
     }),
-};
+});
+
+export const content = createContentField(false);
+export const newsContent = createContentField(true);
 
 export const iframe = {
   title: 'IFrame',

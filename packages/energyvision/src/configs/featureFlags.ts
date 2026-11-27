@@ -30,6 +30,8 @@ const NEWS = [
 ];
 const ARCHIVED_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV];
 const NEWS_SUBSCRIPTION = [...GLOBAL_PROD, ...GLOBAL_DEV];
+/* Studio action that re-triggers the newsletter for an already published news article */
+const NEWSLETTER_RESEND = ['global', 'global-development'];
 const MAGAZINE_SUBSCRIPTION = [...GLOBAL_DEV, ...GLOBAL_PROD];
 const NEWSROOM = [...GLOBAL_PROD, ...GLOBAL_DEV];
 const LOCAL_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV];
@@ -49,9 +51,9 @@ const MAGAZINE = [...GLOBAL_PROD, ...GLOBAL_DEV, 'stemgapet'];
 const SAME_SLUG = [...GLOBAL_DEV, 'japan'];
 const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV];
 
-const FETCH_OPTIMIZED = [...GLOBAL_PROD, ...SATELLITES, ...GLOBAL_DEV];
 const PEOPLE = [...GLOBAL_PROD, ...GLOBAL_DEV];
 const ADVANCED_HIGHLIGHTER = ['stemgapet', 'global-development'];
+const UPDATE_STATEMENT_NEWS_FEATURE = [...GLOBAL_PROD, ...GLOBAL_DEV];
 
 /**
  * @param {string} dataset
@@ -61,6 +63,7 @@ export const FeatureFlags = (dataset: DatasetsKeys) => ({
   HAS_NEWSROOM: NEWSROOM.includes(dataset),
   HAS_ARCHIVED_NEWS: ARCHIVED_NEWS.includes(dataset),
   HAS_NEWS_SUBSCRIPTION: NEWS_SUBSCRIPTION.includes(dataset),
+  HAS_NEWSLETTER_RESEND: NEWSLETTER_RESEND.includes(dataset),
   HAS_MAGAZINE_SUBSCRIPTION: MAGAZINE_SUBSCRIPTION.includes(dataset),
   HAS_LOCAL_NEWS: LOCAL_NEWS.includes(dataset),
   HAS_SEARCH: SEARCH.includes(dataset),
@@ -88,7 +91,8 @@ export const FeatureFlags = (dataset: DatasetsKeys) => ({
   IS_DEV: GLOBAL_DEV.includes(dataset),
   IS_SATELLITE: SATELLITES.includes(dataset),
   HAS_CAMPAIGN_BLOCKS: CAMPAIGN.includes(dataset),
-  IS_FETCH_OPTIMIZED: FETCH_OPTIMIZED.includes(dataset),
   HAS_PEOPLE: PEOPLE.includes(dataset),
   HAS_ADVANCED_HIGHLIGHTER: ADVANCED_HIGHLIGHTER.includes(dataset),
+  HAS_UPDATE_STATEMENT_NEWS_FEATURE:
+    UPDATE_STATEMENT_NEWS_FEATURE.includes(dataset),
 });

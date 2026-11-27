@@ -133,6 +133,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
         </div>
         {enableStructuredMarkup && (
           <ProfilePageJsonLd
+            scriptKey={`profile-jsonld-${data.id}`}
             mainEntity={{
               name: name,
               ...(image && { image: urlForImage(image)?.toString() }),

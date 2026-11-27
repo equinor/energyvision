@@ -1,8 +1,9 @@
 import { newsSlug } from '@energyvision/shared/satelliteConfig';
 import { file_add } from '@equinor/eds-icons';
 import slugify from '@sindresorhus/slugify';
-import type { Rule } from 'sanity';
+import type { CurrentUser, Rule } from 'sanity';
 import { formatDate } from '../../helpers/formatDate';
+import { isAllowed } from '../../helpers/isAllowed';
 import { EdsIcon } from '../../icons';
 import { defaultLanguage } from '../../languages';
 import { Flags } from '../../src/lib/datasetHelpers';
@@ -13,13 +14,14 @@ import { withSlugValidation } from '../validations/validateSlug';
 import { lang } from './langField';
 
 import {
-  content,
   countryTags,
   excludeFromSearch,
   heroImage,
   iframe,
   ingress,
+  newsContent,
   newsSlugField,
+  newsletterResentAt,
   openGraphImage,
   publishDateTime,
   relatedLinks,
@@ -82,6 +84,10 @@ export default {
       ...subscriptionType,
       fieldset: 'newsletter',
     },
+    Flags.HAS_NEWSLETTER_RESEND && {
+      ...newsletterResentAt,
+      fieldset: 'newsletter',
+    },
     {
       name: 'slugInfo',
       title: 'About slugs',
@@ -125,8 +131,34 @@ export default {
       validation: (Rule: { required: () => any }) => Rule.required(),
     },
     heroImage,
+    Flags.HAS_UPDATE_STATEMENT_NEWS_FEATURE && {
+      title: 'Show updated design with pill and datetime',
+      description:
+        'Displays an update pill with date and time on news pages and news promotions.',
+      name: 'showUpdatedTag',
+      type: 'boolean',
+      initialValue: false,
+      readOnly: ({ currentUser }: { currentUser: CurrentUser | null }) =>
+        !isAllowed(currentUser?.roles),
+    },
+    // Updated statement design for situations, where an statement might require its own updated datetime independent of the publish/modified date
+    Flags.HAS_UPDATE_STATEMENT_NEWS_FEATURE && {
+      title: 'Updated date and time',
+      name: 'updateStatementDatetime',
+      description:
+        'Select the date/time to show for when the news item was updated on the news page, promotion cards, and in newsletters. (If left empty, the document’s last-modified date and time is used.)',
+      type: 'datetime',
+      options: {
+        timeStep: 1,
+        calendarTodayLabel: 'Today',
+      },
+      readOnly: ({ currentUser }: { currentUser: CurrentUser | null }) =>
+        !isAllowed(currentUser?.roles),
+      hidden: ({ parent }: { parent?: { showUpdatedTag?: boolean } }) =>
+        !parent?.showUpdatedTag,
+    },
     ingress,
-    content,
+    newsContent,
     iframe,
     Flags.HAS_PEOPLE && {
       name: 'relations',

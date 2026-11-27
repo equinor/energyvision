@@ -4,7 +4,6 @@ import { useLocale } from 'next-intl';
 import type { PortableTextBlock } from 'next-sanity';
 import { useId, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
-import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime';
 import {
   getBackgroundPositionForImage,
   type ObjectPositions,
@@ -298,18 +297,15 @@ const PromotionsBlock = ({
                       {...(onColorBg && {
                         background: 'white-100',
                       })}
-                      {...(promotion?.publishDateTime && {
-                        eyebrow: (
-                          <FormattedDateTime
-                            datetime={promotion?.publishDateTime}
-                            uppercase
-                            className="pb-2 font-medium text-xs"
-                          />
-                        ),
-                      })}
+                      publishDateTime={promotion?.publishDateTime}
                       image={promotion?.heroImage?.image}
-                      href={href}
+                      href={href ?? ''}
                       hasSectionTitle={!!title}
+                      showUpdatedTag={Boolean(promotion?.showUpdatedTag)}
+                      updateStatementDatetime={
+                        promotion?.updateStatementDatetime
+                      }
+                      updatedAt={promotion?.updatedAt}
                     />
                   )}
                 </li>

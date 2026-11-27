@@ -52,10 +52,14 @@ async function MetadataConnection() {
 
 // Layer 1: branches on draft mode without awaiting any other dynamic API,
 // so the published route still prerenders into the static shell.
-export default async function Home({ searchParams }: PageProps<'/[locale]'>) {
-  const [{ isEnabled: isDraftMode }, locale] = await Promise.all([
+// The locale comes from the route params (prerender-safe) rather than getLocale().
+export default async function Home({
+  params,
+  searchParams,
+}: PageProps<'/[locale]'>) {
+  const [{ isEnabled: isDraftMode }, { locale }] = await Promise.all([
     draftMode(),
-    getLocale(),
+    params,
   ]);
   if (!isDraftMode) {
     return (
@@ -133,6 +137,7 @@ async function CachedHome({
     <FriendlyCaptchaSdkWrapper>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
       <OrganizationJsonLd
+        scriptKey="organization-jsonld-home"
         name="Equinor ASA"
         url="https://www.equinor.com"
         logo="https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red"

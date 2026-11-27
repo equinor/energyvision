@@ -123,7 +123,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
           )}
           {actions && (
             <div className="mt-8 flex flex-col gap-x-8 gap-y-6">
-              {actions?.map((action, idx) => {
+              {actions?.map((action, index) => {
                 const url = action && getUrlFromAction(action);
                 return (
                   <ResourceLink
@@ -132,7 +132,9 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
                       hrefLang: action.link?.lang,
                     })}
                     type={action.type}
-                    key={action.id || idx}
+                    key={
+                      action.id != null ? `id:${action.id}` : `index:${index}`
+                    }
                     variant="fit"
                     file={{
                       ...action?.file,
