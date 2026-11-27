@@ -21,6 +21,7 @@ import {
   ingress,
   newsContent,
   newsSlugField,
+  newsletterResentAt,
   openGraphImage,
   publishDateTime,
   relatedLinks,
@@ -81,6 +82,10 @@ export default {
     Flags.HAS_NEWS && { ...countryTags, fieldset: 'tagFieldset' },
     Flags.HAS_NEWS_SUBSCRIPTION && {
       ...subscriptionType,
+      fieldset: 'newsletter',
+    },
+    Flags.HAS_NEWSLETTER_RESEND && {
+      ...newsletterResentAt,
       fieldset: 'newsletter',
     },
     {

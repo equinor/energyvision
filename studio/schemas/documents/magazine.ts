@@ -86,6 +86,15 @@ export default {
       type: 'datetime',
       readOnly: true,
       hidden: true,
+      options: { documentInternationalization: { exclude: true } },
+    },
+    {
+      title: 'Date and time of when the document was last updated at',
+      name: 'lastModifiedAt',
+      type: 'datetime',
+      readOnly: true,
+      hidden: true,
+      options: { documentInternationalization: { exclude: true } },
     },
 
     {

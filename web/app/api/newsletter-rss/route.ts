@@ -9,24 +9,34 @@ import {
   type newsletterCategoryKeys,
   newsletterCategoryMap,
 } from '@/types/newsLetterTypes';
-import { type LatestNewsType, latestMagazine, latestNews } from './groq.global';
+import {
+  latestMagazine,
+  latestNews,
+  type NewsletterArticle,
+} from './groq.global';
+
+const updatedLabelQuery = /* groq */ `
+  *[_type == "textSnippet" && _id == "text_snippet_updated"][0]
+    .translation[language == $lang][0].value
+`;
 
 const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
   try {
     // Fetch both English and Norwegian articles from news and magazine
-    const [newsArticles, magazineArticles] = await Promise.all([
+    const [newsArticles, magazineArticles, updatedLabel] = await Promise.all([
       client.fetch(latestNews, { lang: locale }),
       client.fetch(latestMagazine, { lang: locale }),
+      client.fetch<string | null>(updatedLabelQuery, { lang: locale }),
     ]);
 
-    // Merge the articles and sort by publish date (newest first)
-    const articles: LatestNewsType[] = [
+    // Merge the articles and sort by RSS pubDate (newest first)
+    const articles: NewsletterArticle[] = [
       ...newsArticles,
       ...magazineArticles,
     ].sort(
       (a, b) =>
-        new Date(b.publishDateTime).getTime() -
-        new Date(a.publishDateTime).getTime(),
+        new Date(b.rssPublicationDate).getTime() -
+        new Date(a.rssPublicationDate).getTime(),
     );
     const newsLink =
       locale === 'en-GB'
@@ -62,22 +72,27 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
         : '';
       const encodedUrl = bannerImageUrl.replace(/&/g, '&amp;');
 
-      const publishDate = new Date(article.publishDateTime);
       const dateFormat =
         article.lang === 'nb-NO' ? 'd. MMMM yyyy HH:mm' : 'd MMMM yyyy HH:mm';
 
-      const tzName =
-        new Intl.DateTimeFormat('en-GB', {
-          timeZone: 'Europe/Oslo',
-          timeZoneName: 'short',
-        })
-          .formatToParts(publishDate)
-          .find((p) => p.type === 'timeZoneName')?.value ?? '';
+      const formatArticleDate = (dateTime: string) => {
+        const date = new Date(dateTime);
+        const tzName =
+          new Intl.DateTimeFormat('en-GB', {
+            timeZone: 'Europe/Oslo',
+            timeZoneName: 'short',
+          })
+            .formatToParts(date)
+            .find((p) => p.type === 'timeZoneName')?.value ?? '';
 
-      const formattedPubDate = `${format(publishDate, dateFormat, {
-        in: tz('Europe/Oslo'),
-        locale: article.lang === 'nb-NO' ? nb : enGB,
-      })} (${tzName})`;
+        return `${format(date, dateFormat, {
+          in: tz('Europe/Oslo'),
+          locale: article.lang === 'nb-NO' ? nb : enGB,
+        })} (${tzName})`;
+      };
+
+      const formattedArticleDate = formatArticleDate(article.articleDisplayDate);
+      const updateDate = article.updateStatementDatetime || article.updatedAt;
 
       const categoryTag = (
         article.type === 'magazine'
@@ -90,23 +105,22 @@ const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
             toPlainText(article.title)
           : article.title;
 
+      const articleUrl = `https://www.equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email`;
+
       rss += `
         <item>
           <title>${title}</title>
-          <link><![CDATA[https://www.equinor.com${langPath}${
-            article.slug
-          }?utm_source=newssubscription&utm_medium=email]]></link>
-          <guid><![CDATA[https://www.equinor.com${langPath}${
-            article.slug
-          }?utm_source=newssubscription&utm_medium=email]]></guid>
-          <pubDate>${publishDate}</pubDate>
+          <link><![CDATA[${articleUrl}]]></link>
+          <guid><![CDATA[${articleUrl}]]></guid>
+          <pubDate>${new Date(article.rssPublicationDate).toUTCString()}</pubDate>
           <description><![CDATA[${toPlainText(article.ingress)}]]></description>
           ${
             categoryTag
               ? `<category>${newsletterCategoryMap[locale === 'nb-NO' ? 'no' : 'en'][categoryTag]}</category>`
               : '<category />'
           }
-          <nl:extra1>${formattedPubDate}</nl:extra1>
+          <nl:extra1>${formattedArticleDate}</nl:extra1>
+          ${article.showUpdatedTag && updateDate ? `<nl:extra2>${updatedLabel || 'Updated'} ${formatArticleDate(updateDate)}</nl:extra2>` : ''}
           ${
             hero?.image?.asset
               ? `<media:content medium="image" type="image/jpeg" url="${encodedUrl}">
