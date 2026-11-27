@@ -22,7 +22,6 @@ import {
   newsContent,
   newsletterResentAt,
   newsSlugField,
-  newsletterResentAt,
   openGraphImage,
   publishDateTime,
   relatedLinks,
